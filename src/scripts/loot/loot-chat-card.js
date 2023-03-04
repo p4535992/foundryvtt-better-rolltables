@@ -132,17 +132,17 @@ export class LootChatCard {
 
 		let flavorString;
 		if (this.numberOfDraws > 1) {
-			flavorString = game.i18n.format('BRT.DrawResultPlural', {
+			flavorString = game.i18n.format(`${BRTCONFIG.NAMESPACE}.DrawResultPlural`, {
 				amount: this.numberOfDraws,
 				name: table.name
 			});
 		} else if (this.numberOfDraws > 0) {
-			flavorString = game.i18n.format('BRT.DrawResultSingular', {
+			flavorString = game.i18n.format(`${BRTCONFIG.NAMESPACE}.DrawResultSingular`, {
 				amount: this.numberOfDraws,
 				name: table.name
 			});
 		} else {
-			flavorString = game.i18n.format('BRT.DrawResultZero', {
+			flavorString = game.i18n.format(`${BRTCONFIG.NAMESPACE}DrawResultZero`, {
 				name: table.name
 			});
 		}

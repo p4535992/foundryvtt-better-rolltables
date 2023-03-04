@@ -43,7 +43,7 @@ export class BRTBuilder {
 		let msg = '';
 		// Prevent infinite recursion
 		if (_depth > maxRecursions) {
-			let msg = game.i18n.format('BRT.Strings.Warnings.MaxRecursion', {
+			let msg = game.i18n.format(`${BRTCONFIG.NAMESPACE}.Strings.Warnings.MaxRecursion`, {
 				maxRecursions: maxRecursions,
 				tableId: table.id
 			});
@@ -69,7 +69,7 @@ export class BRTBuilder {
 			}
 
 			if (!table.formula) {
-				let msg = game.i18n.format('BRT.RollTable.NoFormula', {
+				let msg = game.i18n.format(`${BRTCONFIG.NAMESPACE}.RollTable.NoFormula`, {
 					name: table.name
 				});
 				ui.notifications.error(MODULE.ns + ' | ' + msg);

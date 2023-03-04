@@ -17,8 +17,8 @@ export class Settings {
 	 */
 	registerSettingsDuringInit() {
 		game.settings.register(MODULE.ns, BRTCONFIG.ADD_ROLL_IN_COMPENDIUM_CONTEXTMENU, {
-			name: i18n('BRT.Settings.AddRollInCompediumContextMenu.Title'),
-			hint: i18n('BRT.Settings.AddRollInCompediumContextMenu.Description'),
+			name: i18n(`${BRTCONFIG.NAMESPACE}.Settings.AddRollInCompediumContextMenu.Title`),
+			hint: i18n(`${BRTCONFIG.NAMESPACE}.Settings.AddRollInCompediumContextMenu.Description`),
 			scope: WORLD,
 			group: GROUP_UI,
 			config: false,
@@ -26,8 +26,8 @@ export class Settings {
 			type: Boolean
 		});
 		game.settings.register(MODULE.ns, BRTCONFIG.ADD_ROLL_IN_ROLLTABLE_CONTEXTMENU, {
-			name: i18n('BRT.Settings.AddRollInRolltableContextMenu.Title'),
-			hint: i18n('BRT.Settings.AddRollInRolltableContextMenu.Description'),
+			name: i18n(`${BRTCONFIG.NAMESPACE}.Settings.AddRollInRolltableContextMenu.Title`),
+			hint: i18n(`${BRTCONFIG.NAMESPACE}.Settings.AddRollInRolltableContextMenu.Description`),
 			scope: WORLD,
 			group: GROUP_UI,
 			config: false,
@@ -72,7 +72,7 @@ export class Settings {
 
 		game.settings.registerMenu(MODULE.ns, 'helpersOptions', {
 			name: i18n('User Interface Integration'),
-			label: i18n('BRT.Settings.Module.AdvancedSettings.Title'),
+			label: i18n(`${BRTCONFIG.NAMESPACE}.Settings.Module.AdvancedSettings.Title`),
 			icon: 'fas fa-user-cog',
 			type: BetterRolltableSettingsConfig,
 			restricted: true
@@ -82,8 +82,8 @@ export class Settings {
 		 * Base Settings Sheet
 		 */
 		game.settings.register(MODULE.ns, BRTCONFIG.LOOT_SHEET_TO_USE_KEY, {
-			name: i18n('BRT.Settings.LootSheet.Title'),
-			hint: i18n('BRT.Settings.LootSheet.Description'),
+			name: i18n(`${BRTCONFIG.NAMESPACE}.Settings.LootSheet.Title`),
+			hint: i18n(`${BRTCONFIG.NAMESPACE}.Settings.LootSheet.Description`),
 			scope: WORLD,
 			group: GROUP_DEFAULT,
 			config: false,
@@ -93,8 +93,8 @@ export class Settings {
 		});
 
 		game.settings.register(MODULE.ns, BRTCONFIG.SPELL_COMPENDIUM_KEY, {
-			name: i18n('BRT.Settings.SpellCompendium.Title'),
-			hint: i18n('BRT.Settings.SpellCompendium.Description'),
+			name: i18n(`${BRTCONFIG.NAMESPACE}.Settings.SpellCompendium.Title`),
+			hint: i18n(`${BRTCONFIG.NAMESPACE}.Settings.SpellCompendium.Description`),
 			scope: WORLD,
 			group: GROUP_DEFAULT,
 			config: false,
@@ -107,8 +107,8 @@ export class Settings {
 		 */
 
 		game.settings.register(MODULE.ns, BRTCONFIG.USE_CONDENSED_BETTERROLL, {
-			name: i18n('BRT.Settings.UseCondensedBetterRoll.Title'),
-			hint: i18n('BRT.Settings.UseCondensedBetterRoll.Description'),
+			name: i18n(`${BRTCONFIG.NAMESPACE}.Settings.UseCondensedBetterRoll.Title`),
+			hint: i18n(`${BRTCONFIG.NAMESPACE}.Settings.UseCondensedBetterRoll.Description`),
 			scope: WORLD,
 			group: GROUP_UI,
 			config: false,
@@ -117,8 +117,8 @@ export class Settings {
 		});
 
 		game.settings.register(MODULE.ns, BRTCONFIG.SHOW_REROLL_BUTTONS, {
-			name: i18n('BRT.Buttons.Reroll.Title'),
-			hint: i18n('BRT.Buttons.Reroll.Description'),
+			name: i18n(`${BRTCONFIG.NAMESPACE}.Buttons.Reroll.Title`),
+			hint: i18n(`${BRTCONFIG.NAMESPACE}.Buttons.Reroll.Description`),
 			scope: WORLD,
 			group: GROUP_UI,
 			config: false,
@@ -127,8 +127,8 @@ export class Settings {
 		});
 
 		game.settings.register(MODULE.ns, BRTCONFIG.SHOW_WARNING_BEFORE_REROLL, {
-			name: i18n('BRT.Settings.ShowWarningBeforeReroll.Title'),
-			hint: i18n('BRT.Settings.ShowWarningBeforeReroll.Description'),
+			name: i18n(`${BRTCONFIG.NAMESPACE}.Settings.ShowWarningBeforeReroll.Title`),
+			hint: i18n(`${BRTCONFIG.NAMESPACE}.Settings.ShowWarningBeforeReroll.Description`),
 			scope: WORLD,
 			group: GROUP_UI,
 			config: false,
@@ -137,8 +137,8 @@ export class Settings {
 		});
 
 		game.settings.register(MODULE.ns, BRTCONFIG.SHOW_OPEN_BUTTONS, {
-			name: i18n('BRT.Buttons.Open.Title'),
-			hint: i18n('BRT.Buttons.Open.Description'),
+			name: i18n(`${BRTCONFIG.NAMESPACE}.Buttons.Open.Title`),
+			hint: i18n(`${BRTCONFIG.NAMESPACE}.Buttons.Open.Description`),
 			scope: WORLD,
 			group: GROUP_UI,
 			config: false,
@@ -147,8 +147,8 @@ export class Settings {
 		});
 
 		game.settings.register(MODULE.ns, BRTCONFIG.ROLL_TABLE_FROM_JOURNAL, {
-			name: i18n('BRT.Settings.RollTableFromJournal.Title'),
-			hint: i18n('BRT.Settings.RollTableFromJournal.Description'),
+			name: i18n(`${BRTCONFIG.NAMESPACE}.Settings.RollTableFromJournal.Title`),
+			hint: i18n(`${BRTCONFIG.NAMESPACE}.Settings.RollTableFromJournal.Description`),
 			scope: WORLD,
 			group: GROUP_UI,
 			config: false,
@@ -162,8 +162,8 @@ export class Settings {
 		 * Loot / Merchant specific
 		 */
 		game.settings.register(MODULE.ns, BRTCONFIG.SHOW_CURRENCY_SHARE_BUTTON, {
-			name: i18n('BRT.Settings.ShareCurrencyButton.Title'),
-			hint: i18n('BRT.Settings.ShareCurrencyButton.Description'),
+			name: i18n(`${BRTCONFIG.NAMESPACE}.Settings.ShareCurrencyButton.Title`),
+			hint: i18n(`${BRTCONFIG.NAMESPACE}.Settings.ShareCurrencyButton.Description`),
 			scope: WORLD,
 			group: GROUP_LOOT,
 			config: false,
@@ -172,8 +172,8 @@ export class Settings {
 		});
 
 		game.settings.register(MODULE.ns, BRTCONFIG.ALWAYS_SHOW_GENERATED_LOOT_AS_MESSAGE, {
-			name: i18n('BRT.Settings.AlwaysShowGeneratedLootAsMessage.Title'),
-			hint: i18n('BRT.Settings.AlwaysShowGeneratedLootAsMessage.Description'),
+			name: i18n(`${BRTCONFIG.NAMESPACE}.Settings.AlwaysShowGeneratedLootAsMessage.Title`),
+			hint: i18n(`${BRTCONFIG.NAMESPACE}.Settings.AlwaysShowGeneratedLootAsMessage.Description`),
 			scope: WORLD,
 			group: GROUP_LOOT,
 			config: false,
@@ -187,8 +187,8 @@ export class Settings {
 	 */
 	static _registerTagsSettings() {
 		game.settings.register(MODULE.ns, BRTCONFIG.TAGS.USE, {
-			name: i18n('BRT.Settings.Tags.Use.Title'),
-			hint: i18n('BRT.Settings.Tags.Use.Description'),
+			name: i18n(`${BRTCONFIG.NAMESPACE}.Settings.Tags.Use.Title`),
+			hint: i18n(`${BRTCONFIG.NAMESPACE}.Settings.Tags.Use.Description`),
 			scope: WORLD,
 			group: GROUP_TAGS,
 			config: false,
@@ -197,8 +197,8 @@ export class Settings {
 		});
 
 		game.settings.register(MODULE.ns, BRTCONFIG.TAGS.DEFAULTS, {
-			name: i18n('BRT.Settings.Tags.Defaults.Title'),
-			hint: i18n('BRT.Settings.Tags.Defaults.Description'),
+			name: i18n(`${BRTCONFIG.NAMESPACE}.Settings.Tags.Defaults.Title`),
+			hint: i18n(`${BRTCONFIG.NAMESPACE}.Settings.Tags.Defaults.Description`),
 			scope: WORLD,
 			group: GROUP_TAGS,
 			config: false,
@@ -235,7 +235,7 @@ class BetterRolltableSettingsConfig extends FormApplication {
 	/** @override */
 	static get defaultOptions() {
 		return mergeObject(super.defaultOptions, {
-			title: i18n('BRT.Settings.Module.AdvancedSettings.Title'),
+			title: i18n(`${BRTCONFIG.NAMESPACE}.Settings.Module.AdvancedSettings.Title`),
 			id: 'betterrolltables-settings',
 			template: `${MODULE.path}/templates/config/settings.hbs`,
 			width: 650,
@@ -350,32 +350,32 @@ class BetterRolltableSettingsConfig extends FormApplication {
 			tabs: [
 				{
 					name: GROUP_DEFAULT,
-					description: i18n('BRT.Settings.Module.AdvancedSettings.Menu.Base.Description'),
-					i18nName: i18n('BRT.Settings.Module.AdvancedSettings.Menu.Base.Title'),
+					description: i18n(`${BRTCONFIG.NAMESPACE}.Settings.Module.AdvancedSettings.Menu.Base.Description`),
+					i18nName: i18n(`${BRTCONFIG.NAMESPACE}.Settings.Module.AdvancedSettings.Menu.Base.Title`),
 					class: 'fas fa-table',
 					menus: [],
 					settings: []
 				},
 				{
 					name: GROUP_UI,
-					description: i18n('BRT.Settings.Module.AdvancedSettings.Menu.UI.Description'),
-					i18nName: i18n('BRT.Settings.Module.AdvancedSettings.Menu.UI.Title'),
+					description: i18n(`${BRTCONFIG.NAMESPACE}.Settings.Module.AdvancedSettings.Menu.UI.Description`),
+					i18nName: i18n(`${BRTCONFIG.NAMESPACE}.Settings.Module.AdvancedSettings.Menu.UI.Title`),
 					class: 'fas fa-cog',
 					menus: [],
 					settings: []
 				},
 				{
 					name: GROUP_LOOT,
-					description: i18n('BRT.Settings.Module.AdvancedSettings.Menu.Loot.Description'),
-					i18nName: i18n('BRT.Settings.Module.AdvancedSettings.Menu.Loot.Title'),
+					description: i18n(`${BRTCONFIG.NAMESPACE}.Settings.Module.AdvancedSettings.Menu.Loot.Description`),
+					i18nName: i18n(`${BRTCONFIG.NAMESPACE}.Settings.Module.AdvancedSettings.Menu.Loot.Title`),
 					class: 'fas fa-cog',
 					menus: [],
 					settings: []
 				},
 				{
 					name: GROUP_TAGS,
-					description: i18n('BRT.Settings.Module.AdvancedSettings.Menu.Tags.Description'),
-					i18nName: i18n('BRT.Settings.Module.AdvancedSettings.Menu.Tags.Title'),
+					description: i18n(`${BRTCONFIG.NAMESPACE}.Settings.Module.AdvancedSettings.Menu.Tags.Description`),
+					i18nName: i18n(`${BRTCONFIG.NAMESPACE}.Settings.Module.AdvancedSettings.Menu.Tags.Title`),
 					class: 'fas fa-tags',
 					menus: [],
 					settings: []

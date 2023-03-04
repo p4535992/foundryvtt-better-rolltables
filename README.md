@@ -25,6 +25,10 @@ The form was updated for the 10 by on commission [elizeuangelo](https://github.c
 
 A special ty to the original authors [Ultrakorne#6240](https://ultrakorne.github.io/discord) and [DanielBöttner](https://github.com/DanielBoettner).
 
+## NOTE FOR FOUNDRYVTT VERSION 11
+
+With FoundryVTT version 11 there are many UX/UI changes for rollable tables coming so maybe you don't want this module enabled right away. DO NOT INSTALL ON 11 UNTIL I SAY SO.
+
 ## NOTE: This module is under maintenance, I have no plans to update or add features. However, I will try to fix any bugs as possible. Any contribution is welcome.
 
 ### Intro video

@@ -1,5 +1,5 @@
 {
-	"BRT": {
+	"better-rolltables": {
 		"api": {
 			"msg": {
 				"compendiumEmpty": "Compendium named {title} ({name}) is empty.`",

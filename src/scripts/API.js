@@ -132,7 +132,7 @@ class API {
 			api_msg = MODULE.ns + '.api | ';
 
 		if (compendium === undefined) {
-			api.msg += game.i18n.format('BRT.api.msg.compendiumNotFound', msg);
+			api.msg += game.i18n.format(`${BRTCONFIG.NAMESPACE}.api.msg.compendiumNotFound`, msg);
 			ui.notifications.warn(MODULE.ns + ' | ' + api_msg);
 			return;
 		}
@@ -141,11 +141,11 @@ class API {
 		msg.compendiumSize = (await compendium.getIndex()).size;
 
 		if (!msg.compendiumSize) {
-			ui.notifications.warn(api.msg + game.i18n.format('BRT.api.msg.compendiumEmpty', msg));
+			ui.notifications.warn(api.msg + game.i18n.format(`${BRTCONFIG.NAMESPACE}.api.msg.compendiumEmpty`, msg));
 			return;
 		}
 
-		ui.notifications.info(api_msg + game.i18n.format('BRT.api.msg.startRolltableGeneration', msg));
+		ui.notifications.info(api_msg + game.i18n.format(`${BRTCONFIG.NAMESPACE}.api.msg.startRolltableGeneration`, msg));
 
 		compendium
 			.getDocuments()
@@ -167,7 +167,9 @@ class API {
 			)
 			.then((rolltable) => {
 				rolltable.normalize();
-				ui.notifications.info(api_msg + game.i18n.format('BRT.api.msg.rolltableGenerationFinished', msg));
+				ui.notifications.info(
+					api_msg + game.i18n.format(`${BRTCONFIG.NAMESPACE}.api.msg.rolltableGenerationFinished`, msg)
+				);
 			});
 	}
 }

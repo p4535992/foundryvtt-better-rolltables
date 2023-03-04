@@ -118,7 +118,7 @@ export class BetterRT {
 						const formulaInput = document.createElement('input');
 
 						formulaInput.classList.add('result-brt-formula');
-						formulaInput.placeholder = i18n('BRT.Formula');
+						formulaInput.placeholder = i18n(`${BRTCONFIG.NAMESPACE}.Formula`);
 						formulaInput.type = 'text';
 						formulaInput.disabled = !editable;
 						/** based on the name of the elents the value will be added in the preUpdateRollTable and override the table.data */
@@ -242,7 +242,9 @@ export class BetterRT {
 		generateLootBtn.setAttribute('class', 'generate');
 		generateLootBtn.setAttribute('type', 'button');
 
-		generateLootBtn.innerHTML = `<i id="BRT-gen-loot" class="fas fa-coins"></i> ${i18n('BRT.Buttons.GenerateLoot')}`;
+		generateLootBtn.innerHTML = `<i id="BRT-gen-loot" class="fas fa-coins"></i> ${i18n(
+			`${BRTCONFIG.NAMESPACE}.Buttons.GenerateLoot`
+		)}`;
 		generateLootBtn.onclick = async () => await game.betterTables.generateLoot(tableEntity);
 
 		htmlElement.insertBefore(generateLootBtn, htmlElement.firstChild);

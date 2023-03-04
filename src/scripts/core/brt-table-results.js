@@ -176,7 +176,7 @@ export class BetterResults {
 			for (const currency of currenciesPieces) {
 				const match = /(.*)\[(.*?)\]/g.exec(currency); // capturing 2 groups, the formula and then the currency symbol in brakets []
 				if (!match || match.length < 3) {
-					let msg = game.i18n.format('BRT.Strings.Warnings.CurrencyFormat', {
+					let msg = game.i18n.format(`${BRTCONFIG.NAMESPACE}.Strings.Warnings.CurrencyFormat`, {
 						currencyString: currency
 					});
 					ui.notifications.warn(MODULE.ns + ' | ' + msg);

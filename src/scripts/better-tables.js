@@ -225,7 +225,7 @@ export class BetterTables {
 
 		if (game.user.isGM) {
 			options.push({
-				name: i18n('BRT.api.msg.generateRolltableFromCompendium'),
+				name: i18n(`${BRTCONFIG.NAMESPACE}.api.msg.generateRolltableFromCompendium`),
 				icon: '<i class="fas fa-th-list"></i>',
 				callback: (li) => {
 					api.createRolltableFromCompendium(li.data('pack'));
@@ -234,7 +234,7 @@ export class BetterTables {
 
 			if (game.settings.get(MODULE.ns, BRTCONFIG.ADD_ROLL_IN_COMPENDIUM_CONTEXTMENU)) {
 				options.push({
-					name: i18n('BRT.api.msg.rollCompendiumAsRolltable'),
+					name: i18n(`${BRTCONFIG.NAMESPACE}.api.msg.rollCompendiumAsRolltable`),
 					icon: '<i class="fas fa-dice-d20"></i>',
 					callback: (li) => {
 						api.rollCompendiumAsRolltable(li.data('pack'));
@@ -347,7 +347,7 @@ export class BetterTables {
 		if (game.settings.get(MODULE.ns, BRTCONFIG.SHOW_REROLL_BUTTONS)) {
 			// reroll button
 			const rerollButton = $(
-				`<a class="roll-table-reroll-button" title="${game.i18n.localize('BRT.DrawReroll')}">`
+				`<a class="roll-table-reroll-button" title="${game.i18n.localize(`${BRTCONFIG.NAMESPACE}.DrawReroll`)}">`
 			).append("<i class='fas fa-dice-d20'></i>");
 			rerollButton.click(async () => {
 				let cardContent;
@@ -380,7 +380,9 @@ export class BetterTables {
 		) {
 			// Currency share button
 			const currencyShareButton = $(
-				`<a class="roll-table-share-currencies" title="${game.i18n.localize('BRT.Buttons.Currency.Share')}">`
+				`<a class="roll-table-share-currencies" title="${game.i18n.localize(
+					`${BRTCONFIG.NAMESPACE}.Buttons.Currency.Share`
+				)}">`
 			).append("<i class='fas fa-coins'></i>");
 			currencyShareButton.click(async () => BetterTables._toggleCurrenciesShareSection(message, html));
 			$(html).find('.message-delete').before(currencyShareButton);
@@ -400,7 +402,7 @@ export class BetterTables {
 			}
 			if (document) {
 				const openLink = $(
-					`<a class="roll-table-open-table" title="${game.i18n.localize('BRT.OpenRolltable')}">`
+					`<a class="roll-table-open-table" title="${game.i18n.localize(`${BRTCONFIG.NAMESPACE}.OpenRolltable`)}">`
 				).append("<i class='fas fa-th-list'></i>");
 				if (id) openLink.data('id', id);
 				if (pack) openLink.data('pack', pack);
@@ -458,7 +460,7 @@ export class BetterTables {
 
 					const rollNode = $(
 						`<a class="roll-table-roll-link" title="${game.i18n.localize(
-							'BRT.DrawReroll'
+							`${BRTCONFIG.NAMESPACE}.DrawReroll`
 						)}"><i class="fas fa-dice-d20"></i></a>`
 					).click(async () => {
 						await game.betterTables.generateChatLoot(rolltable);
@@ -480,7 +482,7 @@ export class BetterTables {
 
 					const rollNode = $(
 						`<a class="roll-table-roll-link" title="${game.i18n.localize(
-							'BRT.DrawReroll'
+							`${BRTCONFIG.NAMESPACE}.DrawReroll`
 						)}"><i class="fas fa-dice-d20"></i></a>`
 					).click(async () => {
 						await game.betterTables.generateChatLoot(document);
@@ -514,8 +516,8 @@ export class BetterTables {
 		if (game.user.isGM) {
 			if (!options.force && game.settings.get(MODULE.ns, BRTCONFIG.SHOW_WARNING_BEFORE_REROLL)) {
 				Dialog.confirm({
-					title: game.i18n.localize('BRT.Settings.RerollWarning.Title'),
-					content: game.i18n.localize('BRT.Settings.RerollWarning.Description'),
+					title: game.i18n.localize(`${BRTCONFIG.NAMESPACE}.Settings.RerollWarning.Title`),
+					content: game.i18n.localize(`${BRTCONFIG.NAMESPACE}.Settings.RerollWarning.Description`),
 					yes: () => BetterTables.updateChatMessage(message, content, { force: true }),
 					defaultYes: false
 				});
@@ -540,7 +542,7 @@ export class BetterTables {
 
 					const rollNode = $(
 						`<a class="roll-table-roll-link" title="${game.i18n.localize(
-							'BRT.DrawReroll'
+							`${BRTCONFIG.NAMESPACE}.DrawReroll`
 						)}"><i class="fas fa-dice-d20"></i></a>`
 					).click(async () => {
 						await game.betterTables.generateChatLoot(rolltable);
@@ -562,7 +564,7 @@ export class BetterTables {
 
 					const rollNode = $(
 						`<a class="roll-table-roll-link" title="${game.i18n.localize(
-							'BRT.DrawReroll'
+							`${BRTCONFIG.NAMESPACE}.DrawReroll`
 						)}"><i class="fas fa-dice-d20"></i></a>`
 					).click(async () => {
 						await game.betterTables.generateChatLoot(document);
