@@ -29,6 +29,13 @@ or support the original authors:
 *better-rolltables* is Module for FoundryVTT to improve and add functionality to Rollable tables
 Implementing for example the Treasure Hoard" Tables from the Dungeon master manual becomes possible!
 
+Some Features:
+
+- Enhance your RollTables with Drag and Drop, Generate Loot, Encounters and and build your NPC Generator!
+- Roll on multiple tables with roll formulas
+- Auto create a loot actor to store generated loot
+- Automatically select a random spells when a scroll item is selected
+
 ## NOTES ABOUT UPDATE FROM 18.95 for FVTT 9 to 1.9.1 FVTT 10
 
 The form was updated for the 10 by on commission [elizeuangelo](https://github.com/elizeuangelo) and then perfected by [sasquach45932](https://github.com/sasquach45932) with some updates and bug fixing . Finallu [p4535992](https://github.com/p4535992) applied some code best practices (module id as prefix of i18n and css rules, etc.) and taking over maintenance of the module.
