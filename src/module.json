@@ -55,37 +55,37 @@
     {
       "lang": "de",
       "name": "Deutsch (German)",
-      "path": "lang/de.json",
+      "path": "languages/de.json",
       "flags": {}
     },
     {
       "lang": "en",
       "name": "English",
-      "path": "lang/en.json",
+      "path": "languages/en.json",
       "flags": {}
     },
     {
       "lang": "ko",
       "name": "Korean",
-      "path": "lang/ko.json",
+      "path": "languages/ko.json",
       "flags": {}
     },
     {
       "lang": "pt-BR",
       "name": "Português (Brasil)",
-      "path": "lang/pt-BR.json",
+      "path": "languages/pt-BR.json",
       "flags": {}
     },
     {
       "lang": "es-ES",
       "name": "Castellano",
-      "path": "lang/es-ES.json",
+      "path": "languages/es-ES.json",
       "flags": {}
     },
     {
       "lang": "fr",
       "name": "Français",
-      "path": "lang/fr.json",
+      "path": "languages/fr.json",
       "flags": {}
     }
   ],
