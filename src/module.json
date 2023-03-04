@@ -20,6 +20,27 @@
 			"name": "Daimakaicho",
 			"url": "https://github.com/Daimakaicho",
 			"flags": {}
+		},
+		{
+			"name": "elizeuangelo",
+			"url": "https://github.com/elizeuangelo",
+			"flags": {}
+		},
+		{
+			"name": "sasquach45932",
+			"url": "https://github.com/sasquach45932",
+			"flags": {}
+		},
+		{
+			"name": "p4535992",
+			"url": "https://github.com/p4535992",
+			"discord": "",
+			"twitter": "",
+			"patreon": "",
+			"github": "p4535992",
+			"ko-fi": "",
+			"reddit": "",
+			"email": ""
 		}
 	],
 	"esmodules": ["scripts/brt-main.js"],

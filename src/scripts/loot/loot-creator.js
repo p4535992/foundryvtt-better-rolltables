@@ -21,7 +21,7 @@ export class LootCreator {
 			this.actor = await Actor.create({
 				name: actorName || 'New Loot',
 				type: 'npc',
-				img: 'modules/better-rolltables/artwork/chest.webp',
+				img: 'modules/better-rolltables/assets/artwork/chest.webp',
 				sort: 12000,
 				token: { actorLink: true }
 			});
