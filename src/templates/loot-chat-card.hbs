@@ -4,9 +4,9 @@
     {{/if}}
     {{#unlessEmpty currency}}
         <div class="table-description" style="font-size: 15px; text-align: center; font-weight:bold;">{{localize 'better-rolltables.Buttons.Currency.label'}} {{format-currencies currency}}
-            {{#if shared}}<span class="brt-currency-shared">{{ localize 'better-rolltables.Buttons.Currency.Shared' }}</span>{{/if}}
+            {{#if shared}}<span class="better-rolltables-currency-shared">{{ localize 'better-rolltables.Buttons.Currency.Shared' }}</span>{{/if}}
         </div>
-    <section class="brt-share-currencies brt-hidden">
+    <section class="better-rolltables-share-currencies better-rolltables-hidden">
         {{#each users as |user|}}
             <div class="flexrow">
                 <input type="checkbox" checked="checked" data-user-id="{{user.id}}" />
@@ -14,7 +14,7 @@
                 <span>{{user.name}}</span>
             </div>
         {{/each}}
-        <button class="brt-share-currencies-button">{{localize 'better-rolltables.Buttons.Currency.Share' }}</button>
+        <button class="better-rolltables-share-currencies-button">{{localize 'better-rolltables.Buttons.Currency.Share' }}</button>
     </section>
     {{/unlessEmpty}}
 

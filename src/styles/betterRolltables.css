@@ -60,71 +60,71 @@
 /** 
 * Sticky Mode
 */
-.app.roll-table-config.brt-sticky-view {
+.app.roll-table-config.better-rolltables-sticky-view {
 	height: fit-content !important;
 	min-height: 50vh;
 }
-.app.roll-table-config.brt-sticky-view .window-content {
+.app.roll-table-config.better-rolltables-sticky-view .window-content {
 	overflow: hidden;
 	color: var(--primary-font);
 	padding: 0;
 }
-.app.roll-table-config.brt-sticky-view .window-content form {
+.app.roll-table-config.better-rolltables-sticky-view .window-content form {
 	background: var(--background);
 	padding: 0.5em;
 }
-.app.roll-table-config.brt-sticky-view header fieldset {
+.app.roll-table-config.better-rolltables-sticky-view header fieldset {
 	min-height: 1.5em;
 }
-.app.roll-table-config.brt-sticky-view header fieldset legend {
+.app.roll-table-config.better-rolltables-sticky-view header fieldset legend {
 	margin-bottom: -1em;
 }
-.app.roll-table-config.brt-sticky-view form > header {
+.app.roll-table-config.better-rolltables-sticky-view form > header {
 	margin-bottom: 0.5em;
 }
-.app.roll-table-config.brt-sticky-view form button {
+.app.roll-table-config.better-rolltables-sticky-view form button {
 	color: var(--primary-font);
 	border: 1px solid var(--header-border);
 	background: var(--header-background);
 	border-radius: 0.5em;
 	height: calc(100% - 0.7em);
 }
-.app.roll-table-config.brt-sticky-view input[type='text'],
-.app.roll-table-config.brt-sticky-view input[type='number'],
-.app.roll-table-config.brt-sticky-view select {
+.app.roll-table-config.better-rolltables-sticky-view input[type='text'],
+.app.roll-table-config.better-rolltables-sticky-view input[type='number'],
+.app.roll-table-config.better-rolltables-sticky-view select {
 	border: 1px solid #7a7971;
 	text-overflow: ellipsis;
 	font-size: 0.9em;
 	height: calc(100% - 0.7em);
 }
-.app.roll-table-config.brt-sticky-view .results {
+.app.roll-table-config.better-rolltables-sticky-view .results {
 	position: relative;
 	padding-bottom: 32px;
 }
-.app.roll-table-config.brt-sticky-view .results .table-results {
+.app.roll-table-config.better-rolltables-sticky-view .results .table-results {
 	min-height: 40vh;
 	max-height: 52vh;
 	height: fit-content;
 }
-.app.roll-table-config.brt-sticky-view .results .table-results:nth-child(2n) {
+.app.roll-table-config.better-rolltables-sticky-view .results .table-results:nth-child(2n) {
 	background: var(--faintest-color);
 }
-.app.roll-table-config.brt-sticky-view .results .table-results .table-header {
+.app.roll-table-config.better-rolltables-sticky-view .results .table-results .table-header {
 	background: var(--icon-background);
 	position: sticky;
 	align-self: flex-start;
 	top: 0;
 	z-index: 1;
 }
-.app.roll-table-config.brt-sticky-view .results .table-results .table-result {
+.app.roll-table-config.better-rolltables-sticky-view .results .table-results .table-result {
 	border: unset;
 	border-bottom: 1px solid var(--header-border);
 }
-.app.roll-table-config.brt-sticky-view .results .table-results .table-result.drawn {
+.app.roll-table-config.better-rolltables-sticky-view .results .table-results .table-result.drawn {
 	opacity: 0.5;
 	z-index: 0;
 }
-.app.roll-table-config.brt-sticky-view .results .table-results.expanded {
+.app.roll-table-config.better-rolltables-sticky-view .results .table-results.expanded {
 	max-height: 70vh;
 }
 /*************\
@@ -172,20 +172,28 @@
 	width: 43%;
 	margin-left: 3px;
 }
-.roll-table-config ol.table-results .table-result .result-details .result-brt-formula {
+.roll-table-config ol.table-results .table-result .result-details .result-better-rolltables-formula {
 	width: 14%;
 	margin-left: 3px;
 }
-.roll-table-config ol.table-results .table-result .result-details .result-brt-formula::placeholder {
+.roll-table-config ol.table-results .table-result .result-details .result-better-rolltables-formula::placeholder {
 	font-size: 12px;
 }
-.roll-table-config ol.table-results .table-result .result-details .result-brt-formula::-webkit-input-placeholder {
+.roll-table-config
+	ol.table-results
+	.table-result
+	.result-details
+	.result-better-rolltables-formula::-webkit-input-placeholder {
 	font-size: 12px;
 }
-.roll-table-config ol.table-results .table-result .result-details .result-brt-formula::-moz-placeholder {
+.roll-table-config ol.table-results .table-result .result-details .result-better-rolltables-formula::-moz-placeholder {
 	font-size: 12px;
 }
-.roll-table-config ol.table-results .table-result .result-details .result-brt-formula:-ms-input-placeholder {
+.roll-table-config
+	ol.table-results
+	.table-result
+	.result-details
+	.result-better-rolltables-formula:-ms-input-placeholder {
 	font-size: 12px;
 }
 .roll-table-config ol.table-results .table-result .result-details .result-target-mid {
@@ -213,7 +221,7 @@
 .roll-table-share-currencies {
 	margin-right: 5px;
 }
-.brt-hidden {
+.better-rolltables-hidden {
 	display: none !important;
 }
 .roll-table-roll-link {
@@ -223,21 +231,21 @@
 	border: 1px solid;
 	border-left: 0;
 }
-.brt-share-currencies {
+.better-rolltables-share-currencies {
 	border: 1px solid #b5b3a4;
 	padding: 5px;
 }
-.brt-share-currencies div {
+.better-rolltables-share-currencies div {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 }
-.brt-share-currencies div img {
+.better-rolltables-share-currencies div img {
 	border: none;
 	max-width: 48px;
 	margin-right: 5px;
 }
-.brt-currency-shared {
+.better-rolltables-currency-shared {
 	color: green;
 	font-weight: bold;
 	display: block;
