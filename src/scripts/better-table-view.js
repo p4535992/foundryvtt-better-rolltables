@@ -92,7 +92,7 @@ export class BetterRT {
 			headerElement.querySelectorAll('.toggler').forEach(async (e) => {
 				e.addEventListener('click', async (e) => {
 					const toggleIconElement = e.currentTarget.querySelector('.toggleicon');
-					e.currentTarget.nextElementSibling.classList.toggle('brt-hidden');
+					e.currentTarget.nextElementSibling.classList.toggle(`${BRTCONFIG.NAMESPACE}-hidden`);
 					['fa-expand-alt', 'fa-compress-alt'].map((c) => toggleIconElement.classList.toggle(c));
 				});
 			});
@@ -117,7 +117,7 @@ export class BetterRT {
 						/** tableText is for each row the text of the table */
 						const formulaInput = document.createElement('input');
 
-						formulaInput.classList.add('result-brt-formula');
+						formulaInput.classList.add(`result-${BRTCONFIG.NAMESPACE}-formula`);
 						formulaInput.placeholder = i18n(`${BRTCONFIG.NAMESPACE}.Formula`);
 						formulaInput.type = 'text';
 						formulaInput.disabled = !editable;

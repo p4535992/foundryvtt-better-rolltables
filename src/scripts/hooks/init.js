@@ -3,7 +3,7 @@ import { MODULE } from '../core/config.js';
 import { BetterRT } from '../better-table-view.js';
 import { Settings } from '../core/settingsConfig.js';
 import { BetterTables } from '../better-tables.js';
-import renderWelcomeScreen from '../versioning/welcome-screen.js';
+// import renderWelcomeScreen from '../versioning/welcome-screen.js';
 import VersionCheck from '../versioning/version-check.js';
 import { getIconByEntityType } from '../core/utils.js';
 
@@ -52,9 +52,9 @@ class BetterRolltableHooks {
 			Hooks.on('renderActorSheet', BetterTables.handleChatMessageButtons);
 		}
 
-		if (game.user.isGM && VersionCheck.check(MODULE.ns)) {
-			renderWelcomeScreen();
-		}
+		// if (game.user.isGM && VersionCheck.check(MODULE.ns)) {
+		// 	renderWelcomeScreen();
+		// }
 
 		/** Register Handlebar helpers **/
 		/** checks if the first argument is equal to any of the subsequent arguments */

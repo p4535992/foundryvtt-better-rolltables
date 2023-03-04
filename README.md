@@ -16,6 +16,16 @@
 
 ### If you want to buy me a coffee [![alt-text](https://img.shields.io/badge/-Patreon-%23ff424d?style=for-the-badge)](https://www.patreon.com/p4535992)
 
+or support the original authors:
+
+**Paypal TipJar: Ultrakorne**
+
+[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/paypalme/ultrakorne)
+
+**Paypal TipJar: JackPrince** 
+
+[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/paypalme/JackPrince)
+
 *better-rolltables* is Module for FoundryVTT to improve and add functionality to Rollable tables
 Implementing for example the Treasure Hoard" Tables from the Dungeon master manual becomes possible!
 
@@ -23,7 +33,7 @@ Implementing for example the Treasure Hoard" Tables from the Dungeon master manu
 
 The form was updated for the 10 by on commission [elizeuangelo](https://github.com/elizeuangelo) and then perfected by [sasquach45932](https://github.com/sasquach45932) with some updates and bug fixing . Finallu [p4535992](https://github.com/p4535992) applied some code best practices (module id as prefix of i18n and css rules, etc.) and taking over maintenance of the module.
 
-A special ty to the original authors [Ultrakorne#6240](https://ultrakorne.github.io/discord) and [DanielBöttner](https://github.com/DanielBoettner).
+A special ty to the original authors [Ultrakorne#6240](https://discordapp.com/users/Ultrakorne#6240), [JackPrince#0494](https://discordapp.com/users/JackPrince#0494) and [DanielBöttner](https://github.com/DanielBoettner).
 
 ## NOTE FOR FOUNDRYVTT VERSION 11
 

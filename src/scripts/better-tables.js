@@ -333,8 +333,8 @@ export class BetterTables {
 	}
 
 	static async _toggleCurrenciesShareSection(message, html) {
-		const section = html[0].querySelector('section.brt-share-currencies');
-		section.classList.toggle('brt-hidden');
+		const section = html[0].querySelector(`section.${BRTCONFIG.NAMESPACE}-share-currencies`);
+		section.classList.toggle(`${BRTCONFIG.NAMESPACE}-hidden`);
 		// await BetterTables.updateChatMessage(message, html, {"force":true});
 	}
 
@@ -386,7 +386,7 @@ export class BetterTables {
 			).append("<i class='fas fa-coins'></i>");
 			currencyShareButton.click(async () => BetterTables._toggleCurrenciesShareSection(message, html));
 			$(html).find('.message-delete').before(currencyShareButton);
-			const shareButton = html[0].querySelector('button.brt-share-currencies-button');
+			const shareButton = html[0].querySelector(`button.${BRTCONFIG.NAMESPACE}-share-currencies-button`);
 			shareButton.addEventListener('click', async (event) => {
 				await BetterTables._shareCurrenciesToPlayers(message, html);
 			});
@@ -422,7 +422,7 @@ export class BetterTables {
 	static async _shareCurrenciesToPlayers(message, html) {
 		await BetterTables._toggleCurrenciesShareSection(message, html);
 		const usersId = Array.from(
-			html[0].querySelector('section.brt-share-currencies')?.querySelectorAll('input:checked')
+			html[0].querySelector(`section.${BRTCONFIG.NAMESPACE}-share-currencies`)?.querySelectorAll('input:checked')
 		).map((x) => x.dataset.userId);
 		if (!usersId) return undefined;
 
