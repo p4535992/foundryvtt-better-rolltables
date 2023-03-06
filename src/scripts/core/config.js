@@ -12,8 +12,9 @@ export const BRTCONFIG = {
 	LOOT_CURRENCY_KEY: 'table-currency-string',
 	ROLLS_AMOUNT_KEY: 'loot-amount-key',
 	ACTOR_NAME_KEY: 'loot-actor-name',
-	RESULTS_FORMULA_KEY: 'better-rolltables-result-formula',
-    RESULTS_FORMULA_KEY_OLD: 'brt-result-formula',
+	// RESULTS_FORMULA_KEY: 'better-rolltables-result-formula',
+	// RESULTS_FORMULA_KEY_OLD: 'brt-result-formula',
+	RESULTS_FORMULA_KEY: 'brt-result-formula',
 
 	// different type of table type the mod will support. none will basically keep the basic rolltable functionality
 	TABLE_TYPE_NONE: 'none',

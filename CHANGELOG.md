@@ -1,3 +1,7 @@
+### 1.9.2 
+
+- Fixed a retrocomaptibility error on flags for formula text
+
 ### v1.9.1 the [p4535992](https://github.com/p4535992) refactoring
 
 - Maintance mode for fvtt10

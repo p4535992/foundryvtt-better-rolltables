@@ -2,7 +2,7 @@
   "name": "better-rolltables",
   "title": "Better Roll Tables",
   "description": "Adding functionality to roll tables, especially to roll treasure and magic items",
-  "version": "1.9.1",
+  "version": "1.9.2",
   "main": "scripts/brt-main.js",
   "scripts": {
     "publish": "gulp publish --update",
