@@ -85,8 +85,20 @@ export class BRTBuilder {
 			}
 
 			for (const entry of draw.results) {
-				const formulaAmount =
+                // const formulaAmount =
+				// 	getProperty(entry, `flags.${BRTCONFIG.NAMESPACE}.${BRTCONFIG.RESULTS_FORMULA_KEY}.formula`) || '';
+				let formulaAmount =
 					getProperty(entry, `flags.${BRTCONFIG.NAMESPACE}.${BRTCONFIG.RESULTS_FORMULA_KEY}.formula`) || '';
+                // priority to old value
+                if(hasProperty(entry, `flags.${BRTCONFIG.NAMESPACE}.${BRTCONFIG.RESULTS_FORMULA_KEY_OLD}.formula`)) {
+                    let formulaAmountTmp =
+					    getProperty(entry, `flags.${BRTCONFIG.NAMESPACE}.${BRTCONFIG.RESULTS_FORMULA_KEY_OLD}.formula`) || '';
+                    if(formulaAmountTmp) {
+                        formulaAmount = formulaAmountTmp;
+                        setProperty(entry, `flags.${BRTCONFIG.NAMESPACE}.${BRTCONFIG.RESULTS_FORMULA_KEY_OLD}.formula`, null);
+                        setProperty(entry, `flags.${BRTCONFIG.NAMESPACE}.${BRTCONFIG.RESULTS_FORMULA_KEY}.formula`, formulaAmount);
+                    }
+                }
 				const entryAmount = await BRTHelper.tryRoll(formulaAmount);
 
 				let innerTable;

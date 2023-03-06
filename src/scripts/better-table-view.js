@@ -124,8 +124,21 @@ export class BetterRT {
 						/** based on the name of the elents the value will be added in the preUpdateRollTable and override the table.data */
 						formulaInput.name = `results.${index}.flags.${MODULE.ns}.${BRTCONFIG.RESULTS_FORMULA_KEY}.formula`;
 						if (tableText.classList.contains('result-target')) {
-							formulaInput.value =
+							// formulaInput.value =
+							// 	getProperty(tableResult, `flags.${MODULE.ns}.${BRTCONFIG.RESULTS_FORMULA_KEY}.formula`) || '';
+                            let formulaAmount =
 								getProperty(tableResult, `flags.${MODULE.ns}.${BRTCONFIG.RESULTS_FORMULA_KEY}.formula`) || '';
+                            // priority to old value
+                            if(hasProperty(entry, `flags.${BRTCONFIG.NAMESPACE}.${BRTCONFIG.RESULTS_FORMULA_KEY_OLD}.formula`)) {
+                                let formulaAmountTmp =
+                                    getProperty(entry, `flags.${BRTCONFIG.NAMESPACE}.${BRTCONFIG.RESULTS_FORMULA_KEY_OLD}.formula`) || '';
+                                if(formulaAmountTmp) {
+                                    formulaAmount = formulaAmountTmp;
+                                    setProperty(entry, `flags.${BRTCONFIG.NAMESPACE}.${BRTCONFIG.RESULTS_FORMULA_KEY_OLD}.formula`, null);
+                                    setProperty(entry, `flags.${BRTCONFIG.NAMESPACE}.${BRTCONFIG.RESULTS_FORMULA_KEY}.formula`, formulaAmount);
+                                }
+                            }
+                            formulaInput.value = formulaAmount;
 							tableText.classList.add('result-target-short');
 						} else {
 							/** text type result, we disable the formula field for text */
