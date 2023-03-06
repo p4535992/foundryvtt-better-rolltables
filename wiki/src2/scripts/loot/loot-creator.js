@@ -73,7 +73,7 @@ export class LootCreator {
 			itemPrice = getProperty(newItemData, BRTCONFIG.PRICE_PROPERTY_PATH) || 0,
 			embeddedItems = [...actor.getEmbeddedCollection('Item').values()],
 			originalItem = embeddedItems.find(
-				i => i.name === newItemData.name && itemPrice === getProperty(i, BRTCONFIG.PRICE_PROPERTY_PATH)
+				(i) => i.name === newItemData.name && itemPrice === getProperty(i, BRTCONFIG.PRICE_PROPERTY_PATH)
 			);
 
 		/** if the item is already owned by the actor (same name and same PRICE) */
@@ -155,7 +155,7 @@ export class LootCreator {
 			}
 		};
 
-		const convert = itemConversions[(existingItem?.documentName)] ?? false;
+		const convert = itemConversions[existingItem?.documentName] ?? false;
 		/** Create item from text since the item does not exist */
 		const createNewItem = !existingItem || convert;
 

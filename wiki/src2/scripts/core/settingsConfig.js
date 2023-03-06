@@ -41,7 +41,7 @@ export class Settings {
 	 */
 	registerSettings() {
 		let defaultLootSheet = 'dnd5e.LootSheet5eNPC',
-			systemSheets = Object.values(CONFIG.Actor.sheetClasses.npc).map(s => ({
+			systemSheets = Object.values(CONFIG.Actor.sheetClasses.npc).map((s) => ({
 				id: s.id,
 				label: s.label
 			})),
@@ -279,7 +279,7 @@ class BetterRolltableSettingsConfig extends FormApplication {
 			const name = s.namespace;
 			if (name === MODULE.ns) {
 				const group = s.group;
-				let groupTab = data.tabs.find(tab => tab.name === group) ?? false;
+				let groupTab = data.tabs.find((tab) => tab.name === group) ?? false;
 				if (groupTab) {
 					groupTab.settings.push(s);
 				}

@@ -23,7 +23,7 @@ export class StoryChatCard {
 			content: story
 		};
 		if (options.gmOnly) {
-			chatData.whisper = [game.users.find(u => u.isGM).id];
+			chatData.whisper = [game.users.find((u) => u.isGM).id];
 		} else {
 			addRollModeToChatData(chatData);
 		}

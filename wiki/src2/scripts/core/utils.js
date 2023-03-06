@@ -1,4 +1,4 @@
-export const i18n = key => game.i18n && game.i18n.localize(key);
+export const i18n = (key) => game.i18n && game.i18n.localize(key);
 
 export function addRollModeToChatData(chatData, rollMode) {
 	rollMode = rollMode ?? game.settings.get('core', 'rollMode');
@@ -9,7 +9,7 @@ export function addRollModeToChatData(chatData, rollMode) {
 		// no break needed, if so please change this comment ?
 		// eslint-disable-next-line no-fallthrough
 		case 'gmroll':
-			chatData.whisper = [game.users.find(u => u.isGM).id];
+			chatData.whisper = [game.users.find((u) => u.isGM).id];
 			break;
 		case 'selfroll':
 			chatData.whisper = [game.userId];

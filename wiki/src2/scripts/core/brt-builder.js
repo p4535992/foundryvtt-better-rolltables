@@ -56,7 +56,7 @@ export class BRTBuilder {
 			let resultToDraw = amount;
 			/** if we draw without replacement we need to reset the table once all entries are drawn */
 			if (!table.replacement) {
-				const resultsLeft = table.results.reduce(function(n, r) {
+				const resultsLeft = table.results.reduce(function (n, r) {
 					return n + !r.drawn;
 				}, 0);
 

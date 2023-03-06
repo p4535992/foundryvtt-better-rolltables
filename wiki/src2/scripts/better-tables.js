@@ -170,8 +170,8 @@ export class BetterTables {
 		);
 		compendium
 			.getDocuments()
-			.then(compendiumItems => {
-				return compendiumItems.map(item => ({
+			.then((compendiumItems) => {
+				return compendiumItems.map((item) => ({
 					type: CONST.TABLE_RESULT_TYPES.COMPENDIUM,
 					collection: compendiumName,
 					text: item.name,
@@ -180,13 +180,13 @@ export class BetterTables {
 					range: [1, 1]
 				}));
 			})
-			.then(results =>
+			.then((results) =>
 				RollTable.create({
 					name: tableName,
-					results: results.filter(x => x.weight !== 0) // remove empty results due to null weight
+					results: results.filter((x) => x.weight !== 0) // remove empty results due to null weight
 				})
 			)
-			.then(rolltable => {
+			.then((rolltable) => {
 				rolltable.normalize();
 				ui.notifications.info(`Rolltable ${tableName} with ${rolltable.results.size} entries was generated.`);
 			});
@@ -207,8 +207,8 @@ export class BetterTables {
 					fields: ['system.level', 'img']
 				});
 				this._spellCache = spellCompendiumIndex
-					.filter(entry => entry.type === 'spell')
-					.map(i => mergeObject(i, { collection: spellCompendium.collection }));
+					.filter((entry) => entry.type === 'spell')
+					.map((i) => mergeObject(i, { collection: spellCompendium.collection }));
 			} else {
 				ui.notifications.error(MODULE.ns + `| Spell cache could not be initialized/updated.`);
 			}
@@ -227,7 +227,7 @@ export class BetterTables {
 			options.push({
 				name: i18n('BRT.api.msg.generateRolltableFromCompendium'),
 				icon: '<i class="fas fa-th-list"></i>',
-				callback: li => {
+				callback: (li) => {
 					api.createRolltableFromCompendium(li.data('pack'));
 				}
 			});
@@ -236,7 +236,7 @@ export class BetterTables {
 				options.push({
 					name: i18n('BRT.api.msg.rollCompendiumAsRolltable'),
 					icon: '<i class="fas fa-dice-d20"></i>',
-					callback: li => {
+					callback: (li) => {
 						api.rollCompendiumAsRolltable(li.data('pack'));
 					}
 				});
@@ -254,7 +254,7 @@ export class BetterTables {
 			options.unshift({
 				name: 'Roll table',
 				icon: '<i class="fas fa-dice-d20"></i>',
-				callback: li => {
+				callback: (li) => {
 					BetterTables.menuCallBackRollTable(li.data('documentId'));
 				}
 			});
@@ -369,9 +369,7 @@ export class BetterTables {
 					flags: cardContent.flags
 				});
 			});
-			$(html)
-				.find('.message-delete')
-				.before(rerollButton);
+			$(html).find('.message-delete').before(rerollButton);
 		}
 
 		if (
@@ -385,11 +383,9 @@ export class BetterTables {
 				`<a class="roll-table-share-currencies" title="${game.i18n.localize('BRT.Buttons.Currency.Share')}">`
 			).append("<i class='fas fa-coins'></i>");
 			currencyShareButton.click(async () => BetterTables._toggleCurrenciesShareSection(message, html));
-			$(html)
-				.find('.message-delete')
-				.before(currencyShareButton);
+			$(html).find('.message-delete').before(currencyShareButton);
 			const shareButton = html[0].querySelector('button.brt-share-currencies-button');
-			shareButton.addEventListener('click', async event => {
+			shareButton.addEventListener('click', async (event) => {
 				await BetterTables._shareCurrenciesToPlayers(message, html);
 			});
 		}
@@ -409,9 +405,7 @@ export class BetterTables {
 				if (id) openLink.data('id', id);
 				if (pack) openLink.data('pack', pack);
 				openLink.click(async () => document.sheet.render(true));
-				$(html)
-					.find('.message-delete')
-					.before(openLink);
+				$(html).find('.message-delete').before(openLink);
 			}
 		}
 	}
@@ -427,13 +421,13 @@ export class BetterTables {
 		await BetterTables._toggleCurrenciesShareSection(message, html);
 		const usersId = Array.from(
 			html[0].querySelector('section.brt-share-currencies')?.querySelectorAll('input:checked')
-		).map(x => x.dataset.userId);
+		).map((x) => x.dataset.userId);
 		if (!usersId) return undefined;
 
 		const currenciesToShare = message.flags.betterTables.loot.currency;
 		const usersCount = usersId.length;
 		const share = Object.keys(currenciesToShare)
-			.map(x => ({ [x]: Math.floor(currenciesToShare[x] / usersCount) }))
+			.map((x) => ({ [x]: Math.floor(currenciesToShare[x] / usersCount) }))
 			.reduce((a, b) => Object.assign(a, b), {});
 
 		for (const userId of usersId) {

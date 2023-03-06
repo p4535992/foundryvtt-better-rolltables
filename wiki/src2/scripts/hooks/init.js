@@ -58,7 +58,7 @@ class BetterRolltableHooks {
 
 		/** Register Handlebar helpers **/
 		/** checks if the first argument is equal to any of the subsequent arguments */
-		Handlebars.registerHelper('ifcontain', function() {
+		Handlebars.registerHelper('ifcontain', function () {
 			const options = arguments[arguments.length - 1];
 			for (let i = 1; i < arguments.length - 1; i++) {
 				if (arguments[0] === arguments[i]) {
@@ -69,24 +69,24 @@ class BetterRolltableHooks {
 		});
 
 		/** checks if the first argument is greater than the second argument */
-		Handlebars.registerHelper('ifgt', function(a, b, options) {
+		Handlebars.registerHelper('ifgt', function (a, b, options) {
 			return a > b ? options.fn(this) : options.inverse(this);
 		});
 
-		Handlebars.registerHelper('ifeq', function(a, b, options) {
+		Handlebars.registerHelper('ifeq', function (a, b, options) {
 			return a == b ? options.fn(this) : options.inverse(this);
 		});
 
-		Handlebars.registerHelper('uneq', function(a, b, options) {
+		Handlebars.registerHelper('uneq', function (a, b, options) {
 			return a != b ? options.fn(this) : options.inverse(this);
 		});
 
 		/** return fas icon based on document name */
-		Handlebars.registerHelper('entity-icon', function(documentName) {
+		Handlebars.registerHelper('entity-icon', function (documentName) {
 			return getIconByEntityType(documentName);
 		});
 
-		Handlebars.registerHelper('format-currencies', function(currenciesData) {
+		Handlebars.registerHelper('format-currencies', function (currenciesData) {
 			let currencyString = '';
 			for (const key in currenciesData) {
 				if (currencyString !== '') currencyString += ', ';
@@ -95,12 +95,12 @@ class BetterRolltableHooks {
 			return currencyString;
 		});
 
-		Handlebars.registerHelper('switch', function(value, options) {
+		Handlebars.registerHelper('switch', function (value, options) {
 			this.switch_value = value;
 			return options.fn(this);
 		});
 
-		Handlebars.registerHelper('isEmpty', function(value, options) {
+		Handlebars.registerHelper('isEmpty', function (value, options) {
 			return value === undefined ||
 				(value instanceof Object && Object.keys(value).length === 0) ||
 				(value instanceof Array && value.length === 0)
@@ -108,14 +108,14 @@ class BetterRolltableHooks {
 				: options.inverse(this);
 		});
 
-		Handlebars.registerHelper('unlessEmpty', function(value, options) {
+		Handlebars.registerHelper('unlessEmpty', function (value, options) {
 			return value !== undefined &&
 				((value instanceof Object && Object.keys(value).length > 0) || (value instanceof Array && value.length > 0))
 				? options.fn(this)
 				: options.inverse(this);
 		});
 
-		Handlebars.registerHelper('case', function(value, options) {
+		Handlebars.registerHelper('case', function (value, options) {
 			if (value == this.switch_value) {
 				return options.fn(this);
 			}

@@ -149,8 +149,8 @@ class API {
 
 		compendium
 			.getDocuments()
-			.then(compendiumItems => {
-				return compendiumItems.map(item => ({
+			.then((compendiumItems) => {
+				return compendiumItems.map((item) => ({
 					type: CONST.TABLE_RESULT_TYPES.COMPENDIUM,
 					collection: compendiumName,
 					text: item.name,
@@ -159,13 +159,13 @@ class API {
 					range: [1, 1]
 				}));
 			})
-			.then(results =>
+			.then((results) =>
 				RollTable.create({
 					name: tableName,
-					results: results.filter(x => x.weight !== 0) // remove empty results due to null weight
+					results: results.filter((x) => x.weight !== 0) // remove empty results due to null weight
 				})
 			)
-			.then(rolltable => {
+			.then((rolltable) => {
 				rolltable.normalize();
 				ui.notifications.info(api_msg + game.i18n.format('BRT.api.msg.rolltableGenerationFinished', msg));
 			});

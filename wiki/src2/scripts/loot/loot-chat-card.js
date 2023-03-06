@@ -61,7 +61,7 @@ export class LootChatCard {
 	}
 
 	addToItemData(itemEntity, data) {
-		const existingItem = this.itemsData.find(i => i.item.id === itemEntity.id);
+		const existingItem = this.itemsData.find((i) => i.item.id === itemEntity.id);
 		const quantity = getProperty(data, BRTCONFIG.QUANTITY_PROPERTY_PATH) || 1;
 
 		if (existingItem) {
@@ -120,8 +120,8 @@ export class LootChatCard {
 			compendium: table.pack,
 			id: table.id,
 			users: game.users
-				.filter(user => !user.isGM && user.character)
-				.map(user => ({
+				.filter((user) => !user.isGM && user.character)
+				.map((user) => ({
 					id: user.id,
 					name: user.character.name,
 					img: user.character.token?.img || user.avatar

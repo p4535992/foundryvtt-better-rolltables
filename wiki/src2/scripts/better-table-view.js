@@ -34,14 +34,14 @@ export class BetterRT {
 		headerElement.insertAdjacentHTML('beforeend', renderedExtraConfig);
 
 		let headerElements = app.querySelectorAll('form > .form-group');
-		Array.prototype.forEach.call(headerElements, function(node) {
+		Array.prototype.forEach.call(headerElements, function (node) {
 			headerElement.querySelector('main').appendChild(node);
 		});
 
 		tableViewClass.insertBefore(headerElement, tableViewClass.children[1]);
 
 		const selectTypeElement = headerElement.getElementsByTagName('select')[0];
-		selectTypeElement.onchange = async function() {
+		selectTypeElement.onchange = async function () {
 			await BetterRT.onOptionTypeChanged(selectTypeElement.value, tableEntity);
 		};
 
@@ -64,7 +64,7 @@ export class BetterRT {
 		/** change footer with new click event on rolls */
 		if (selectedTableType === BRTCONFIG.TABLE_TYPE_LOOT) {
 			newRollButton.getElementsByTagName('i')[0].className = 'fas fa-gem';
-			newRollButton.onclick = async function() {
+			newRollButton.onclick = async function () {
 				await game.betterTables.generateChatLoot(tableEntity);
 			};
 
@@ -77,23 +77,23 @@ export class BetterRT {
 			displayRollElement.remove();
 		} else if (selectedTableType === BRTCONFIG.TABLE_TYPE_STORY) {
 			newRollButton.getElementsByTagName('i')[0].className = 'fas fa-book';
-			newRollButton.onclick = async function() {
+			newRollButton.onclick = async function () {
 				await game.betterTables.generateChatStory(tableEntity);
 			};
 		} else if (selectedTableType === BRTCONFIG.TABLE_TYPE_BETTER) {
 			// newRollButton.getElementsByTagName("i")[0].className = "fas fa-dice";
 			newRollButton.innerHTML = '<i class ="fas fa-dice-d20"></i> Roll+';
-			newRollButton.onclick = async function() {
+			newRollButton.onclick = async function () {
 				await game.betterTables.betterTableRoll(tableEntity);
 			};
 		}
 
 		function _enableTogglers() {
-			headerElement.querySelectorAll('.toggler').forEach(async e => {
-				e.addEventListener('click', async e => {
+			headerElement.querySelectorAll('.toggler').forEach(async (e) => {
+				e.addEventListener('click', async (e) => {
 					const toggleIconElement = e.currentTarget.querySelector('.toggleicon');
 					e.currentTarget.nextElementSibling.classList.toggle('brt-hidden');
-					['fa-expand-alt', 'fa-compress-alt'].map(c => toggleIconElement.classList.toggle(c));
+					['fa-expand-alt', 'fa-compress-alt'].map((c) => toggleIconElement.classList.toggle(c));
 				});
 			});
 		}
@@ -147,7 +147,7 @@ export class BetterRT {
 			DOMList,
 			DOMInput,
 			DOMHiddenInput = document.querySelector(dataCarrier),
-			arrayOfList = listOfTags || DOMHiddenInput.value.split(',').filter(tag => tag !== '');
+			arrayOfList = listOfTags || DOMHiddenInput.value.split(',').filter((tag) => tag !== '');
 
 		function DOMCreate() {
 			const ul = document.createElement('ul'),
@@ -164,11 +164,11 @@ export class BetterRT {
 			DOMList.innerHTML = '';
 
 			// render each <li> to <ul>
-			arrayOfList.forEach(function(currentValue, index) {
+			arrayOfList.forEach(function (currentValue, index) {
 				var li = document.createElement('li');
 				li.innerHTML = ''.concat(currentValue, ' <a>&times;</a>');
 				li.dataset.value = currentValue;
-				li.querySelector('a').addEventListener('click', async e => {
+				li.querySelector('a').addEventListener('click', async (e) => {
 					let regStr = '(' + e.currentTarget.parentNode.dataset.value + '\\,*)';
 					let replace = new RegExp(regStr, 'gm');
 					DOMHiddenInput.value = DOMHiddenInput.value.replace(replace, '').trim(',');
@@ -179,7 +179,7 @@ export class BetterRT {
 		}
 
 		function onKeyUp() {
-			DOMInput.addEventListener('keyup', function(event) {
+			DOMInput.addEventListener('keyup', function (event) {
 				event.preventDefault();
 				const text = this.value.trim(),
 					sepperator = ',',
@@ -203,7 +203,7 @@ export class BetterRT {
 		}
 
 		function onDelete(id) {
-			arrayOfList = arrayOfList.filter(function(currentValue, index) {
+			arrayOfList = arrayOfList.filter(function (currentValue, index) {
 				if (index == id) {
 					return false;
 				}

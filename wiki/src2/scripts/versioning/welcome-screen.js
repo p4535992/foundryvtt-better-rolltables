@@ -27,7 +27,7 @@ class WelcomeScreen extends Application {
 	activateListeners(html) {
 		super.activateListeners(html);
 
-		html.find('.show-again').on('change', event => {
+		html.find('.show-again').on('change', (event) => {
 			let version = '0.0.0';
 			if (event.currentTarget.checked) {
 				version = VersionCheck.get(MODULE.ns);
