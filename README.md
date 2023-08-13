@@ -77,12 +77,9 @@ With FoundryVTT version 11 there are many UX/UI changes for rollable tables comi
  | [LootSheet NPC module](https://github.com/jopeek/fvtt-loot-sheet-npc-5e) | Suggest to use. If installed, _BetterRolltables_ will automatically use it. |
  | [Autocomplete inline properties](https://github.com/ghost-fvtt/FVTT-Autocomplete-Inline-Properties) | If installed offers autocompletion on tags. |
 
-
-## Issues
-
-Any issues, bugs, or feature requests are always welcome to be reported directly to the [Issue Tracker](https://github.com/p4535992/foundryvtt-better-rolltables/issues ), or using the [Bug Reporter Module](https://foundryvtt.com/packages/bug-reporter/).
-
 ## Api
+
+TODO...
 
 # Build
 
@@ -91,56 +88,31 @@ Any issues, bugs, or feature requests are always welcome to be reported directly
 ```bash
 npm install
 ```
+
+### dev
+
+`dev` will let you develop you own code with hot reloading on the browser
+
+```bash
+npm run dev
+```
+
 ## npm build scripts
 
 ### build
 
-will build the code and copy all necessary assets into the dist folder and make a symlink to install the result into your foundry data; create a
-`foundryconfig.json` file with your Foundry Data path.
-
-```json
-{
-  "dataPath": "~/.local/share/FoundryVTT/"
-}
-```
-
 `build` will build and set up a symlink between `dist` and your `dataPath`.
 
 ```bash
-npm run-script build
+npm run build
 ```
 
-### NOTE:
+### build-watch
 
-You don't need to build the `foundryconfig.json` file you can just copy the content of the `dist` folder on the module folder under `modules` of Foundry
-
-### build:watch
-
-`build:watch` will build and watch for changes, rebuilding automatically.
+`build-watch` will build and watch for changes, rebuilding automatically.
 
 ```bash
-npm run-script build:watch
-```
-
-### clean
-
-`clean` will remove all contents in the dist folder (but keeps the link from build:install).
-
-```bash
-npm run-script clean
-```
-### lint and lintfix
-
-`lint` launch the eslint process based on the configuration [here](./.eslintrc)
-
-```bash
-npm run-script lint
-```
-
-`lintfix` launch the eslint process with the fix argument
-
-```bash
-npm run-script lintfix
+npm run build-watch
 ```
 
 ### prettier-format
@@ -149,14 +121,6 @@ npm run-script lintfix
 
 ```bash
 npm run-script prettier-format
-```
-
-### package
-
-`package` generates a zip file containing the contents of the dist folder generated previously with the `build` command. Useful for those who want to manually load the module or want to create their own release
-
-```bash
-npm run-script package
 ```
 
 ## [Changelog](./CHANGELOG.md)
