@@ -1,131 +1,131 @@
 {
-	"id": "better-rolltables",
-	"title": "Better Roll Tables",
-	"description": "Adding functionality to roll tables, especially to roll treasure and magic items",
-	"version": "1.9.2",
-	"authors": [
-		{
-			"name": "Ultrakorne",
-			"url": "https://github.com/ultrakorne/",
-			"discord": "Ultrakorne#6240",
-			"flags": {}
-		},
-		{
-			"name": "Daniel Böttner",
-			"url": "https://github.com/DanielBoettner/",
-			"discord": "JackPrince#0494",
-			"flags": {}
-		},
-		{
-			"name": "Daimakaicho",
-			"url": "https://github.com/Daimakaicho",
-			"flags": {}
-		},
-		{
-			"name": "elizeuangelo",
-			"url": "https://github.com/elizeuangelo",
-			"flags": {}
-		},
-		{
-			"name": "sasquach45932",
-			"url": "https://github.com/sasquach45932",
-			"flags": {}
-		},
-		{
-			"name": "p4535992",
-			"url": "https://github.com/p4535992",
-			"discord": "",
-			"twitter": "",
-			"patreon": "",
-			"github": "p4535992",
-			"ko-fi": "",
-			"reddit": "",
-			"email": ""
-		}
-	],
-	"esmodules": ["scripts/brt-main.js"],
-	"styles": ["styles/brt.css"],
-	"packs": [
-		{
-			"name": "brt-loot",
-			"label": "BRT: Loot Tables",
-			"system": "dnd5e",
-			"path": "packs/loot-tables.db",
-			"type": "RollTable",
-			"private": false,
-			"flags": {}
-		},
-		{
-			"name": "brt-story",
-			"label": "BRT: Story Tables",
-			"path": "packs/story-tables.db",
-			"type": "RollTable",
-			"private": false,
-			"flags": {}
-		},
-		{
-			"name": "brt-gen",
-			"label": "BRT: Story Generators",
-			"path": "packs/story-generators.db",
-			"type": "JournalEntry",
-			"private": false,
-			"flags": {}
-		}
-	],
-	"languages": [
-		{
-			"lang": "de",
-			"name": "Deutsch (German)",
-			"path": "languages/de.json",
-			"flags": {}
-		},
-		{
-			"lang": "en",
-			"name": "English",
-			"path": "languages/en.json",
-			"flags": {}
-		},
-		{
-			"lang": "ko",
-			"name": "Korean",
-			"path": "languages/ko.json",
-			"flags": {}
-		},
-		{
-			"lang": "pt-BR",
-			"name": "Português (Brasil)",
-			"path": "languages/pt-BR.json",
-			"flags": {}
-		},
-		{
-			"lang": "es-ES",
-			"name": "Castellano",
-			"path": "languages/es-ES.json",
-			"flags": {}
-		},
-		{
-			"lang": "fr",
-			"name": "Français",
-			"path": "languages/fr.json",
-			"flags": {}
-		}
-	],
-	"compatibility": {
-		"minimum": 10,
-		"verified": 10.291,
-		"maximum": 10
-	},
-	"url": "https://github.com/p4535992/foundryvtt-better-rolltables",
-	"manifest": "https://github.com/p4535992/foundryvtt-better-rolltables/releases/latest/download/module.json",
-	"download": "https://github.com/p4535992/foundryvtt-better-rolltables/releases/latest/download/module.zip",
-	"readme": "https://github.com/p4535992/foundryvtt-better-rolltables/blob/v1.9.2/README.md",
-	"changelog": "https://github.com/p4535992/foundryvtt-better-rolltables/blob/v1.9.2/CHANGELOG.md",
-	"bugs": "https://github.com/p4535992/foundryvtt-better-rolltables/issues",
-	"allowBugReporter": true,
-	"manifestPlusVersion": "1.2.0",
-	"relationships": {
-		"systems": [],
-		"requires": [],
-		"conflicts": []
-	}
+  "id": "better-rolltables",
+  "title": "Better Roll Tables",
+  "description": "Adding functionality to roll tables, especially to roll treasure and magic items",
+  "version": "1.9.3",
+  "authors": [
+    {
+      "name": "Ultrakorne",
+      "url": "https://github.com/ultrakorne/",
+      "discord": "Ultrakorne#6240",
+      "flags": {}
+    },
+    {
+      "name": "Daniel Böttner",
+      "url": "https://github.com/DanielBoettner/",
+      "discord": "JackPrince#0494",
+      "flags": {}
+    },
+    {
+      "name": "Daimakaicho",
+      "url": "https://github.com/Daimakaicho",
+      "flags": {}
+    },
+    {
+      "name": "elizeuangelo",
+      "url": "https://github.com/elizeuangelo",
+      "flags": {}
+    },
+    {
+      "name": "sasquach45932",
+      "url": "https://github.com/sasquach45932",
+      "flags": {}
+    },
+    {
+      "name": "p4535992",
+      "url": "https://github.com/p4535992",
+      "discord": "",
+      "twitter": "",
+      "patreon": "",
+      "github": "p4535992",
+      "ko-fi": "",
+      "reddit": "",
+      "email": ""
+    }
+  ],
+  "esmodules": ["module.js"],
+  "styles": ["styles/brt.css"],
+  "packs": [
+    {
+      "name": "brt-loot",
+      "label": "BRT: Loot Tables",
+      "system": "dnd5e",
+      "path": "packs/loot-tables.db",
+      "type": "RollTable",
+      "private": false,
+      "flags": {}
+    },
+    {
+      "name": "brt-story",
+      "label": "BRT: Story Tables",
+      "path": "packs/story-tables.db",
+      "type": "RollTable",
+      "private": false,
+      "flags": {}
+    },
+    {
+      "name": "brt-gen",
+      "label": "BRT: Story Generators",
+      "path": "packs/story-generators.db",
+      "type": "JournalEntry",
+      "private": false,
+      "flags": {}
+    }
+  ],
+  "languages": [
+    {
+      "lang": "de",
+      "name": "Deutsch (German)",
+      "path": "languages/de.json",
+      "flags": {}
+    },
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "languages/en.json",
+      "flags": {}
+    },
+    {
+      "lang": "ko",
+      "name": "Korean",
+      "path": "languages/ko.json",
+      "flags": {}
+    },
+    {
+      "lang": "pt-BR",
+      "name": "Português (Brasil)",
+      "path": "languages/pt-BR.json",
+      "flags": {}
+    },
+    {
+      "lang": "es-ES",
+      "name": "Castellano",
+      "path": "languages/es-ES.json",
+      "flags": {}
+    },
+    {
+      "lang": "fr",
+      "name": "Français",
+      "path": "languages/fr.json",
+      "flags": {}
+    }
+  ],
+  "compatibility": {
+    "minimum": 11,
+    "verified": 11,
+    "maximum": 11
+  },
+  "url": "https://github.com/p4535992/foundryvtt-better-rolltables",
+  "manifest": "https://github.com/p4535992/foundryvtt-better-rolltables/releases/download/v1.9.3/module.json",
+  "download": "https://github.com/p4535992/foundryvtt-better-rolltables/releases/download/v1.9.3/module.zip",
+  "readme": "https://github.com/p4535992/foundryvtt-better-rolltables/blob/v1.9.3/README.md",
+  "changelog": "https://github.com/p4535992/foundryvtt-better-rolltables/blob/v1.9.3/CHANGELOG.md",
+  "bugs": "https://github.com/p4535992/foundryvtt-better-rolltables/issues",
+  "allowBugReporter": true,
+  "manifestPlusVersion": "1.2.0",
+  "relationships": {
+    "systems": [],
+    "requires": [],
+    "conflicts": []
+  }
 }

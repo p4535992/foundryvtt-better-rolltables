@@ -1,3 +1,7 @@
+### 1.9.3 
+
+- upgrade for fvtt11 
+
 ### 1.9.2 
 
 - Fixed a retrocomaptibility error on flags for formula text

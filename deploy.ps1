@@ -1,1 +1,0 @@
-Copy-Item .\ C:\Users\ultra\AppData\Local\FoundryVTT\Data\modules\ -Recurse -Force
