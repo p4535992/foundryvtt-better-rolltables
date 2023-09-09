@@ -1,7 +1,7 @@
-export const MODULE = {
-  ns: "better-rolltables",
-  path: "modules/better-rolltables",
-  types: ["none", "better", "loot", "story"],
+export const CONSTANTS = {
+  MODULE_ID: "better-rolltables",
+  PATH: "modules/better-rolltables",
+  TYPES: ["none", "better", "loot", "story"],
 };
 
 export const BRTCONFIG = {
@@ -15,6 +15,7 @@ export const BRTCONFIG = {
   // RESULTS_FORMULA_KEY: 'better-rolltables-result-formula',
   // RESULTS_FORMULA_KEY_OLD: 'brt-result-formula',
   RESULTS_FORMULA_KEY: "brt-result-formula",
+  HIDDEN_TABLE: "brt-hidden-table",
 
   // different type of table type the mod will support. none will basically keep the basic rolltable functionality
   TABLE_TYPE_NONE: "none",

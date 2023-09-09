@@ -1,6 +1,6 @@
 import { BRTBuilder } from "./core/brt-builder.js";
 import { BetterResults } from "./core/brt-table-results.js";
-import { MODULE, BRTCONFIG } from "./core/config.js";
+import { CONSTANTS, BRTCONFIG } from "./core/config.js";
 import { LootChatCard } from "./loot/loot-chat-card.js";
 import { LootCreator } from "./loot/loot-creator.js";
 import { getRandomItemFromCompendium } from "./core/utils.js";
@@ -14,7 +14,7 @@ class API {
    *
    */
   static getTags() {
-    return game.settings.get(MODULE.ns, BRTCONFIG.TAGS.USE);
+    return game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.TAGS.USE);
   }
 
   /**
@@ -38,7 +38,7 @@ class API {
       tokenstack = token ? (token.length >= 0 ? token : [token]) : canvas.tokens.controlled;
     }
 
-    ui.notifications.info(MODULE.ns + " | API | Loot generation started.");
+    ui.notifications.info(CONSTANTS.MODULE_ID + " | API | Loot generation started.");
 
     const brtBuilder = new BRTBuilder(tableEntity);
 
@@ -53,7 +53,7 @@ class API {
       await lootCreator.addItemsToToken(token, stackSame, isTokenActor, itemLimit);
     }
 
-    return ui.notifications.info(MODULE.ns + " | API | Loot generation complete.");
+    return ui.notifications.info(CONSTANTS.MODULE_ID + " | API | Loot generation complete.");
   }
 
   /**
@@ -72,7 +72,7 @@ class API {
     await lootCreator.addCurrenciesToActor();
     await lootCreator.addItemsToActor();
 
-    if (game.settings.get(MODULE.ns, BRTCONFIG.ALWAYS_SHOW_GENERATED_LOOT_AS_MESSAGE)) {
+    if (game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.ALWAYS_SHOW_GENERATED_LOOT_AS_MESSAGE)) {
       const rollMode = options && "rollMode" in options ? options.rollMode : null;
       const lootChatCard = new LootChatCard(betterResults, currencyData, rollMode);
       await lootChatCard.createChatCard(tableEntity);
@@ -129,11 +129,11 @@ class API {
   ) {
     const compendium = game.packs.get(compendiumName);
     let msg = { name: compendiumName, tableName: tableName },
-      api_msg = MODULE.ns + ".api | ";
+      api_msg = CONSTANTS.MODULE_ID + ".api | ";
 
     if (compendium === undefined) {
       api.msg += game.i18n.format(`${BRTCONFIG.NAMESPACE}.api.msg.compendiumNotFound`, msg);
-      ui.notifications.warn(MODULE.ns + " | " + api_msg);
+      ui.notifications.warn(CONSTANTS.MODULE_ID + " | " + api_msg);
       return;
     }
 

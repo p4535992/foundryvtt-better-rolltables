@@ -1,5 +1,5 @@
 import { getItemFromCompendium } from "../core/utils.js";
-import { MODULE, BRTCONFIG } from "../core/config.js";
+import { CONSTANTS, BRTCONFIG } from "../core/config.js";
 import { LootManipulator } from "./loot-manipulation.js";
 
 export class LootCreator {
@@ -15,7 +15,7 @@ export class LootCreator {
   }
 
   async createActor(table, overrideName = undefined) {
-    const actorName = overrideName || table.getFlag(MODULE.ns, BRTCONFIG.ACTOR_NAME_KEY);
+    const actorName = overrideName || table.getFlag(CONSTANTS.MODULE_ID, BRTCONFIG.ACTOR_NAME_KEY);
     this.actor = game.actors.getName(actorName);
     if (!this.actor) {
       this.actor = await Actor.create({
@@ -27,7 +27,7 @@ export class LootCreator {
       });
     }
 
-    const lootSheet = game.settings.get(MODULE.ns, BRTCONFIG.LOOT_SHEET_TO_USE_KEY);
+    const lootSheet = game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.LOOT_SHEET_TO_USE_KEY);
     if (lootSheet in CONFIG.Actor.sheetClasses.npc) {
       await this.actor.setFlag("core", "sheetClass", lootSheet);
     }

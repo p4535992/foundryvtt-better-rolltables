@@ -1,4 +1,4 @@
-import { MODULE, BRTCONFIG } from "./config.js";
+import { CONSTANTS, BRTCONFIG } from "./config.js";
 import { i18n } from "./utils.js";
 
 const WORLD = "world",
@@ -16,7 +16,7 @@ export class Settings {
    * Register the game settings during InitHook required by contextmenues
    */
   registerSettingsDuringInit() {
-    game.settings.register(MODULE.ns, BRTCONFIG.ADD_ROLL_IN_COMPENDIUM_CONTEXTMENU, {
+    game.settings.register(CONSTANTS.MODULE_ID, BRTCONFIG.ADD_ROLL_IN_COMPENDIUM_CONTEXTMENU, {
       name: i18n(`${BRTCONFIG.NAMESPACE}.Settings.AddRollInCompediumContextMenu.Title`),
       hint: i18n(`${BRTCONFIG.NAMESPACE}.Settings.AddRollInCompediumContextMenu.Description`),
       scope: WORLD,
@@ -25,7 +25,7 @@ export class Settings {
       default: false,
       type: Boolean,
     });
-    game.settings.register(MODULE.ns, BRTCONFIG.ADD_ROLL_IN_ROLLTABLE_CONTEXTMENU, {
+    game.settings.register(CONSTANTS.MODULE_ID, BRTCONFIG.ADD_ROLL_IN_ROLLTABLE_CONTEXTMENU, {
       name: i18n(`${BRTCONFIG.NAMESPACE}.Settings.AddRollInRolltableContextMenu.Title`),
       hint: i18n(`${BRTCONFIG.NAMESPACE}.Settings.AddRollInRolltableContextMenu.Description`),
       scope: WORLD,
@@ -70,7 +70,7 @@ export class Settings {
       BRTCONFIG.SCROLL_REGEX = /\s*Scroll\s*of\s*(\d+)/gi;
     }
 
-    game.settings.registerMenu(MODULE.ns, "helpersOptions", {
+    game.settings.registerMenu(CONSTANTS.MODULE_ID, "helpersOptions", {
       name: i18n("User Interface Integration"),
       label: i18n(`${BRTCONFIG.NAMESPACE}.Settings.Module.AdvancedSettings.Title`),
       icon: "fas fa-user-cog",
@@ -81,7 +81,7 @@ export class Settings {
     /**
      * Base Settings Sheet
      */
-    game.settings.register(MODULE.ns, BRTCONFIG.LOOT_SHEET_TO_USE_KEY, {
+    game.settings.register(CONSTANTS.MODULE_ID, BRTCONFIG.LOOT_SHEET_TO_USE_KEY, {
       name: i18n(`${BRTCONFIG.NAMESPACE}.Settings.LootSheet.Title`),
       hint: i18n(`${BRTCONFIG.NAMESPACE}.Settings.LootSheet.Description`),
       scope: WORLD,
@@ -92,7 +92,7 @@ export class Settings {
       choices: systemSheets,
     });
 
-    game.settings.register(MODULE.ns, BRTCONFIG.SPELL_COMPENDIUM_KEY, {
+    game.settings.register(CONSTANTS.MODULE_ID, BRTCONFIG.SPELL_COMPENDIUM_KEY, {
       name: i18n(`${BRTCONFIG.NAMESPACE}.Settings.SpellCompendium.Title`),
       hint: i18n(`${BRTCONFIG.NAMESPACE}.Settings.SpellCompendium.Description`),
       scope: WORLD,
@@ -106,7 +106,7 @@ export class Settings {
      * User Interface Integration
      */
 
-    game.settings.register(MODULE.ns, BRTCONFIG.USE_CONDENSED_BETTERROLL, {
+    game.settings.register(CONSTANTS.MODULE_ID, BRTCONFIG.USE_CONDENSED_BETTERROLL, {
       name: i18n(`${BRTCONFIG.NAMESPACE}.Settings.UseCondensedBetterRoll.Title`),
       hint: i18n(`${BRTCONFIG.NAMESPACE}.Settings.UseCondensedBetterRoll.Description`),
       scope: WORLD,
@@ -116,7 +116,7 @@ export class Settings {
       type: Boolean,
     });
 
-    game.settings.register(MODULE.ns, BRTCONFIG.SHOW_REROLL_BUTTONS, {
+    game.settings.register(CONSTANTS.MODULE_ID, BRTCONFIG.SHOW_REROLL_BUTTONS, {
       name: i18n(`${BRTCONFIG.NAMESPACE}.Buttons.Reroll.Title`),
       hint: i18n(`${BRTCONFIG.NAMESPACE}.Buttons.Reroll.Description`),
       scope: WORLD,
@@ -126,7 +126,7 @@ export class Settings {
       type: Boolean,
     });
 
-    game.settings.register(MODULE.ns, BRTCONFIG.SHOW_WARNING_BEFORE_REROLL, {
+    game.settings.register(CONSTANTS.MODULE_ID, BRTCONFIG.SHOW_WARNING_BEFORE_REROLL, {
       name: i18n(`${BRTCONFIG.NAMESPACE}.Settings.ShowWarningBeforeReroll.Title`),
       hint: i18n(`${BRTCONFIG.NAMESPACE}.Settings.ShowWarningBeforeReroll.Description`),
       scope: WORLD,
@@ -136,7 +136,7 @@ export class Settings {
       type: Boolean,
     });
 
-    game.settings.register(MODULE.ns, BRTCONFIG.SHOW_OPEN_BUTTONS, {
+    game.settings.register(CONSTANTS.MODULE_ID, BRTCONFIG.SHOW_OPEN_BUTTONS, {
       name: i18n(`${BRTCONFIG.NAMESPACE}.Buttons.Open.Title`),
       hint: i18n(`${BRTCONFIG.NAMESPACE}.Buttons.Open.Description`),
       scope: WORLD,
@@ -146,7 +146,7 @@ export class Settings {
       type: Boolean,
     });
 
-    game.settings.register(MODULE.ns, BRTCONFIG.ROLL_TABLE_FROM_JOURNAL, {
+    game.settings.register(CONSTANTS.MODULE_ID, BRTCONFIG.ROLL_TABLE_FROM_JOURNAL, {
       name: i18n(`${BRTCONFIG.NAMESPACE}.Settings.RollTableFromJournal.Title`),
       hint: i18n(`${BRTCONFIG.NAMESPACE}.Settings.RollTableFromJournal.Description`),
       scope: WORLD,
@@ -161,7 +161,7 @@ export class Settings {
     /**
      * Loot / Merchant specific
      */
-    game.settings.register(MODULE.ns, BRTCONFIG.SHOW_CURRENCY_SHARE_BUTTON, {
+    game.settings.register(CONSTANTS.MODULE_ID, BRTCONFIG.SHOW_CURRENCY_SHARE_BUTTON, {
       name: i18n(`${BRTCONFIG.NAMESPACE}.Settings.ShareCurrencyButton.Title`),
       hint: i18n(`${BRTCONFIG.NAMESPACE}.Settings.ShareCurrencyButton.Description`),
       scope: WORLD,
@@ -171,7 +171,7 @@ export class Settings {
       type: Boolean,
     });
 
-    game.settings.register(MODULE.ns, BRTCONFIG.ALWAYS_SHOW_GENERATED_LOOT_AS_MESSAGE, {
+    game.settings.register(CONSTANTS.MODULE_ID, BRTCONFIG.ALWAYS_SHOW_GENERATED_LOOT_AS_MESSAGE, {
       name: i18n(`${BRTCONFIG.NAMESPACE}.Settings.AlwaysShowGeneratedLootAsMessage.Title`),
       hint: i18n(`${BRTCONFIG.NAMESPACE}.Settings.AlwaysShowGeneratedLootAsMessage.Description`),
       scope: WORLD,
@@ -186,7 +186,7 @@ export class Settings {
    *
    */
   static _registerTagsSettings() {
-    game.settings.register(MODULE.ns, BRTCONFIG.TAGS.USE, {
+    game.settings.register(CONSTANTS.MODULE_ID, BRTCONFIG.TAGS.USE, {
       name: i18n(`${BRTCONFIG.NAMESPACE}.Settings.Tags.Use.Title`),
       hint: i18n(`${BRTCONFIG.NAMESPACE}.Settings.Tags.Use.Description`),
       scope: WORLD,
@@ -196,7 +196,7 @@ export class Settings {
       type: Boolean,
     });
 
-    game.settings.register(MODULE.ns, BRTCONFIG.TAGS.DEFAULTS, {
+    game.settings.register(CONSTANTS.MODULE_ID, BRTCONFIG.TAGS.DEFAULTS, {
       name: i18n(`${BRTCONFIG.NAMESPACE}.Settings.Tags.Defaults.Title`),
       hint: i18n(`${BRTCONFIG.NAMESPACE}.Settings.Tags.Defaults.Description`),
       scope: WORLD,
@@ -220,13 +220,13 @@ class BetterRolltableSettingsConfig extends FormApplication {
     this.app = null;
 
     loadTemplates([
-      `${MODULE.path}/templates/config/settings.hbs`,
-      `${MODULE.path}/templates/config/new_rule_form.hbs`,
-      `${MODULE.path}/templates/partials/actions.hbs`,
-      `${MODULE.path}/templates/partials/dropdown_options.hbs`,
-      `${MODULE.path}/templates/partials/filters.hbs`,
-      `${MODULE.path}/templates/partials/settings.hbs`,
-      `${MODULE.path}/templates/partials/menu.hbs`,
+      `${CONSTANTS.PATH}/templates/config/settings.hbs`,
+      `${CONSTANTS.PATH}/templates/config/new_rule_form.hbs`,
+      `${CONSTANTS.PATH}/templates/partials/actions.hbs`,
+      `${CONSTANTS.PATH}/templates/partials/dropdown_options.hbs`,
+      `${CONSTANTS.PATH}/templates/partials/filters.hbs`,
+      `${CONSTANTS.PATH}/templates/partials/settings.hbs`,
+      `${CONSTANTS.PATH}/templates/partials/menu.hbs`,
     ]);
 
     return this;
@@ -237,7 +237,7 @@ class BetterRolltableSettingsConfig extends FormApplication {
     return mergeObject(super.defaultOptions, {
       title: i18n(`${BRTCONFIG.NAMESPACE}.Settings.Module.AdvancedSettings.Title`),
       id: "betterrolltables-settings",
-      template: `${MODULE.path}/templates/config/settings.hbs`,
+      template: `${CONSTANTS.PATH}/templates/config/settings.hbs`,
       width: 650,
       height: "auto",
       tabs: [
@@ -260,7 +260,7 @@ class BetterRolltableSettingsConfig extends FormApplication {
     // Classify all settings
     for (let setting of game.settings.settings.values()) {
       // Only concerned about loot populator settings
-      if (setting.namespace !== MODULE.ns) continue;
+      if (setting.namespace !== CONSTANTS.MODULE_ID) continue;
 
       // Exclude settings the user cannot change
       if (!game.user.isGM) continue;
@@ -277,7 +277,7 @@ class BetterRolltableSettingsConfig extends FormApplication {
 
       // Classify setting
       const name = s.namespace;
-      if (name === MODULE.ns) {
+      if (name === CONSTANTS.MODULE_ID) {
         const group = s.group;
         let groupTab = data.tabs.find((tab) => tab.name === group) ?? false;
         if (groupTab) {
@@ -298,7 +298,7 @@ class BetterRolltableSettingsConfig extends FormApplication {
     event.preventDefault();
     // formData = expandObject(formData)[MODULE.ns];
     for (let [k, v] of Object.entries(formData)) {
-      await game.settings.set(MODULE.ns, k.substring(k.indexOf(".") + 1), v);
+      await game.settings.set(CONSTANTS.MODULE_ID, k.substring(k.indexOf(".") + 1), v);
     }
   }
 
@@ -385,4 +385,4 @@ class BetterRolltableSettingsConfig extends FormApplication {
   }
 }
 
-export const PATH = `modules/${MODULE.ns}`;
+export const PATH = `modules/${CONSTANTS.MODULE_ID}`;

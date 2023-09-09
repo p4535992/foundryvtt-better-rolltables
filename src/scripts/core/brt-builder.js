@@ -1,6 +1,6 @@
 import * as BRTHelper from "./brt-helper.js";
 import * as Utils from "../core/utils.js";
-import { MODULE, BRTCONFIG } from "./config.js";
+import { CONSTANTS, BRTCONFIG } from "./config.js";
 import { addRollModeToChatData } from "../core/utils.js";
 
 export class BRTBuilder {
@@ -47,7 +47,7 @@ export class BRTBuilder {
         maxRecursions: maxRecursions,
         tableId: table.id,
       });
-      throw new Error(MODULE.ns + " | " + msg);
+      throw new Error(CONSTANTS.MODULE_ID + " | " + msg);
     }
 
     let drawnResults = [];
@@ -72,7 +72,7 @@ export class BRTBuilder {
         let msg = game.i18n.format(`${BRTCONFIG.NAMESPACE}.RollTable.NoFormula`, {
           name: table.name,
         });
-        ui.notifications.error(MODULE.ns + " | " + msg);
+        ui.notifications.error(CONSTANTS.MODULE_ID + " | " + msg);
         return;
       }
 

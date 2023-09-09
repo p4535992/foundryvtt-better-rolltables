@@ -1,5 +1,5 @@
 import { API } from "../API.js";
-import { MODULE } from "../core/config.js";
+import { CONSTANTS } from "../core/config.js";
 import { BetterRT } from "../better-table-view.js";
 import { Settings } from "../core/settingsConfig.js";
 import { BetterTables } from "../better-tables.js";
@@ -27,7 +27,7 @@ class BetterRolltableHooks {
   }
 
   static foundrySetup() {
-    const moduleData = game.modules.get(MODULE.ns);
+    const moduleData = game.modules.get(CONSTANTS.MODULE_ID);
 
     /**
      * @type {API}
@@ -131,6 +131,9 @@ class BetterRolltableHooks {
 
     Hooks.on("getCompendiumDirectoryEntryContext", BetterTables.enhanceCompendiumContextMenu);
     Hooks.on("getRollTableDirectoryEntryContext", BetterTables.enhanceRolltableContextMenu);
+
+    // WE DON'T NEED THIS WITH BRT WE ALREADY OVERRRIDE THE ROLL MODE
+    // libWrapper.register(CONSTANTS.MODULE_ID, "RollTable.prototype.draw", BetterTables.hiddenTable, "WRAPPER");
   }
 
   /**
@@ -145,7 +148,7 @@ class BetterRolltableHooks {
     // AIP
     // Define the config for our package
     const config = {
-      packageName: MODULE.ns,
+      packageName: CONSTANTS.MODULE_ID,
       sheetClasses: [
         {
           name: "RolltableConfig", // this _must_ be the class name of the `Application` you want it to apply to
@@ -166,7 +169,7 @@ class BetterRolltableHooks {
   }
 
   static onDevModeReady({ registerPackageDebugFlag }) {
-    registerPackageDebugFlag(MODULE.ns);
+    registerPackageDebugFlag(CONSTANTS.MODULE_ID);
   }
 }
 

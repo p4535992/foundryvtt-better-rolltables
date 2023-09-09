@@ -1,5 +1,5 @@
 import { findInCompendiumById } from "../core/utils.js";
-import { MODULE, BRTCONFIG } from "../core/config.js";
+import { CONSTANTS, BRTCONFIG } from "../core/config.js";
 
 export class LootManipulator {
   /**
@@ -36,7 +36,9 @@ export class LootManipulator {
     const itemEntity = await this._getRandomSpell(level);
 
     if (!itemEntity) {
-      ui.notifications.warn(MODULE.ns + ` | No spell of level ${level} found in compendium  ${itemEntity.collection} `);
+      ui.notifications.warn(
+        CONSTANTS.MODULE_ID + ` | No spell of level ${level} found in compendium  ${itemEntity.collection} `
+      );
       return itemData;
     }
 

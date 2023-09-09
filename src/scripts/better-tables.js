@@ -5,7 +5,7 @@ import { StoryChatCard } from "./story/story-chat-card.js";
 import { BRTBuilder } from "./core/brt-builder.js";
 import { BetterResults } from "./core/brt-table-results.js";
 import { getIconByEntityType, i18n } from "./core/utils.js";
-import { BRTCONFIG, MODULE } from "./core/config.js";
+import { BRTCONFIG, CONSTANTS } from "./core/config.js";
 
 export class BetterTables {
   constructor() {
@@ -36,7 +36,7 @@ export class BetterTables {
     await lootCreator.addCurrenciesToActor();
     await lootCreator.addItemsToActor();
 
-    if (game.settings.get(MODULE.ns, BRTCONFIG.ALWAYS_SHOW_GENERATED_LOOT_AS_MESSAGE)) {
+    if (game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.ALWAYS_SHOW_GENERATED_LOOT_AS_MESSAGE)) {
       const rollMode = options && "rollMode" in options ? options.rollMode : null;
       const lootChatCard = new LootChatCard(betterResults, currencyData, rollMode);
       await lootChatCard.createChatCard(tableEntity);
@@ -123,7 +123,7 @@ export class BetterTables {
     const brtBuilder = new BRTBuilder(tableEntity);
     const results = await brtBuilder.betterRoll();
 
-    if (game.settings.get(MODULE.ns, BRTCONFIG.USE_CONDENSED_BETTERROLL)) {
+    if (game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.USE_CONDENSED_BETTERROLL)) {
       const br = new BetterResults(results);
       const betterResults = await br.buildResults(tableEntity);
       const currencyData = br.getCurrencyData();
@@ -160,12 +160,14 @@ export class BetterTables {
 
     const compendiumSize = (await compendium.getIndex()).size;
     if (compendiumSize === 0) {
-      ui.notifications.warn(MODULE.ns + ` | Compendium named ${compendium.title} (${compendiumName}) is empty.`);
+      ui.notifications.warn(
+        CONSTANTS.MODULE_ID + ` | Compendium named ${compendium.title} (${compendiumName}) is empty.`
+      );
       return;
     }
 
     ui.notifications.info(
-      MODULE.ns +
+      CONSTANTS.MODULE_ID +
         ` | Starting generation of rolltable for ${compendium.title} (${compendiumName}) with ${compendiumSize} entries.`
     );
     compendium
@@ -199,7 +201,7 @@ export class BetterTables {
    */
   async updateSpellCache(pack) {
     if (game.user.isGM) {
-      const defaultPack = game.settings.get(MODULE.ns, BRTCONFIG.SPELL_COMPENDIUM_KEY),
+      const defaultPack = game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.SPELL_COMPENDIUM_KEY),
         spellCompendium = game.packs.get(defaultPack);
 
       if ((!pack && spellCompendium) || pack === defaultPack) {
@@ -210,7 +212,7 @@ export class BetterTables {
           .filter((entry) => entry.type === "spell")
           .map((i) => mergeObject(i, { collection: spellCompendium.collection }));
       } else {
-        ui.notifications.error(MODULE.ns + `| Spell cache could not be initialized/updated.`);
+        ui.notifications.error(CONSTANTS.MODULE_ID + `| Spell cache could not be initialized/updated.`);
       }
     }
   }
@@ -221,7 +223,7 @@ export class BetterTables {
    * @param {Array} options
    */
   static async enhanceCompendiumContextMenu(html, options) {
-    const api = game.modules.get(MODULE.ns).public.API;
+    const api = game.modules.get(CONSTANTS.MODULE_ID).public.API;
 
     if (game.user.isGM) {
       options.push({
@@ -232,7 +234,7 @@ export class BetterTables {
         },
       });
 
-      if (game.settings.get(MODULE.ns, BRTCONFIG.ADD_ROLL_IN_COMPENDIUM_CONTEXTMENU)) {
+      if (game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.ADD_ROLL_IN_COMPENDIUM_CONTEXTMENU)) {
         options.push({
           name: i18n(`${BRTCONFIG.NAMESPACE}.api.msg.rollCompendiumAsRolltable`),
           icon: '<i class="fas fa-dice-d20"></i>',
@@ -250,7 +252,7 @@ export class BetterTables {
    * @param {Array} options
    */
   static async enhanceRolltableContextMenu(html, options) {
-    if (game.user.isGM && game.settings.get(MODULE.ns, BRTCONFIG.ADD_ROLL_IN_ROLLTABLE_CONTEXTMENU)) {
+    if (game.user.isGM && game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.ADD_ROLL_IN_ROLLTABLE_CONTEXTMENU)) {
       options.unshift({
         name: "Roll table",
         icon: '<i class="fas fa-dice-d20"></i>',
@@ -280,7 +282,7 @@ export class BetterTables {
    * @deprecated use api.rollCompendiumAsRolltable instead
    */
   static async rollCompendiumAsRolltable(compendium) {
-    const api = game.modules.get(MODULE.ns).public.API;
+    const api = game.modules.get(CONSTANTS.MODULE_ID).public.API;
     api.rollCompendiumAsRolltable(compendium);
   }
 
@@ -344,7 +346,7 @@ export class BetterTables {
     const pack = $(tableDrawNode).data("pack");
     if (!id && !pack) return;
 
-    if (game.settings.get(MODULE.ns, BRTCONFIG.SHOW_REROLL_BUTTONS)) {
+    if (game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.SHOW_REROLL_BUTTONS)) {
       // reroll button
       const rerollButton = $(
         `<a class="roll-table-reroll-button" title="${game.i18n.localize(`${BRTCONFIG.NAMESPACE}.DrawReroll`)}">`
@@ -352,8 +354,8 @@ export class BetterTables {
       rerollButton.click(async () => {
         let cardContent;
         if (pack && !id) {
-          const api = game.modules.get(MODULE.ns).public.API;
-          cardContent = await api.rollCompendiumAsRolltable(pack, MODULE.ns);
+          const api = game.modules.get(CONSTANTS.MODULE_ID).public.API;
+          cardContent = await api.rollCompendiumAsRolltable(pack, CONSTANTS.MODULE_ID);
         } else {
           let rolltable;
           if (pack && id) {
@@ -374,7 +376,7 @@ export class BetterTables {
 
     if (
       game.system.id === "dnd5e" &&
-      game.settings.get(MODULE.ns, BRTCONFIG.SHOW_CURRENCY_SHARE_BUTTON) &&
+      game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.SHOW_CURRENCY_SHARE_BUTTON) &&
       message.flags?.betterTables?.loot.currency &&
       Object.keys(message.flags.betterTables.loot.currency).length > 0
     ) {
@@ -392,7 +394,7 @@ export class BetterTables {
       });
     }
 
-    if (game.settings.get(MODULE.ns, BRTCONFIG.SHOW_OPEN_BUTTONS)) {
+    if (game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.SHOW_OPEN_BUTTONS)) {
       // Open link
       let document;
       if (pack && id) {
@@ -450,7 +452,7 @@ export class BetterTables {
   }
 
   static async _addRollButtonsToEntityLink(html) {
-    if (game.settings.get(MODULE.ns, BRTCONFIG.ROLL_TABLE_FROM_JOURNAL)) {
+    if (game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.ROLL_TABLE_FROM_JOURNAL)) {
       // handling rolltables imported in campaign
       $(html)
         .find("a.content-link[data-entity='RollTable']")
@@ -514,7 +516,7 @@ export class BetterTables {
    */
   static async updateChatMessage(message, content, options = {}) {
     if (game.user.isGM) {
-      if (!options.force && game.settings.get(MODULE.ns, BRTCONFIG.SHOW_WARNING_BEFORE_REROLL)) {
+      if (!options.force && game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.SHOW_WARNING_BEFORE_REROLL)) {
         Dialog.confirm({
           title: game.i18n.localize(`${BRTCONFIG.NAMESPACE}.Settings.RerollWarning.Title`),
           content: game.i18n.localize(`${BRTCONFIG.NAMESPACE}.Settings.RerollWarning.Description`),
@@ -532,7 +534,7 @@ export class BetterTables {
   }
 
   static async handleRolltableLink(sheet, html) {
-    if (game.user.isGM && game.settings.get(MODULE.ns, BRTCONFIG.ROLL_TABLE_FROM_JOURNAL)) {
+    if (game.user.isGM && game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.ROLL_TABLE_FROM_JOURNAL)) {
       // handling rolltables imported in campaign
       $(html)
         .find("a.content-link[data-uuid^='RollTable']")
@@ -588,5 +590,16 @@ export class BetterTables {
     }
 
     return item.text;
+  }
+
+  static hiddenTable(wrapped, ...args) {
+    if (this.getFlag(CONSTANTS.MODULE_ID, BRTCONFIG.HIDDEN_TABLE)) {
+      try {
+        args[0].rollMode = "gmroll";
+      } catch {
+        args.push({ rollMode: "gmroll" });
+      }
+    }
+    return wrapped(...args);
   }
 }

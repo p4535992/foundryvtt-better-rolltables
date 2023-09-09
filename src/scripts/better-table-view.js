@@ -1,5 +1,5 @@
 import { i18n } from "./core/utils.js";
-import { MODULE, BRTCONFIG } from "./core/config.js";
+import { CONSTANTS, BRTCONFIG } from "./core/config.js";
 
 export class BetterRT {
   static _calcHeight(element) {
@@ -18,7 +18,8 @@ export class BetterRT {
   static async enhanceRollTableView(rollTableConfig, html, rollTable) {
     const tableClassName = rollTable.cssClass,
       tableEntity = rollTableConfig.object,
-      selectedTableType = tableEntity.getFlag(MODULE.ns, BRTCONFIG.TABLE_TYPE_KEY) || BRTCONFIG.TABLE_TYPE_NONE,
+      selectedTableType =
+        tableEntity.getFlag(CONSTANTS.MODULE_ID, BRTCONFIG.TABLE_TYPE_KEY) || BRTCONFIG.TABLE_TYPE_NONE,
       app = document.querySelector(`[data-appid="${rollTableConfig.appId}"]`),
       tableViewClass = app.getElementsByClassName(tableClassName)[0],
       headerElement = document.createElement("header"),
@@ -97,6 +98,19 @@ export class BetterRT {
         });
       });
     }
+
+    // Hidden Table checkbox
+    const isHidden = tableEntity.getFlag(CONSTANTS.MODULE_ID, BRTCONFIG.HIDDEN_TABLE);
+    const lastBox = html.find(".results");
+    const checkboxHTML = `
+    <div class="form-group">
+        <label>${game.i18n.format(`${CONSTANTS.MODULE_ID}.label.tableTextHiddenTable`)}</label>
+        <input type="checkbox" name="flags.${CONSTANTS.MODULE_ID}.${BRTCONFIG.HIDDEN_TABLE}" ${
+      isHidden ? "checked" : ""
+    }>
+    </div>
+    `;
+    lastBox.before(checkboxHTML);
   }
 
   /**
@@ -122,10 +136,10 @@ export class BetterRT {
             formulaInput.type = "text";
             formulaInput.disabled = !editable;
             /** based on the name of the elents the value will be added in the preUpdateRollTable and override the table.data */
-            formulaInput.name = `results.${index}.flags.${MODULE.ns}.${BRTCONFIG.RESULTS_FORMULA_KEY}.formula`;
+            formulaInput.name = `results.${index}.flags.${CONSTANTS.MODULE_ID}.${BRTCONFIG.RESULTS_FORMULA_KEY}.formula`;
             if (tableText.classList.contains("result-target")) {
               formulaInput.value =
-                getProperty(tableResult, `flags.${MODULE.ns}.${BRTCONFIG.RESULTS_FORMULA_KEY}.formula`) || "";
+                getProperty(tableResult, `flags.${CONSTANTS.MODULE_ID}.${BRTCONFIG.RESULTS_FORMULA_KEY}.formula`) || "";
               // let formulaAmount =
               // 	getProperty(tableResult, `flags.${MODULE.ns}.${BRTCONFIG.RESULTS_FORMULA_KEY}.formula`) || '';
               // // priority to old value
@@ -266,6 +280,6 @@ export class BetterRT {
   static async onOptionTypeChanged(value, tableEntity) {
     // console.log("onOptionTypeChanged");
     // console.log(tableEntity);
-    await tableEntity.setFlag(MODULE.ns, BRTCONFIG.TABLE_TYPE_KEY, value);
+    await tableEntity.setFlag(CONSTANTS.MODULE_ID, BRTCONFIG.TABLE_TYPE_KEY, value);
   }
 }

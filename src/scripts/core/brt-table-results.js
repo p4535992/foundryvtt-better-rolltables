@@ -1,7 +1,7 @@
 import * as Utils from "./utils.js";
 import * as BRTHelper from "./brt-helper.js";
 import { BRTBuilder } from "./brt-builder.js";
-import { MODULE, BRTCONFIG } from "./config.js";
+import { CONSTANTS, BRTCONFIG } from "./config.js";
 
 export class BetterResults {
   constructor(tableResults) {
@@ -11,7 +11,7 @@ export class BetterResults {
   }
 
   async buildResults(table) {
-    const currencyString = table.getFlag(MODULE.ns, BRTCONFIG.LOOT_CURRENCY_KEY);
+    const currencyString = table.getFlag(CONSTANTS.MODULE_ID, BRTCONFIG.LOOT_CURRENCY_KEY);
     this.currencyData = await this._generateCurrency(currencyString);
 
     for (let i = 0; i < this.tableResults.length; i++) {
@@ -75,7 +75,7 @@ export class BetterResults {
                 tableName: tableName,
                 packName: tableCompendiumName,
               });
-              ui.notifications.warn(MODULE.ns + " | " + msg);
+              ui.notifications.warn(CONSTANTS.MODULE_ID + " | " + msg);
             }
             break;
           } else if (commandName) {
@@ -179,7 +179,7 @@ export class BetterResults {
           let msg = game.i18n.format(`${BRTCONFIG.NAMESPACE}.Strings.Warnings.CurrencyFormat`, {
             currencyString: currency,
           });
-          ui.notifications.warn(MODULE.ns + " | " + msg);
+          ui.notifications.warn(CONSTANTS.MODULE_ID + " | " + msg);
           continue;
         }
         const rollFormula = match[1];

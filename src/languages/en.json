@@ -139,6 +139,9 @@
         "NotTableByNameInPack": "No table named {tableName} found in compendium {packName}, did you misspell your table name in brackets?",
         "CurrencyFormat": "Currency loot field contain wrong formatting, currencies need to be define as \"diceFormula[currencyType]\" => \"1d100[gp]\" but was {currencyString}"
       }
+    },
+    "label": {
+      "tableTextHiddenTable": "Hidden Table"
     }
   }
 }

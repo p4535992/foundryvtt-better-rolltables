@@ -1,4 +1,4 @@
-import { MODULE, BRTCONFIG } from "./config.js";
+import { CONSTANTS, BRTCONFIG } from "./config.js";
 
 /**
  * when dropping a link entity on a rolltable if the drop is a tableResult, we assign the dropped entity to that result table.
@@ -64,6 +64,6 @@ export async function tryRoll(rollFormula) {
  * @returns {Number} how many times to roll on this table
  */
 export async function rollsAmount(table) {
-  const rollFormula = table.getFlag(MODULE.ns, BRTCONFIG.ROLLS_AMOUNT_KEY);
+  const rollFormula = table.getFlag(CONSTANTS.MODULE_ID, BRTCONFIG.ROLLS_AMOUNT_KEY);
   return tryRoll(rollFormula);
 }
