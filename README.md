@@ -35,6 +35,7 @@ Some Features:
 - Roll on multiple tables with roll formulas
 - Auto create a loot actor to store generated loot
 - Automatically select a random spells when a scroll item is selected
+- Adds an option to change the table roll to GM only.
 
 ## NOTES ABOUT UPDATE FROM 1.8.95 for FVTT 9 to 1.9.1 FVTT 10
 

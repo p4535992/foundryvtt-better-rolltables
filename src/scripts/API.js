@@ -73,7 +73,10 @@ class API {
     await lootCreator.addItemsToActor();
 
     if (game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.ALWAYS_SHOW_GENERATED_LOOT_AS_MESSAGE)) {
-      const rollMode = options && "rollMode" in options ? options.rollMode : null;
+      let rollMode = options && "rollMode" in options ? options.rollMode : null;
+      if (String(getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${BRTCONFIG.HIDDEN_TABLE}`)) === "true") {
+        rollMode = "gmroll";
+      }
       const lootChatCard = new LootChatCard(betterResults, currencyData, rollMode);
       await lootChatCard.createChatCard(tableEntity);
     }

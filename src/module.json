@@ -48,28 +48,31 @@
   "packs": [
     {
       "name": "brt-loot",
-      "label": "BRT: Loot Tables",
+      "label": "BRT - Loot Tables",
       "system": "dnd5e",
-      "path": "packs/loot-tables.db",
+      "path": "packs/loot-tables",
       "type": "RollTable",
       "private": false,
-      "flags": {}
+      "flags": {},
+      "module": "better-rolltables"
     },
     {
       "name": "brt-story",
-      "label": "BRT: Story Tables",
-      "path": "packs/story-tables.db",
+      "label": "BRT - Story Tables",
+      "path": "packs/story-tables",
       "type": "RollTable",
       "private": false,
-      "flags": {}
+      "flags": {},
+      "module": "better-rolltables"
     },
     {
       "name": "brt-gen",
-      "label": "BRT: Story Generators",
-      "path": "packs/story-generators.db",
+      "label": "BRT - Story Generators",
+      "path": "packs/story-generators",
       "type": "JournalEntry",
       "private": false,
-      "flags": {}
+      "flags": {},
+      "module": "better-rolltables"
     }
   ],
   "languages": [

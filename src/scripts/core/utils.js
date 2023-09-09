@@ -1,7 +1,12 @@
+import { BRTCONFIG, CONSTANTS } from "./config";
+
 export const i18n = (key) => game.i18n && game.i18n.localize(key);
 
 export function addRollModeToChatData(chatData, rollMode) {
   rollMode = rollMode ?? game.settings.get("core", "rollMode");
+  if (String(getProperty(chatData, `flags.${CONSTANTS.MODULE_ID}.${BRTCONFIG.HIDDEN_TABLE}`)) === "true") {
+    rollMode = "gmroll";
+  }
 
   switch (rollMode) {
     case "blindroll":

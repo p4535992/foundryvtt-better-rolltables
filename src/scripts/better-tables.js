@@ -37,7 +37,10 @@ export class BetterTables {
     await lootCreator.addItemsToActor();
 
     if (game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.ALWAYS_SHOW_GENERATED_LOOT_AS_MESSAGE)) {
-      const rollMode = options && "rollMode" in options ? options.rollMode : null;
+      let rollMode = options && "rollMode" in options ? options.rollMode : null;
+      if (String(getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${BRTCONFIG.HIDDEN_TABLE}`)) === "true") {
+        rollMode = "gmroll";
+      }
       const lootChatCard = new LootChatCard(betterResults, currencyData, rollMode);
       await lootChatCard.createChatCard(tableEntity);
     }
@@ -83,7 +86,10 @@ export class BetterTables {
   }
 
   async generateChatLoot(tableEntity, options = null) {
-    const rollMode = options && "rollMode" in options ? options.rollMode : null;
+    let rollMode = options && "rollMode" in options ? options.rollMode : null;
+    if (String(getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${BRTCONFIG.HIDDEN_TABLE}`)) === "true") {
+      rollMode = "gmroll";
+    }
     const brtBuilder = new BRTBuilder(tableEntity),
       results = await brtBuilder.betterRoll(),
       br = new BetterResults(results),
@@ -118,7 +124,10 @@ export class BetterTables {
   }
 
   async betterTableRoll(tableEntity, options = null) {
-    const rollMode = options && "rollMode" in options ? options.rollMode : null;
+    let rollMode = options && "rollMode" in options ? options.rollMode : null;
+    if (String(getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${BRTCONFIG.HIDDEN_TABLE}`)) === "true") {
+      rollMode = "gmroll";
+    }
 
     const brtBuilder = new BRTBuilder(tableEntity);
     const results = await brtBuilder.betterRoll();
@@ -592,14 +601,14 @@ export class BetterTables {
     return item.text;
   }
 
-  static hiddenTable(wrapped, ...args) {
-    if (this.getFlag(CONSTANTS.MODULE_ID, BRTCONFIG.HIDDEN_TABLE)) {
-      try {
-        args[0].rollMode = "gmroll";
-      } catch {
-        args.push({ rollMode: "gmroll" });
-      }
-    }
-    return wrapped(...args);
-  }
+  // static hiddenTable(wrapped, ...args) {
+  //   if (this.getFlag(CONSTANTS.MODULE_ID, BRTCONFIG.HIDDEN_TABLE)) {
+  //     try {
+  //       args[0].rollMode = "gmroll";
+  //     } catch {
+  //       args.push({ rollMode: "gmroll" });
+  //     }
+  //   }
+  //   return wrapped(...args);
+  // }
 }

@@ -1,3 +1,7 @@
+### 1.9.4
+
+- Adds an option to change the table roll to GM only. Add the hidden table checkbox feature on the roll drawn from rolltable (liKe the ol kandashi module)
+
 ### 1.9.3 
 
 - upgrade for fvtt11 
