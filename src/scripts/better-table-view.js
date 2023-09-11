@@ -140,19 +140,6 @@ export class BetterRT {
             if (tableText.classList.contains("result-target")) {
               formulaInput.value =
                 getProperty(tableResult, `flags.${CONSTANTS.MODULE_ID}.${BRTCONFIG.RESULTS_FORMULA_KEY}.formula`) || "";
-              // let formulaAmount =
-              // 	getProperty(tableResult, `flags.${MODULE.ns}.${BRTCONFIG.RESULTS_FORMULA_KEY}.formula`) || '';
-              // // priority to old value
-              // if(hasProperty(entry, `flags.${BRTCONFIG.NAMESPACE}.${BRTCONFIG.RESULTS_FORMULA_KEY_OLD}.formula`)) {
-              //     let formulaAmountTmp =
-              //         getProperty(entry, `flags.${BRTCONFIG.NAMESPACE}.${BRTCONFIG.RESULTS_FORMULA_KEY_OLD}.formula`) || '';
-              //     if(formulaAmountTmp) {
-              //         formulaAmount = formulaAmountTmp;
-              //         setProperty(entry, `flags.${BRTCONFIG.NAMESPACE}.${BRTCONFIG.RESULTS_FORMULA_KEY_OLD}.formula`, null);
-              //         setProperty(entry, `flags.${BRTCONFIG.NAMESPACE}.${BRTCONFIG.RESULTS_FORMULA_KEY}.formula`, formulaAmount);
-              //     }
-              // }
-              // formulaInput.value = formulaAmount;
               tableText.classList.add("result-target-short");
             } else {
               /** text type result, we disable the formula field for text */

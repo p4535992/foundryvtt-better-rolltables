@@ -38,13 +38,20 @@
     "TypeDefault": "Default Table",
     "BetterTable": "Better Table",
     "TypeLoot": "Loot Table",
+    "TypeHarvest": "Loot Table",
     "StoryLoot": "Story Table",
     "CurrencyLoot": "Currency Loot",
     "CurrencyLootPlaceholder": "Add comma separated formulas e.g.: 1d4[gp], (1d4+1)*10[sp]",
-    "LootActorName": "Add Loot to Actor",
+    "HarvestDcValue": "Harvest DC Value",
+    "HarvestDcValuePlaceholder": "Add a formulas or a number e.g.: 1d4 or 13",
+    "LootActorName": "Add Loot to Actor with this specific name",
     "LootActorNamePlaceholder": "If empty it will create a new loot actor every time",
+    "HarvestActorName": "Add harvest to Actor with this specific name",
+    "HarvestActorNamePlaceholder": "If empty it will create a new harvest actor every time",
     "LootRollAmount": "Amount of Rolls",
     "LootRollAmountPlaceholder": "Roll the entire table multiple times",
+    "HarvestRollAmount": "Amount of Rolls",
+    "HarvestRollAmountPlaceholder": "Roll the entire table multiple times",
     "DrawResultPlural": "Draws {amount} results from {name}",
     "DrawResultSingular": "Draw {amount} result from {name}",
     "DrawResultZero": "Rolling on {name}",
@@ -115,6 +122,10 @@
       "AlwaysShowGeneratedLootAsMessage": {
         "Title": "Always show generated loot to actor as message",
         "Description": "If enabled, generated loot added to an actor is also displayed as a message."
+      },
+      "AlwaysShowGeneratedHarvestAsMessage": {
+        "Title": "Always show generated harvest to actor as message",
+        "Description": "If enabled, generated harvest added to an actor is also displayed as a message."
       },
       "Tags": {
         "Title": "Tags",

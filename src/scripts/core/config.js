@@ -1,7 +1,7 @@
 export const CONSTANTS = {
   MODULE_ID: "better-rolltables",
   PATH: "modules/better-rolltables",
-  TYPES: ["none", "better", "loot", "story"],
+  TYPES: ["none", "better", "loot", "harvest", "story"],
 };
 
 export const BRTCONFIG = {
@@ -10,10 +10,12 @@ export const BRTCONFIG = {
   // saved data keys (used e.g. in the rolltableEntity.data.flags)
   TABLE_TYPE_KEY: "table-type",
   LOOT_CURRENCY_KEY: "table-currency-string",
-  ROLLS_AMOUNT_KEY: "loot-amount-key",
-  ACTOR_NAME_KEY: "loot-actor-name",
-  // RESULTS_FORMULA_KEY: 'better-rolltables-result-formula',
-  // RESULTS_FORMULA_KEY_OLD: 'brt-result-formula',
+  LOOT_ROLLS_AMOUNT_KEY: "loot-amount-key",
+  LOOT_ACTOR_NAME_KEY: "loot-actor-name",
+
+  HARVEST_ROLLS_AMOUNT_KEY: "harvest-amount-key",
+  HARVEST_ACTOR_NAME_KEY: "harvest-actor-name",
+
   RESULTS_FORMULA_KEY: "brt-result-formula",
   HIDDEN_TABLE: "brt-hidden-table",
 
@@ -21,6 +23,7 @@ export const BRTCONFIG = {
   TABLE_TYPE_NONE: "none",
   TABLE_TYPE_BETTER: "better",
   TABLE_TYPE_LOOT: "loot",
+  TABLE_TYPE_HARVEST: "harvest",
   TABLE_TYPE_STORY: "story",
 
   SPELL_COMPENDIUM_KEY: "default-spell-compendium",
@@ -33,8 +36,13 @@ export const BRTCONFIG = {
   SHOW_WARNING_BEFORE_REROLL: "show-warning-before-reroll",
   STICK_ROLLTABLE_HEADER: "stick-rolltable-header",
   ROLL_TABLE_FROM_JOURNAL: "roll-table-from-journal",
+
+  // Loot
   SHOW_CURRENCY_SHARE_BUTTON: "show-currency-share-button",
   ALWAYS_SHOW_GENERATED_LOOT_AS_MESSAGE: "always-show-generated-loot-as-message",
+
+  // Harvest
+  ALWAYS_SHOW_GENERATED_HARVEST_AS_MESSAGE: "always-show-generated-harvest-as-message",
 
   // in fp2e quantity is in system.quantity.value , in 5e system.quantity
   QUANTITY_PROPERTY_PATH: "system.quantity",

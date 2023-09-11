@@ -15,7 +15,7 @@ export class LootCreator {
   }
 
   async createActor(table, overrideName = undefined) {
-    const actorName = overrideName || table.getFlag(CONSTANTS.MODULE_ID, BRTCONFIG.ACTOR_NAME_KEY);
+    const actorName = overrideName || table.getFlag(CONSTANTS.MODULE_ID, BRTCONFIG.LOOT_ACTOR_NAME_KEY);
     this.actor = game.actors.getName(actorName);
     if (!this.actor) {
       this.actor = await Actor.create({

@@ -35,7 +35,7 @@ export async function dropEventOnTable(event, table) {
   }
 
   if (resultTableData._id) {
-    table.updateEmbeddedEntity("TableResult", resultTableData);
+    table.updateEmbeddedDocuments("TableResult", [resultTableData]);
   } else {
     /** create a new embedded entity if we dropped the entity on the sheet but not on a specific result */
     const lastTableResult = table.results[table.results.length - 1];
@@ -47,7 +47,7 @@ export async function dropEventOnTable(event, table) {
       resultTableData.weight = 1;
       resultTableData.range = [1, 1];
     }
-    table.createEmbeddedEntity("TableResult", resultTableData);
+    table.createEmbeddedDocuments("TableResult", [resultTableData]);
   }
 }
 
@@ -64,6 +64,14 @@ export async function tryRoll(rollFormula) {
  * @returns {Number} how many times to roll on this table
  */
 export async function rollsAmount(table) {
-  const rollFormula = table.getFlag(CONSTANTS.MODULE_ID, BRTCONFIG.ROLLS_AMOUNT_KEY);
-  return tryRoll(rollFormula);
+    const tableType = table.getFlag(CONSTANTS.MODULE_ID, BRTCONFIG.TABLE_TYPE_KEY);
+    if(tableType === BRTCONFIG.TABLE_TYPE_LOOT) {
+        const rollFormula = table.getFlag(CONSTANTS.MODULE_ID, BRTCONFIG.LOOT_ROLLS_AMOUNT_KEY);
+        return tryRoll(rollFormula);
+    } else if(tableType === BRTCONFIG.TABLE_TYPE_HARVEST) {
+        const rollFormula = table.getFlag(CONSTANTS.MODULE_ID, BRTCONFIG.HARVEST_ROLLS_AMOUNT_KEY);
+        return tryRoll(rollFormula);
+    } else {
+        return 1;
+    }
 }

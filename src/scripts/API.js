@@ -4,6 +4,7 @@ import { CONSTANTS, BRTCONFIG } from "./core/config.js";
 import { LootChatCard } from "./loot/loot-chat-card.js";
 import { LootCreator } from "./loot/loot-creator.js";
 import { getRandomItemFromCompendium } from "./core/utils.js";
+import { CompendiumToRollTableHelpers } from "./apps/compendium-to-rolltable/compendium-to-rollTable-helpers.js";
 
 /**
  * Create a new API class and export it as default
@@ -130,51 +131,15 @@ class API {
     tableName = compendiumName + " RollTable",
     { weightPredicate = null } = {}
   ) {
-    const compendium = game.packs.get(compendiumName);
-    let msg = { name: compendiumName, tableName: tableName },
-      api_msg = CONSTANTS.MODULE_ID + ".api | ";
-
-    if (compendium === undefined) {
-      api.msg += game.i18n.format(`${BRTCONFIG.NAMESPACE}.api.msg.compendiumNotFound`, msg);
-      ui.notifications.warn(CONSTANTS.MODULE_ID + " | " + api_msg);
-      return;
-    }
-
-    msg.title = compendium.title;
-    msg.compendiumSize = (await compendium.getIndex()).size;
-
-    if (!msg.compendiumSize) {
-      ui.notifications.warn(api.msg + game.i18n.format(`${BRTCONFIG.NAMESPACE}.api.msg.compendiumEmpty`, msg));
-      return;
-    }
-
-    ui.notifications.info(api_msg + game.i18n.format(`${BRTCONFIG.NAMESPACE}.api.msg.startRolltableGeneration`, msg));
-
-    compendium
-      .getDocuments()
-      .then((compendiumItems) => {
-        return compendiumItems.map((item) => ({
-          type: CONST.TABLE_RESULT_TYPES.COMPENDIUM,
-          collection: compendiumName,
-          text: item.name,
-          img: item.img,
-          weight: weightPredicate ? weightPredicate(item) : 1,
-          range: [1, 1],
-        }));
-      })
-      .then((results) =>
-        RollTable.create({
-          name: tableName,
-          results: results.filter((x) => x.weight !== 0), // remove empty results due to null weight
-        })
-      )
-      .then((rolltable) => {
-        rolltable.normalize();
-        ui.notifications.info(
-          api_msg + game.i18n.format(`${BRTCONFIG.NAMESPACE}.api.msg.rolltableGenerationFinished`, msg)
-        );
-      });
+    return await CompendiumToRollTableHelpers.createRolltableFromCompendium(
+        compendiumName,tableName, { weightPredicate });
   }
+
+  /* ======================================================== */
+  /* NEW API INTEGRATION */
+  /* ======================================================== */
+
+
 }
 
 export { API };
