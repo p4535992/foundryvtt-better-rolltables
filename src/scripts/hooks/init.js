@@ -6,6 +6,7 @@ import { BetterTables } from "../better-tables.js";
 // import renderWelcomeScreen from '../versioning/welcome-screen.js';
 import VersionCheck from "../versioning/version-check.js";
 import { getIconByEntityType } from "../core/utils.js";
+import { setApi } from "../../module.js";
 
 /**
  * @module BetterRollTables.BetterRolltableHooks
@@ -19,25 +20,31 @@ class BetterRolltableHooks {
    * Hooks on game hooks and attaches methods
    */
   static init() {
-    Hooks.once("init", BetterRolltableHooks.foundryInit);
-    Hooks.once("ready", BetterRolltableHooks.foundryReady);
+    // Hooks.once("init", BetterRolltableHooks.foundryInit);
+    // Hooks.once("ready", BetterRolltableHooks.foundryReady);
     Hooks.once("aipSetup", BetterRolltableHooks.onAIPSetup);
-    Hooks.once("devModeReady", BetterRolltableHooks.onDevModeReady);
-    Hooks.once("setup", BetterRolltableHooks.foundrySetup);
+    // Hooks.once("devModeReady", BetterRolltableHooks.onDevModeReady);
+    // Hooks.once("setup", BetterRolltableHooks.foundrySetup);
   }
 
   static foundrySetup() {
     const moduleData = game.modules.get(CONSTANTS.MODULE_ID);
+    setApi(API);
 
+    // For retrocompatibility only...
+
+    game.betterTables = game.modules.get(CONSTANTS.MODULE_ID).api.betterTables;
     /**
+     * game.modules.get(CONSTANTS.MODULE_ID).public.API;
      * @type {API}
      */
     moduleData.public = {
-      API,
+      API: game.modules.get(CONSTANTS.MODULE_ID).api,
     };
 
     // Freeze the public API so it can't be modified.
     Object.freeze(moduleData.public);
+
   }
 
   static async foundryReady() {
@@ -125,7 +132,7 @@ class BetterRolltableHooks {
   }
 
   static foundryInit() {
-    game.betterTables = new BetterTables();
+    // game.betterTables = new BetterTables();
     const moduleSettingsInit = new Settings();
     moduleSettingsInit.registerSettingsDuringInit();
 
@@ -142,7 +149,7 @@ class BetterRolltableHooks {
    * Register fields with autocomplete inline properties
    */
   static async onAIPSetup() {
-    const api = game.modules.get("autocomplete-inline-properties").API;
+    const autocompleteInlinePropertiesApi = game.modules.get("autocomplete-inline-properties").API;
     const DATA_MODE = api.CONST.DATA_MODE;
 
     // AIP
@@ -165,12 +172,12 @@ class BetterRolltableHooks {
     };
 
     // Add our config
-    api.PACKAGE_CONFIG.push(config);
+    autocompleteInlinePropertiesApi.PACKAGE_CONFIG.push(config);
   }
 
-  static onDevModeReady({ registerPackageDebugFlag }) {
-    registerPackageDebugFlag(CONSTANTS.MODULE_ID);
-  }
+//   static onDevModeReady({ registerPackageDebugFlag }) {
+//     registerPackageDebugFlag(CONSTANTS.MODULE_ID);
+//   }
 }
 
 export { BetterRolltableHooks };

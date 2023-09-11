@@ -25,25 +25,8 @@ export class BetterTables {
    * @param {*} tableEntity
    */
   async generateLoot(tableEntity, options = {}) {
-    const brtBuilder = new BRTBuilder(tableEntity),
-      results = await brtBuilder.betterRoll(),
-      br = new BetterResults(results),
-      betterResults = await br.buildResults(tableEntity),
-      currencyData = br.getCurrencyData(),
-      lootCreator = new LootCreator(betterResults, currencyData);
-
-    await lootCreator.createActor(tableEntity);
-    await lootCreator.addCurrenciesToActor();
-    await lootCreator.addItemsToActor();
-
-    if (game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.ALWAYS_SHOW_GENERATED_LOOT_AS_MESSAGE)) {
-      let rollMode = options && "rollMode" in options ? options.rollMode : null;
-      if (String(getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${BRTCONFIG.HIDDEN_TABLE}`)) === "true") {
-        rollMode = "gmroll";
-      }
-      const lootChatCard = new LootChatCard(betterResults, currencyData, rollMode);
-      await lootChatCard.createChatCard(tableEntity);
-    }
+    const api = game.modules.get(CONSTANTS.MODULE_ID).api;
+    return await api.generateLoot(tableEntity, options);
   }
 
   /**
@@ -55,49 +38,13 @@ export class BetterTables {
    * @returns
    */
   async addLootToSelectedToken(tableEntity, token = null, options = null) {
-    let tokenstack = [];
-    const isTokenActor = options && options?.isTokenActor,
-      stackSame = options && options?.stackSame ? options.stackSame : true,
-      customRoll = options && options?.customRole ? options.customRole : undefined,
-      itemLimit = options && options?.itemLimit ? Number(options.itemLimit) : 0;
-
-    if (null == token && canvas.tokens.controlled.length === 0) {
-      return ui.notifications.error("Please select a token first");
-    } else {
-      tokenstack = token ? (token.length >= 0 ? token : [token]) : canvas.tokens.controlled;
-    }
-
-    ui.notifications.info("Loot generation started.");
-
-    const brtBuilder = new BRTBuilder(tableEntity);
-
-    for (const token of tokenstack) {
-      const results = await brtBuilder.betterRoll(customRoll);
-      const br = new BetterResults(results);
-      const betterResults = await br.buildResults(tableEntity);
-      const currencyData = br.getCurrencyData();
-      const lootCreator = new LootCreator(betterResults, currencyData);
-
-      await lootCreator.addCurrenciesToToken(token, isTokenActor);
-      await lootCreator.addItemsToToken(token, stackSame, isTokenActor, itemLimit);
-    }
-
-    return ui.notifications.info("Loot generation complete.");
+    const api = game.modules.get(CONSTANTS.MODULE_ID).api;
+    return await api.addLootToSelectedToken(tableEntity, token, options);
   }
 
   async generateChatLoot(tableEntity, options = null) {
-    let rollMode = options && "rollMode" in options ? options.rollMode : null;
-    if (String(getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${BRTCONFIG.HIDDEN_TABLE}`)) === "true") {
-      rollMode = "gmroll";
-    }
-    const brtBuilder = new BRTBuilder(tableEntity),
-      results = await brtBuilder.betterRoll(),
-      br = new BetterResults(results),
-      betterResults = await br.buildResults(tableEntity),
-      currencyData = br.getCurrencyData(),
-      lootChatCard = new LootChatCard(betterResults, currencyData, rollMode);
-
-    await lootChatCard.createChatCard(tableEntity);
+    const api = game.modules.get(CONSTANTS.MODULE_ID).api;
+    return await api.generateChatLoot(tableEntity, options);
   }
 
   async getStoryResults(tableEntity) {
@@ -161,46 +108,8 @@ export class BetterTables {
    */
 
   async createTableFromCompendium(tableName, compendiumName, { weightPredicate = null } = {}) {
-    const compendium = game.packs.get(compendiumName);
-    if (compendium === undefined) {
-      ui.notifications.warn(`Compendium named ${compendiumName} not found.`);
-      return;
-    }
-
-    const compendiumSize = (await compendium.getIndex()).size;
-    if (compendiumSize === 0) {
-      ui.notifications.warn(
-        CONSTANTS.MODULE_ID + ` | Compendium named ${compendium.title} (${compendiumName}) is empty.`
-      );
-      return;
-    }
-
-    ui.notifications.info(
-      CONSTANTS.MODULE_ID +
-        ` | Starting generation of rolltable for ${compendium.title} (${compendiumName}) with ${compendiumSize} entries.`
-    );
-    compendium
-      .getDocuments()
-      .then((compendiumItems) => {
-        return compendiumItems.map((item) => ({
-          type: CONST.TABLE_RESULT_TYPES.COMPENDIUM,
-          collection: compendiumName,
-          text: item.name,
-          img: item.img,
-          weight: weightPredicate ? weightPredicate(item) : 1,
-          range: [1, 1],
-        }));
-      })
-      .then((results) =>
-        RollTable.create({
-          name: tableName,
-          results: results.filter((x) => x.weight !== 0), // remove empty results due to null weight
-        })
-      )
-      .then((rolltable) => {
-        rolltable.normalize();
-        ui.notifications.info(`Rolltable ${tableName} with ${rolltable.results.size} entries was generated.`);
-      });
+    const api = game.modules.get(CONSTANTS.MODULE_ID).api;
+    return await api.createTableFromCompendium(tableName, compendiumName, { weightPredicate });
   }
 
   /**
@@ -232,7 +141,7 @@ export class BetterTables {
    * @param {Array} options
    */
   static async enhanceCompendiumContextMenu(html, options) {
-    const api = game.modules.get(CONSTANTS.MODULE_ID).public.API;
+    const api = game.modules.get(CONSTANTS.MODULE_ID).api;
 
     if (game.user.isGM) {
       options.push({
@@ -291,7 +200,7 @@ export class BetterTables {
    * @deprecated use api.rollCompendiumAsRolltable instead
    */
   static async rollCompendiumAsRolltable(compendium) {
-    const api = game.modules.get(CONSTANTS.MODULE_ID).public.API;
+    const api = game.modules.get(CONSTANTS.MODULE_ID).api;
     api.rollCompendiumAsRolltable(compendium);
   }
 
@@ -322,7 +231,8 @@ export class BetterTables {
    * @param {String} compendium ID of the compendium to roll
    */
   static async menuCallBackRollCompendium(compendium) {
-    const chatData = await BetterTables.rollCompendiumAsRolltable(compendium);
+    const api = game.modules.get(CONSTANTS.MODULE_ID).api;
+    const chatData = await api.rollCompendiumAsRolltable(compendium);
     ChatMessage.create(chatData);
   }
 
@@ -363,7 +273,7 @@ export class BetterTables {
       rerollButton.click(async () => {
         let cardContent;
         if (pack && !id) {
-          const api = game.modules.get(CONSTANTS.MODULE_ID).public.API;
+          const api = game.modules.get(CONSTANTS.MODULE_ID).api;
           cardContent = await api.rollCompendiumAsRolltable(pack, CONSTANTS.MODULE_ID);
         } else {
           let rolltable;
@@ -600,15 +510,4 @@ export class BetterTables {
 
     return item.text;
   }
-
-  // static hiddenTable(wrapped, ...args) {
-  //   if (this.getFlag(CONSTANTS.MODULE_ID, BRTCONFIG.HIDDEN_TABLE)) {
-  //     try {
-  //       args[0].rollMode = "gmroll";
-  //     } catch {
-  //       args.push({ rollMode: "gmroll" });
-  //     }
-  //   }
-  //   return wrapped(...args);
-  // }
 }

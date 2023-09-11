@@ -5,18 +5,22 @@ import { LootChatCard } from "./loot/loot-chat-card.js";
 import { LootCreator } from "./loot/loot-creator.js";
 import { getRandomItemFromCompendium } from "./core/utils.js";
 import { CompendiumToRollTableHelpers } from "./apps/compendium-to-rolltable/compendium-to-rollTable-helpers.js";
+import { RollFromCompendiumAsRollTableHelpers } from "./apps/roll-from-compendium-as-rolltable/roll-from-compendium-as-rolltable-helpers.js";
+import { BRTLootHelpers } from "./loot/loot-helpers.js";
 
 /**
  * Create a new API class and export it as default
  */
-class API {
+const API = {
+
+    betterTables: new BetterTables(),
   /**
    * Get better rolltable tags from settings
    *
    */
-  static getTags() {
+  getTags() {
     return game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.TAGS.USE);
-  }
+  },
 
   /**
    * Roll a table an add the resulting loot to a given token.
@@ -27,89 +31,33 @@ class API {
    * @returns
    */
   async addLootToSelectedToken(tableEntity, token = null, options = null) {
-    let tokenstack = [];
-    const isTokenActor = options && options?.isTokenActor,
-      stackSame = options && options?.stackSame ? options.stackSame : true,
-      customRoll = options && options?.customRole ? options.customRole : undefined,
-      itemLimit = options && options?.itemLimit ? Number(options.itemLimit) : 0;
-
-    if (null == token && canvas.tokens.controlled.length === 0) {
-      return ui.notifications.error("Please select a token first");
-    } else {
-      tokenstack = token ? (token.length >= 0 ? token : [token]) : canvas.tokens.controlled;
-    }
-
-    ui.notifications.info(CONSTANTS.MODULE_ID + " | API | Loot generation started.");
-
-    const brtBuilder = new BRTBuilder(tableEntity);
-
-    for (const token of tokenstack) {
-      const results = await brtBuilder.betterRoll(customRoll);
-      const br = new BetterResults(results);
-      const betterResults = await br.buildResults(tableEntity);
-      const currencyData = br.getCurrencyData();
-      const lootCreator = new LootCreator(betterResults, currencyData);
-
-      await lootCreator.addCurrenciesToToken(token, isTokenActor);
-      await lootCreator.addItemsToToken(token, stackSame, isTokenActor, itemLimit);
-    }
-
-    return ui.notifications.info(CONSTANTS.MODULE_ID + " | API | Loot generation complete.");
-  }
+    return await BRTLootHelpers.addLootToSelectedToken(tableEntity, token, options);
+  },
 
   /**
    *
    * @param {*} tableEntity
    */
-  static async generateLoot(tableEntity, options = {}) {
-    const builder = new BRTBuilder(tableEntity),
-      results = await builder.betterRoll(),
-      br = new BetterResults(results),
-      betterResults = await br.buildResults(tableEntity),
-      currencyData = br.getCurrencyData(),
-      lootCreator = new LootCreator(betterResults, currencyData); //LootCreator;
+  async generateLoot(tableEntity, options = {}) {
+    return await BRTLootHelpers.generateLoot(tableEntity, options);
+  },
 
-    await lootCreator.createActor(tableEntity);
-    await lootCreator.addCurrenciesToActor();
-    await lootCreator.addItemsToActor();
 
-    if (game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.ALWAYS_SHOW_GENERATED_LOOT_AS_MESSAGE)) {
-      let rollMode = options && "rollMode" in options ? options.rollMode : null;
-      if (String(getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${BRTCONFIG.HIDDEN_TABLE}`)) === "true") {
-        rollMode = "gmroll";
-      }
-      const lootChatCard = new LootChatCard(betterResults, currencyData, rollMode);
-      await lootChatCard.createChatCard(tableEntity);
-    }
-  }
+  /**
+   *
+   * @param {*} tableEntity
+   */
+  async generateChatLoot(tableEntity, options = null) {
+    return await BRTLootHelpers.generateChatLoot(tableEntity, options)
+  },
 
   /**
    *
    * @param {String} compendium ID of the compendium to roll
    */
-  static async rollCompendiumAsRolltable(compendium = null, hideChatMessage) {
-    if (!game.user.isGM || !compendium) return;
-
-    // Get random item from compendium
-    const item = await getRandomItemFromCompendium(compendium);
-
-    // prepare card data
-    const fontSize = Math.max(60, 100 - Math.max(0, item.name.length - 27) * 2);
-    const chatCardData = {
-      compendium: compendium,
-      itemsData: [{ item: item, quantity: 1, fontSize: fontSize, type: 2 }],
-    };
-    const cardHtml = await renderTemplate("modules/better-rolltables/templates/loot-chat-card.hbs", chatCardData);
-    let chatData = {
-      flavor: `Rolled from compendium ${item.pack}`,
-      sound: "sounds/dice.wav",
-      user: game.user._id,
-      content: cardHtml,
-    };
-
-    if (!hideChatMessage) ChatMessage.create(chatData);
-    return chatData;
-  }
+  async rollCompendiumAsRolltable(compendium = null, hideChatMessage) {
+    return await RollFromCompendiumAsRollTableHelpers.rollCompendiumAsRollTable(compendium, hideChatMessage);
+  },
 
   /**
    * @module BetterRolltables.API.createRolltableFromCompendium
@@ -126,14 +74,16 @@ class API {
    *
    * @returns {Promise<Document>} the table entity that was created
    */
-  static async createRolltableFromCompendium(
+  async createRolltableFromCompendium(
     compendiumName,
     tableName = compendiumName + " RollTable",
     { weightPredicate = null } = {}
   ) {
-    return await CompendiumToRollTableHelpers.createRolltableFromCompendium(
+    return await CompendiumToRollTableHelpers.compendiumToRollTable(
         compendiumName,tableName, { weightPredicate });
   }
+
+
 
   /* ======================================================== */
   /* NEW API INTEGRATION */
@@ -142,4 +92,4 @@ class API {
 
 }
 
-export { API };
+export default API
