@@ -14,10 +14,10 @@ The API offers the following methods (WIP not complete)
 
 The `options` Argument is optional.
 
-You can check the [better-tables.js](https://github.com/p4535992/foundryvtt-better-rolltables/blob/master/scripts/better-tables.js)
+You can check the [better-tables.js](../src/scripts/better-tables.js)
 for all available methods.
 
-See the [options page](https://github.com/p4535992/foundryvtt-better-rolltables/wiki/Options-Argument-for-API-methods) for optional
+See the [options page](./Options-Argument-for-API-methods.md) for optional
 arguments.
 
 ## Roll tables from macros
@@ -43,7 +43,7 @@ With #141 support for a token argument was added to `addLootToSelectedToken ()`.
 This allows macros or other modules to give a single token or an array of tokens to the method to be used.
 
 As a fallback the there still is a check for currently controlled tokens.
-The `[options](https://github.com/p4535992/foundryvtt-better-rolltables/wiki/Options-Argument-for-API-methods)` argument currently has no effect on the method.
+The `[options](./Options-Argument-for-API-methods.md)` argument currently has no effect on the method.
 
 ## Example
 

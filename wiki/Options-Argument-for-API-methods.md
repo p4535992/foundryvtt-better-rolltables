@@ -2,7 +2,7 @@
 
 Developers can now use an optional options argument on several methods.
 This is still work in progress and currently only used for a single option.
-Please feel free to [add an issue](https://github.com/p4535992/foundryvtt-better-rolltables/issues)
+Please feel free to [add an issue](https://github.com/ultrakorne/better-rolltables/issues)
 with options you would like to see.
 
 ```javascript

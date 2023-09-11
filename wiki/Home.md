@@ -1,10 +1,10 @@
 ## Better RollTables
 
-How to use [**Loot Tables**](https://github.com/p4535992/foundryvtt-better-rolltables/wiki/Loot-Tables)
+How to use [**Loot Tables**](./Loot-Tables.md)
 
-How to use [Better RollTables Macros](https://github.com/p4535992/foundryvtt-better-rolltables/wiki/API-for-macros-and-modules#how-to-roll-tables-from-macros)
+How to use [Better RollTables Macros](./API-for-macros-and-modules#how-to-roll-tables-from-macros)
 
-[FAQs](https://github.com/p4535992/foundryvtt-better-rolltables/wiki/FAQ)
+[FAQs](./FAQ.md)
 
 
 ### Better Tables
