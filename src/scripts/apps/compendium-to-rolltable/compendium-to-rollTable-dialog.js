@@ -11,20 +11,7 @@ export class CompendiumToRollTableDialog extends Dialog {
     let itemTypesLength = itemTypes.length;
     let thisSystem = game.system.id;
 
-    let windowWidth;
-    switch (thisSystem) {
-      case "dnd5e": {
-        windowWidth = 322;
-        break;
-      }
-      case "sfrpg": {
-        windowWidth = 656;
-        break;
-      }
-      default: {
-        windowWidth = 322;
-      }
-    }
+    let windowWidth = 656;
 
     let compendiumSelect = ``;
 
@@ -48,16 +35,19 @@ export class CompendiumToRollTableDialog extends Dialog {
             </div>
             `;
 
+    // TODO TO PUT ON SYSTEM MANAGEMENT CHECK OUT THE LEVEL PATH PROPERTY
     let spellLevel = [];
     switch (thisSystem) {
-      case "dnd5e":
+      case "dnd5e": {
         spellLevel = [`cantrip`, `1st`, `2nd`, `3rd`, `4th`, `5th`, `6th`, `7th`, `8th`, `9th`];
         break;
-      case "sfrpg":
+      }
+      case "sfrpg": {
         for (let i = 0; i < 7; i++) {
           spellLevel.push(i);
         }
         break;
+      }
     }
 
     let spellLevelLength = spellLevel.length;
@@ -73,6 +63,7 @@ export class CompendiumToRollTableDialog extends Dialog {
             `;
     }
 
+    // TODO TO PUT ON SYSTEM MANAGEMENT CHECK OUT THE LEVEL PATH PROPERTY
     let itemRarity = [];
     let itemRaritySelect = ``;
     switch (thisSystem) {
@@ -382,6 +373,28 @@ export class CompendiumToRollTableDialog extends Dialog {
     return haystack.toLowerCase().includes(needle.toLowerCase());
   }
 
+  async fromCompendiumSimple(compendium, options = {}) {
+    // Ported from Foundry's existing RollTable.fromFolder()
+    const results = await compendium.index.map((e, i) => {
+      console.log("Compendium Item:");
+      console.log(e);
+      console.log("Compendium Index:");
+      console.log(i);
+      return {
+        text: e.name,
+        type: CONST.TABLE_RESULT_TYPES.COMPENDIUM,
+        collection: compendium.type,
+        resultId: e.id,
+        img: e.thumbnail || e.img,
+        weight: 1,
+        range: [i + 1, i + 1],
+        documentCollection: `${compendium.metadata.packageName}.${compendium.metadata.name}`,
+        drawn: false,
+      };
+    });
+    return await this.createCompendiumFromData(compendium.metadata.label, results, `1d${results.length}`, options);
+  }
+
   async fromCompendium(
     customFilters,
     nameFilters,
@@ -393,8 +406,6 @@ export class CompendiumToRollTableDialog extends Dialog {
     options = {}
   ) {
     // Ported from Foundry's existing RollTable.fromFolder()
-    let checked = true;
-
     const entries = await compendium.getDocuments();
     const filteredEntries = entries.filter((entry) => {
       let customFiltersValid = customFilters.every(({ filterPath, filterRequirements }) => {
@@ -435,7 +446,7 @@ export class CompendiumToRollTableDialog extends Dialog {
 
       return {
         text: entry.name,
-        type: 2,
+        type: CONST.TABLE_RESULT_TYPES.COMPENDIUM,
         collection: compendium.type,
         resultId: entry.id,
         img: entry.thumbnail || entry.img,
@@ -447,15 +458,13 @@ export class CompendiumToRollTableDialog extends Dialog {
     });
 
     // const results = await compendium.index.map((e, i) => {
-    //     if (checked) {
     //         debug("Compendium Item:");
     //         debug(e);
     //         debug("Compendium Index:");
     //         debug(i);
-    //     }
     //     return {
     //         text: e.name,
-    //         type: 2,
+    //         type: CONST.TABLE_RESULT_TYPES.COMPENDIUM,,
     //         collection: compendium.type,
     //         resultId: e.id,
     //         img: e.thumbnail || e.img,

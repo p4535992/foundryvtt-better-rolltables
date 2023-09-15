@@ -1,12 +1,12 @@
 import { CONSTANTS } from "../core/config.js";
 import { BetterRT } from "../better-table-view.js";
-import { Settings } from "../core/settingsConfig.js";
 import { BetterTables } from "../better-tables.js";
 // import renderWelcomeScreen from '../versioning/welcome-screen.js';
-import VersionCheck from "../versioning/version-check.js";
+// import VersionCheck from "../versioning/version-check.js";
 import { getIconByEntityType } from "../core/utils.js";
 import { setApi } from "../../module.js";
 import API from "../API.js";
+import { registerSettings } from "../settings.js";
 
 /**
  * @module BetterRollTables.BetterRolltableHooks
@@ -48,13 +48,15 @@ class BetterRolltableHooks {
   }
 
   static async foundryReady() {
-    const moduleSettings = new Settings();
-    moduleSettings.registerSettings();
+    // const moduleSettings = new Settings();
+    // moduleSettings.registerSettings();
 
     Hooks.on("renderRollTableConfig", BetterRT.enhanceRollTableView);
     Hooks.on("renderChatMessage", BetterTables.handleChatMessageButtons);
     Hooks.on("renderJournalPageSheet", BetterTables.handleRolltableLink);
     Hooks.on("renderItemSheet", BetterTables.handleRolltableLink);
+
+    // TODO we really need this ???
     if (game.system.id === "dnd5e") {
       Hooks.on("renderActorSheet", BetterTables.handleChatMessageButtons);
     }
@@ -134,8 +136,7 @@ class BetterRolltableHooks {
 
   static foundryInit() {
     // game.betterTables = new BetterTables();
-    const moduleSettingsInit = new Settings();
-    moduleSettingsInit.registerSettingsDuringInit();
+    registerSettings();
 
     Hooks.on("getCompendiumDirectoryEntryContext", BetterTables.enhanceCompendiumContextMenu);
     Hooks.on("getRollTableDirectoryEntryContext", BetterTables.enhanceRolltableContextMenu);

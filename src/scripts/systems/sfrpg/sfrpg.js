@@ -1,0 +1,9 @@
+export default {
+    DEFAULT_LOOT_SHEET: "", // TODO
+    DEFAULT_SPELL_COMPENDIUM: "", // TODO
+    QUANTITY_PROPERTY_PATH: "", // TODO
+    PRICE_PROPERTY_PATH: "", // TODO
+    SPELL_LEVEL_PATH: "", // TODO
+    ITEM_LOOT_TYPE: "", // TODO
+    SCROLL_REGEX: "", // TODO
+};

@@ -1,3 +1,4 @@
+import { CONSTANTS } from "../../core/config";
 import { debug } from "../../lib";
 import { CompendiumToRollTableDialog } from "./compendium-to-rollTable-dialog";
 
@@ -23,12 +24,81 @@ export class CompendiumToRollTableSpecialHarvestDialog extends CompendiumToRollT
    * const result = groupBy(arr, "type");
    * console.log(result); // Output: { A: [{type: "A"}, {type: "A"}], B: [{type: "B"}] }
    */
-  groupBy(array, property) {
+  _groupBy(array, property) {
     return array.reduce((memo, x) => {
       memo[x[property]] ||= [];
       memo[x[property]].push(x);
       return memo;
     }, {});
+  }
+
+  _convertToSkillDenomination(skillValue) {
+    if (!skillValue) {
+      return "";
+    }
+    const skillValueToCheck = String(skillValue).toLowerCase().trim();
+
+    // TODO multiy
+  }
+
+  /**
+   * @override
+   * @param {*} customFilters
+   * @param {*} nameFilters
+   * @param {*} selectedItems
+   * @param {*} selectedSpellLevels
+   * @param {*} selectedRarities
+   * @param {*} weightPredicate
+   * @param {*} compendium
+   * @param {*} options
+   * @returns
+   */
+  async fromCompendium(
+    customFilters,
+    nameFilters,
+    selectedItems,
+    selectedSpellLevels,
+    selectedRarities,
+    weightPredicate,
+    compendium,
+    options = {}
+  ) {
+    // Ported from Foundry's existing RollTable.fromFolder()
+    const results = await compendium.index.map((e, i) => {
+      console.log("Compendium Item:");
+      console.log(e);
+      console.log("Compendium Index:");
+      console.log(i);
+
+      const dcValue = getProperty(e, `system.description.chat`);
+      const skillValue = getProperty(e, `system.description.unidentified`);
+
+      const skillDenom = this._convertToSkillDenomination(skillValue);
+
+      // https://foundryvtt.com/api/v8/data.TableResultData.html
+      // _id	string The _id which uniquely identifies this TableResult embedded document
+      // type	string	<optional> A result sub-type from CONST.TABLE_RESULT_TYPES
+      // text	string	<optional> The text which describes the table result
+      // img	string	<optional> An image file url that represents the table result
+      // collection	string	<optional> A named collection from which this result is drawn
+      // resultId	string	<optional> The _id of a Document within the collection this result references
+      // weight	number	<optional> The probabilistic weight of this result relative to other results
+      // range	Array.<number>	<optional> A length 2 array of ascending integers which defines the range of dice roll totals which produce this drawn result
+      // drawn	boolean	<optional> false Has this result already been drawn (without replacement)
+      // flags	object	<optional> {} An object of optional key/value flags
+      return {
+        text: e.name,
+        type: CONST.TABLE_RESULT_TYPES.COMPENDIUM,
+        collection: compendium.type,
+        resultId: e.id,
+        img: e.thumbnail || e.img,
+        weight: 1,
+        range: [i + 1, i + 1],
+        documentCollection: `${compendium.metadata.packageName}.${compendium.metadata.name}`,
+        drawn: false,
+      };
+    });
+    return await this.createCompendiumFromData(compendium.metadata.label, results, `1d${results.length}`, options);
   }
 
   /**
@@ -39,7 +109,7 @@ export class CompendiumToRollTableSpecialHarvestDialog extends CompendiumToRollT
    * @param {*} options
    */
   async createCompendiumFromData(compendiumName, results, formula, options = {}) {
-    const resultsGroupedBySystemOrigin = this.groupBy(results, `system.origin`);
+    const resultsGroupedBySystemOrigin = this._groupBy(results, `system.origin`);
     const documents = [];
 
     for (const [key, value] of Object.entries(resultsGroupedBySystemOrigin)) {
