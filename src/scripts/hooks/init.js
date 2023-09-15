@@ -1,4 +1,3 @@
-import { API } from "../API.js";
 import { CONSTANTS } from "../core/config.js";
 import { BetterRT } from "../better-table-view.js";
 import { Settings } from "../core/settingsConfig.js";
@@ -7,6 +6,7 @@ import { BetterTables } from "../better-tables.js";
 import VersionCheck from "../versioning/version-check.js";
 import { getIconByEntityType } from "../core/utils.js";
 import { setApi } from "../../module.js";
+import API from "../API.js";
 
 /**
  * @module BetterRollTables.BetterRolltableHooks
@@ -29,6 +29,7 @@ class BetterRolltableHooks {
 
   static foundrySetup() {
     const moduleData = game.modules.get(CONSTANTS.MODULE_ID);
+    // game.modules.get("better-rolltables").api.betterTables
     setApi(API);
 
     // For retrocompatibility only...
@@ -44,7 +45,6 @@ class BetterRolltableHooks {
 
     // Freeze the public API so it can't be modified.
     Object.freeze(moduleData.public);
-
   }
 
   static async foundryReady() {
@@ -128,7 +128,8 @@ class BetterRolltableHooks {
       }
     });
 
-    await game.betterTables.updateSpellCache();
+    //await game.betterTables.updateSpellCache();
+    await API.updateSpellCache();
   }
 
   static foundryInit() {
@@ -175,9 +176,9 @@ class BetterRolltableHooks {
     autocompleteInlinePropertiesApi.PACKAGE_CONFIG.push(config);
   }
 
-//   static onDevModeReady({ registerPackageDebugFlag }) {
-//     registerPackageDebugFlag(CONSTANTS.MODULE_ID);
-//   }
+  //   static onDevModeReady({ registerPackageDebugFlag }) {
+  //     registerPackageDebugFlag(CONSTANTS.MODULE_ID);
+  //   }
 }
 
 export { BetterRolltableHooks };

@@ -62,6 +62,13 @@
                 name="flags.better-rolltables.harvest-dc-value" value="{{better-rolltables.harvest-dc-value}}"
                 {{#if disabled}}disabled{{/if}}>
         </div>
+        <div class="form-group {{#ifcontain better-rolltables.table-type "harvest"}}{{else}}hidden{{/ifcontain}}">
+            <label>{{localize 'better-rolltables.HarvestSkillValue'}}</label>
+            <input type="{{#ifcontain better-rolltables.table-type "harvest"}}text{{else}}hidden{{/ifcontain}}"
+                placeholder="{{localize 'better-rolltables.HarvestSkillValuePlaceholder'}}"
+                name="flags.better-rolltables.harvest-skill-value" value="{{better-rolltables.harvest-skill-value}}"
+                {{#if disabled}}disabled{{/if}}>
+        </div>
         <div class="form-group {{#ifcontain better-rolltables.table-type "harvest"}}hidden{{/ifcontain}}">
             <label for="flags.better-rolltables.harvest-amount-key">{{localize 'better-rolltables.HarvestRollAmount'}}</label>
             <input type="{{#ifcontain better-rolltables.table-type "harvest"}}hidden{{else}}text{{/ifcontain}}"
@@ -69,6 +76,7 @@
                 name="flags.better-rolltables.harvest-amount-key" value="{{better-rolltables.harvest-amount-key}}"
                 {{#if disabled}}disabled{{/if}}>
         </div>
+        <!-- TODO for now not actor creation
         <div class="form-group {{#ifcontain better-rolltables.table-type "harvest"}}{{else}}hidden{{/ifcontain}}">
             <label>{{localize 'better-rolltables.HarvestActorName'}}</label>
             <input type="{{#ifcontain better-rolltables.table-type "harvest"}}text{{else}}hidden{{/ifcontain}}"
@@ -76,7 +84,7 @@
                 value="{{better-rolltables.harvest-actor-name}}"
                 {{#if disabled}}disabled{{/if}}>
         </div>
-
+        -->
 
     </main>
 </fieldset>

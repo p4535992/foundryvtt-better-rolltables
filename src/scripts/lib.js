@@ -8,74 +8,77 @@ import { CONSTANTS } from "./core/config";
 // 0 = none, warnings = 1, debug = 2, all = 3
 
 export function debug(msg, ...args) {
-    try {
-        if (game.settings.get(CONSTANTS.MODULE_ID, "debug") || game.modules.get('_dev-mode')?.api?.getPackageDebugValue(CONSTANTS.MODULE_ID, 'boolean')) {
-            console.log(`DEBUG | ${CONSTANTS.MODULE_ID} | ${msg}`, ...args);
-        }
-    } catch (e) {
-        console.error(e.message);
+  try {
+    if (
+      game.settings.get(CONSTANTS.MODULE_ID, "debug") ||
+      game.modules.get("_dev-mode")?.api?.getPackageDebugValue(CONSTANTS.MODULE_ID, "boolean")
+    ) {
+      console.log(`DEBUG | ${CONSTANTS.MODULE_ID} | ${msg}`, ...args);
     }
-    return msg;
+  } catch (e) {
+    console.error(e.message);
+  }
+  return msg;
 }
 
 export function log(message, ...args) {
-    try {
-        message = `${CONSTANTS.MODULE_ID} | ${message}`;
-        console.log(message.replace("<br>", "\n"), ...args);
-    } catch (e) {
-        console.error(e.message);
-    }
-    return message;
+  try {
+    message = `${CONSTANTS.MODULE_ID} | ${message}`;
+    console.log(message.replace("<br>", "\n"), ...args);
+  } catch (e) {
+    console.error(e.message);
+  }
+  return message;
 }
 
 export function notify(message, ...args) {
-    try {
-        message = `${CONSTANTS.MODULE_ID} | ${message}`;
-        ui.notifications?.notify(message);
-        console.log(message.replace("<br>", "\n"), ...args);
-    } catch (e) {
-        console.error(e.message);
-    }
-    return message;
+  try {
+    message = `${CONSTANTS.MODULE_ID} | ${message}`;
+    ui.notifications?.notify(message);
+    console.log(message.replace("<br>", "\n"), ...args);
+  } catch (e) {
+    console.error(e.message);
+  }
+  return message;
 }
 
 export function info(info, notify = false, ...args) {
-    try {
-        info = `${CONSTANTS.MODULE_ID} | ${info}`;
-        if (notify) {
-            ui.notifications?.info(info);
-        }
-        console.log(info.replace("<br>", "\n"), ...args);
-    } catch (e) {
-        console.error(e.message);
+  try {
+    info = `${CONSTANTS.MODULE_ID} | ${info}`;
+    if (notify) {
+      ui.notifications?.info(info);
     }
-    return info;
+    console.log(info.replace("<br>", "\n"), ...args);
+  } catch (e) {
+    console.error(e.message);
+  }
+  return info;
 }
 
 export function warn(warning, notify = false, ...args) {
-    try {
-        warning = `${CONSTANTS.MODULE_ID} | ${warning}`;
-        if (notify) {
-            ui.notifications?.warn(warning);
-        }
-        console.warn(warning.replace("<br>", "\n"), ...args);
-    } catch (e) {
-        console.error(e.message);
+  try {
+    warning = `${CONSTANTS.MODULE_ID} | ${warning}`;
+    if (notify) {
+      ui.notifications?.warn(warning);
     }
-    return warning;
+    console.warn(warning.replace("<br>", "\n"), ...args);
+  } catch (e) {
+    console.error(e.message);
+  }
+  return warning;
 }
 
 export function error(error, notify = true, ...args) {
-    try {
-        error = `${CONSTANTS.MODULE_ID} | ${error}`;
-        if (notify) {
-            ui.notifications?.error(error);
-        }
-        console.error(error.replace("<br>", "\n"), ...args);
-    } catch (e) {
-        console.error(e.message);
+  try {
+    error = `${CONSTANTS.MODULE_ID} | ${error}`;
+    if (notify) {
+      ui.notifications?.error(error);
     }
-    return new Error(error.replace("<br>", "\n"));
+    console.error(error.replace("<br>", "\n"), ...args);
+  } catch (e) {
+    console.error(e.message);
+  }
+  return new Error(error.replace("<br>", "\n"));
 }
 
 export function timelog(message) {
@@ -105,4 +108,3 @@ export function dialogWarning(message, icon = "fas fa-exclamation-triangle") {
 }
 
 // =========================================================================================
-

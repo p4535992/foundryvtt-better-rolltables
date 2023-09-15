@@ -1,7 +1,6 @@
 import { CONSTANTS } from "./scripts/core/config.js";
 import { BetterRolltableHooks } from "./scripts/hooks/init.js";
 
-
 //   BetterRolltableHooks.init();
 
 /* ------------------------------------ */
@@ -11,8 +10,8 @@ Hooks.once("init", async () => {
   // log(`${CONSTANTS.MODULE_ID} | Initializing ${CONSTANTS.MODULE_ID}`);
 
   // Register custom module settings
-//   registerSettings();
-//   initHooks();
+  //   registerSettings();
+  //   initHooks();
 
   BetterRolltableHooks.foundryInit();
 
@@ -25,7 +24,7 @@ Hooks.once("init", async () => {
 /* ------------------------------------ */
 Hooks.once("setup", function () {
   // Do anything after initialization but before ready
-//   setupHooks();
+  //   setupHooks();
   BetterRolltableHooks.foundrySetup();
 });
 
@@ -44,8 +43,8 @@ Hooks.once("ready", async () => {
   //   if (game.modules.get('socketLib')) word = 'activate';
   //   throw error(`Requires the 'socketLib' module. Please ${word} it.`);
   // }
-//   readyHooks();
-   BetterRolltableHooks.foundryReady();
+  //   readyHooks();
+  BetterRolltableHooks.foundryReady();
 });
 
 /* ------------------------------------ */

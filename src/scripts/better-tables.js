@@ -6,6 +6,7 @@ import { BRTBuilder } from "./core/brt-builder.js";
 import { BetterResults } from "./core/brt-table-results.js";
 import { getIconByEntityType, i18n } from "./core/utils.js";
 import { BRTCONFIG, CONSTANTS } from "./core/config.js";
+import API from "./API.js";
 
 export class BetterTables {
   constructor() {
@@ -25,8 +26,7 @@ export class BetterTables {
    * @param {*} tableEntity
    */
   async generateLoot(tableEntity, options = {}) {
-    const api = game.modules.get(CONSTANTS.MODULE_ID).api;
-    return await api.generateLoot(tableEntity, options);
+    return await API.generateLoot(tableEntity, options);
   }
 
   /**
@@ -38,31 +38,19 @@ export class BetterTables {
    * @returns
    */
   async addLootToSelectedToken(tableEntity, token = null, options = null) {
-    const api = game.modules.get(CONSTANTS.MODULE_ID).api;
-    return await api.addLootToSelectedToken(tableEntity, token, options);
+    return await API.addLootToSelectedToken(tableEntity, token, options);
   }
 
   async generateChatLoot(tableEntity, options = null) {
-    const api = game.modules.get(CONSTANTS.MODULE_ID).api;
-    return await api.generateChatLoot(tableEntity, options);
+    return await API.generateChatLoot(tableEntity, options);
   }
 
   async getStoryResults(tableEntity) {
-    const storyBuilder = new StoryBuilder(tableEntity);
-    await storyBuilder.drawStory();
-    const storyHtml = storyBuilder.getGeneratedStory();
-    const storyGMHtml = storyBuilder.getGeneratedStoryGM();
-    return { storyHtml, storyGMHtml };
+    return await API.getStoryResults(tableEntity);
   }
 
   async generateChatStory(tableEntity) {
-    const storyBuilder = new StoryBuilder(tableEntity);
-    await storyBuilder.drawStory();
-    const storyHtml = storyBuilder.getGeneratedStory();
-    const storyGMHtml = storyBuilder.getGeneratedStoryGM();
-    const storyChat = new StoryChatCard(tableEntity);
-    storyChat.createChatCard(storyHtml);
-    storyChat.createChatCard(storyGMHtml, { gmOnly: true });
+    return await API.generateChatStory(tableEntity);
   }
 
   async getBetterTableResults(tableEntity) {
@@ -108,8 +96,7 @@ export class BetterTables {
    */
 
   async createTableFromCompendium(tableName, compendiumName, { weightPredicate = null } = {}) {
-    const api = game.modules.get(CONSTANTS.MODULE_ID).api;
-    return await api.createTableFromCompendium(tableName, compendiumName, { weightPredicate });
+    return await API.createTableFromCompendium(tableName, compendiumName, { weightPredicate });
   }
 
   /**
@@ -134,6 +121,28 @@ export class BetterTables {
       }
     }
   }
+
+  createLink(item) {
+    if (!item) {
+      return undefined;
+    }
+    if (!item.type || item.type > 0) {
+      const id = item.id;
+      const uuid = item.uuid;
+      const text = item.name || item.text;
+      const entity = item.documentName;
+      const pack = item.pack || game.collections.get(item.collectionName)?.documentName || "";
+      const packPart = pack !== "" ? `data-pack="${pack}"` : "";
+      const icon = getIconByEntityType(entity);
+      return `<a class="content-link" draggable="true" ${packPart} data-entity="${entity}" data-id="${id}" data-uuid="${uuid}"><i class="fas ${icon}"></i>${text}</a>`;
+    }
+
+    return item.text;
+  }
+
+  /* =================================== */
+  /* STATIC METHODS */
+  /* =================================== */
 
   /**
    *
@@ -187,7 +196,8 @@ export class BetterTables {
    */
   static async menuCallBackRollTable(rolltableId) {
     const rolltable = game.tables.get(rolltableId);
-    await game.betterTables.betterTableRoll(rolltable);
+    //await game.betterTables.betterTableRoll(rolltable);
+    await API.betterTableRoll(rolltable);
   }
 
   /**
@@ -200,7 +210,7 @@ export class BetterTables {
    * @deprecated use api.rollCompendiumAsRolltable instead
    */
   static async rollCompendiumAsRolltable(compendium) {
-    const api = game.modules.get(CONSTANTS.MODULE_ID).api;
+    // const api = game.modules.get(CONSTANTS.MODULE_ID).api;
     api.rollCompendiumAsRolltable(compendium);
   }
 
@@ -231,7 +241,7 @@ export class BetterTables {
    * @param {String} compendium ID of the compendium to roll
    */
   static async menuCallBackRollCompendium(compendium) {
-    const api = game.modules.get(CONSTANTS.MODULE_ID).api;
+    // const api = game.modules.get(CONSTANTS.MODULE_ID).api;
     const chatData = await api.rollCompendiumAsRolltable(compendium);
     ChatMessage.create(chatData);
   }
@@ -260,11 +270,13 @@ export class BetterTables {
   }
 
   static async _addButtonsToMessage(message, html) {
+    const api = game.modules.get(CONSTANTS.MODULE_ID).api;
     const tableDrawNode = $(html).find(".table-draw");
     const id = $(tableDrawNode).data("id");
     const pack = $(tableDrawNode).data("pack");
-    if (!id && !pack) return;
-
+    if (!id && !pack) {
+      return;
+    }
     if (game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.SHOW_REROLL_BUTTONS)) {
       // reroll button
       const rerollButton = $(
@@ -273,7 +285,6 @@ export class BetterTables {
       rerollButton.click(async () => {
         let cardContent;
         if (pack && !id) {
-          const api = game.modules.get(CONSTANTS.MODULE_ID).api;
           cardContent = await api.rollCompendiumAsRolltable(pack, CONSTANTS.MODULE_ID);
         } else {
           let rolltable;
@@ -384,7 +395,8 @@ export class BetterTables {
               `${BRTCONFIG.NAMESPACE}.DrawReroll`
             )}"><i class="fas fa-dice-d20"></i></a>`
           ).click(async () => {
-            await game.betterTables.generateChatLoot(rolltable);
+            //await game.betterTables.generateChatLoot(rolltable);
+            await API.generateChatLoot(rolltable);
           });
           $(link).after(rollNode);
         });
@@ -406,7 +418,8 @@ export class BetterTables {
               `${BRTCONFIG.NAMESPACE}.DrawReroll`
             )}"><i class="fas fa-dice-d20"></i></a>`
           ).click(async () => {
-            await game.betterTables.generateChatLoot(document);
+            //await game.betterTables.generateChatLoot(document);
+            await API.generateChatLoot(document);
           });
           $(link).after(rollNode);
         });
@@ -466,7 +479,8 @@ export class BetterTables {
               `${BRTCONFIG.NAMESPACE}.DrawReroll`
             )}"><i class="fas fa-dice-d20"></i></a>`
           ).click(async () => {
-            await game.betterTables.generateChatLoot(rolltable);
+            //await game.betterTables.generateChatLoot(rolltable);
+            await API.generateChatLoot(rolltable);
           });
           $(link).after(rollNode);
         });
@@ -488,26 +502,11 @@ export class BetterTables {
               `${BRTCONFIG.NAMESPACE}.DrawReroll`
             )}"><i class="fas fa-dice-d20"></i></a>`
           ).click(async () => {
-            await game.betterTables.generateChatLoot(document);
+            // await game.betterTables.generateChatLoot(document);
+            await API.generateChatLoot(document);
           });
           $(link).after(rollNode);
         });
     }
-  }
-
-  createLink(item) {
-    if (!item) return undefined;
-
-    if (!item.type || item.type > 0) {
-      const id = item.id;
-      const text = item.name || item.text;
-      const entity = item.documentName;
-      const pack = item.pack || game.collections.get(item.collectionName)?.documentName || "";
-      const packPart = pack !== "" ? `data-pack="${pack}"` : "";
-      const icon = getIconByEntityType(entity);
-      return `<a class="content-link" draggable="true" ${packPart} data-entity="${entity}" data-id="${id}"><i class="fas ${icon}"></i>${text}</a>`;
-    }
-
-    return item.text;
   }
 }

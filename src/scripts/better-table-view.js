@@ -1,5 +1,6 @@
 import { i18n } from "./core/utils.js";
 import { CONSTANTS, BRTCONFIG } from "./core/config.js";
+import API from "./API.js";
 
 export class BetterRT {
   static _calcHeight(element) {
@@ -66,7 +67,8 @@ export class BetterRT {
     if (selectedTableType === BRTCONFIG.TABLE_TYPE_LOOT) {
       newRollButton.getElementsByTagName("i")[0].className = "fas fa-gem";
       newRollButton.onclick = async function () {
-        await game.betterTables.generateChatLoot(tableEntity);
+        //await game.betterTables.generateChatLoot(tableEntity);
+        await API.generateChatLoot(tableEntity);
       };
 
       /** Create additional Button to Generate Loot */
@@ -79,13 +81,15 @@ export class BetterRT {
     } else if (selectedTableType === BRTCONFIG.TABLE_TYPE_STORY) {
       newRollButton.getElementsByTagName("i")[0].className = "fas fa-book";
       newRollButton.onclick = async function () {
-        await game.betterTables.generateChatStory(tableEntity);
+        //await game.betterTables.generateChatStory(tableEntity);
+        await API.generateChatStory(tableEntity);
       };
     } else if (selectedTableType === BRTCONFIG.TABLE_TYPE_BETTER) {
       // newRollButton.getElementsByTagName("i")[0].className = "fas fa-dice";
       newRollButton.innerHTML = '<i class ="fas fa-dice-d20"></i> Roll+';
       newRollButton.onclick = async function () {
-        await game.betterTables.betterTableRoll(tableEntity);
+        // await game.betterTables.betterTableRoll(tableEntity);
+        await API.betterTableRoll(tableEntity);
       };
     }
 
@@ -259,7 +263,10 @@ export class BetterRT {
     generateLootBtn.innerHTML = `<i id="BRT-gen-loot" class="fas fa-coins"></i> ${i18n(
       `${BRTCONFIG.NAMESPACE}.Buttons.GenerateLoot`
     )}`;
-    generateLootBtn.onclick = async () => await game.betterTables.generateLoot(tableEntity);
+    generateLootBtn.onclick = async () => {
+      //await game.betterTables.generateLoot(tableEntity);
+      await API.generateLoot(tableEntity);
+    };
 
     htmlElement.insertBefore(generateLootBtn, htmlElement.firstChild);
   }

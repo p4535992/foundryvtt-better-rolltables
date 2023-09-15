@@ -64,14 +64,14 @@ export async function tryRoll(rollFormula) {
  * @returns {Number} how many times to roll on this table
  */
 export async function rollsAmount(table) {
-    const tableType = table.getFlag(CONSTANTS.MODULE_ID, BRTCONFIG.TABLE_TYPE_KEY);
-    if(tableType === BRTCONFIG.TABLE_TYPE_LOOT) {
-        const rollFormula = table.getFlag(CONSTANTS.MODULE_ID, BRTCONFIG.LOOT_ROLLS_AMOUNT_KEY);
-        return tryRoll(rollFormula);
-    } else if(tableType === BRTCONFIG.TABLE_TYPE_HARVEST) {
-        const rollFormula = table.getFlag(CONSTANTS.MODULE_ID, BRTCONFIG.HARVEST_ROLLS_AMOUNT_KEY);
-        return tryRoll(rollFormula);
-    } else {
-        return 1;
-    }
+  const tableType = table.getFlag(CONSTANTS.MODULE_ID, BRTCONFIG.TABLE_TYPE_KEY);
+  if (tableType === BRTCONFIG.TABLE_TYPE_LOOT) {
+    const rollFormula = table.getFlag(CONSTANTS.MODULE_ID, BRTCONFIG.LOOT_AMOUNT_KEY);
+    return tryRoll(rollFormula);
+  } else if (tableType === BRTCONFIG.TABLE_TYPE_HARVEST) {
+    const rollFormula = table.getFlag(CONSTANTS.MODULE_ID, BRTCONFIG.HARVEST_AMOUNT_KEY);
+    return tryRoll(rollFormula);
+  } else {
+    return 1;
+  }
 }

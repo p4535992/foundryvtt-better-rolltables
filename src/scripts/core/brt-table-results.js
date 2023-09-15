@@ -11,7 +11,7 @@ export class BetterResults {
   }
 
   async buildResults(table) {
-    const currencyString = table.getFlag(CONSTANTS.MODULE_ID, BRTCONFIG.LOOT_CURRENCY_KEY);
+    const currencyString = table.getFlag(CONSTANTS.MODULE_ID, BRTCONFIG.LOOT_CURRENCY_STRING_KEY);
     this.currencyData = await this._generateCurrency(currencyString);
 
     for (let i = 0; i < this.tableResults.length; i++) {

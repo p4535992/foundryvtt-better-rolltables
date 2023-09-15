@@ -5,8 +5,7 @@ import { LootChatCard } from "./loot-chat-card";
 import { LootCreator } from "./loot-creator";
 
 export class BRTLootHelpers {
-
-    /**
+  /**
    * Roll a table an add the resulting loot to a given token.
    *
    * @param {RollTable} tableEntity
@@ -14,7 +13,7 @@ export class BRTLootHelpers {
    * @param {options} object
    * @returns
    */
-  async addLootToSelectedToken(tableEntity, token = null, options = null) {
+  static async addLootToSelectedToken(tableEntity, token = null, options = null) {
     let tokenstack = [];
     const isTokenActor = options && options?.isTokenActor,
       stackSame = options && options?.stackSame ? options.stackSame : true,
@@ -85,5 +84,4 @@ export class BRTLootHelpers {
 
     await lootChatCard.createChatCard(tableEntity);
   }
-
 }

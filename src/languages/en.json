@@ -44,6 +44,8 @@
     "CurrencyLootPlaceholder": "Add comma separated formulas e.g.: 1d4[gp], (1d4+1)*10[sp]",
     "HarvestDcValue": "Harvest DC Value",
     "HarvestDcValuePlaceholder": "Add a formulas or a number e.g.: 1d4 or 13",
+    "HarvestSkillValue": "Harvest Key of the skill",
+    "HarvestSkillValuePlaceholder": "The key of the skill used. Is the key property not the label so for example on Dnd5e if is 'Dexterity' we use 'dex', or 'Arcana' we use 'arc'",
     "LootActorName": "Add Loot to Actor with this specific name",
     "LootActorNamePlaceholder": "If empty it will create a new loot actor every time",
     "HarvestActorName": "Add harvest to Actor with this specific name",

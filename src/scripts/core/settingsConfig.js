@@ -45,16 +45,16 @@ export class Settings {
     let defaultLootSheet = undefined;
 
     if (game.system.id === "dnd5e") {
-        defaultSpellCompendium = "dnd5e.spells";
-        defaultLootSheet = "dnd5e.LootSheet5eNPC",
-        systemSheets = Object.values(CONFIG.Actor.sheetClasses.npc).map((s) => ({
-            id: s.id,
-            label: s.label,
-        }));
+      defaultSpellCompendium = "dnd5e.spells";
+      (defaultLootSheet = "dnd5e.LootSheet5eNPC"),
+        (systemSheets = Object.values(CONFIG.Actor.sheetClasses.npc).map((s) => ({
+          id: s.id,
+          label: s.label,
+        })));
 
-        BRTCONFIG.QUANTITY_PROPERTY_PATH = "system.quantity";
-        BRTCONFIG.PRICE_PROPERTY_PATH = "system.price";
-        BRTCONFIG.SPELL_LEVEL_PATH = "system.level";
+      BRTCONFIG.QUANTITY_PROPERTY_PATH = "system.quantity";
+      BRTCONFIG.PRICE_PROPERTY_PATH = "system.price";
+      BRTCONFIG.SPELL_LEVEL_PATH = "system.level";
     }
 
     if (game.system.id === "pf2e") {
@@ -195,15 +195,14 @@ export class Settings {
      * Harvest specific
      */
     game.settings.register(CONSTANTS.MODULE_ID, BRTCONFIG.ALWAYS_SHOW_GENERATED_HARVEST_AS_MESSAGE, {
-        name: i18n(`${BRTCONFIG.NAMESPACE}.Settings.AlwaysShowGeneratedHarvestAsMessage.Title`),
-        hint: i18n(`${BRTCONFIG.NAMESPACE}.Settings.AlwaysShowGeneratedHarvestAsMessage.Description`),
-        scope: WORLD,
-        group: GROUP_HARVEST,
-        config: false,
-        default: false,
-        type: Boolean,
+      name: i18n(`${BRTCONFIG.NAMESPACE}.Settings.AlwaysShowGeneratedHarvestAsMessage.Title`),
+      hint: i18n(`${BRTCONFIG.NAMESPACE}.Settings.AlwaysShowGeneratedHarvestAsMessage.Description`),
+      scope: WORLD,
+      group: GROUP_HARVEST,
+      config: false,
+      default: false,
+      type: Boolean,
     });
-
   }
 
   /**
