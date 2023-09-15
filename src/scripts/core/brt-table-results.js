@@ -1,7 +1,8 @@
 import * as Utils from "./utils.js";
 import * as BRTHelper from "./brt-helper.js";
 import { BRTBuilder } from "./brt-builder.js";
-import { CONSTANTS, BRTCONFIG } from "./config.js";
+import { BRTCONFIG } from "./config.js";
+import { CONSTANTS } from "../constants/constants.js";
 
 export class BetterResults {
   constructor(tableResults) {
@@ -99,7 +100,7 @@ export class BetterResults {
         } else if (textString) {
           // if no table definition is found, the textString is the item name
           console.log(`results text ${textString.trim()} and commands ${commands}`);
-          betterResult.img = result.img;
+          betterResult.img = result.thumbnail || result.img || CONFIG.RollTable.resultIcon;
           betterResult.text = textString.trim();
           // if there is command, then it's not a pure text but a generated item
           if (!commands || commands.length === 0) {
@@ -111,7 +112,7 @@ export class BetterResults {
       }
     } else {
       const betterResult = {};
-      betterResult.img = result.img;
+      betterResult.img = result.thumbnail || result.img || CONFIG.RollTable.resultIcon;
       betterResult.collection = result.documentCollection;
       betterResult.text = result.text;
       betterResults.push(betterResult);

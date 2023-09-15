@@ -1,5 +1,6 @@
-import { CONSTANTS, BRTCONFIG } from "./config.js";
-import { i18n } from "./utils.js";
+import { CONSTANTS } from "../constants/constants.js";
+import { i18n } from "../lib.js";
+import { BRTCONFIG } from "./config.js";
 
 /**
  * A game settings configuration application

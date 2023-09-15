@@ -5,5 +5,6 @@ export default {
   PRICE_PROPERTY_PATH: "system.price",
   SPELL_LEVEL_PATH: "system.level",
   ITEM_LOOT_TYPE: "loot",
-  SCROLL_REGEX: "",
+  SCROLL_REGEX: /\s*Spell\s*Scroll\s*(\d+|cantrip)/i,
+  MATCH_ATTRIBUTES_BLACKLIST: [],
 };

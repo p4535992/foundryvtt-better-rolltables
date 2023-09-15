@@ -1,7 +1,8 @@
 import * as BRTHelper from "./brt-helper.js";
 import * as Utils from "../core/utils.js";
-import { CONSTANTS, BRTCONFIG } from "./config.js";
+import { BRTCONFIG } from "./config.js";
 import { addRollModeToChatData } from "../core/utils.js";
+import { CONSTANTS } from "../constants/constants.js";
 
 export class BRTBuilder {
   constructor(tableEntity) {
@@ -103,9 +104,10 @@ export class BRTBuilder {
           const innerResults = await this.rollManyOnTable(entryAmount, innerTable, { _depth: _depth + 1 });
           drawnResults = drawnResults.concat(innerResults);
         } else {
-          for (let i = 0; i < entryAmount; i++) {
-            drawnResults.push(entry);
-          }
+          //   for (let i = 0; i < entryAmount; i++) {
+          //     drawnResults.push(entry);
+          //   }
+          drawnResults = drawnResults.concat(Array(entryAmount).fill(entry));
         }
       }
       amount -= resultToDraw;

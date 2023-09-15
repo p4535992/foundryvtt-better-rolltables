@@ -2,9 +2,9 @@
 import dnd5e from "./systems/dnd5e/dnd5e.js";
 import sw5e from "./systems/sw5e/sw5e.js";
 import generic from "./systems/generic/generic.js";
-import pf2e from "./pf2e/pf2e.js";
-import pf1 from "./pf1/pf1.js";
-import sfrpg from "./sfrpg/sfrpg.js";
+import pf2e from "./systems/pf2e/pf2e.js";
+import pf1 from "./systems/pf1/pf1.js";
+import sfrpg from "./systems/sfrpg/sfrpg.js";
 // ↑ IMPORT SYSTEMS HERE ↑
 
 /**

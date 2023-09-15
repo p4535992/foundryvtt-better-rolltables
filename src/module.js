@@ -1,4 +1,4 @@
-import { CONSTANTS } from "./scripts/core/config.js";
+import { CONSTANTS } from "./scripts/constants/constants.js";
 import { BetterRolltableHooks } from "./scripts/hooks/init.js";
 
 //   BetterRolltableHooks.init();

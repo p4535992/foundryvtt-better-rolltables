@@ -1,6 +1,7 @@
 import { getItemFromCompendium } from "../core/utils.js";
-import { CONSTANTS, BRTCONFIG } from "../core/config.js";
+import { BRTCONFIG } from "../core/config.js";
 import { LootManipulator } from "./loot-manipulation.js";
+import { CONSTANTS } from "../constants/constants.js";
 
 export class LootCreator {
   /**

@@ -1,85 +1,69 @@
-export const CONSTANTS = {
-  MODULE_ID: "better-rolltables",
-  PATH: "modules/better-rolltables",
-  TYPES: ["none", "better", "loot", "harvest", "story"],
-  FLAGS: {
-    // saved data keys (used e.g. in the rolltableEntity.data.flags)
-    TABLE_TYPE_KEY: "table-type",
-
-    LOOT_CURRENCY_STRING_KEY: "table-currency-string",
-    LOOT_AMOUNT_KEY: "loot-amount-key",
-    LOOT_ACTOR_NAME_KEY: "loot-actor-name",
-
-    HARVEST_AMOUNT_KEY: "harvest-amount-key",
-    HARVEST_DC_VALUE_KEY: "harvest-dc-value",
-    HARVEST_SKILLS_VALUE_KEY: "harvest-skills.value",
-    // TODO HARVEST_ACTOR_NAME_KEY: "harvest-actor-name",
-
-    RESULTS_FORMULA_KEY: "brt-result-formula",
-    HIDDEN_TABLE: "brt-hidden-table",
-  },
-};
+import { CONSTANTS } from "../constants/constants.js";
+import SETTINGS from "../constants/settings.js";
 
 export const BRTCONFIG = {
-  NAMESPACE: "better-rolltables",
+  NAMESPACE: CONSTANTS.MODULE_ID,
 
   // START FLAGS
 
   // saved data keys (used e.g. in the rolltableEntity.data.flags)
-  TABLE_TYPE_KEY: "table-type",
+  TABLE_TYPE_KEY: CONSTANTS.FLAGS.TABLE_TYPE_KEY,
 
-  LOOT_CURRENCY_STRING_KEY: "table-currency-string",
-  LOOT_AMOUNT_KEY: "loot-amount-key",
-  LOOT_ACTOR_NAME_KEY: "loot-actor-name",
+  LOOT_CURRENCY_STRING_KEY: CONSTANTS.FLAGS.LOOT_CURRENCY_STRING_KEY,
+  LOOT_AMOUNT_KEY: CONSTANTS.FLAGS.LOOT_AMOUNT_KEY,
+  LOOT_ACTOR_NAME_KEY: CONSTANTS.FLAGS.LOOT_ACTOR_NAME_KEY,
 
-  HARVEST_AMOUNT_KEY: "harvest-amount-key",
-  HARVEST_DC_VALUE_KEY: "harvest-dc-value",
-  HARVEST_SKILLS_VALUE_KEY: "harvest-skills.value",
-  // TODO HARVEST_ACTOR_NAME_KEY: "harvest-actor-name",
+  HARVEST_AMOUNT_KEY: CONSTANTS.FLAGS.HARVEST_AMOUNT_KEY,
+  HARVEST_DC_VALUE_KEY: CONSTANTS.FLAGS.HARVEST_DC_VALUE_KEY,
+  HARVEST_SKILLS_VALUE_KEY: CONSTANTS.FLAGS.HARVEST_SKILLS_VALUE_KEY,
+  // TODO HARVEST_ACTOR_NAME_KEY:  CONSTANTS.FLAGS.HARVEST_ACTOR_NAME_KEY,
 
-  RESULTS_FORMULA_KEY: "brt-result-formula",
-  HIDDEN_TABLE: "brt-hidden-table",
+  RESULTS_FORMULA_KEY: CONSTANTS.FLAGS.RESULTS_FORMULA_KEY,
+  HIDDEN_TABLE: CONSTANTS.FLAGS.HIDDEN_TABLE,
 
   // END FLAGS
 
-  // different type of table type the mod will support. none will basically keep the basic rolltable functionality
-  TABLE_TYPE_NONE: "none",
-  TABLE_TYPE_BETTER: "better",
-  TABLE_TYPE_LOOT: "loot",
-  TABLE_TYPE_HARVEST: "harvest",
-  TABLE_TYPE_STORY: "story",
+  // START WORLD SETTINGS
 
-  SPELL_COMPENDIUM_KEY: "default-spell-compendium",
-  LOOT_SHEET_TO_USE_KEY: "loot-sheet-to-use",
-  SHOW_REROLL_BUTTONS: "show-reroll-buttons",
-  SHOW_OPEN_BUTTONS: "show-open-buttons",
-  USE_CONDENSED_BETTERROLL: "use-condensed-betterroll",
-  ADD_ROLL_IN_COMPENDIUM_CONTEXTMENU: "add-roll-on-compendium-contextmenu",
-  ADD_ROLL_IN_ROLLTABLE_CONTEXTMENU: "add-roll-on-rolltable-contextmenu",
-  SHOW_WARNING_BEFORE_REROLL: "show-warning-before-reroll",
-  STICK_ROLLTABLE_HEADER: "stick-rolltable-header",
-  ROLL_TABLE_FROM_JOURNAL: "roll-table-from-journal",
+  // different type of table type the mod will support. none will basically keep the basic rolltable functionality
+  TABLE_TYPE_NONE: CONSTANTS.TABLE_TYPE_NONE,
+  TABLE_TYPE_BETTER: CONSTANTS.TABLE_TYPE_BETTER,
+  TABLE_TYPE_LOOT: CONSTANTS.TABLE_TYPE_LOOT,
+  TABLE_TYPE_HARVEST: CONSTANTS.TABLE_TYPE_HARVEST,
+  TABLE_TYPE_STORY: CONSTANTS.TABLE_TYPE_STORY,
+
+  SPELL_COMPENDIUM_KEY: SETTINGS.SPELL_COMPENDIUM_KEY,
+  LOOT_SHEET_TO_USE_KEY: SETTINGS.LOOT_SHEET_TO_USE_KEY,
+  SHOW_REROLL_BUTTONS: SETTINGS.SHOW_REROLL_BUTTONS,
+  SHOW_OPEN_BUTTONS: SETTINGS.SHOW_OPEN_BUTTONS,
+  USE_CONDENSED_BETTERROLL: SETTINGS.USE_CONDENSED_BETTERROLL,
+  ADD_ROLL_IN_COMPENDIUM_CONTEXTMENU: SETTINGS.ADD_ROLL_IN_COMPENDIUM_CONTEXTMENU,
+  ADD_ROLL_IN_ROLLTABLE_CONTEXTMENU: SETTINGS.ADD_ROLL_IN_ROLLTABLE_CONTEXTMENU,
+  SHOW_WARNING_BEFORE_REROLL: SETTINGS.SHOW_WARNING_BEFORE_REROLL,
+  STICK_ROLLTABLE_HEADER: SETTINGS.STICK_ROLLTABLE_HEADER,
+  ROLL_TABLE_FROM_JOURNAL: SETTINGS.ROLL_TABLE_FROM_JOURNAL,
 
   // Loot
-  SHOW_CURRENCY_SHARE_BUTTON: "show-currency-share-button",
-  ALWAYS_SHOW_GENERATED_LOOT_AS_MESSAGE: "always-show-generated-loot-as-message",
+  SHOW_CURRENCY_SHARE_BUTTON: SETTINGS.SHOW_CURRENCY_SHARE_BUTTON,
+  ALWAYS_SHOW_GENERATED_LOOT_AS_MESSAGE: SETTINGS.ALWAYS_SHOW_GENERATED_LOOT_AS_MESSAGE,
 
   // Harvest
-  ALWAYS_SHOW_GENERATED_HARVEST_AS_MESSAGE: "always-show-generated-harvest-as-message",
+  ALWAYS_SHOW_GENERATED_HARVEST_AS_MESSAGE: SETTINGS.ALWAYS_SHOW_GENERATED_HARVEST_AS_MESSAGE,
 
-  // in fp2e quantity is in system.quantity.value , in 5e system.quantity
+  TAGS: {
+    USE: SETTINGS.TAGS.USE,
+    DEFAULTS: SETTINGS.TAGS.DEFAULTS,
+  },
+
+  // END WORLD SETTINGS
+
+  // START DEFAULT SYSTEM SETTINGS
+
   QUANTITY_PROPERTY_PATH: "system.quantity",
   PRICE_PROPERTY_PATH: "system.price",
   SPELL_LEVEL_PATH: "system.level",
-
-  // in 5e a valid item type is loot
   ITEM_LOOT_TYPE: "loot",
-  REGEX: {
-    scroll: /\s*Spell\s*Scroll\s*(\d+|cantrip)/i,
-  },
   SCROLL_REGEX: /\s*Spell\s*Scroll\s*(\d+|cantrip)/i,
-  TAGS: {
-    USE: "use-tags",
-    DEFAULTS: "tag-defaults",
-  },
+
+  // END DEFAULT SYSTEM SETTINGS
 };

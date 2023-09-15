@@ -1,6 +1,8 @@
-import { BRTCONFIG, CONSTANTS } from "./core/config";
+import { CONSTANTS } from "./constants/constants";
+import { BRTCONFIG } from "./core/config";
 import { BetterRolltableSettingsConfig } from "./core/settingsConfig";
 import { i18n } from "./lib";
+import { SYSTEMS } from "./systems";
 
 const WORLD = "world";
 const GROUP_DEFAULT = "defaults";

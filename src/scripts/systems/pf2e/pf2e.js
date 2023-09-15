@@ -6,4 +6,5 @@ export default {
   SPELL_LEVEL_PATH: "system.level.value",
   ITEM_LOOT_TYPE: "treasure",
   SCROLL_REGEX: /\s*Scroll\s*of\s*(\d+)/gi, // pf2e scroll is "Scroll of 1st-level Spell"
+  MATCH_ATTRIBUTES_BLACKLIST: [],
 };

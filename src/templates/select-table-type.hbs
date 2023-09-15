@@ -29,6 +29,14 @@
 
         {{!-- BETTER TABLE --}}
 
+        <div class="form-group {{#ifcontain better-rolltables.table-type "better"}}hidden{{/ifcontain}}">
+            <label for="flags.better-rolltables.loot-amount-key">{{localize 'better-rolltables.BetterRollAmount'}}</label>
+            <input type="{{#ifcontain better-rolltables.table-type "better"}}hidden{{else}}text{{/ifcontain}}"
+                placeholder="{{localize 'better-rolltables.BetterRollAmountPlaceholder'}}"
+                name="flags.better-rolltables.loot-amount-key" value="{{better-rolltables.loot-amount-key}}"
+                {{#if disabled}}disabled{{/if}}>
+        </div>
+
         {{!-- LOOT TABLE --}}
 
         <div class="form-group {{#ifcontain better-rolltables.table-type "loot"}}{{else}}hidden{{/ifcontain}}">
@@ -70,18 +78,18 @@
                 {{#if disabled}}disabled{{/if}}>
         </div>
         <div class="form-group {{#ifcontain better-rolltables.table-type "harvest"}}hidden{{/ifcontain}}">
-            <label for="flags.better-rolltables.harvest-amount-key">{{localize 'better-rolltables.HarvestRollAmount'}}</label>
+            <label for="flags.better-rolltables.loot-amount-key">{{localize 'better-rolltables.HarvestRollAmount'}}</label>
             <input type="{{#ifcontain better-rolltables.table-type "harvest"}}hidden{{else}}text{{/ifcontain}}"
                 placeholder="{{localize 'better-rolltables.HarvestRollAmountPlaceholder'}}"
-                name="flags.better-rolltables.harvest-amount-key" value="{{better-rolltables.harvest-amount-key}}"
+                name="flags.better-rolltables.loot-amount-key" value="{{better-rolltables.loot-amount-key}}"
                 {{#if disabled}}disabled{{/if}}>
         </div>
         <!-- TODO for now not actor creation
         <div class="form-group {{#ifcontain better-rolltables.table-type "harvest"}}{{else}}hidden{{/ifcontain}}">
             <label>{{localize 'better-rolltables.HarvestActorName'}}</label>
             <input type="{{#ifcontain better-rolltables.table-type "harvest"}}text{{else}}hidden{{/ifcontain}}"
-                placeholder="{{localize 'better-rolltables.HarvestActorNamePlaceholder'}}" name="flags.better-rolltables.harvest-actor-name"
-                value="{{better-rolltables.harvest-actor-name}}"
+                placeholder="{{localize 'better-rolltables.HarvestActorNamePlaceholder'}}" name="flags.better-rolltables.loot-actor-name"
+                value="{{better-rolltables.loot-actor-name}}"
                 {{#if disabled}}disabled{{/if}}>
         </div>
         -->

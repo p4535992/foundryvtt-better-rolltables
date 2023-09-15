@@ -1,6 +1,7 @@
+import { CONSTANTS } from "../constants/constants";
 import { BRTBuilder } from "../core/brt-builder";
 import { BetterResults } from "../core/brt-table-results";
-import { BRTCONFIG, CONSTANTS } from "../core/config";
+import { BRTCONFIG } from "../core/config";
 import { LootChatCard } from "./loot-chat-card";
 import { LootCreator } from "./loot-creator";
 

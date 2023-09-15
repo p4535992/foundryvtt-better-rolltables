@@ -4,9 +4,11 @@ import { StoryBuilder } from "./story/story-builder.js";
 import { StoryChatCard } from "./story/story-chat-card.js";
 import { BRTBuilder } from "./core/brt-builder.js";
 import { BetterResults } from "./core/brt-table-results.js";
-import { getIconByEntityType, i18n } from "./core/utils.js";
-import { BRTCONFIG, CONSTANTS } from "./core/config.js";
+import { getIconByEntityType } from "./core/utils.js";
+import { BRTCONFIG } from "./core/config.js";
 import API from "./API.js";
+import { CONSTANTS } from "./constants/constants.js";
+import { i18n } from "./lib.js";
 
 export class BetterTables {
   constructor() {
@@ -280,7 +282,9 @@ export class BetterTables {
     if (game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.SHOW_REROLL_BUTTONS)) {
       // reroll button
       const rerollButton = $(
-        `<a class="better-rolltables-roll-table-reroll-button" title="${game.i18n.localize(`${BRTCONFIG.NAMESPACE}.DrawReroll`)}">`
+        `<a class="better-rolltables-roll-table-reroll-button" title="${game.i18n.localize(
+          `${BRTCONFIG.NAMESPACE}.DrawReroll`
+        )}">`
       ).append("<i class='fas fa-dice-d20'></i>");
       rerollButton.click(async () => {
         let cardContent;
@@ -334,7 +338,9 @@ export class BetterTables {
       }
       if (document) {
         const openLink = $(
-          `<a class="better-rolltables-roll-table-open-table" title="${game.i18n.localize(`${BRTCONFIG.NAMESPACE}.OpenRolltable`)}">`
+          `<a class="better-rolltables-roll-table-open-table" title="${game.i18n.localize(
+            `${BRTCONFIG.NAMESPACE}.OpenRolltable`
+          )}">`
         ).append("<i class='fas fa-th-list'></i>");
         if (id) openLink.data("id", id);
         if (pack) openLink.data("pack", pack);

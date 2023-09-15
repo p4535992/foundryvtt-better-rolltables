@@ -1,6 +1,6 @@
 import { BRTBuilder } from "./core/brt-builder.js";
 import { BetterResults } from "./core/brt-table-results.js";
-import { CONSTANTS, BRTCONFIG } from "./core/config.js";
+import { BRTCONFIG } from "./core/config.js";
 import { LootChatCard } from "./loot/loot-chat-card.js";
 import { LootCreator } from "./loot/loot-creator.js";
 import { getRandomItemFromCompendium } from "./core/utils.js";
@@ -9,6 +9,7 @@ import { RollFromCompendiumAsRollTableHelpers } from "./apps/roll-from-compendiu
 import { BRTLootHelpers } from "./loot/loot-helpers.js";
 import { BRTStoryHelpers } from "./story/story-helpers.js";
 import { BetterTables } from "./better-tables.js";
+import { CONSTANTS } from "./constants/constants.js";
 
 /**
  * Create a new API class and export it as default

@@ -1,6 +1,5 @@
-import { BRTCONFIG, CONSTANTS } from "./config";
-
-export const i18n = (key) => game.i18n && game.i18n.localize(key);
+import { CONSTANTS } from "../constants/constants";
+import { BRTCONFIG } from "./config";
 
 export function addRollModeToChatData(chatData, rollMode) {
   rollMode = rollMode ?? game.settings.get("core", "rollMode");

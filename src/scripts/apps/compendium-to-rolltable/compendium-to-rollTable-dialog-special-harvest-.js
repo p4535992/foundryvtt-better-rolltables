@@ -1,4 +1,4 @@
-import { CONSTANTS } from "../../core/config";
+import { CONSTANTS } from "../../constants/constants";
 import { debug } from "../../lib";
 import { CompendiumToRollTableDialog } from "./compendium-to-rollTable-dialog";
 
@@ -38,7 +38,8 @@ export class CompendiumToRollTableSpecialHarvestDialog extends CompendiumToRollT
     }
     const skillValueToCheck = String(skillValue).toLowerCase().trim();
 
-    // TODO multiy
+    const r = this.skillMap[skillValueToCheck];
+    return r;
   }
 
   /**
@@ -91,11 +92,18 @@ export class CompendiumToRollTableSpecialHarvestDialog extends CompendiumToRollT
         type: CONST.TABLE_RESULT_TYPES.COMPENDIUM,
         collection: compendium.type,
         resultId: e.id,
-        img: e.thumbnail || e.img,
+        img: e.thumbnail || e.img || CONFIG.RollTable.resultIcon,
         weight: 1,
         range: [i + 1, i + 1],
         documentCollection: `${compendium.metadata.packageName}.${compendium.metadata.name}`,
         drawn: false,
+        flags: {
+          [`${CONSTANTS.MODULE_ID}`]: {
+            [`${CONSTANTS.FLAGS.HARVEST_AMOUNT_KEY}`]: 1,
+            [`${CONSTANTS.FLAGS.HARVEST_DC_VALUE_KEY}`]: dc ?? 0,
+            [`${CONSTANTS.FLAGS.HARVEST_SKILLS_VALUE_KEY}`]: skillDenom ?? "",
+          },
+        },
       };
     });
     return await this.createCompendiumFromData(compendium.metadata.label, results, `1d${results.length}`, options);
@@ -112,13 +120,13 @@ export class CompendiumToRollTableSpecialHarvestDialog extends CompendiumToRollT
     const resultsGroupedBySystemOrigin = this._groupBy(results, `system.origin`);
     const documents = [];
 
-    for (const [key, value] of Object.entries(resultsGroupedBySystemOrigin)) {
+    for (const [key, values] of Object.entries(resultsGroupedBySystemOrigin)) {
       //options.renderSheet = options.renderSheet ?? true;
       const document = await RollTable.create(
         {
           name: "Better Harvester | " + key + " RollTable",
           description: `A random table created from the contents of the ${compendiumName} compendium filter for the system origin value '${key}'.`,
-          results: value,
+          results: values,
           formula: formula ?? `1d${value.length}`,
         },
         options
@@ -127,4 +135,25 @@ export class CompendiumToRollTableSpecialHarvestDialog extends CompendiumToRollT
     }
     return documents;
   }
+
+  skillMap = new Map([
+    ["acrobatics", "acr"],
+    ["animal handling", "ani"],
+    ["arcana", "arc"],
+    ["athletics", "ath"],
+    ["deception", "dec"],
+    ["history", "his"],
+    ["insight", "ins"],
+    ["investigation", "inv"],
+    ["intimidation", "itm"],
+    ["medicine", "med"],
+    ["nature", "nat"],
+    ["persuasion", "per"],
+    ["perception", "prc"],
+    ["performance", "prf"],
+    ["religion", "rel"],
+    ["sleight of Hand", "slt"],
+    ["stealth", "ste"],
+    ["survival", "sur"],
+  ]);
 }

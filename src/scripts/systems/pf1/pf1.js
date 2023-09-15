@@ -6,4 +6,5 @@ export default {
   SPELL_LEVEL_PATH: "system.level",
   ITEM_LOOT_TYPE: "loot",
   SCROLL_REGEX: /\s*Scroll\s*of\s*(\d+)/gi,
+  MATCH_ATTRIBUTES_BLACKLIST: [],
 };

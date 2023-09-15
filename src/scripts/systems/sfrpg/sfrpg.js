@@ -6,4 +6,5 @@ export default {
   SPELL_LEVEL_PATH: "", // TODO
   ITEM_LOOT_TYPE: "", // TODO
   SCROLL_REGEX: "", // TODO
+  MATCH_ATTRIBUTES_BLACKLIST: [],
 };

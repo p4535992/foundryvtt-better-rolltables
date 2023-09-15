@@ -1,4 +1,5 @@
-import { CONSTANTS, BRTCONFIG } from "./config.js";
+import { CONSTANTS } from "../constants/constants.js";
+import { BRTCONFIG } from "./config.js";
 
 /**
  * when dropping a link entity on a rolltable if the drop is a tableResult, we assign the dropped entity to that result table.
@@ -53,7 +54,16 @@ export async function dropEventOnTable(event, table) {
 
 export async function tryRoll(rollFormula) {
   try {
-    return (await new Roll(rollFormula).roll({ async: true })).total || 1;
+    // return (await new Roll(rollFormula).roll({ async: true })).total || 1;
+    const qtFormula = rollFormula; //r.flags[CONSTANTS.MODULE_ID]?.qtFormula?.trim();
+    if (qtFormula == null || qtFormula === "" || qtFormula === "1") {
+      return 1;
+    } else {
+      // const qtRoll = Roll.create(qtFormula);
+      // const qt = (await qtRoll.evaluate({ async: true })).total;
+      const qt = (await new Roll(rollFormula).roll({ async: true })).total || 1;
+      return qt;
+    }
   } catch (error) {
     return 1;
   }

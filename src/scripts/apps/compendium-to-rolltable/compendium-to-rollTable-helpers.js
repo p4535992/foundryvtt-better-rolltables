@@ -1,4 +1,5 @@
-import { BRTCONFIG, CONSTANTS } from "../../core/config";
+import { CONSTANTS } from "../../constants/constants";
+import { BRTCONFIG } from "../../core/config";
 import { CompendiumToRollTableDialog } from "./compendium-to-rollTable-dialog";
 import { CompendiumToRollTableSpecialHarvestDialog } from "./compendium-to-rollTable-dialog-special-harvest-";
 
@@ -64,7 +65,7 @@ export class CompendiumToRollTableHelpers {
           type: CONST.TABLE_RESULT_TYPES.COMPENDIUM,
           collection: compendiumName,
           text: item.name,
-          img: item.thumbnail || item.img,
+          img: item.thumbnail || item.img || CONFIG.RollTable.resultIcon,
           weight: weightPredicate ? weightPredicate(item) : 1,
           range: [1, 1],
         }));

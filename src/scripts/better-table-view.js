@@ -1,6 +1,7 @@
-import { i18n } from "./core/utils.js";
-import { CONSTANTS, BRTCONFIG } from "./core/config.js";
+import { BRTCONFIG } from "./core/config.js";
 import API from "./API.js";
+import { CONSTANTS } from "./constants/constants.js";
+import { i18n, i18nFormat } from "./lib.js";
 
 export class BetterRT {
   static _calcHeight(element) {
@@ -30,7 +31,7 @@ export class BetterRT {
     brtData.disabled = !rollTable.editable;
 
     let renderedExtraConfig = await renderTemplate(
-      "modules/better-rolltables/templates/select-table-type.hbs",
+      `modules/${CONSTANTS.MODULE_ID}/templates/select-table-type.hbs`,
       brtData
     );
     headerElement.insertAdjacentHTML("beforeend", renderedExtraConfig);
@@ -108,7 +109,7 @@ export class BetterRT {
     const lastBox = html.find(".results");
     const checkboxHTML = `
     <div class="form-group">
-        <label>${game.i18n.format(`${CONSTANTS.MODULE_ID}.label.tableTextHiddenTable`)}</label>
+        <label>${i18nFormat(`${CONSTANTS.MODULE_ID}.label.tableTextHiddenTable`)}</label>
         <input type="checkbox" name="flags.${CONSTANTS.MODULE_ID}.${BRTCONFIG.HIDDEN_TABLE}" ${
       isHidden ? "checked" : ""
     }>
