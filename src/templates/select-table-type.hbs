@@ -62,7 +62,7 @@
         </div>
 
         {{!-- HARVEST TABLE --}}
-
+        <!-- TODO
         <div class="form-group {{#ifcontain better-rolltables.table-type "harvest"}}{{else}}hidden{{/ifcontain}}">
             <label>{{localize 'better-rolltables.HarvestDcValue'}}</label>
             <input type="{{#ifcontain better-rolltables.table-type "harvest"}}text{{else}}hidden{{/ifcontain}}"
@@ -77,11 +77,12 @@
                 name="flags.better-rolltables.harvest-skill-value" value="{{better-rolltables.harvest-skill-value}}"
                 {{#if disabled}}disabled{{/if}}>
         </div>
+        -->
         <div class="form-group {{#ifcontain better-rolltables.table-type "harvest"}}hidden{{/ifcontain}}">
-            <label for="flags.better-rolltables.loot-amount-key">{{localize 'better-rolltables.HarvestRollAmount'}}</label>
+            <label for="flags.better-rolltables.harvest-amount-key">{{localize 'better-rolltables.HarvestRollAmount'}}</label>
             <input type="{{#ifcontain better-rolltables.table-type "harvest"}}hidden{{else}}text{{/ifcontain}}"
                 placeholder="{{localize 'better-rolltables.HarvestRollAmountPlaceholder'}}"
-                name="flags.better-rolltables.loot-amount-key" value="{{better-rolltables.loot-amount-key}}"
+                name="flags.better-rolltables.harvest-amount-key" value="{{better-rolltables.harvest-amount-key}}"
                 {{#if disabled}}disabled{{/if}}>
         </div>
         <!-- TODO for now not actor creation

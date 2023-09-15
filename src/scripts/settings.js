@@ -117,20 +117,20 @@ export function registerSettings() {
     type: Boolean,
   });
 
-  /**
-   * Base Settings Sheet
-   */
-  game.settings.register(CONSTANTS.MODULE_ID, BRTCONFIG.LOOT_SHEET_TO_USE_KEY, {
-    name: i18n(`${BRTCONFIG.NAMESPACE}.Settings.LootSheet.Title`),
-    hint: i18n(`${BRTCONFIG.NAMESPACE}.Settings.LootSheet.Description`),
-    scope: WORLD,
-    group: GROUP_DEFAULT,
-    config: false,
-    default: defaultLootSheet,
-    type: String,
-    // choices: systemSheets,
-    // choices: Object.values(CONFIG.Actor.sheetClasses.npc).map((s) => ({id: s.id, label: s.label}))
-  });
+  // /**
+  //  * Base Settings Sheet
+  //  */
+  // game.settings.register(CONSTANTS.MODULE_ID, BRTCONFIG.LOOT_SHEET_TO_USE_KEY, {
+  //   name: i18n(`${BRTCONFIG.NAMESPACE}.Settings.LootSheet.Title`),
+  //   hint: i18n(`${BRTCONFIG.NAMESPACE}.Settings.LootSheet.Description`),
+  //   scope: WORLD,
+  //   group: GROUP_DEFAULT,
+  //   config: false,
+  //   default: defaultLootSheet,
+  //   type: String,
+  //   // choices: systemSheets,
+  //   // choices: Object.values(CONFIG.Actor.sheetClasses.npc).map((s) => ({id: s.id, label: s.label}))
+  // });
 
   game.settings.register(CONSTANTS.MODULE_ID, BRTCONFIG.SPELL_COMPENDIUM_KEY, {
     name: i18n(`${BRTCONFIG.NAMESPACE}.Settings.SpellCompendium.Title`),

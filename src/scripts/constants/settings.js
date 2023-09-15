@@ -6,7 +6,7 @@ const SETTINGS = {
   // Module Settings
 
   SPELL_COMPENDIUM_KEY: "default-spell-compendium",
-  LOOT_SHEET_TO_USE_KEY: "loot-sheet-to-use",
+  // LOOT_SHEET_TO_USE_KEY: "loot-sheet-to-use",
   SHOW_REROLL_BUTTONS: "show-reroll-buttons",
   SHOW_OPEN_BUTTONS: "show-open-buttons",
   USE_CONDENSED_BETTERROLL: "use-condensed-betterroll",

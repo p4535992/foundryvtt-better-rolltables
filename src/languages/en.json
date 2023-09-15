@@ -7,7 +7,7 @@
         "generateRolltableFromCompendium": "Generate rolltable.",
         "startRolltableGeneration": "Starting generation of rolltable for {title} ({name}) with {compendiumSize} entries.",
         "rolltableGenerationFinished": "Rolltable generation for {title} ({name}) finished.",
-        "rollCompendiumAsRolltable": "Rolling compendium as rolltable."
+        "rollCompendiumAsRolltable": "Rolling compendium as rolltable (BRT)."
       }
     },
     "Buttons": {

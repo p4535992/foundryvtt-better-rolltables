@@ -164,7 +164,7 @@ export class BetterTables {
       if (game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.ADD_ROLL_IN_COMPENDIUM_CONTEXTMENU)) {
         options.push({
           name: i18n(`${BRTCONFIG.NAMESPACE}.api.msg.rollCompendiumAsRolltable`),
-          icon: '<i class="fas fa-dice-d20"></i>',
+          icon: '<i class="fa-solid fa-dice"></i>',
           callback: (li) => {
             API.rollCompendiumAsRolltable(li.data("pack"));
           },
@@ -181,8 +181,8 @@ export class BetterTables {
   static async enhanceRolltableContextMenu(html, options) {
     if (game.user.isGM && game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.ADD_ROLL_IN_ROLLTABLE_CONTEXTMENU)) {
       options.unshift({
-        name: "Roll table",
-        icon: '<i class="fas fa-dice-d20"></i>',
+        name: "Roll table (BRT)",
+        icon: '<i class="fa-solid fa-dice"></i>',
         callback: (li) => {
           BetterTables.menuCallBackRollTable(li.data("documentId"));
         },

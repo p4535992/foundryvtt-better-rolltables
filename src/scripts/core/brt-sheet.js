@@ -33,7 +33,7 @@ export class BetterRollTableGenericSheet extends RollTableConfig {
     results.sort((a, b) => a.range[0] - b.range[0]);
 
     // Merge data and return;
-    return foundry.utils.mergeObject(super.getData(options), {
+    let brtData = foundry.utils.mergeObject(super.getData(options), {
       results: results,
       resultTypes: Object.entries(CONST.TABLE_RESULT_TYPES).reduce((obj, v) => {
         obj[v[1]] = v[0].titleCase();
@@ -42,5 +42,9 @@ export class BetterRollTableGenericSheet extends RollTableConfig {
       documentTypes: CONST.COMPENDIUM_DOCUMENT_TYPES,
       compendiumPacks: Array.from(game.packs.keys()),
     });
+
+    brtData = foundry.utils.mergeObject(brtData, duplicate(this.document.flags));
+    brtData.disabled = !this.editable;
+    return brtData;
   }
 }

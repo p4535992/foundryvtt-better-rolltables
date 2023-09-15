@@ -28,10 +28,10 @@ export class LootCreator {
       });
     }
 
-    const lootSheet = game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.LOOT_SHEET_TO_USE_KEY);
-    if (lootSheet in CONFIG.Actor.sheetClasses.npc) {
-      await this.actor.setFlag("core", "sheetClass", lootSheet);
-    }
+    // const lootSheet = game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.LOOT_SHEET_TO_USE_KEY);
+    // if (lootSheet in CONFIG.Actor.sheetClasses.npc) {
+    //   await this.actor.setFlag("core", "sheetClass", lootSheet);
+    // }
   }
 
   async addCurrenciesToActor() {
