@@ -26,23 +26,20 @@ class BetterRolltableHooks {
   }
 
   static foundrySetup() {
-    const moduleData = game.modules.get(CONSTANTS.MODULE_ID);
-    // game.modules.get("better-rolltables").api.betterTables
+    // game.modules.get("better-rolltables").api
     setApi(API);
 
     // For retrocompatibility only...
-
+    // game.betterTables
     game.betterTables = game.modules.get(CONSTANTS.MODULE_ID).api.betterTables;
-    /**
-     * game.modules.get(CONSTANTS.MODULE_ID).public.API;
-     * @type {API}
-     */
-    moduleData.public = {
+
+    // game.modules.get(CONSTANTS.MODULE_ID).public.API;
+    game.modules.get(CONSTANTS.MODULE_ID).public = {
       API: game.modules.get(CONSTANTS.MODULE_ID).api,
     };
 
     // Freeze the public API so it can't be modified.
-    Object.freeze(moduleData.public);
+    Object.freeze(game.modules.get(CONSTANTS.MODULE_ID).public);
   }
 
   static async foundryReady() {
@@ -146,7 +143,7 @@ class BetterRolltableHooks {
    */
   static async onAIPSetup() {
     const autocompleteInlinePropertiesApi = game.modules.get("autocomplete-inline-properties").API;
-    const DATA_MODE = api.CONST.DATA_MODE;
+    const DATA_MODE = autocompleteInlinePropertiesApi.CONST.DATA_MODE;
 
     // AIP
     // Define the config for our package

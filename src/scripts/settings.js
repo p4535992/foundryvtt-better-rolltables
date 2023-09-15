@@ -1,15 +1,16 @@
 import { CONSTANTS } from "./constants/constants";
+import SETTINGS from "./constants/settings";
 import { BRTCONFIG } from "./core/config";
 import { BetterRolltableSettingsConfig } from "./core/settingsConfig";
 import { i18n } from "./lib";
 import { SYSTEMS } from "./systems";
 
-const WORLD = "world";
-const GROUP_DEFAULT = "defaults";
-const GROUP_UI = "UI";
-const GROUP_LOOT = "Loot";
-const GROUP_HARVEST = "Harvest";
-const GROUP_TAGS = "Tags";
+export const WORLD = "world";
+export const GROUP_DEFAULT = "defaults";
+export const GROUP_UI = "UI";
+export const GROUP_LOOT = "Loot";
+export const GROUP_HARVEST = "Harvest";
+export const GROUP_TAGS = "Tags";
 
 // /**
 //  * Register the game settings during InitHook required by contextmenues
@@ -76,7 +77,7 @@ export function registerSettings() {
   //   }
 
   for (let [name, data] of Object.entries(SETTINGS.GET_DEFAULT())) {
-    game.settings.register(CONSTANTS.MODULE_NAME, name, data);
+    game.settings.register(CONSTANTS.MODULE_ID, name, data);
   }
 
   let defaultSpellCompendium = SYSTEMS.DATA.DEFAULT_LOOT_SHEET;
@@ -127,7 +128,8 @@ export function registerSettings() {
     config: false,
     default: defaultLootSheet,
     type: String,
-    choices: systemSheets,
+    // choices: systemSheets,
+    // choices: Object.values(CONFIG.Actor.sheetClasses.npc).map((s) => ({id: s.id, label: s.label}))
   });
 
   game.settings.register(CONSTANTS.MODULE_ID, BRTCONFIG.SPELL_COMPENDIUM_KEY, {
@@ -254,9 +256,9 @@ export function registerSettings() {
 
   // =====================================================================
 
-  game.settings.register(CONSTANTS.MODULE_NAME, "debug", {
-    name: `${CONSTANTS.MODULE_NAME}.Settings.debug.name`,
-    hint: `${CONSTANTS.MODULE_NAME}.Settings.debug.hint`,
+  game.settings.register(CONSTANTS.MODULE_ID, "debug", {
+    name: `${CONSTANTS.MODULE_ID}.Settings.debug.name`,
+    hint: `${CONSTANTS.MODULE_ID}.Settings.debug.hint`,
     scope: "client",
     config: true,
     default: false,

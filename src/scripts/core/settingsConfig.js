@@ -1,5 +1,6 @@
 import { CONSTANTS } from "../constants/constants.js";
 import { i18n } from "../lib.js";
+import { GROUP_DEFAULT, GROUP_LOOT, GROUP_TAGS, GROUP_UI } from "../settings.js";
 import { BRTCONFIG } from "./config.js";
 
 /**

@@ -152,14 +152,12 @@ export class BetterTables {
    * @param {Array} options
    */
   static async enhanceCompendiumContextMenu(html, options) {
-    const api = game.modules.get(CONSTANTS.MODULE_ID).api;
-
     if (game.user.isGM) {
       options.push({
         name: i18n(`${BRTCONFIG.NAMESPACE}.api.msg.generateRolltableFromCompendium`),
         icon: '<i class="fas fa-th-list"></i>',
         callback: (li) => {
-          api.createRolltableFromCompendium(li.data("pack"));
+          API.createRolltableFromCompendium(li.data("pack"));
         },
       });
 
@@ -168,7 +166,7 @@ export class BetterTables {
           name: i18n(`${BRTCONFIG.NAMESPACE}.api.msg.rollCompendiumAsRolltable`),
           icon: '<i class="fas fa-dice-d20"></i>',
           callback: (li) => {
-            api.rollCompendiumAsRolltable(li.data("pack"));
+            API.rollCompendiumAsRolltable(li.data("pack"));
           },
         });
       }
@@ -212,8 +210,7 @@ export class BetterTables {
    * @deprecated use api.rollCompendiumAsRolltable instead
    */
   static async rollCompendiumAsRolltable(compendium) {
-    // const api = game.modules.get(CONSTANTS.MODULE_ID).api;
-    api.rollCompendiumAsRolltable(compendium);
+    API.rollCompendiumAsRolltable(compendium);
   }
 
   static async _renderMessage(message) {
@@ -243,8 +240,7 @@ export class BetterTables {
    * @param {String} compendium ID of the compendium to roll
    */
   static async menuCallBackRollCompendium(compendium) {
-    // const api = game.modules.get(CONSTANTS.MODULE_ID).api;
-    const chatData = await api.rollCompendiumAsRolltable(compendium);
+    const chatData = await API.rollCompendiumAsRolltable(compendium);
     ChatMessage.create(chatData);
   }
 
@@ -272,7 +268,6 @@ export class BetterTables {
   }
 
   static async _addButtonsToMessage(message, html) {
-    const api = game.modules.get(CONSTANTS.MODULE_ID).api;
     const tableDrawNode = $(html).find(".table-draw");
     const id = $(tableDrawNode).data("id");
     const pack = $(tableDrawNode).data("pack");
@@ -289,7 +284,7 @@ export class BetterTables {
       rerollButton.click(async () => {
         let cardContent;
         if (pack && !id) {
-          cardContent = await api.rollCompendiumAsRolltable(pack, CONSTANTS.MODULE_ID);
+          cardContent = await API.rollCompendiumAsRolltable(pack, CONSTANTS.MODULE_ID);
         } else {
           let rolltable;
           if (pack && id) {
