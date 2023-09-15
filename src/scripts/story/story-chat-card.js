@@ -14,7 +14,7 @@ export class StoryChatCard {
     if (!story) return;
 
     // quickfix for textselection of stories
-    story = '<div class="story-text-selectable">' + story + "</div>";
+    story = '<div class="better-rolltables-story-text-selectable">' + story + "</div>";
 
     const chatData = {
       flavor: this._tableEntity.name,

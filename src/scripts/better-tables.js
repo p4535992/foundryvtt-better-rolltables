@@ -280,7 +280,7 @@ export class BetterTables {
     if (game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.SHOW_REROLL_BUTTONS)) {
       // reroll button
       const rerollButton = $(
-        `<a class="roll-table-reroll-button" title="${game.i18n.localize(`${BRTCONFIG.NAMESPACE}.DrawReroll`)}">`
+        `<a class="better-rolltables-roll-table-reroll-button" title="${game.i18n.localize(`${BRTCONFIG.NAMESPACE}.DrawReroll`)}">`
       ).append("<i class='fas fa-dice-d20'></i>");
       rerollButton.click(async () => {
         let cardContent;
@@ -312,7 +312,7 @@ export class BetterTables {
     ) {
       // Currency share button
       const currencyShareButton = $(
-        `<a class="roll-table-share-currencies" title="${game.i18n.localize(
+        `<a class="better-rolltables-roll-table-share-currencies" title="${game.i18n.localize(
           `${BRTCONFIG.NAMESPACE}.Buttons.Currency.Share`
         )}">`
       ).append("<i class='fas fa-coins'></i>");
@@ -334,7 +334,7 @@ export class BetterTables {
       }
       if (document) {
         const openLink = $(
-          `<a class="roll-table-open-table" title="${game.i18n.localize(`${BRTCONFIG.NAMESPACE}.OpenRolltable`)}">`
+          `<a class="better-rolltables-roll-table-open-table" title="${game.i18n.localize(`${BRTCONFIG.NAMESPACE}.OpenRolltable`)}">`
         ).append("<i class='fas fa-th-list'></i>");
         if (id) openLink.data("id", id);
         if (pack) openLink.data("pack", pack);
@@ -391,7 +391,7 @@ export class BetterTables {
           const rolltable = game.tables.get(id);
 
           const rollNode = $(
-            `<a class="roll-table-roll-link" title="${game.i18n.localize(
+            `<a class="better-rolltables-roll-table-roll-link" title="${game.i18n.localize(
               `${BRTCONFIG.NAMESPACE}.DrawReroll`
             )}"><i class="fas fa-dice-d20"></i></a>`
           ).click(async () => {
@@ -414,7 +414,7 @@ export class BetterTables {
           if (!document || document.documentName !== "RollTable") return;
 
           const rollNode = $(
-            `<a class="roll-table-roll-link" title="${game.i18n.localize(
+            `<a class="better-rolltables-roll-table-roll-link" title="${game.i18n.localize(
               `${BRTCONFIG.NAMESPACE}.DrawReroll`
             )}"><i class="fas fa-dice-d20"></i></a>`
           ).click(async () => {
@@ -475,7 +475,7 @@ export class BetterTables {
           const rolltable = game.tables.get(id);
 
           const rollNode = $(
-            `<a class="roll-table-roll-link" title="${game.i18n.localize(
+            `<a class="better-rolltables-roll-table-roll-link" title="${game.i18n.localize(
               `${BRTCONFIG.NAMESPACE}.DrawReroll`
             )}"><i class="fas fa-dice-d20"></i></a>`
           ).click(async () => {
@@ -498,7 +498,7 @@ export class BetterTables {
           if (!document || document.documentName !== "RollTable") return;
 
           const rollNode = $(
-            `<a class="roll-table-roll-link" title="${game.i18n.localize(
+            `<a class="better-rolltables-roll-table-roll-link" title="${game.i18n.localize(
               `${BRTCONFIG.NAMESPACE}.DrawReroll`
             )}"><i class="fas fa-dice-d20"></i></a>`
           ).click(async () => {
