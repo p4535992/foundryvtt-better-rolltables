@@ -217,7 +217,7 @@ export class BetterTables {
 
   static async _renderMessage(message) {
     const cardHtml = await renderTemplate(
-      "modules/better-rolltables/templates/loot-chat-card.hbs",
+      `modules/${CONSTANTS.MODULE_ID}/templates/loot-chat-card.hbs`,
       message.flags.betterTables.loot
     );
     message.content = cardHtml;

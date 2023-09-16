@@ -1,6 +1,7 @@
 import { LootCreator } from "./loot-creator.js";
 import { addRollModeToChatData, getItemFromCompendium } from "../core/utils.js";
 import { BRTCONFIG } from "../core/config.js";
+import { CONSTANTS } from "../constants/constants.js";
 
 /**
  * create a chat card based on the content of the object LootData
@@ -92,7 +93,7 @@ export class LootChatCard {
   }
 
   async renderMessage(data) {
-    return renderTemplate("modules/better-rolltables/templates/loot-chat-card.hbs", data);
+    return renderTemplate(`modules/${CONSTANTS.MODULE_ID}/templates/loot-chat-card.hbs`, data);
   }
 
   async getBRTFolder() {
