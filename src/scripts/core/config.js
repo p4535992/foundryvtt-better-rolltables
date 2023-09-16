@@ -5,6 +5,7 @@ export const BRTCONFIG = {
   NAMESPACE: CONSTANTS.MODULE_ID,
 
   // START FLAGS
+  GENERIC_AMOUNT_KEY: CONSTANTS.FLAGS.GENERIC_AMOUNT_KEY,
 
   // saved data keys (used e.g. in the rolltableEntity.data.flags)
   TABLE_TYPE_KEY: CONSTANTS.FLAGS.TABLE_TYPE_KEY,

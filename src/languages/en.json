@@ -34,9 +34,10 @@
       }
     },
     "Formula": "Formula",
-    "TypeLabel": "Better Tables Type",
-    "TypeDefault": "Default Table",
     "BetterTable": "Better Table",
+    "TypePrefixLabel": "This table type is: ",
+    "TypeLabel": "Better Tables",
+    "TypeDefault": "Default Table",
     "TypeLoot": "Loot Table",
     "TypeHarvest": "Harvest Table",
     "StoryLoot": "Story Table",
@@ -169,7 +170,8 @@
         "Title": "Table \"{table}\" result: {result}",
         "ButtonHint": "Rich Edit",
         "ToggleSimple": "Simple Editor"
-      }
+      },
+      "better-rolltables-roll": "Roll+"
     }
   }
 }

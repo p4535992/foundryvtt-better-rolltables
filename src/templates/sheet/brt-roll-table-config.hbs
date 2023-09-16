@@ -8,25 +8,38 @@
 
     <fieldset>
         <main class="better-rolltables">
+            <h2>{{textType}}</h2>
+            <input type="hidden" 
+                name="flags.better-rolltables.table-type" 
+                    value="{{data.flags.better-rolltables.table-type}}"/>
             {{#ifcontain better-rolltables.table-type "loot"}}
             <div class="form-group">
                 <label>{{localize 'better-rolltables.CurrencyLoot'}}</label>
                 <input type="text"
                     placeholder="{{localize 'better-rolltables.CurrencyLootPlaceholder'}}"
-                    name="flags.better-rolltables.table-currency-string" value="{{better-rolltables.table-currency-string}}">
+                    name="flags.better-rolltables.table-currency-string" 
+                    value="{{data.flags.better-rolltables.table-currency-string}}" />
             </div>
             <div class="form-group">
                 <label>{{localize 'better-rolltables.LootActorName'}}</label>
                 <input type="text"
                     placeholder="{{localize 'better-rolltables.LootActorNamePlaceholder'}}" name="flags.better-rolltables.loot-actor-name"
-                    value="{{better-rolltables.loot-actor-name}}">
+                    value="{{data.flags.better-rolltables.loot-actor-name}}" />
             </div>            
             {{/ifcontain}}
             <div class="form-group">
                 <label for="flags.better-rolltables.loot-amount-key">{{localize 'better-rolltables.LootRollAmount'}}</label>
                 <input type="text"
                     placeholder="{{localize 'better-rolltables.LootRollAmountPlaceholder'}}"
-                    name="flags.better-rolltables.loot-amount-key" value="{{better-rolltables.loot-amount-key}}">
+                    name="flags.better-rolltables.loot-amount-key" 
+                    value="{{data.flags.better-rolltables.loot-amount-key}}" />
+            </div>
+
+            <div class="form-group">
+                <label>{{localize "better-rolltables.label.tableTextHiddenTable"}}</label>
+                <input type="checkbox"
+                    name="flags.better-rolltables.brt-hidden-table" 
+                    {{checked data.flags.better-rolltables.brt-hidden-table}} />
             </div>
 
         </main>
@@ -34,9 +47,20 @@
 
     <div class="form-group stacked">
         <label>{{ localize "TABLE.Description" }}</label>
-        <textarea name="description">{{ data.description }}</textarea>
+        {{editor descriptionHTML target="description" button=false editable=editable engine="prosemirror" collaborate=false}}
     </div>
+    <!-- TODO
+	<div class='form-group stacked description'>
+		<label>{{localize 'TABLE.Description'}}</label>
+		<div class='description-editor'>
+			{{editor enrichedDescription target='description' owner=owner button=true editable=owner engine='prosemirror'}}
 
+			<a class='toggle-editor' data-tooltip='{{localize 'better-rolltables.label.RichEdit.ToggleSimple'}}' data-tooltip-direction='UP'>
+				<i class='fa-solid fa-file-lines'></i>
+			</a>
+		</div>
+	</div>
+    -->
     <div class="form-group">
         <label>{{ localize "TABLE.Formula" }}</label>
         <input type="text" name="formula" value="{{data.formula}}" placeholder="{{localize 'Roll Formula'}}"/>
@@ -52,54 +76,50 @@
         <input type="checkbox" name="displayRoll" {{checked data.displayRoll}}/>
     </div>
 
-    <!-- START MOD BRT -->
-
-    <div class="form-group">
-      <label>{{localize "better-rolltables.label.tableTextHiddenTable"}}</label>
-      <input type="checkbox" name="flags.better-rolltables.brt-hidden-table" {{checked data.flags.better-rolltables.brt-hidden-table}}>
-    </div>
-
-    <!-- END MOD BRT
-
     <!-- Roll Table Results Loop -->
     <section class="results">
         <table class="table-results">
             <thead>
                 <tr class="table-result table-header flexrow">
-                <th class="result-image">
-                    <a class="create-result" title="{{ localize "TABLE.ResultCreate" }}">
-                        <i class="fas fa-plus"></i>
-                    </a>
-                </th>
+                    <th class="result-image">
+                        <a class="create-result" title="{{ localize "TABLE.ResultCreate" }}">
+                            <i class="fas fa-plus"></i>
+                        </a>
+                    </th>
 
-                <th class="result-type">
-                    <label>{{ localize "TABLE.ResultType" }}</label>
-                </th>
+                    <th class="result-type">
+                        <label>{{ localize "TABLE.ResultType" }}</label>
+                    </th>
 
-                <th class="result-details">
-                    <label>{{ localize "TABLE.ResultDetails" }}</label>
-                </th>
-                <!-- TODO
-                <th class="result-quantity-formula">
-                    <label>{{ localize "better-rolltables.qtFormulaLabel" }}</label>
-                </th>
-                -->
-                <th class="result-weight">
-                    <label>{{ localize "TABLE.ResultWeight" }}</label>
-                </th>
+                    <th class="result-details">
+                        <label>{{ localize "TABLE.ResultDetails" }}</label>
+                    </th>
+                    <!-- TODO
+                    <th class="result-quantity-formula">
+                        <label>{{ localize "better-rolltables.qtFormulaLabel" }}</label>
+                    </th>
+                    -->
+                    <th class="result-weight">
+                        <label>{{ localize "TABLE.ResultWeight" }}</label>
+                    </th>
 
-                <th class="result-range">
-                    <label>{{ localize "TABLE.ResultRange" }}</label>
-                </th>
-
-                {{#if owner}}
-                <th class="result-controls">
-                    <a class="normalize-results" title="{{ localize "TABLE.Normalize" }}">
-                        <i class="fas fa-balance-scale"></i>
-                    </a>
-                </th>
-                {{/if}}
-            </tr>
+                    <th class="result-range">
+                        <label>{{ localize "TABLE.ResultRange" }}</label>
+                    </th>
+                    {{#if owner}}
+                    <th class="result-controls" style="display:flex">
+                        <a class="normalize-results" title="{{ localize "TABLE.Normalize" }}">
+                            <i class="fas fa-balance-scale"></i>
+                        </a>
+                        <a class='normalize-weights' data-tooltip='{{localize 'better-rolltables.label.NormalizeWeights'}}' data-tooltip-direction='UP'>
+                            <i class='fa-solid fa-weight-scale'></i>
+                        </a>
+                        <a class='normalize-results' data-tooltip='{{localize 'better-rolltables.label.NormalizeRanges'}}' data-tooltip-direction='UP'>
+                            <i class='fa-solid fa-sliders'></i>
+                        </a>
+                    </th>
+                    {{/if}}
+                </tr>
             </thead>
             <tbody>
                 {{#each results as |result i|}}
@@ -121,32 +141,34 @@
                 </td>
 
                 <td class="result-details">
-                    <input type="hidden" name="results.{{i}}.documentId" value="{{result.documentId}}"/>
+					<input type="hidden" name="results.{{i}}.documentId" value="{{result.documentId}}"/>
 
-                    {{#if result.isText}}
-                    <input type="text" name="results.{{i}}.text" value="{{result.text}}" placeholder="{{localize 'TABLE.ResultDescription'}}"/>
+					{{#if result.isText}}
+					<input type="text" name="results.{{i}}.text" value="{{result.text}}" placeholder="{{localize 'TABLE.ResultDescription'}}"/>
+					<a class="rich-edit-result" data-tooltip="{{localize 'better-rolltables.label.RichEdit.ButtonHint'}}" data-tooltip-direction="UP">
+						<i class="fa-solid fa-file-contract"></i>
+					</a>
+					{{else if result.isDocument}}
+					<select name="results.{{i}}.documentCollection">
+						{{#select result.documentCollection}}
+						{{#each ../documentTypes}}
+						<option value="{{this}}">{{this}}</option>
+						{{/each}}
+						{{/select}}
+					</select>
+					<input class="result-target" name="results.{{i}}.text" type="text" value="{{result.text}}"/>
 
-                    {{else if result.isDocument}}
-                    <select name="results.{{i}}.documentCollection">
-                        {{#select result.documentCollection}}
-                        {{#each ../documentTypes}}
-                        <option value="{{this}}">{{this}}</option>
-                        {{/each}}
-                        {{/select}}
-                    </select>
-                    <input class="result-target" name="results.{{i}}.text" type="text" value="{{result.text}}"/>
-
-                    {{else if result.isCompendium}}
-                    <select name="results.{{i}}.documentCollection">
-                        {{#select result.documentCollection}}
-                        {{#each ../compendiumPacks}}
-                        <option value="{{this}}">{{this}}</option>
-                        {{/each}}
-                        {{/select}}
-                    </select>
-                    <input class="result-target" name="results.{{i}}.text" type="text" value="{{result.text}}"/>
-                    {{/if}}
-                </td>
+					{{else if result.isCompendium}}
+					<select name="results.{{i}}.documentCollection">
+						{{#select result.documentCollection}}
+						{{#each ../compendiumPacks}}
+						<option value="{{this}}">{{this}}</option>
+						{{/each}}
+						{{/select}}
+					</select>
+					<input class="result-target" name="results.{{i}}.text" type="text" value="{{result.text}}"/>
+					{{/if}}
+				</td>
                 <!-- TODO
                 <td class="result-quantity-formula">
                     <input type="text" name="results.{{i}}.flags.better-rolltables.qtFormula" value="{{result.qtFormula}}" placeholder="{{localize "better-rolltables.label.qtFormulaPlaceholder"}}">
@@ -186,5 +208,6 @@
         <button class="reset" type="button"><i class="fas fa-undo"></i> {{ localize "TABLE.Reset" }}</button>
         {{/if}}
         <button class="roll" type="button"><i class="fas fa-dice-d20"></i> {{ localize "TABLE.Roll" }}</button>
+        <button class="better-rolltables-roll" type="button"><i class="fa-solid fa-dice"></i> {{ localize "better-rolltables.label.better-rolltables-roll" }}</button>
     </footer>
 </form>

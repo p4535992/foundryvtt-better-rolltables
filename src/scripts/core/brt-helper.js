@@ -75,7 +75,10 @@ export async function tryRoll(rollFormula) {
  */
 export async function rollsAmount(table) {
   const tableType = table.getFlag(CONSTANTS.MODULE_ID, BRTCONFIG.TABLE_TYPE_KEY);
-  if (tableType === BRTCONFIG.TABLE_TYPE_LOOT) {
+  if (tableType === BRTCONFIG.TABLE_TYPE_BETTER) {
+    const rollFormula = table.getFlag(CONSTANTS.MODULE_ID, BRTCONFIG.GENERIC_AMOUNT_KEY);
+    return tryRoll(rollFormula);
+  } else if (tableType === BRTCONFIG.TABLE_TYPE_LOOT) {
     const rollFormula = table.getFlag(CONSTANTS.MODULE_ID, BRTCONFIG.LOOT_AMOUNT_KEY);
     return tryRoll(rollFormula);
   } else if (tableType === BRTCONFIG.TABLE_TYPE_HARVEST) {

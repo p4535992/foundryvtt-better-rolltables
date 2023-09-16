@@ -11,7 +11,7 @@ export const CONSTANTS = {
     LOOT_AMOUNT_KEY: "loot-amount-key",
     LOOT_ACTOR_NAME_KEY: "loot-actor-name",
 
-    HARVEST_AMOUNT_KEY: "harvest-amount-key",
+    HARVEST_AMOUNT_KEY: "loot-amount-key",
     HARVEST_DC_VALUE_KEY: "harvest-dc-value",
     HARVEST_SKILLS_VALUE_KEY: "harvest-skills.value",
     // TODO HARVEST_ACTOR_NAME_KEY: "harvest-actor-name",

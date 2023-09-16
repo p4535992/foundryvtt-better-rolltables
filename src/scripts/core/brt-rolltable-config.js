@@ -1,5 +1,7 @@
 import API from "../API";
 import { CONSTANTS } from "../constants/constants";
+import { i18n } from "../lib";
+import { RichResultEdit } from "./brt-result-editor";
 
 export class BetterRollTableConfig extends RollTableConfig {
   /** @inheritdoc */
@@ -56,41 +58,50 @@ export class BetterRollTableConfig extends RollTableConfig {
       compendiumPacks: Array.from(game.packs.keys()),
     });
 
+    // Set brt type
+    if (this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) !== CONSTANTS.TABLE_TYPE_BETTER) {
+      await this.document.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY, CONSTANTS.TABLE_TYPE_BETTER);
+    }
+
     brtData = foundry.utils.mergeObject(brtData, duplicate(this.document.flags));
     brtData.disabled = !this.isEditable;
     brtData.uuid = this.document.uuid;
+    // TODO
     // brtData.enrichedDescription = await TextEditor.enrichHTML(context.data.description, { async: true });
+
+    brtData.textType =
+      i18n(`${CONSTANTS.MODULE_ID}.${"TypePrefixLabel"}`) + " " + i18n(`${CONSTANTS.MODULE_ID}.${"TypeLabel"}`) + "";
     return brtData;
   }
 
-  /**
-   * Modified copy of core _animateRoll to ensure it does not constantly break with the changed layout.
-   *
-   * @param {TableResult[]} results An Array of drawn table results to highlight
-   * @returns {Promise} A Promise which resolves once the animation is complete
-   * @override
-   */
-  async _animateRoll(results) {
-    // Get the list of results and their indices
-    const tableResults = this.element[0].querySelector(".table-results"); // MOD ".table-results" instead ".table-results > tbody"
-    const drawnIds = new Set(results.map((r) => r.id));
-    const drawnItems = Array.from(tableResults.children).filter((item) => drawnIds.has(item.dataset.resultId));
+  // /**
+  //  * Modified copy of core _animateRoll to ensure it does not constantly break with the changed layout.
+  //  *
+  //  * @param {TableResult[]} results An Array of drawn table results to highlight
+  //  * @returns {Promise} A Promise which resolves once the animation is complete
+  //  * @override
+  //  */
+  // async _animateRoll(results) {
+  //   // Get the list of results and their indices
+  //   const tableResults = this.element[0].querySelector(".table-results"); // MOD ".table-results" instead ".table-results > tbody"
+  //   const drawnIds = new Set(results.map((r) => r.id));
+  //   const drawnItems = Array.from(tableResults.children).filter((item) => drawnIds.has(item.dataset.resultId));
 
-    // Set the animation timing
-    const nResults = this.object.results.size;
-    const maxTime = 2000;
-    let animTime = 50;
-    let animOffset = Math.round(tableResults.offsetHeight / (tableResults.children[1].offsetHeight * 2)); // MOD [1] instead [0]
-    const nLoops = Math.min(Math.ceil(maxTime / (animTime * nResults)), 4);
-    if (nLoops === 1) animTime = maxTime / nResults;
+  //   // Set the animation timing
+  //   const nResults = this.object.results.size;
+  //   const maxTime = 2000;
+  //   let animTime = 50;
+  //   let animOffset = Math.round(tableResults.offsetHeight / (tableResults.children[1].offsetHeight * 2)); // MOD [1] instead [0]
+  //   const nLoops = Math.min(Math.ceil(maxTime / (animTime * nResults)), 4);
+  //   if (nLoops === 1) animTime = maxTime / nResults;
 
-    // Animate the roulette
-    await this._animateRoulette(tableResults, drawnIds, nLoops, animTime, animOffset);
+  //   // Animate the roulette
+  //   await this._animateRoulette(tableResults, drawnIds, nLoops, animTime, animOffset);
 
-    // Flash the results
-    const flashes = drawnItems.map((li) => this._flashResult(li));
-    return Promise.all(flashes);
-  }
+  //   // Flash the results
+  //   const flashes = drawnItems.map((li) => this._flashResult(li));
+  //   return Promise.all(flashes);
+  // }
 
   /**
    * @param {DragEvent} event
@@ -226,15 +237,17 @@ export class BetterRollTableConfig extends RollTableConfig {
   activateListeners(jq) {
     super.activateListeners(jq);
 
-    // const html = jq[0];
+    const html = jq[0];
 
-    // // Re-normalize Table Entries
-    // html.querySelector(".normalize-weights").addEventListener("click", this._onNormalizeWeights.bind(this));
+    // Re-normalize Table Entries
+    html.querySelector(".normalize-weights").addEventListener("click", this._onNormalizeWeights.bind(this));
 
-    // html
-    //   .querySelectorAll(".rich-edit-result")
-    //   .forEach((el) => el.addEventListener("click", this._openRichEditor.bind(this)));
+    html
+      .querySelectorAll(".rich-edit-result")
+      .forEach((el) => el.addEventListener("click", this._openRichEditor.bind(this)));
 
+    html.querySelector(".better-rolltables-roll").addEventListener("click", this._onBetterRollTablesRoll.bind(this));
+    // TODO
     // html.querySelector(".toggle-editor").addEventListener("click", (ev) => this._toggleSimpleEditor(ev, html));
   }
 
@@ -246,19 +259,38 @@ export class BetterRollTableConfig extends RollTableConfig {
    * @private
    */
   async _onRollTable(event) {
+    // event.preventDefault();
+    // await this.submit({preventClose: true, preventRender: true});
+    // event.currentTarget.disabled = true;
+    // let tableRoll = await this.document.roll();
+    // const draws = this.document.getResultsForRoll(tableRoll.roll.total);
+    // if ( draws.length ) {
+    //   if (game.settings.get("core", "animateRollTable")) await this._animateRoll(draws);
+    //   await this.document.draw(tableRoll);
+    // }
+    // event.currentTarget.disabled = false;
+    return await super._onRollTable(event);
+  }
+
+  /**
+   * Handle drawing a result from the RollTable
+   * @param {Event} event
+   * @private
+   */
+  async _onBetterRollTablesRoll(event) {
     event.preventDefault();
     await this.submit({ preventClose: true, preventRender: true });
-    event.currentTarget.disabled = true;
-    /*
-    let tableRoll = await this.document.roll();
-    const draws = this.document.getResultsForRoll(tableRoll.roll.total);
-    if ( draws.length ) {
-      if (game.settings.get("core", "animateRollTable")) await this._animateRoll(draws);
-      await this.document.draw(tableRoll);
+    if (event.currentTarget) {
+      event.currentTarget.disabled = true;
+    } else {
+      event.target.disabled = true;
     }
-    */
     const tableEntity = this.document;
     await API.betterTableRoll(tableEntity);
-    event.currentTarget.disabled = false;
+    if (event.currentTarget) {
+      event.currentTarget.disabled = false;
+    } else {
+      event.target.disabled = false;
+    }
   }
 }

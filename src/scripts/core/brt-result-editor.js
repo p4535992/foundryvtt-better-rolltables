@@ -18,14 +18,14 @@ export class RichResultEdit extends DocumentSheet {
   }
 
   get template() {
-    return `modules/${CONSTANTS.MODULE_ID}/template/sheet/brt-result-editor.hbs`;
+    return `modules/${CONSTANTS.MODULE_ID}/templates/sheet/brt-result-editor.hbs`;
   }
 
   static get defaultOptions() {
     const _default = super.defaultOptions;
     return {
       ..._default,
-      classes: [..._default.classes, "rolltable-result-richedit"],
+      classes: [..._default.classes, `${CONSTANTS.MODULE_ID}-rolltable-result-richedit`],
       width: 540,
       height: 360,
       resizable: true,
