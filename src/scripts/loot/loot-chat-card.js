@@ -1,6 +1,6 @@
 import { LootCreator } from "./loot-creator.js";
 import { addRollModeToChatData, getItemFromCompendium } from "../core/utils.js";
-import { CONSTANTS, BRTCONFIG } from "../core/config.js";
+import { BRTCONFIG } from "../core/config.js";
 
 /**
  * create a chat card based on the content of the object LootData
@@ -142,7 +142,7 @@ export class LootChatCard {
         name: table.name,
       });
     } else {
-      flavorString = game.i18n.format(`${BRTCONFIG.NAMESPACE}DrawResultZero`, {
+      flavorString = game.i18n.format(`${BRTCONFIG.NAMESPACE}.DrawResultZero`, {
         name: table.name,
       });
     }

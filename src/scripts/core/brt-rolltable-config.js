@@ -1,4 +1,5 @@
-import { CONSTANTS } from "./config";
+import API from "../API";
+import { CONSTANTS } from "../constants/constants";
 
 export class BetterRollTableConfig extends RollTableConfig {
   /** @inheritdoc */
@@ -26,7 +27,7 @@ export class BetterRollTableConfig extends RollTableConfig {
    * @override
    */
   async getData(options = {}) {
-    const context = super.getData(options);
+    const context = await super.getData(options);
     context.descriptionHTML = await TextEditor.enrichHTML(this.object.description, {
       async: true,
       secrets: this.object.isOwner,
@@ -56,7 +57,7 @@ export class BetterRollTableConfig extends RollTableConfig {
     });
 
     brtData = foundry.utils.mergeObject(brtData, duplicate(this.document.flags));
-    brtData.disabled = !this.editable;
+    brtData.disabled = !this.isEditable;
     brtData.uuid = this.document.uuid;
     // brtData.enrichedDescription = await TextEditor.enrichHTML(context.data.description, { async: true });
     return brtData;
@@ -225,15 +226,39 @@ export class BetterRollTableConfig extends RollTableConfig {
   activateListeners(jq) {
     super.activateListeners(jq);
 
-    const html = jq[0];
+    // const html = jq[0];
 
-    // Re-normalize Table Entries
-    html.querySelector(".normalize-weights").addEventListener("click", this._onNormalizeWeights.bind(this));
+    // // Re-normalize Table Entries
+    // html.querySelector(".normalize-weights").addEventListener("click", this._onNormalizeWeights.bind(this));
 
-    html
-      .querySelectorAll(".rich-edit-result")
-      .forEach((el) => el.addEventListener("click", this._openRichEditor.bind(this)));
+    // html
+    //   .querySelectorAll(".rich-edit-result")
+    //   .forEach((el) => el.addEventListener("click", this._openRichEditor.bind(this)));
 
-    html.querySelector(".toggle-editor").addEventListener("click", (ev) => this._toggleSimpleEditor(ev, html));
+    // html.querySelector(".toggle-editor").addEventListener("click", (ev) => this._toggleSimpleEditor(ev, html));
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Handle drawing a result from the RollTable
+   * @param {Event} event
+   * @private
+   */
+  async _onRollTable(event) {
+    event.preventDefault();
+    await this.submit({ preventClose: true, preventRender: true });
+    event.currentTarget.disabled = true;
+    /*
+    let tableRoll = await this.document.roll();
+    const draws = this.document.getResultsForRoll(tableRoll.roll.total);
+    if ( draws.length ) {
+      if (game.settings.get("core", "animateRollTable")) await this._animateRoll(draws);
+      await this.document.draw(tableRoll);
+    }
+    */
+    const tableEntity = this.document;
+    await API.betterTableRoll(tableEntity);
+    event.currentTarget.disabled = false;
   }
 }

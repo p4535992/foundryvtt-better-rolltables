@@ -28,7 +28,7 @@ export class BetterRT {
       brtData = duplicate(tableEntity.flags);
 
     headerElement.classList.add("configuration");
-    brtData.disabled = !rollTable.editable;
+    brtData.disabled = !rollTable.isEditable;
 
     let renderedExtraConfig = await renderTemplate(
       `modules/${CONSTANTS.MODULE_ID}/templates/select-table-type.hbs`,
@@ -56,7 +56,7 @@ export class BetterRT {
 
     /** for every result, add an input field before the text to add a formula */
     if (selectedTableType === BRTCONFIG.TABLE_TYPE_BETTER || selectedTableType === BRTCONFIG.TABLE_TYPE_LOOT) {
-      BetterRT.ShowFormulaField(tableViewClass, tableEntity, rollTable.editable);
+      BetterRT.ShowFormulaField(tableViewClass, tableEntity, rollTable.isEditable);
     }
 
     BetterRT.Tags(".tagger", 'input[name="flags.better-rolltables.tags"]');

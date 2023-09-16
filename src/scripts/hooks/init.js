@@ -6,6 +6,7 @@ import API from "../API.js";
 import { registerSettings } from "../settings.js";
 import { CONSTANTS } from "../constants/constants.js";
 import { BetterRollTableConfig } from "../core/brt-rolltable-config.js";
+import SETTINGS from "../constants/settings.js";
 
 /**
  * @module BetterRollTables.BetterRolltableHooks
@@ -15,21 +16,16 @@ import { BetterRollTableConfig } from "../core/brt-rolltable-config.js";
  *
  */
 class BetterRolltableHooks {
-  /**
-   * Hooks on game hooks and attaches methods
-   */
-  static init() {
-    // Hooks.once("init", BetterRolltableHooks.foundryInit);
-    // Hooks.once("ready", BetterRolltableHooks.foundryReady);
-    Hooks.once("aipSetup", BetterRolltableHooks.onAIPSetup);
-    // Hooks.once("devModeReady", BetterRolltableHooks.onDevModeReady);
-    // Hooks.once("setup", BetterRolltableHooks.foundrySetup);
-
-    RollTables.registerSheet(CONSTANTS.MODULE_ID, BetterRollTableConfig, {
-      label: "BRT - Better Rolltable",
-      makeDefault: false,
-    });
-  }
+  // /**
+  //  * Hooks on game hooks and attaches methods
+  //  */
+  // static init() {
+  //   Hooks.once("init", BetterRolltableHooks.foundryInit);
+  //   Hooks.once("ready", BetterRolltableHooks.foundryReady);
+  //   Hooks.once("aipSetup", BetterRolltableHooks.onAIPSetup);
+  //   Hooks.once("devModeReady", BetterRolltableHooks.onDevModeReady);
+  //   Hooks.once("setup", BetterRolltableHooks.foundrySetup);
+  // }
 
   static foundrySetup() {
     // game.modules.get("better-rolltables").api
@@ -52,7 +48,9 @@ class BetterRolltableHooks {
     // const moduleSettings = new Settings();
     // moduleSettings.registerSettings();
 
-    Hooks.on("renderRollTableConfig", BetterRT.enhanceRollTableView);
+    if (game.settings.get(CONSTANTS.MODULE_ID, SETTINGS.ENABLE_OLD_BEHAVIOR)) {
+      Hooks.on("renderRollTableConfig", BetterRT.enhanceRollTableView);
+    }
     Hooks.on("renderChatMessage", BetterTables.handleChatMessageButtons);
     Hooks.on("renderJournalPageSheet", BetterTables.handleRolltableLink);
     Hooks.on("renderItemSheet", BetterTables.handleRolltableLink);
@@ -137,9 +135,15 @@ class BetterRolltableHooks {
 
     Hooks.on("getCompendiumDirectoryEntryContext", BetterTables.enhanceCompendiumContextMenu);
     Hooks.on("getRollTableDirectoryEntryContext", BetterTables.enhanceRolltableContextMenu);
+    Hooks.once("aipSetup", BetterRolltableHooks.onAIPSetup);
 
     // WE DON'T NEED THIS WITH BRT WE ALREADY OVERRRIDE THE ROLL MODE
-    // libWrapper.register(CONSTANTS.MODULE_ID, "RollTable.prototype.draw", BetterTables.hiddenTable, "WRAPPER");
+    // libWrapper.register(CONSTANTS.MODULE_ID, "RollTable.prototype.draw", BetterTables.rolltableDrawHandler, "MIXED");
+
+    RollTables.registerSheet(CONSTANTS.MODULE_ID, BetterRollTableConfig, {
+      label: "BRT - Better Rolltable",
+      makeDefault: false,
+    });
   }
 
   /**

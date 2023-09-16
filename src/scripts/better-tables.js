@@ -9,6 +9,7 @@ import { BRTCONFIG } from "./core/config.js";
 import API from "./API.js";
 import { CONSTANTS } from "./constants/constants.js";
 import { i18n } from "./lib.js";
+import SETTINGS from "./constants/settings.js";
 
 export class BetterTables {
   constructor() {
@@ -57,7 +58,8 @@ export class BetterTables {
 
   async getBetterTableResults(tableEntity) {
     const brtBuilder = new BRTBuilder(tableEntity);
-    return await brtBuilder.betterRoll();
+    const results = await brtBuilder.betterRoll();
+    return results;
   }
 
   async betterTableRoll(tableEntity, options = null) {
@@ -113,7 +115,7 @@ export class BetterTables {
 
       if ((!pack && spellCompendium) || pack === defaultPack) {
         const spellCompendiumIndex = await spellCompendium.getIndex({
-          fields: ["system.level", "img"],
+          fields: [SETTINGS.SPELL_LEVEL_PATH, "img"],
         });
         this._spellCache = spellCompendiumIndex
           .filter((entry) => entry.type === "spell")
