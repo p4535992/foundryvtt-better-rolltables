@@ -3,7 +3,7 @@
  * @param {RollTable} table                 The RollTable document being configured
  * @param {DocumentSheetOptions} [options]  Additional application configuration options
  */
-class RollTableConfig extends DocumentSheet {
+class RollTableConfig extends DocumentSh
   /** @inheritdoc */
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
@@ -447,3 +447,22 @@ class RollTableConfig extends DocumentSheet {
     });
   }
 }
+mplete
+     * @protected
+     */
+    async _flashResult(item) {
+      return new Promise(resolve => {
+        let count = 0;
+        let animId = setInterval(() => {
+          if (count % 2) item.classList.remove("roulette");
+          else item.classList.add("roulette");
+          if (count === 7) {
+            clearInterval(animId);
+            resolve();
+          }
+          count++;
+        }, 50);
+      });
+    }
+  }
+  

@@ -5,6 +5,7 @@ import { setApi } from "../../module.js";
 import API from "../API.js";
 import { registerSettings } from "../settings.js";
 import { CONSTANTS } from "../constants/constants.js";
+import { BetterRollTableConfig } from "../core/brt-rolltable-config.js";
 
 /**
  * @module BetterRollTables.BetterRolltableHooks
@@ -23,6 +24,11 @@ class BetterRolltableHooks {
     Hooks.once("aipSetup", BetterRolltableHooks.onAIPSetup);
     // Hooks.once("devModeReady", BetterRolltableHooks.onDevModeReady);
     // Hooks.once("setup", BetterRolltableHooks.foundrySetup);
+
+    RollTables.registerSheet(CONSTANTS.MODULE_ID, BetterRollTableConfig, {
+      label: "BRT - Better Rolltable",
+      makeDefault: false,
+    });
   }
 
   static foundrySetup() {
