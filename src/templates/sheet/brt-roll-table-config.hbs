@@ -211,9 +211,19 @@
                     <a class="delete-result" title="{{ localize "TABLE.ResultDelete" }}">
                         <i class="fas fa-trash fa-fw"></i>
                     </a>
-                    <a class="edit-result" title="{{ localize "better-rolltables.label.editResult" }}">
-                        <i class="fas fa-pencil-alt fa-fw"></i>
-                    </a>
+					{{#if result.isText}}
+                        <a class="rich-edit-result" data-tooltip="{{localize 'better-rolltables.label.RichEdit.ButtonHint'}}" data-tooltip-direction="UP">
+                            <i class="fa-solid fa-file-contract fa-fw"></i>
+                        </a>
+					{{else if result.isDocument}}
+                        <a class="edit-result" title="{{ localize "better-rolltables.label.editResult" }}">
+                            <i class="fas fa-pencil-alt fa-fw"></i>
+                        </a>
+					{{else if result.isCompendium}}
+                        <a class="edit-result" title="{{ localize "better-rolltables.label.editResult" }}">
+                            <i class="fas fa-pencil-alt fa-fw"></i>
+                        </a>
+					{{/if}}
                 </td>
                 {{/if}}
             </tr>
