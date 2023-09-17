@@ -8,7 +8,7 @@ export class BetterRollTable extends RollTable {
     let newResults = [];
     for (let i = 0; i < draw.results.length; i++) {
       const r = draw.results[i];
-      const qtFormula = getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_AMOUNT_KEY}`)?.trim();
+      const qtFormula = getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RESULTS_FORMULA_KEY_FORMULA}`)?.trim();
       if (qtFormula == null || qtFormula === "" || qtFormula === "1") {
         newResults.push(r);
       } else {

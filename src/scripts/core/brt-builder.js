@@ -86,8 +86,12 @@ export class BRTBuilder {
       }
 
       for (const entry of draw.results) {
-        const formulaAmount =
-          getProperty(entry, `flags.${BRTCONFIG.NAMESPACE}.${BRTCONFIG.RESULTS_FORMULA_KEY}.formula`) || "";
+        let formulaAmount =
+          getProperty(entry, `flags.${BRTCONFIG.NAMESPACE}.${BRTCONFIG.RESULTS_FORMULA_KEY_FORMULA}`) || "";
+
+        if (entry.type === CONST.TABLE_RESULT_TYPES.TEXT) {
+          formulaAmount = "";
+        }
         const entryAmount = await BRTHelper.tryRoll(formulaAmount);
 
         let innerTable;
@@ -114,5 +118,97 @@ export class BRTBuilder {
     }
 
     return drawnResults;
+  }
+
+  /**
+   * Evaluate a RollTable by rolling its formula and retrieving a drawn result.
+   *
+   * Note that this function only performs the roll and identifies the result, the RollTable#draw function should be
+   * called to formalize the draw from the table.
+   *
+   * @param {object} [options={}]       Options which modify rolling behavior
+   * @param {Roll} [options.roll]                   An alternative dice Roll to use instead of the default table formula
+   * @param {boolean} [options.recursive=true]   If a RollTable document is drawn as a result, recursively roll it
+   * @param {number} [options._depth]            An internal flag used to track recursion depth
+   * @returns {Promise<RollTableDraw>}  The Roll and results drawn by that Roll
+   *
+   * @example Draw results using the default table formula
+   * ```js
+   * const defaultResults = await table.roll();
+   * ```
+   *
+   * @example Draw results using a custom roll formula
+   * ```js
+   * const roll = new Roll("1d20 + @abilities.wis.mod", actor.getRollData());
+   * const customResults = await table.roll({roll});
+   * ```
+   */
+  async roll(tableEntity, { roll, recursive = true, _depth = 0 } = {}) {
+    this.rollManyOnTable(amount, tableEntity, { roll, recursive, _depth });
+  }
+
+  /**
+   * Draw a result from the RollTable based on the table formula or a provided Roll instance
+   * @param {object} [options={}]         Optional arguments which customize the draw behavior
+   * @param {Roll} [options.roll]                   An existing Roll instance to use for drawing from the table
+   * @param {boolean} [options.recursive=true]      Allow drawing recursively from inner RollTable results
+   * @param {TableResult[]} [options.results]       One or more table results which have been drawn
+   * @param {boolean} [options.displayChat=true]    Whether to automatically display the results in chat
+   * @param {string} [options.rollMode]             The chat roll mode to use when displaying the result
+   * @returns {Promise<{RollTableDraw}>}  A Promise which resolves to an object containing the executed roll and the
+   *                                      produced results.
+   */
+  async draw({ table, roll, recursive = true, results = [], displayChat = true, rollMode } = {}) {
+    // If an array of results were not already provided, obtain them from the standard roll method
+    if (!results.length) {
+      const r = await table.roll({ roll, recursive });
+      roll = r.roll;
+      results = r.results;
+    }
+    if (!results.length) {
+      return { roll, results };
+    }
+
+    // Mark results as drawn, if replacement is not used, and we are not in a Compendium pack
+    if (!table.replacement && !table.pack) {
+      const draws = table.getResultsForRoll(roll.total);
+      await table.updateEmbeddedDocuments(
+        "TableResult",
+        draws.map((r) => {
+          return { _id: r.id, drawn: true };
+        })
+      );
+    }
+
+    // Mark any nested table results as drawn too.
+    let updates = results.reduce((obj, r) => {
+      const parent = r.parent;
+      if (parent === table || parent.replacement || parent.pack) {
+        return obj;
+      }
+      if (!obj[parent.id]) {
+        obj[parent.id] = [];
+      }
+      obj[parent.id].push({ _id: r.id, drawn: true });
+      return obj;
+    }, {});
+
+    if (Object.keys(updates).length) {
+      updates = Object.entries(updates).map(([id, results]) => {
+        return { _id: id, results };
+      });
+      await RollTable.implementation.updateDocuments(updates);
+    }
+
+    // Forward drawn results to create chat messages
+    if (displayChat) {
+      await table.toMessage(results, {
+        roll: roll,
+        messageOptions: { rollMode },
+      });
+    }
+
+    // Return the roll and the produced results
+    return { roll, results };
   }
 }

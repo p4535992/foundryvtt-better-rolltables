@@ -13,10 +13,11 @@ export const CONSTANTS = {
 
     HARVEST_AMOUNT_KEY: "loot-amount-key",
     HARVEST_DC_VALUE_KEY: "harvest-dc-value",
-    HARVEST_SKILLS_VALUE_KEY: "harvest-skills.value",
+    HARVEST_SKILL_VALUE_KEY: "harvest-skill-value",
     // TODO HARVEST_ACTOR_NAME_KEY: "harvest-actor-name",
 
     RESULTS_FORMULA_KEY: "brt-result-formula",
+    RESULTS_FORMULA_KEY_FORMULA: "brt-result-formula.formula",
     HIDDEN_TABLE: "brt-hidden-table",
   },
 

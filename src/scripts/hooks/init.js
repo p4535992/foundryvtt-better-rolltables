@@ -61,6 +61,10 @@ class BetterRolltableHooks {
       Hooks.on("renderActorSheet", BetterTables.handleChatMessageButtons);
     }
 
+    Handlebars.registerHelper("ifequals", function (arg1, arg2, options) {
+      return arg1 == arg2 ? options.fn(this) : options.inverse(this);
+    });
+
     /** Register Handlebar helpers **/
     /** checks if the first argument is equal to any of the subsequent arguments */
     Handlebars.registerHelper("ifcontain", function () {

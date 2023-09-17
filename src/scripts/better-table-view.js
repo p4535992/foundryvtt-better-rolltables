@@ -144,10 +144,10 @@ export class BetterRT {
             formulaInput.type = "text";
             formulaInput.disabled = !editable;
             /** based on the name of the elents the value will be added in the preUpdateRollTable and override the table.data */
-            formulaInput.name = `results.${index}.flags.${CONSTANTS.MODULE_ID}.${BRTCONFIG.RESULTS_FORMULA_KEY}.formula`;
+            formulaInput.name = `results.${index}.flags.${CONSTANTS.MODULE_ID}.${BRTCONFIG.RESULTS_FORMULA_KEY_FORMULA}`;
             if (tableText.classList.contains("result-target")) {
               formulaInput.value =
-                getProperty(tableResult, `flags.${CONSTANTS.MODULE_ID}.${BRTCONFIG.RESULTS_FORMULA_KEY}.formula`) || "";
+                getProperty(tableResult, `flags.${CONSTANTS.MODULE_ID}.${BRTCONFIG.RESULTS_FORMULA_KEY_FORMULA}`) || "";
               tableText.classList.add("result-target-short");
             } else {
               /** text type result, we disable the formula field for text */

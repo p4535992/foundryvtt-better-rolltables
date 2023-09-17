@@ -78,7 +78,7 @@ export class CompendiumToRollTableSpecialHarvestDialog extends CompendiumToRollT
 
       // https://foundryvtt.com/api/v8/data.TableResultData.html
       // _id	string The _id which uniquely identifies this TableResult embedded document
-      // type	string	<optional> A result sub-type from CONST.TABLE_RESULT_TYPES
+      // type	string	<optional> A result sub-type from CONST.TABLE_RESULT_TYPES (COMPENDIUM: 2, DOCUMENT: 1, TEXT: 0)
       // text	string	<optional> The text which describes the table result
       // img	string	<optional> An image file url that represents the table result
       // collection	string	<optional> A named collection from which this result is drawn
@@ -99,9 +99,9 @@ export class CompendiumToRollTableSpecialHarvestDialog extends CompendiumToRollT
         drawn: false,
         flags: {
           [`${CONSTANTS.MODULE_ID}`]: {
-            [`${CONSTANTS.FLAGS.HARVEST_AMOUNT_KEY}`]: 1,
+            [`${CONSTANTS.FLAGS.RESULTS_FORMULA_KEY_FORMULA}`]: 1,
             [`${CONSTANTS.FLAGS.HARVEST_DC_VALUE_KEY}`]: dc ?? 0,
-            [`${CONSTANTS.FLAGS.HARVEST_SKILLS_VALUE_KEY}`]: skillDenom ?? "",
+            [`${CONSTANTS.FLAGS.HARVEST_SKILL_VALUE_KEY}`]: skillDenom ?? "",
           },
         },
       };
