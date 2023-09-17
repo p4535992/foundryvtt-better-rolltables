@@ -172,7 +172,8 @@
         "ToggleSimple": "Simple Editor"
       },
       "betterRolltableRoll": "Roll+",
-      "quantityFormula": "Qt."
+      "quantityFormula": "Qt.",
+      "editResult": "Edit Result"
     }
   }
 }

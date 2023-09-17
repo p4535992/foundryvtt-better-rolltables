@@ -109,15 +109,15 @@
                         <label>{{ localize "TABLE.ResultRange" }}</label>
                     </th>
                     {{#if owner}}
-                    <th class="result-controls" style="display:flex">
+                    <th class="result-controls result-brt-controls-header">
                         <a class="normalize-results" title="{{ localize "TABLE.Normalize" }}">
-                            <i class="fas fa-balance-scale"></i>
+                            <i class="fas fa-balance-scale fa-fw"></i>
                         </a>
                         <a class='normalize-weights' data-tooltip='{{localize 'better-rolltables.label.NormalizeWeights'}}' data-tooltip-direction='UP'>
-                            <i class='fa-solid fa-weight-scale'></i>
+                            <i class='fa-solid fa-weight-scale fa-fw'></i>
                         </a>
                         <a class='normalize-results' data-tooltip='{{localize 'better-rolltables.label.NormalizeRanges'}}' data-tooltip-direction='UP'>
-                            <i class='fa-solid fa-sliders'></i>
+                            <i class='fa-solid fa-sliders fa-fw'></i>
                         </a>
                     </th>
                     {{/if}}
@@ -210,6 +210,9 @@
                     <input type="hidden" name="results.{{i}}.drawn" value="{{result.drawn}}" data-dtype="Boolean"/>
                     <a class="delete-result" title="{{ localize "TABLE.ResultDelete" }}">
                         <i class="fas fa-trash fa-fw"></i>
+                    </a>
+                    <a class="edit-result" title="{{ localize "better-rolltables.label.editResult" }}">
+                        <i class="fas fa-pencil-alt fa-fw"></i>
                     </a>
                 </td>
                 {{/if}}

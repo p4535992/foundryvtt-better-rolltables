@@ -1,6 +1,6 @@
 import API from "../API";
 import { CONSTANTS } from "../constants/constants";
-import { i18n } from "../lib";
+import { error, i18n } from "../lib";
 import { RichResultEdit } from "./brt-result-editor";
 
 export class BetterRollTableBetterConfig extends RollTableConfig {
@@ -237,6 +237,9 @@ export class BetterRollTableBetterConfig extends RollTableConfig {
   activateListeners(jq) {
     super.activateListeners(jq);
 
+    // The below options require an editable sheet
+    if (!this.isEditable) return;
+
     const html = jq[0];
 
     // Re-normalize Table Entries
@@ -247,8 +250,52 @@ export class BetterRollTableBetterConfig extends RollTableConfig {
       .forEach((el) => el.addEventListener("click", this._openRichEditor.bind(this)));
 
     html.querySelector(".better-rolltables-roll").addEventListener("click", this._onBetterRollTablesRoll.bind(this));
+
+    // Edit a Result
+    html.querySelectorAll("a.edit-result").forEach((el) => el.addEventListener("click", this._onEditResult.bind(this)));
+    html
+      .querySelectorAll("a.rich-edit-result")
+      .forEach((el) => el.addEventListener("click", this._openRichEditor.bind(this)));
     // TODO
     // html.querySelector(".toggle-editor").addEventListener("click", (ev) => this._toggleSimpleEditor(ev, html));
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Handle toggling the drawn status of the result in the table
+   * @param {Event} event
+   * @private
+   */
+  async _onEditResult(event) {
+    event.preventDefault();
+    const tableResult = event.currentTarget.closest(".table-result");
+    const result = this.document.results.get(tableResult.dataset.resultId);
+
+    if (result.type === CONST.TABLE_RESULT_TYPES.COMPENDIUM) {
+      // Compendium.world.prodottifiniti.Item.cGvOfBMe8XQjL8ra
+      let compendium = game.packs.get(`${result.documentCollection}`);
+      if (!compendium) {
+        throw error(`Compendium ${result.documentCollection} was not found`);
+      }
+      let findDocument = (await compendium.getDocuments()).find((m) => m.id === `${result.documentId}`);
+      if (!findDocument) {
+        throw error(`The "${result.documentId}" document was not found in Compendium ${result.documentCollection}`);
+      }
+      // const doc = await fromUuid(findDocument.uuid);
+      // doc.sheet.render(true);
+      findDocument.sheet.render(true);
+    } else if (result.type === CONST.TABLE_RESULT_TYPES.DOCUMENT) {
+      let compendium = game.collections.get(result.documentCollection);
+      if (!compendium) {
+        throw error(`Collection ${result.documentCollection} was not found`);
+      }
+      let findDocument = (await compendium.contents).find((m) => m.id === `${result.documentId}`);
+      if (!findDocument) {
+        throw error(`The "${result.documentId}" document was not found in collection ${result.documentCollection}`);
+      }
+      findDocument.sheet.render(true);
+    }
   }
 
   /* -------------------------------------------- */
