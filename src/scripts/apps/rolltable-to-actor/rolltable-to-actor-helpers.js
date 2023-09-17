@@ -1,5 +1,5 @@
+import { CONSTANTS } from "../../constants/constants";
 import SETTINGS from "../../constants/settings";
-import { CONSTANTS } from "../../core/config";
 
 export class RollTableToActorHelpers {
   /**
@@ -46,6 +46,8 @@ export class RollTableToActorHelpers {
       actorNames,
     ]);
     ui.notifications.info(infoStr);
+    const items = itemsData;
+    return items;
   }
 
   static _stringInject(str, arr) {
@@ -114,6 +116,7 @@ export class RollTableToActorHelpers {
     if (!stackAttribute) {
       return Item.create(itemsData, { parent: actor });
     }
+    const items = [];
     for (const item of itemsData) {
       const match = actor.getEmbeddedCollection("Item").find((i) => {
         return RollTableToActorHelpers.itemMatches(i, item);
@@ -126,9 +129,11 @@ export class RollTableToActorHelpers {
           [`${stackAttribute}`]: newStack,
         });
       } else {
-        await Item.create(itemsData, { parent: actor });
+        const i = await Item.create(itemsData, { parent: actor });
+        items.push(i);
       }
     }
+    return items;
   }
 
   static itemMatches(charItem, tableItem) {

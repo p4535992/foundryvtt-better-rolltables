@@ -2,6 +2,7 @@ import { getItemFromCompendium } from "../core/utils.js";
 import { BRTCONFIG } from "../core/config.js";
 import { LootManipulator } from "./loot-manipulation.js";
 import { CONSTANTS } from "../constants/constants.js";
+import { RollTableToActorHelpers } from "../apps/rolltable-to-actor/rolltable-to-actor-helpers.js";
 
 export class LootCreator {
   /**
@@ -59,6 +60,8 @@ export class LootCreator {
       items.push(newItem);
     }
     return items;
+    // const items = await RollTableToActorHelpers.addItemsToActor(this.actor, this.betterResults);
+    // return items;
   }
 
   /**
@@ -246,7 +249,7 @@ export class LootCreator {
       const newItem = await this._createLootItem(item, targetActor, stackSame, customLimit);
       items.push(newItem);
     }
-
-    return items;
+    // const items = await RollTableToActorHelpers.addResultsToControlledTokens(this.betterResults);
+    // return items;
   }
 }

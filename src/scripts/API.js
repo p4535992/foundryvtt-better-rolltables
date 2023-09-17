@@ -10,6 +10,7 @@ import { BRTLootHelpers } from "./loot/loot-helpers.js";
 import { BRTStoryHelpers } from "./story/story-helpers.js";
 import { BetterTables } from "./better-tables.js";
 import { CONSTANTS } from "./constants/constants.js";
+import { RollTableToActorHelpers } from "./apps/rolltable-to-actor/rolltable-to-actor-helpers.js";
 
 /**
  * Create a new API class and export it as default
@@ -214,6 +215,19 @@ const API = {
     const hideChatMessage = inAttributes.hideChatMessage;
     return await RollFromCompendiumAsRollTableHelpers.rollCompendiumAsRollTable(compendium, hideChatMessage);
   },
+
+  // async addItemsToActor(inAttributes) {
+  //   // if (!Array.isArray(inAttributes)) {
+  //   //   throw error("rollCompendiumAsRollTable | inAttributes must be of type array");
+  //   // }
+  //   // const [uuidOrItem] = inAttributes;
+  //   if (typeof inAttributes !== "object") {
+  //     throw error("rollCompendiumAsRollTable | inAttributes must be of type object");
+  //   }
+  //   const actor = inAttributes.actor;
+  //   const itemsData = inAttributes.itemsData
+  //   return await RollTableToActorHelpers.addItemsToActor(actor,itemsData);
+  // },
 };
 
 export default API;
