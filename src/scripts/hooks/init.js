@@ -5,8 +5,9 @@ import { setApi } from "../../module.js";
 import API from "../API.js";
 import { registerSettings } from "../settings.js";
 import { CONSTANTS } from "../constants/constants.js";
-import { BetterRollTableConfig } from "../core/brt-rolltable-config.js";
+import { BetterRollTableBetterConfig } from "../core/brt-rolltable-config.js";
 import SETTINGS from "../constants/settings.js";
+import { BetterRollTableLootConfig } from "../loot/loot-rolltable-config.js";
 
 /**
  * @module BetterRollTables.BetterRolltableHooks
@@ -140,8 +141,12 @@ class BetterRolltableHooks {
     // WE DON'T NEED THIS WITH BRT WE ALREADY OVERRRIDE THE ROLL MODE
     // libWrapper.register(CONSTANTS.MODULE_ID, "RollTable.prototype.draw", BetterTables.rolltableDrawHandler, "MIXED");
 
-    RollTables.registerSheet(CONSTANTS.MODULE_ID, BetterRollTableConfig, {
+    RollTables.registerSheet(CONSTANTS.MODULE_ID, BetterRollTableBetterConfig, {
       label: "BRT - Better Rolltable",
+      makeDefault: false,
+    });
+    RollTables.registerSheet(CONSTANTS.MODULE_ID, BetterRollTableLootConfig, {
+      label: "BRT - Loot Rolltable",
       makeDefault: false,
     });
   }

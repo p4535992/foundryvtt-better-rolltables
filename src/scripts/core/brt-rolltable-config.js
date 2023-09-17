@@ -3,7 +3,7 @@ import { CONSTANTS } from "../constants/constants";
 import { i18n } from "../lib";
 import { RichResultEdit } from "./brt-result-editor";
 
-export class BetterRollTableConfig extends RollTableConfig {
+export class BetterRollTableBetterConfig extends RollTableConfig {
   /** @inheritdoc */
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {

@@ -16,21 +16,14 @@
 
 ### If you want to buy me a coffee [![alt-text](https://img.shields.io/badge/-Patreon-%23ff424d?style=for-the-badge)](https://www.patreon.com/p4535992)
 
-or support the original authors:
-
-**Paypal TipJar: Ultrakorne**
-
-[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/paypalme/ultrakorne)
-
-**Paypal TipJar: JackPrince** 
-
-[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/paypalme/JackPrince)
-
 *better-rolltables* is Module for FoundryVTT to improve and add functionality to Rollable tables
 Implementing for example the Treasure Hoard" Tables from the Dungeon master manual becomes possible!
 
-Some Features:
+## Features
 
+- Weight normalization: Generates appropriate weight value to results based on range, as opposed to doing the inverse with base sheet.
+- Drag & drop re-ordering: Allows drag & dropping results to re-order them. This involves above weight normalization being called automatically as ordering is based on ranges, and doing it without weights is unnecessarily difficult, so make sure this is intended.
+- Text result rich editor: Allows editing a text result in ProseMirror.
 - Enhance your RollTables with Drag and Drop, Generate Loot, Encounters and and build your NPC Generator!
 - Roll on multiple tables with roll formulas
 - Auto create a loot actor to store generated loot
@@ -42,10 +35,6 @@ Some Features:
 The module was updated for the 10 by [elizeuangelo](https://github.com/elizeuangelo) on commission and then perfected by [sasquach45932](https://github.com/sasquach45932) with some updates and bug fixing . Finally [p4535992](https://github.com/p4535992) applied some code best practices (module id as prefix of i18n and css rules, etc.) and taking over maintenance of the module.
 
 A special ty to the original authors [Ultrakorne#6240](https://discordapp.com/users/Ultrakorne#6240), [JackPrince#0494](https://discordapp.com/users/JackPrince#0494) and [DanielBöttner](https://github.com/DanielBoettner).
-
-## NOTE FOR FOUNDRYVTT VERSION 11
-
-With FoundryVTT version 11 there are many UX/UI changes for rollable tables coming so maybe you don't want this module enabled right away. DO NOT INSTALL ON 11 UNTIL I SAY SO.
 
 ## NOTE: This module is under maintenance, I have no plans to update or add features. However, I will try to fix any bugs as possible. Any contribution is welcome.
 

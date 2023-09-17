@@ -203,6 +203,9 @@
 
     <!-- Roll Table Footer -->
     <footer class="sheet-footer flexrow">
+        {{#ifcontain better-rolltables.table-type "loot"}}
+        <button id="BRT-gen-loot" class="generate" type="button"><i class="fas fa-coins"></i>{{localize "better-rolltables.Buttons.GenerateLoot"}}</button>
+        {{/ifcontain}}
         {{#if owner}}
         <button class="submit" type="submit"><i class="fas fa-save"></i> {{ localize "TABLE.Update" }}</button>
         <button class="reset" type="button"><i class="fas fa-undo"></i> {{ localize "TABLE.Reset" }}</button>
