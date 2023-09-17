@@ -15,13 +15,13 @@ export class BetterRollTableLootConfig extends RollTableConfig {
       viewPermission: CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER,
       scrollY: ["ol.table-results"],
       //   // dragDrop: [{ dragSelector: null, dropSelector: null }],
-      //   dragDrop: [
-      //     { dragSelector: null, dropSelector: null },
-      //     {
-      //       dragSelector: "section.results .table-results .table-result",
-      //       dropSelector: "section.results .table-results",
-      //     },
-      //   ],
+      dragDrop: [
+        //   { dragSelector: null, dropSelector: null },
+        {
+          dragSelector: "section.results .table-results .table-result",
+          dropSelector: "section.results .table-results",
+        },
+      ],
     });
   }
 
@@ -103,32 +103,32 @@ export class BetterRollTableLootConfig extends RollTableConfig {
   //   return Promise.all(flashes);
   // }
 
-  //   /**
-  //    * @param {DragEvent} event
-  //    */
-  //   _onDragStart(event) {
-  //     const eel = event.target;
-  //     const el = eel.dataset.resultId ? eel : eel.closest(".table-result[data-result-id]");
-  //     event.dataTransfer?.setData(
-  //       "text/plain",
-  //       JSON.stringify({ event: "sort", index: el.dataset.index, result: el.dataset.resultId })
-  //     );
-  //   }
+  /**
+   * @param {DragEvent} event
+   */
+  _onDragStart(event) {
+    const eel = event.target;
+    const el = eel.dataset.resultId ? eel : eel.closest(".table-result[data-result-id]");
+    event.dataTransfer?.setData(
+      "text/plain",
+      JSON.stringify({ event: "sort", index: el.dataset.index, result: el.dataset.resultId })
+    );
+  }
 
-  //   async _onDrop(event) {
-  //     const json = TextEditor.getDragEventData(event);
-  //     if (json.event === "sort") {
-  //       const eel = event.target;
-  //       const el = eel.dataset.resultId ? eel : eel.closest(".table-result[data-result-id]");
-  //       if (!el) {
-  //         ui.notifications.warn("Drop target not found.");
-  //         return;
-  //       }
-  //       return this.reorderIndex(event, json.result, el.dataset.resultId);
-  //     } else {
-  //       return super._onDrop(event);
-  //     }
-  //   }
+  async _onDrop(event) {
+    const json = TextEditor.getDragEventData(event);
+    if (json.event === "sort") {
+      const eel = event.target;
+      const el = eel.dataset.resultId ? eel : eel.closest(".table-result[data-result-id]");
+      if (!el) {
+        ui.notifications.warn("Drop target not found.");
+        return;
+      }
+      return this.reorderIndex(event, json.result, el.dataset.resultId);
+    } else {
+      return super._onDrop(event);
+    }
+  }
 
   /**
    * @param {String} source Source ID

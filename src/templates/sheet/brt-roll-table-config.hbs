@@ -7,6 +7,7 @@
     </header>
 
     <fieldset>
+        
         <main class="better-rolltables">
             <h2>{{textType}}</h2>
             <input type="hidden" 
@@ -43,6 +44,7 @@
             </div>
 
         </main>
+        
     </fieldset>
 
     <div class="form-group stacked">
@@ -94,11 +96,11 @@
                     <th class="result-details">
                         <label>{{ localize "TABLE.ResultDetails" }}</label>
                     </th>
-                    <!--
+                    
                     <th class="result-brt-quantity-formula">
                         <label>{{ localize "better-rolltables.label.quantityFormula" }}</label>
                     </th>
-                    -->
+                    
                     <th class="result-weight">
                         <label>{{ localize "TABLE.ResultWeight" }}</label>
                     </th>
@@ -143,42 +145,31 @@
                 <td class="result-details">
 					<input type="hidden" name="results.{{i}}.documentId" value="{{result.documentId}}"/>
 
-					{{#if result.isText}}
-                        <input type="text" name="results.{{i}}.text" value="{{result.text}}" placeholder="{{localize 'TABLE.ResultDescription'}}"/>
-                        <a class="rich-edit-result" data-tooltip="{{localize 'better-rolltables.label.RichEdit.ButtonHint'}}" data-tooltip-direction="UP">
-                            <i class="fa-solid fa-file-contract"></i>
-                        </a>
-					{{else if result.isDocument}}
-                        <select name="results.{{i}}.documentCollection">
-                            {{#select result.documentCollection}}
-                            {{#each ../documentTypes}}
-                            <option value="{{this}}">{{this}}</option>
-                            {{/each}}
-                            {{/select}}
-                        </select>
-                        <input class="result-target result-target-short"
-                            type="text"  
-                            name="results.{{i}}.text" 
-                            value="{{result.text}}"
-                            readonly>
-                        <!--<input class="result-target" name="results.{{i}}.text" type="text" value="{{result.text}}"/>-->
-					{{else if result.isCompendium}}
-                        <select name="results.{{i}}.documentCollection">
-                            {{#select result.documentCollection}}
-                            {{#each ../compendiumPacks}}
-                            <option value="{{this}}">{{this}}</option>
-                            {{/each}}
-                            {{/select}}
-                        </select>
-                        <input class="result-target result-target-short"
-                            type="text"  
-                            name="results.{{i}}.text" 
-                            value="{{result.text}}"
-                            readonly>
-			            <!--<input class="result-target" name="results.{{i}}.text" type="text" value="{{result.text}}"/>-->
-					{{/if}}
+                    {{#if result.isText}}
+                    <input type="text" name="results.{{i}}.text" value="{{result.text}}" placeholder="{{localize 'TABLE.ResultDescription'}}"/>
+
+                    {{else if result.isDocument}}
+                    <select name="results.{{i}}.documentCollection">
+                        {{#select result.documentCollection}}
+                        {{#each ../documentTypes}}
+                        <option value="{{this}}">{{this}}</option>
+                        {{/each}}
+                        {{/select}}
+                    </select>
+                    <input class="result-target" name="results.{{i}}.text" type="text" value="{{result.text}}"/>
+
+                    {{else if result.isCompendium}}
+                    <select name="results.{{i}}.documentCollection">
+                        {{#select result.documentCollection}}
+                        {{#each ../compendiumPacks}}
+                        <option value="{{this}}">{{this}}</option>
+                        {{/each}}
+                        {{/select}}
+                    </select>
+                    <input class="result-target" name="results.{{i}}.text" type="text" value="{{result.text}}"/>
+                    {{/if}}
 				</td>
-                <!--
+
                 <td class="result-brt-quantity-formula">
 					{{#if result.isText}}
                         <input class="result-better-rolltables-formula" placeholder="{{localize better-rolltables.Formula}}" 
@@ -200,7 +191,7 @@
                             />
 					{{/if}}
                 </td>
-                -->
+                
                 <td class="result-weight">
                     <input type="text" name="results.{{i}}.weight" value="{{result.weight}}" placeholder="1" data-dtype="Number"/>
                 </td>
