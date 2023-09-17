@@ -1,4 +1,5 @@
 import { StoryBuilder } from "./story-builder";
+import { StoryChatCard } from "./story-chat-card.js";
 
 export class BRTStoryHelpers {
   static async getStoryResults(tableEntity) {

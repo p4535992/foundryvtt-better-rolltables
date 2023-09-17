@@ -242,6 +242,20 @@
         <button class="reset" type="button"><i class="fas fa-undo"></i> {{ localize "TABLE.Reset" }}</button>
         {{/if}}
         <button class="roll" type="button"><i class="fas fa-dice-d20"></i> {{ localize "TABLE.Roll" }}</button>
-        <button class="better-rolltables-roll" type="button"><i class="fa-solid fa-dice"></i> {{ localize "better-rolltables.label.betterRolltableRoll" }}</button>
+        {{#ifcontain better-rolltables.table-type "better"}}
+        <button class="better-rolltables-roll-better" type="button">
+            <i class="fa-solid fa-dice"></i> {{ localize "better-rolltables.label.betterRolltableRoll" }}
+        </button>
+        {{/ifcontain}}
+        {{#ifcontain better-rolltables.table-type "loot"}}
+        <button class="better-rolltables-roll-loot" type="button">
+            <i class="fas fa-gem"></i>{{localize "better-rolltables.label.betterRolltableRoll"}}
+        </button>
+        {{/ifcontain}}
+        {{#ifcontain better-rolltables.table-type "story"}}
+        <button class="better-rolltables-roll-story" type="button">
+            <i class="fas fa-book"></i>{{localize "better-rolltables.label.betterRolltableRoll"}}
+        </button>
+        {{/ifcontain}}
     </footer>
 </form>

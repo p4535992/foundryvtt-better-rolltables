@@ -1,5 +1,6 @@
 import { StoryBoolCondition } from "./story-bool-condition.js";
 import * as Utils from "../core/utils.js";
+import { warn } from "../lib.js";
 
 export class StoryBuilder {
   constructor(tableEntity) {
@@ -216,8 +217,10 @@ export class StoryBuilder {
    * @returns {string}
    */
   _generateStory(story) {
-    if (!story) return story;
-
+    if (!story) {
+      warn(`No story is been passed in th correct format`, true);
+      return story;
+    }
     const regex = /{ *([^}]*?) *}/g;
     let replacedStory = story;
     let matches;

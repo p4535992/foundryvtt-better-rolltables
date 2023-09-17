@@ -220,7 +220,9 @@ export class BetterRollTableLootConfig extends RollTableConfig {
       .querySelectorAll(".rich-edit-result")
       .forEach((el) => el.addEventListener("click", this._openRichEditor.bind(this)));
 
-    html.querySelector(".better-rolltables-roll").addEventListener("click", this._onBetterRollTablesRoll.bind(this));
+    html
+      .querySelector(".better-rolltables-roll-loot")
+      .addEventListener("click", this._onBetterRollTablesRoll.bind(this));
 
     // Edit a Result
     html.querySelectorAll("a.edit-result").forEach((el) => el.addEventListener("click", this._onEditResult.bind(this)));
@@ -309,7 +311,7 @@ export class BetterRollTableLootConfig extends RollTableConfig {
       event.target.disabled = true;
     }
     const tableEntity = this.document;
-    await API.betterTableRoll(tableEntity);
+    await API.generateChatLoot(tableEntity);
     if (event.currentTarget) {
       event.currentTarget.disabled = false;
     } else {

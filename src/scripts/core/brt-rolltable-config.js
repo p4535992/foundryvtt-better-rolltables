@@ -220,7 +220,9 @@ export class BetterRollTableBetterConfig extends RollTableConfig {
       .querySelectorAll(".rich-edit-result")
       .forEach((el) => el.addEventListener("click", this._openRichEditor.bind(this)));
 
-    html.querySelector(".better-rolltables-roll").addEventListener("click", this._onBetterRollTablesRoll.bind(this));
+    html
+      .querySelectorAll(".better-rolltables-roll-better")
+      .addEventListener("click", this._onBetterRollTablesRoll.bind(this));
 
     // Edit a Result
     html.querySelectorAll("a.edit-result").forEach((el) => el.addEventListener("click", this._onEditResult.bind(this)));
