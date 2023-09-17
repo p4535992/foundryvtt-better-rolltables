@@ -55,6 +55,7 @@ class BetterRolltableHooks {
     Hooks.on("renderChatMessage", BetterTables.handleChatMessageButtons);
     Hooks.on("renderJournalPageSheet", BetterTables.handleRolltableLink);
     Hooks.on("renderItemSheet", BetterTables.handleRolltableLink);
+    // Hooks.on("dropRollTableSheetData", BetterTables.handleDropRollTableSheetData);
 
     // TODO we really need this ???
     if (game.system.id === "dnd5e") {

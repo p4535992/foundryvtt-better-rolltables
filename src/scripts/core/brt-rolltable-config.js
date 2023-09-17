@@ -14,14 +14,14 @@ export class BetterRollTableBetterConfig extends RollTableConfig {
       closeOnSubmit: false,
       viewPermission: CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER,
       scrollY: ["ol.table-results"],
-      // dragDrop: [{ dragSelector: null, dropSelector: null }],
-      dragDrop: [
-        { dragSelector: null, dropSelector: null },
-        {
-          dragSelector: "section.results .table-results .table-result",
-          dropSelector: "section.results .table-results",
-        },
-      ],
+      // // dragDrop: [{ dragSelector: null, dropSelector: null }],
+      // dragDrop: [
+      //   { dragSelector: null, dropSelector: null },
+      //   {
+      //     dragSelector: "section.results .table-results .table-result",
+      //     dropSelector: "section.results .table-results",
+      //   },
+      // ],
     });
   }
 
@@ -62,6 +62,8 @@ export class BetterRollTableBetterConfig extends RollTableConfig {
     if (this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) !== CONSTANTS.TABLE_TYPE_BETTER) {
       await this.document.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY, CONSTANTS.TABLE_TYPE_BETTER);
     }
+    brtData.textType =
+      i18n(`${CONSTANTS.MODULE_ID}.${"TypePrefixLabel"}`) + " " + i18n(`${CONSTANTS.MODULE_ID}.${"TypeLabel"}`) + "";
 
     brtData = foundry.utils.mergeObject(brtData, duplicate(this.document.flags));
     brtData.disabled = !this.isEditable;
@@ -69,8 +71,6 @@ export class BetterRollTableBetterConfig extends RollTableConfig {
     // TODO
     // brtData.enrichedDescription = await TextEditor.enrichHTML(context.data.description, { async: true });
 
-    brtData.textType =
-      i18n(`${CONSTANTS.MODULE_ID}.${"TypePrefixLabel"}`) + " " + i18n(`${CONSTANTS.MODULE_ID}.${"TypeLabel"}`) + "";
     return brtData;
   }
 
@@ -103,32 +103,32 @@ export class BetterRollTableBetterConfig extends RollTableConfig {
   //   return Promise.all(flashes);
   // }
 
-  /**
-   * @param {DragEvent} event
-   */
-  _onDragStart(event) {
-    const eel = event.target;
-    const el = eel.dataset.resultId ? eel : eel.closest(".table-result[data-result-id]");
-    event.dataTransfer?.setData(
-      "text/plain",
-      JSON.stringify({ event: "sort", index: el.dataset.index, result: el.dataset.resultId })
-    );
-  }
+  // /**
+  //  * @param {DragEvent} event
+  //  */
+  // _onDragStart(event) {
+  //   const eel = event.target;
+  //   const el = eel.dataset.resultId ? eel : eel.closest(".table-result[data-result-id]");
+  //   event.dataTransfer?.setData(
+  //     "text/plain",
+  //     JSON.stringify({ event: "sort", index: el.dataset.index, result: el.dataset.resultId })
+  //   );
+  // }
 
-  async _onDrop(event) {
-    const json = TextEditor.getDragEventData(event);
-    if (json.event === "sort") {
-      const eel = event.target;
-      const el = eel.dataset.resultId ? eel : eel.closest(".table-result[data-result-id]");
-      if (!el) {
-        ui.notifications.warn("Drop target not found.");
-        return;
-      }
-      return this.reorderIndex(event, json.result, el.dataset.resultId);
-    } else {
-      return super._onDrop(event);
-    }
-  }
+  // async _onDrop(event) {
+  //   const json = TextEditor.getDragEventData(event);
+  //   if (json.event === "sort") {
+  //     const eel = event.target;
+  //     const el = eel.dataset.resultId ? eel : eel.closest(".table-result[data-result-id]");
+  //     if (!el) {
+  //       ui.notifications.warn("Drop target not found.");
+  //       return;
+  //     }
+  //     return this.reorderIndex(event, json.result, el.dataset.resultId);
+  //   } else {
+  //     return super._onDrop(event);
+  //   }
+  // }
 
   /**
    * @param {String} source Source ID

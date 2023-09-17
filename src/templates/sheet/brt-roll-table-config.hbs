@@ -94,9 +94,9 @@
                     <th class="result-details">
                         <label>{{ localize "TABLE.ResultDetails" }}</label>
                     </th>
-                    <!-- TODO
-                    <th class="result-quantity-formula">
-                        <label>{{ localize "better-rolltables.qtFormulaLabel" }}</label>
+                    <!--
+                    <th class="result-brt-quantity-formula">
+                        <label>{{ localize "better-rolltables.label.quantityFormula" }}</label>
                     </th>
                     -->
                     <th class="result-weight">
@@ -144,12 +144,6 @@
 					<input type="hidden" name="results.{{i}}.documentId" value="{{result.documentId}}"/>
 
 					{{#if result.isText}}
-                        <!-- text type result, we disable the formula field for text -->
-                        <input class="result-better-rolltables-formula" placeholder="{{localize better-rolltables.Formula}}" 
-                            type="hidden"
-                            name="results.{{i}}.flags.better-rolltables.brt-result-formula.formula" 
-                            value="{{result.flags.better-rolltables.brt-result-formula.formula}}"
-                        />
                         <input type="text" name="results.{{i}}.text" value="{{result.text}}" placeholder="{{localize 'TABLE.ResultDescription'}}"/>
                         <a class="rich-edit-result" data-tooltip="{{localize 'better-rolltables.label.RichEdit.ButtonHint'}}" data-tooltip-direction="UP">
                             <i class="fa-solid fa-file-contract"></i>
@@ -162,11 +156,6 @@
                             {{/each}}
                             {{/select}}
                         </select>
-                        <input class="result-better-rolltables-formula" placeholder="{{localize better-rolltables.Formula}}" 
-                            type="text"
-                            name="results.{{i}}.flags.better-rolltables.brt-result-formula.formula" 
-                            value="{{result.flags.better-rolltables.brt-result-formula.formula}}"
-                            />
                         <input class="result-target result-target-short"
                             type="text"  
                             name="results.{{i}}.text" 
@@ -181,11 +170,6 @@
                             {{/each}}
                             {{/select}}
                         </select>
-                        <input class="result-better-rolltables-formula" placeholder="{{localize better-rolltables.Formula}}" 
-                            type="text"
-                            name="results.{{i}}.flags.better-rolltables.brt-result-formula.formula" 
-                            value="{{result.flags.better-rolltables.brt-result-formula.formula}}"
-                            />
                         <input class="result-target result-target-short"
                             type="text"  
                             name="results.{{i}}.text" 
@@ -194,9 +178,27 @@
 			            <!--<input class="result-target" name="results.{{i}}.text" type="text" value="{{result.text}}"/>-->
 					{{/if}}
 				</td>
-                <!-- TODO
-                <td class="result-quantity-formula">
-                    <input type="text" name="results.{{i}}.flags.better-rolltables.qtFormula" value="{{result.qtFormula}}" placeholder="{{localize "better-rolltables.label.qtFormulaPlaceholder"}}">
+                <!--
+                <td class="result-brt-quantity-formula">
+					{{#if result.isText}}
+                        <input class="result-better-rolltables-formula" placeholder="{{localize better-rolltables.Formula}}" 
+                            type="hidden"
+                            name="results.{{i}}.flags.better-rolltables.brt-result-formula.formula" 
+                            value="{{result.flags.better-rolltables.brt-result-formula.formula}}"
+                        />
+					{{else if result.isDocument}}
+                        <input class="result-better-rolltables-formula" placeholder="{{localize better-rolltables.Formula}}" 
+                            type="text"
+                            name="results.{{i}}.flags.better-rolltables.brt-result-formula.formula" 
+                            value="{{result.flags.better-rolltables.brt-result-formula.formula}}"
+                            />
+					{{else if result.isCompendium}}
+                        <input class="result-better-rolltables-formula" placeholder="{{localize better-rolltables.Formula}}" 
+                            type="text"
+                            name="results.{{i}}.flags.better-rolltables.brt-result-formula.formula" 
+                            value="{{result.flags.better-rolltables.brt-result-formula.formula}}"
+                            />
+					{{/if}}
                 </td>
                 -->
                 <td class="result-weight">
@@ -236,6 +238,6 @@
         <button class="reset" type="button"><i class="fas fa-undo"></i> {{ localize "TABLE.Reset" }}</button>
         {{/if}}
         <button class="roll" type="button"><i class="fas fa-dice-d20"></i> {{ localize "TABLE.Roll" }}</button>
-        <button class="better-rolltables-roll" type="button"><i class="fa-solid fa-dice"></i> {{ localize "better-rolltables.label.better-rolltables-roll" }}</button>
+        <button class="better-rolltables-roll" type="button"><i class="fa-solid fa-dice"></i> {{ localize "better-rolltables.label.betterRolltableRoll" }}</button>
     </footer>
 </form>

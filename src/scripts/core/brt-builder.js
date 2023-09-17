@@ -32,14 +32,19 @@ export class BRTBuilder {
   }
 
   /**
+   * Draw multiple results from a RollTable, constructing a final synthetic Roll as a dice pool of inner rolls.
+   * @param {amount} amount               The number of results to draw
+   * @param {RollTable} table             The rollTable object
+   * @param {object} [options={}]         Optional arguments which customize the draw
+   * @param {Roll} [options.roll]                   An optional pre-configured Roll instance which defines the dice
+   *                                                roll to use
+   * @param {boolean} [options.recursive=true]      Allow drawing recursively from inner RollTable results
+   * @param {boolean} [options.displayChat=true]    Automatically display the drawn results in chat? Default is true
+   * @param {string} [options.rollMode]             Customize the roll mode used to display the drawn results
    *
-   * @param {number} amount
-   * @param {RollTable} table
-   * @param {object} options
-   *
-   * @returns {array}
+   * @returns {Promise<Array{RollTableResult}>} The drawn results
    */
-  async rollManyOnTable(amount, table, { _depth = 0 } = {}) {
+  async rollManyOnTable(amount, table, { roll = null, recursive = true, _depth = 0 } = {}) {
     const maxRecursions = 5;
     let msg = "";
     // Prevent infinite recursion
@@ -77,9 +82,22 @@ export class BRTBuilder {
         return;
       }
 
+      /*
+       * Draw multiple results from a RollTable, constructing a final synthetic Roll as a dice pool of inner rolls.
+       * @param {number} number               The number of results to draw
+       * @param {object} [options={}]         Optional arguments which customize the draw
+       * @param {Roll} [options.roll]                   An optional pre-configured Roll instance which defines the dice
+       *                                                roll to use
+       * @param {boolean} [options.recursive=true]      Allow drawing recursively from inner RollTable results
+       * @param {boolean} [options.displayChat=true]    Automatically display the drawn results in chat? Default is true
+       * @param {string} [options.rollMode]             Customize the roll mode used to display the drawn results
+       * @returns {Promise<{RollTableDraw}>}  The drawn results
+       */
       const draw = await table.drawMany(resultToDraw, {
-        displayChat: false,
+        roll: roll,
         recursive: false,
+        displayChat: false,
+        rollMode: "gmroll",
       });
       if (!this.mainRoll) {
         this.mainRoll = draw.roll;
@@ -143,72 +161,11 @@ export class BRTBuilder {
    * const customResults = await table.roll({roll});
    * ```
    */
-  async roll(tableEntity, { roll, recursive = true, _depth = 0 } = {}) {
-    this.rollManyOnTable(amount, tableEntity, { roll, recursive, _depth });
-  }
-
-  /**
-   * Draw a result from the RollTable based on the table formula or a provided Roll instance
-   * @param {object} [options={}]         Optional arguments which customize the draw behavior
-   * @param {Roll} [options.roll]                   An existing Roll instance to use for drawing from the table
-   * @param {boolean} [options.recursive=true]      Allow drawing recursively from inner RollTable results
-   * @param {TableResult[]} [options.results]       One or more table results which have been drawn
-   * @param {boolean} [options.displayChat=true]    Whether to automatically display the results in chat
-   * @param {string} [options.rollMode]             The chat roll mode to use when displaying the result
-   * @returns {Promise<{RollTableDraw}>}  A Promise which resolves to an object containing the executed roll and the
-   *                                      produced results.
-   */
-  async draw({ table, roll, recursive = true, results = [], displayChat = true, rollMode } = {}) {
-    // If an array of results were not already provided, obtain them from the standard roll method
-    if (!results.length) {
-      const r = await table.roll({ roll, recursive });
-      roll = r.roll;
-      results = r.results;
-    }
-    if (!results.length) {
-      return { roll, results };
-    }
-
-    // Mark results as drawn, if replacement is not used, and we are not in a Compendium pack
-    if (!table.replacement && !table.pack) {
-      const draws = table.getResultsForRoll(roll.total);
-      await table.updateEmbeddedDocuments(
-        "TableResult",
-        draws.map((r) => {
-          return { _id: r.id, drawn: true };
-        })
-      );
-    }
-
-    // Mark any nested table results as drawn too.
-    let updates = results.reduce((obj, r) => {
-      const parent = r.parent;
-      if (parent === table || parent.replacement || parent.pack) {
-        return obj;
-      }
-      if (!obj[parent.id]) {
-        obj[parent.id] = [];
-      }
-      obj[parent.id].push({ _id: r.id, drawn: true });
-      return obj;
-    }, {});
-
-    if (Object.keys(updates).length) {
-      updates = Object.entries(updates).map(([id, results]) => {
-        return { _id: id, results };
-      });
-      await RollTable.implementation.updateDocuments(updates);
-    }
-
-    // Forward drawn results to create chat messages
-    if (displayChat) {
-      await table.toMessage(results, {
-        roll: roll,
-        messageOptions: { rollMode },
-      });
-    }
-
-    // Return the roll and the produced results
-    return { roll, results };
+  async roll({ roll = null, recursive = true, _depth = 0 } = {}) {
+    const resultsBrt = await this.rollManyOnTable(1, this.table, { roll, recursive, _depth });
+    return {
+      roll: roll,
+      results: resultsBrt,
+    };
   }
 }

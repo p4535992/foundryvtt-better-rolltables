@@ -468,6 +468,14 @@ export class BetterTables {
     }
   }
 
+  static handleDropRollTableSheetData(rollTable, rollTableSheet, json) {
+    if (json.event === "sort") {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   static async handleRolltableLink(sheet, html) {
     if (game.user.isGM && game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.ROLL_TABLE_FROM_JOURNAL)) {
       // handling rolltables imported in campaign

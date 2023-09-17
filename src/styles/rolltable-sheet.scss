@@ -121,6 +121,15 @@
             overflow: auto;
           }
           */
+		  > .result-brt-quantity-formula {
+			flex: 0 0 50px;
+			text-align: center;
+		  }
+		  > .result-brt-details-text {
+			display: flex;
+			place-items: center;
+			gap: 0.2rem;
+		  }
           > .result-controls {
             padding: 0 0.3rem;
           }
