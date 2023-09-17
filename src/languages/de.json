@@ -39,7 +39,7 @@
     "TypeDefault": "Standard Tabelle",
     "BetterTable": "`Better Table` Tabelle",
     "TypeLoot": "Beute Tabelle (loot)",
-    "StoryLoot": "Story Tabelle",
+    "TypeStory": "Story Tabelle",
     "CurrencyLoot": "Währungsbeute",
     "CurrencyLootPlaceholder": "Komma separierte Formel(n) z.B.: 1d4[gp], (1d4+1)*10[sp]",
     "LootActorName": "Beute zu Akteur hinzufügen",

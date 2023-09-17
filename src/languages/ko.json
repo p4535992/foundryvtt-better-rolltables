@@ -31,7 +31,7 @@
     "TypeDefault": "기본 표",
     "BetterTable": "향상된 표",
     "TypeLoot": "전리품 표",
-    "StoryLoot": "스토리 표",
+    "TypeStory": "스토리 표",
     "CurrencyLoot": "노획한 돈",
     "Currency.Label": "화폐",
     "CurrencyLootPlaceholder": "쉼표로 구분된 수식 추가 e.g.: 1d4[gp], (1d4+1)*10[sp]",

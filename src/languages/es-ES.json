@@ -31,7 +31,7 @@
     "TypeDefault": "Tabla por defecto",
     "BetterTable": "Tabla mejorada",
     "TypeLoot": "Tabla de botín",
-    "StoryLoot": "Tabla de historia",
+    "TypeStory": "Tabla de historia",
     "Currency": {
       "Label": "Monedas"
     },

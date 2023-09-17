@@ -40,7 +40,7 @@
     "TypeDefault": "Default Table",
     "TypeLoot": "Loot Table",
     "TypeHarvest": "Harvest Table",
-    "StoryLoot": "Story Table",
+    "TypeStory": "Story Table",
     "CurrencyLoot": "Currency Loot",
     "CurrencyLootPlaceholder": "Add comma separated formulas e.g.: 1d4[gp], (1d4+1)*10[sp]",
     "HarvestDcValue": "Harvest DC Value",

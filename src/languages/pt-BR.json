@@ -31,7 +31,7 @@
     "TypeDefault": "Tabela Padrão",
     "BetterTable": "Tabela Melhorada",
     "TypeLoot": "Tabela de Pilhagem",
-    "StoryLoot": "Tabela de História",
+    "TypeStory": "Tabela de História",
     "CurrencyLoot": "Moedas de Pilhagem",
     "Currency.Label": "Moeda:",
     "CurrencyLootPlaceholder": "Adicione fórmulas separadas por vírgula, por exemplo: 1d4[po], (1d4+1)*10[pp]",

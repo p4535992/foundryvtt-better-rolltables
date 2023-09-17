@@ -31,7 +31,7 @@
     "TypeDefault": "Table par défaut",
     "BetterTable": "Table améliorée",
     "TypeLoot": "Table de butin",
-    "StoryLoot": "Table d'histoire",
+    "TypeStory": "Table d'histoire",
     "CurrencyLoot": "Butin d'argent",
     "CurrencyLootPlaceholder": "Ajouter des formules séparées par des virgules : 1d4[gp], (1d4+1)*10[sp]",
     "LootActorName": "Ajouter le butin à un acteur",
