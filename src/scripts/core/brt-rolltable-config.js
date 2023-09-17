@@ -74,35 +74,6 @@ export class BetterRollTableBetterConfig extends RollTableConfig {
     return brtData;
   }
 
-  // /**
-  //  * Modified copy of core _animateRoll to ensure it does not constantly break with the changed layout.
-  //  *
-  //  * @param {TableResult[]} results An Array of drawn table results to highlight
-  //  * @returns {Promise} A Promise which resolves once the animation is complete
-  //  * @override
-  //  */
-  // async _animateRoll(results) {
-  //   // Get the list of results and their indices
-  //   const tableResults = this.element[0].querySelector(".table-results"); // MOD ".table-results" instead ".table-results > tbody"
-  //   const drawnIds = new Set(results.map((r) => r.id));
-  //   const drawnItems = Array.from(tableResults.children).filter((item) => drawnIds.has(item.dataset.resultId));
-
-  //   // Set the animation timing
-  //   const nResults = this.object.results.size;
-  //   const maxTime = 2000;
-  //   let animTime = 50;
-  //   let animOffset = Math.round(tableResults.offsetHeight / (tableResults.children[1].offsetHeight * 2)); // MOD [1] instead [0]
-  //   const nLoops = Math.min(Math.ceil(maxTime / (animTime * nResults)), 4);
-  //   if (nLoops === 1) animTime = maxTime / nResults;
-
-  //   // Animate the roulette
-  //   await this._animateRoulette(tableResults, drawnIds, nLoops, animTime, animOffset);
-
-  //   // Flash the results
-  //   const flashes = drawnItems.map((li) => this._flashResult(li));
-  //   return Promise.all(flashes);
-  // }
-
   /**
    * @param {DragEvent} event
    */
@@ -340,4 +311,33 @@ export class BetterRollTableBetterConfig extends RollTableConfig {
       event.target.disabled = false;
     }
   }
+
+  // /**
+  //  * Modified copy of core _animateRoll to ensure it does not constantly break with the changed layout.
+  //  *
+  //  * @param {TableResult[]} results An Array of drawn table results to highlight
+  //  * @returns {Promise} A Promise which resolves once the animation is complete
+  //  * @override
+  //  */
+  // async _animateRoll(results) {
+  //   // Get the list of results and their indices
+  //   const tableResults = this.element[0].querySelector(".table-results"); // MOD ".table-results" instead ".table-results > tbody"
+  //   const drawnIds = new Set(results.map((r) => r.id));
+  //   const drawnItems = Array.from(tableResults.children).filter((item) => drawnIds.has(item.dataset.resultId));
+
+  //   // Set the animation timing
+  //   const nResults = this.object.results.size;
+  //   const maxTime = 2000;
+  //   let animTime = 50;
+  //   let animOffset = Math.round(tableResults.offsetHeight / (tableResults.children[1].offsetHeight * 2)); // MOD [1] instead [0]
+  //   const nLoops = Math.min(Math.ceil(maxTime / (animTime * nResults)), 4);
+  //   if (nLoops === 1) animTime = maxTime / nResults;
+
+  //   // Animate the roulette
+  //   await this._animateRoulette(tableResults, drawnIds, nLoops, animTime, animOffset);
+
+  //   // Flash the results
+  //   const flashes = drawnItems.map((li) => this._flashResult(li));
+  //   return Promise.all(flashes);
+  // }
 }
