@@ -175,7 +175,11 @@
       "quantityFormula": "Qt.",
       "editResult": "Edit Result",
       "dc": "DC",
-      "skill": "Skill"
+      "skill": "Skill",
+      "OrderByDCAsc": "Order by DC (1 - 9)",
+      "OrderByDCDesc": "Order by DC (9 - 1)",
+      "OrderBySkillAsc": "Order by Skill (A - Z)",
+      "OrderBySkillDesc": "Order by Skill (Z - A)"
     }
   }
 }

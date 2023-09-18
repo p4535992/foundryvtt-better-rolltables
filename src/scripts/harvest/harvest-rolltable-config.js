@@ -3,7 +3,7 @@ import { CONSTANTS } from "../constants/constants";
 import { BetterRollTableBetterConfig } from "../core/brt-rolltable-config";
 import { i18n } from "../lib";
 
-export class BetterRollTableLootConfig extends RollTableConfig {
+export class BetterRollTableHarvestConfig extends RollTableConfig {
   /** @inheritdoc */
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
@@ -59,11 +59,11 @@ export class BetterRollTableLootConfig extends RollTableConfig {
     });
 
     // Set brt type
-    if (this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) !== CONSTANTS.TABLE_TYPE_LOOT) {
-      await this.document.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY, CONSTANTS.TABLE_TYPE_LOOT);
+    if (this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) !== CONSTANTS.TABLE_TYPE_HARVEST) {
+      await this.document.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY, CONSTANTS.TABLE_TYPE_HARVEST);
     }
     brtData.textType =
-      i18n(`${CONSTANTS.MODULE_ID}.${"TypePrefixLabel"}`) + " " + i18n(`${CONSTANTS.MODULE_ID}.${"TypeLoot"}`) + "";
+      i18n(`${CONSTANTS.MODULE_ID}.${"TypePrefixLabel"}`) + " " + i18n(`${CONSTANTS.MODULE_ID}.${"TypeHarvest"}`) + "";
 
     brtData = foundry.utils.mergeObject(brtData, duplicate(this.document.flags));
     brtData.disabled = !this.isEditable;
@@ -217,7 +217,7 @@ export class BetterRollTableLootConfig extends RollTableConfig {
     html.querySelector(".normalize-weights").addEventListener("click", this._onNormalizeWeights.bind(this));
 
     html
-      .querySelector(".better-rolltables-roll-loot")
+      .querySelector(".better-rolltables-roll-harvest")
       .addEventListener("click", this._onBetterRollTablesRoll.bind(this));
 
     // Edit a Result
@@ -230,8 +230,8 @@ export class BetterRollTableLootConfig extends RollTableConfig {
 
     // TIPO SPECIFICO
     html
-      .querySelectorAll("#BRT-gen-loot")
-      .forEach((el) => el.addEventListener("click", this._onBetterRollTablesGenerateLoot.bind(this)));
+      .querySelectorAll("#BRT-gen-harvest")
+      .forEach((el) => el.addEventListener("click", this._onBetterRollTablesGenerateHarvest.bind(this)));
   }
 
   /* -------------------------------------------- */
@@ -307,7 +307,7 @@ export class BetterRollTableLootConfig extends RollTableConfig {
       event.target.disabled = true;
     }
     const tableEntity = this.document;
-    await API.generateChatLoot(tableEntity);
+    await API.generateChatHarvest(tableEntity);
     if (event.currentTarget) {
       event.currentTarget.disabled = false;
     } else {
@@ -322,7 +322,7 @@ export class BetterRollTableLootConfig extends RollTableConfig {
    * @param {Event} event
    * @private
    */
-  async _onBetterRollTablesGenerateLoot(event) {
+  async _onBetterRollTablesGenerateHarvest(event) {
     event.preventDefault();
     await this.submit({ preventClose: true, preventRender: true });
     if (event.currentTarget) {
@@ -331,7 +331,7 @@ export class BetterRollTableLootConfig extends RollTableConfig {
       event.target.disabled = true;
     }
     const tableEntity = this.document;
-    await API.generateLoot(tableEntity);
+    await API.generateHarvest(tableEntity);
     if (event.currentTarget) {
       event.currentTarget.disabled = false;
     } else {

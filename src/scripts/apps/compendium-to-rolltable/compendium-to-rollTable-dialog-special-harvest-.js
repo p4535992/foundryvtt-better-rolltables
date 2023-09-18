@@ -117,7 +117,7 @@ export class CompendiumToRollTableSpecialHarvestDialog extends CompendiumToRollT
    * @param {*} options
    */
   async createCompendiumFromData(compendiumName, results, formula, options = {}) {
-    const resultsGroupedBySystemOrigin = this._groupBy(results, `system.origin`);
+    const resultsGroupedBySystemOrigin = this._groupBy(results, `system.source`);
     const documents = [];
 
     for (const [key, values] of Object.entries(resultsGroupedBySystemOrigin)) {
@@ -125,7 +125,7 @@ export class CompendiumToRollTableSpecialHarvestDialog extends CompendiumToRollT
       const document = await RollTable.create(
         {
           name: "Better Harvester | " + key + " RollTable",
-          description: `A random table created from the contents of the ${compendiumName} compendium filter for the system origin value '${key}'.`,
+          description: `A random table created from the contents of the ${compendiumName} compendium filter for the system source value '${key}'.`,
           results: values,
           formula: formula ?? `1d${value.length}`,
         },

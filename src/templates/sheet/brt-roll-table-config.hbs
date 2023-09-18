@@ -43,6 +43,23 @@
                     {{checked data.flags.better-rolltables.brt-hidden-table}} />
             </div>
 
+            {{#ifcontain better-rolltables.table-type "harvest"}}
+            <div class="form-group">
+                <a class='normalize-dcs-asc' data-tooltip='{{localize 'better-rolltables.label.OrderByDCAsc'}}' data-tooltip-direction='UP'>
+                    <i class="fa-solid fa-arrow-up-1-9"></i>
+                </a>
+                <a class='normalize-skills-asc' data-tooltip='{{localize 'better-rolltables.label.OrderBySkillAsc'}}' data-tooltip-direction='UP'>
+                    <i class="fa-solid fa-arrow-up-a-z"></i>
+                </a>
+                <a class='normalize-dcs-desc' data-tooltip='{{localize 'better-rolltables.label.OrderByDCDesc'}}' data-tooltip-direction='UP'>
+                    <i class="fa-solid fa-arrow-up-9-1"></i>
+                </a>
+                <a class='normalize-skills-desc' data-tooltip='{{localize 'better-rolltables.label.OrderBySkillDesc'}}' data-tooltip-direction='UP'>
+                    <i class="fa-solid fa-arrow-up-z-a"></i>
+                </a>
+            </div>
+            {{/ifcontain}}
+
         </main>
 
     </fieldset>

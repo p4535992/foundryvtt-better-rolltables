@@ -1,6 +1,7 @@
 import { BetterTables } from "../../better-tables";
 import { CONSTANTS } from "../../constants/constants";
 import SETTINGS from "../../constants/settings";
+import { BRTUtils } from "../../core/utils";
 
 export class RollTableToActorHelpers {
   static async addRollTableItemsToActor(table, actor) {
@@ -202,4 +203,238 @@ export class RollTableToActorHelpers {
   //     });
   //   });
   // }
+
+  /**
+   *
+   * @param {boolean} stackSame Should same items be stacked together? Default = true
+   * @returns
+   */
+  static async addItemsToActorOld(actor, results, stackSame = true) {
+    const items = [];
+    for (const item of results) {
+      const newItem = await RollTableToActorHelpers._createHarvestItem(item, actor, stackSame);
+      items.push(newItem);
+    }
+    return items;
+    // const items = await RollTableToActorHelpers.addItemsToActor(actor, results, stackSame);
+    // return items;
+  }
+
+  /**
+   *
+   * @param {token} token
+   * @param {boolean} stackSame
+   * @param {boolean} isTokenActor - is the token already the token actor?
+   * @param {number} customLimit
+   *
+   * @returns {object[]} items
+   */
+  static async addItemsToTokenOld(token, stackSame = true, isTokenActor = false, customLimit = 0) {
+    const items = [];
+    for (const item of results) {
+      // Create the item making sure to pass the token actor and not the base actor
+      const targetActor = isTokenActor ? token : token.actor;
+      const newItem = await RollTableToActorHelpers._createItem(item, targetActor, stackSame, customLimit);
+      items.push(newItem);
+    }
+    // const items = await RollTableToActorHelpers.addResultsToControlledTokens(results, stackSame);
+    // return items;
+  }
+
+  /**
+   *
+   * @param {object} item representation
+   * @param {Actor} actor to which to add items to
+   * @param {boolean} stackSame if true add quantity to an existing item of same name in the current actor
+   * @param {number} customLimit
+   * @returns {Item} the create Item (foundry item)
+   */
+  static async _createItem(item, actor, stackSame = true, customLimit = 0) {
+    const newItemData = await RollTableToActorHelpers.buildItemData(item);
+    const itemPrice = getProperty(newItemData, BRTCONFIG.PRICE_PROPERTY_PATH) || 0;
+    const embeddedItems = [...actor.getEmbeddedCollection("Item").values()];
+    const originalItem = embeddedItems.find(
+      (i) => i.name === newItemData.name && itemPrice === getProperty(i, BRTCONFIG.PRICE_PROPERTY_PATH)
+    );
+
+    /** if the item is already owned by the actor (same name and same PRICE) */
+    if (originalItem && stackSame) {
+      /** add quantity to existing item */
+      const newItemQty = getProperty(newItemData, BRTCONFIG.QUANTITY_PROPERTY_PATH) || 1,
+        originalQty = getProperty(originalItem, BRTCONFIG.QUANTITY_PROPERTY_PATH) || 1,
+        updateItem = { _id: originalItem.id },
+        newQty = RollTableToActorHelpers._handleLimitedQuantity(newItemQty, originalQty, customLimit);
+
+      if (newQty != newItemQty) {
+        setProperty(updateItem, BRTCONFIG.QUANTITY_PROPERTY_PATH, newQty);
+        await actor.updateEmbeddedDocuments("Item", [updateItem]);
+      }
+      return actor.items.get(originalItem.id);
+    } else {
+      /** we create a new item if we don't own already */
+      return await actor.createEmbeddedDocuments("Item", [newItemData]);
+    }
+  }
+
+  /**
+   *
+   * @param {number} currentQty Quantity of item we want to add
+   * @param {number} originalQty Quantity of the originalItem already in posession
+   * @param {number} customLimit A custom Limit
+   * @returns
+   */
+  static _handleLimitedQuantity(currentQty, originalQty, customLimit = 0) {
+    const newQty = Number(originalQty) + Number(currentQty);
+
+    if (customLimit > 0) {
+      // limit is bigger or equal to newQty
+      if (Number(customLimit) >= Number(newQty)) {
+        return newQty;
+      }
+      //limit was reached, we stick to that limit
+      return customLimit;
+    }
+
+    //we don't care for the limit
+    return newQty;
+  }
+
+  /**
+   *
+   * @param {object} item
+   * @returns
+   */
+  static async buildItemData(item) {
+    let itemData = {},
+      existingItem = false;
+    /** Try first to load item from compendium */
+    if (item.collection) {
+      existingItem = await BRTUtils.getItemFromCompendium(item);
+      itemData = duplicate(existingItem);
+      itemData.type = BRTCONFIG.ITEM_LOOT_TYPE;
+    }
+
+    /** Try first to load item from item list */
+    if (!existingItem) {
+      /** if an item with this name exist we load that item data, otherwise we create a new one */
+      existingItem = game.items.getName(item.text);
+      if (existingItem) {
+        itemData = duplicate(existingItem);
+        itemData.type = BRTCONFIG.ITEM_LOOT_TYPE;
+      }
+    }
+
+    const itemConversions = {
+      Actor: {
+        text: `${item.text} Portrait`,
+        img: existingItem?.img || "icons/svg/mystery-man.svg",
+      },
+      Scene: {
+        text: "Map of " + existingItem?.name,
+        img: existingItem?.thumb || "icons/svg/direction.svg",
+        price: new Roll("1d20 + 10").roll({ async: false }).total || 1,
+      },
+    };
+
+    const convert = itemConversions[existingItem?.documentName] ?? false;
+    /** Create item from text since the item does not exist */
+    const createNewItem = !existingItem || convert;
+
+    if (createNewItem) {
+      const name = convert ? convert?.text : item.text,
+        type = BRTCONFIG.ITEM_LOOT_TYPE,
+        img = convert ? convert?.img : item.img,
+        price = convert ? convert?.price : item.price || 0;
+
+      itemData = { name: name, type, img: img, system: { price: price } }; // "icons/svg/mystery-man.svg"
+    }
+
+    if (Object.getOwnPropertyDescriptor(item, "commands") && item.commands) {
+      itemData = RollTableToActorHelpers._applyCommandToItemData(itemData, item.commands);
+    }
+
+    if (!itemData) {
+      return;
+    }
+    itemData = await RollTableToActorHelpers.preItemCreationDataManipulation(itemData);
+    return itemData;
+  }
+
+  /**
+   *
+   * @param {object} itemData
+   * @param {object[]} commands
+   * @returns {object} itemData
+   */
+  static _applyCommandToItemData(itemData, commands) {
+    for (const cmd of commands) {
+      // TODO check the type of command, that is a command to be rolled and a valid command
+      let rolledValue;
+      try {
+        rolledValue = new Roll(cmd.arg).roll({ async: false }).total;
+      } catch (error) {
+        continue;
+      }
+      setProperty(itemData, `system.${cmd.command.toLowerCase()}`, rolledValue);
+    }
+    return itemData;
+  }
+
+  /** MANIPULATOR */
+
+  /**
+   *
+   * @param {number} level
+   *
+   * @returns {Item}
+   */
+  static async _getRandomSpell(level) {
+    const spells = game.betterTables
+        .getSpellCache()
+        .filter((spell) => getProperty(spell, BRTCONFIG.SPELL_LEVEL_PATH) === level),
+      spell = spells[Math.floor(Math.random() * spells.length)];
+    return BRTUtils.findInCompendiumById(spell.collection, spell._id);
+  }
+
+  /**
+   *
+   * @param {*} itemData
+   *
+   * @returns
+   */
+  static async preItemCreationDataManipulation(itemData) {
+    const match = BRTCONFIG.SCROLL_REGEX.exec(itemData.name);
+
+    itemData = duplicate(itemData);
+
+    if (!match) {
+      return itemData;
+    }
+
+    // If it is a scroll then open the compendium
+    const level = match[1].toLowerCase() === "cantrip" ? 0 : parseInt(match[1]);
+    const itemEntity = await RollTableToActorHelpers._getRandomSpell(level);
+
+    if (!itemEntity) {
+      ui.notifications.warn(
+        CONSTANTS.MODULE_ID + ` | No spell of level ${level} found in compendium  ${itemEntity.collection} `
+      );
+      return itemData;
+    }
+
+    const itemLink = `@Compendium[${itemEntity.pack}.${itemEntity._id}]`;
+    // make the name shorter by removing some text
+    itemData.name = itemData.name.replace(/^(Spell\s)/, "");
+    itemData.name = itemData.name.replace(/(Cantrip\sLevel)/, "Cantrip");
+    itemData.name += ` (${itemEntity.name})`;
+    itemData.system.description.value =
+      "<blockquote>" +
+      itemLink +
+      "<br />" +
+      itemEntity.system.description.value +
+      "<hr />" +
+      itemData.system.description.value +
+      "</blockquote>";
+    return itemData;
+  }
 }

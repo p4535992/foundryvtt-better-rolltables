@@ -217,10 +217,6 @@ export class BetterRollTableBetterConfig extends RollTableConfig {
     html.querySelector(".normalize-weights").addEventListener("click", this._onNormalizeWeights.bind(this));
 
     html
-      .querySelectorAll(".rich-edit-result")
-      .forEach((el) => el.addEventListener("click", this._openRichEditor.bind(this)));
-
-    html
       .querySelectorAll(".better-rolltables-roll-better")
       .addEventListener("click", this._onBetterRollTablesRoll.bind(this));
 

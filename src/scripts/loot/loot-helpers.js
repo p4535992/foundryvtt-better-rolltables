@@ -16,10 +16,10 @@ export class BRTLootHelpers {
    */
   static async addLootToSelectedToken(tableEntity, token = null, options = null) {
     let tokenstack = [];
-    const isTokenActor = options && options?.isTokenActor,
-      stackSame = options && options?.stackSame ? options.stackSame : true,
-      customRoll = options && options?.customRole ? options.customRole : undefined,
-      itemLimit = options && options?.itemLimit ? Number(options.itemLimit) : 0;
+    const isTokenActor = options && options?.isTokenActor;
+    const stackSame = options && options?.stackSame ? options.stackSame : true;
+    const customRoll = options && options?.customRole ? options.customRole : undefined;
+    const itemLimit = options && options?.itemLimit ? Number(options.itemLimit) : 0;
 
     if (null == token && canvas.tokens.controlled.length === 0) {
       return ui.notifications.error("Please select a token first");
@@ -50,12 +50,12 @@ export class BRTLootHelpers {
    * @param {*} tableEntity
    */
   static async generateLoot(tableEntity, options = {}) {
-    const builder = new BRTBuilder(tableEntity),
-      results = await builder.betterRoll(),
-      br = new BetterResults(results),
-      betterResults = await br.buildResults(tableEntity),
-      currencyData = br.getCurrencyData(),
-      lootCreator = new LootCreator(betterResults, currencyData); //LootCreator;
+    const builder = new BRTBuilder(tableEntity);
+    const results = await builder.betterRoll();
+    const br = new BetterResults(results);
+    const betterResults = await br.buildResults(tableEntity);
+    const currencyData = br.getCurrencyData();
+    const lootCreator = new LootCreator(betterResults, currencyData);
 
     await lootCreator.createActor(tableEntity);
     await lootCreator.addCurrenciesToActor();
@@ -76,13 +76,58 @@ export class BRTLootHelpers {
     if (String(getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${BRTCONFIG.HIDDEN_TABLE}`)) === "true") {
       rollMode = "gmroll";
     }
-    const brtBuilder = new BRTBuilder(tableEntity),
-      results = await brtBuilder.betterRoll(),
-      br = new BetterResults(results),
-      betterResults = await br.buildResults(tableEntity),
-      currencyData = br.getCurrencyData(),
-      lootChatCard = new LootChatCard(betterResults, currencyData, rollMode);
+    const brtBuilder = new BRTBuilder(tableEntity);
+    const results = await brtBuilder.betterRoll();
+    const br = new BetterResults(results);
+    const betterResults = await br.buildResults(tableEntity);
+    const currencyData = br.getCurrencyData();
+    const lootChatCard = new LootChatCard(betterResults, currencyData, rollMode);
 
     await lootChatCard.createChatCard(tableEntity);
+  }
+
+  static async addCurrenciesToActor(actor, lootCurrency) {
+    const currencyData = duplicate(actor.system.currency);
+    // const lootCurrency = this.currencyData;
+
+    for (const key in lootCurrency) {
+      if (Object.getOwnPropertyDescriptor(currencyData, key)) {
+        const amount = Number(currencyData[key].value || 0) + Number(lootCurrency[key]);
+        currencyData[key] = amount.toString();
+      }
+    }
+    await actor.update({ "system.currency": currencyData });
+  }
+
+  /**
+   *
+   * @param {Token|Actor} token
+   * @param {Object} currencyData
+   * @param {Boolean} is the token passed as the token actor instead?
+   */
+  static async addCurrenciesToToken(token, lootCurrency, isTokenActor = false) {
+    // needed for base key set in the event that a token has no currency properties
+    const currencyDataInitial = { cp: 0, ep: 0, gp: 0, pp: 0, sp: 0 };
+    let currencyData = currencyDataInitial;
+
+    if (isTokenActor) {
+      currencyData = duplicate(token.system.currency);
+    } else if (token.actor.system.currency) {
+      currencyData = duplicate(token.actor.system.currency);
+    }
+
+    // const lootCurrency = currencyData;
+
+    for (const key in currencyDataInitial) {
+      const amount = Number(currencyData[key] || 0) + Number(lootCurrency[key] || 0);
+      currencyData[key] = amount;
+    }
+
+    if (isTokenActor) {
+      // @type {Actor}
+      return await token.update({ "system.currency": currencyData });
+    } else {
+      return await token.actor.update({ "system.currency": currencyData });
+    }
   }
 }

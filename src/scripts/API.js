@@ -1,8 +1,4 @@
-import { BRTBuilder } from "./core/brt-builder.js";
-import { BetterResults } from "./core/brt-table-results.js";
 import { BRTCONFIG } from "./core/config.js";
-import { LootChatCard } from "./loot/loot-chat-card.js";
-import { LootCreator } from "./loot/loot-creator.js";
 import { CompendiumToRollTableHelpers } from "./apps/compendium-to-rolltable/compendium-to-rollTable-helpers.js";
 import { RollFromCompendiumAsRollTableHelpers } from "./apps/roll-from-compendium-as-rolltable/roll-from-compendium-as-rolltable-helpers.js";
 import { BRTLootHelpers } from "./loot/loot-helpers.js";
@@ -10,6 +6,7 @@ import { BRTStoryHelpers } from "./story/story-helpers.js";
 import { BetterTables } from "./better-tables.js";
 import { CONSTANTS } from "./constants/constants.js";
 import { RollTableToActorHelpers } from "./apps/rolltable-to-actor/rolltable-to-actor-helpers.js";
+import { BRTHarvestHelpers } from "./harvest/harvest-helpers.js";
 
 /**
  * Create a new API class and export it as default
@@ -143,6 +140,32 @@ const API = {
    */
   async generateChatLoot(tableEntity, options = null) {
     return await BRTLootHelpers.generateChatLoot(tableEntity, options);
+  },
+
+  /* ================================================ */
+  /* HARVEST */
+  /* ================================================ */
+
+  /**
+   *
+   * @param {RollTable} tableEntity
+   * @param {Object} options
+   * @param {('blindroll'|'gmroll'|'selfroll')} options.rollMode The roll mode
+   * @returns {Promise<void>}
+   */
+  async generateHarvest(tableEntity, options = {}) {
+    return await BRTHarvestHelpers.generateHarvest(tableEntity, options);
+  },
+
+  /**
+   *
+   * @param {RollTable} tableEntity
+   * @param {Object} options
+   * @param {('blindroll'|'gmroll'|'selfroll')} options.rollMode The roll mode
+   * @returns {Promise<void>}
+   */
+  async generateChatHarvest(tableEntity, options = null) {
+    return await BRTHarvestHelpers.generateChatHarvest(tableEntity, options);
   },
 
   /* ================================================ */
