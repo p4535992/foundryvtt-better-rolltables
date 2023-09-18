@@ -1,5 +1,5 @@
 import { CONSTANTS } from "../../constants/constants";
-import { getRandomItemFromCompendium } from "../../core/utils";
+import { BRTUtils } from "../../core/utils";
 import { warn } from "../../lib";
 
 export class RollFromCompendiumAsRollTableHelpers {
@@ -18,7 +18,7 @@ export class RollFromCompendiumAsRollTableHelpers {
     }
 
     // Get random item from compendium
-    const item = await getRandomItemFromCompendium(compendium);
+    const item = await BRTUtils.getRandomItemFromCompendium(compendium);
 
     // prepare card data
     const fontSize = Math.max(60, 100 - Math.max(0, item.name.length - 27) * 2);

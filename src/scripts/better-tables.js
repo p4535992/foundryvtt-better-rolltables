@@ -2,7 +2,7 @@ import { LootCreator } from "./loot/loot-creator.js";
 import { LootChatCard } from "./loot/loot-chat-card.js";
 import { BRTBuilder } from "./core/brt-builder.js";
 import { BetterResults } from "./core/brt-table-results.js";
-import { getIconByEntityType } from "./core/utils.js";
+import { BRTUtils } from "./core/utils.js";
 import { BRTCONFIG } from "./core/config.js";
 import API from "./API.js";
 import { CONSTANTS } from "./constants/constants.js";
@@ -135,7 +135,7 @@ export class BetterTables {
       const entity = item.documentName;
       const pack = item.pack || game.collections.get(item.collectionName)?.documentName || "";
       const packPart = pack !== "" ? `data-pack="${pack}"` : "";
-      const icon = getIconByEntityType(entity);
+      const icon = BRTUtils.getIconByEntityType(entity);
       return `<a class="content-link" draggable="true" ${packPart} data-entity="${entity}" data-id="${id}" data-uuid="${uuid}"><i class="fas ${icon}"></i>${text}</a>`;
     }
 

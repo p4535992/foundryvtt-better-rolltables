@@ -1,7 +1,7 @@
 import { LootCreator } from "./loot-creator.js";
-import { addRollModeToChatData, getItemFromCompendium } from "../core/utils.js";
 import { BRTCONFIG } from "../core/config.js";
 import { CONSTANTS } from "../constants/constants.js";
+import { BRTUtils } from "../core/utils.js";
 
 /**
  * create a chat card based on the content of the object LootData
@@ -38,7 +38,7 @@ export class LootChatCard {
        * existing or in a compendium we have to create a new one */
       const itemData = await lootCreator.buildItemData(item);
       if (item.collection) {
-        const itemEntity = await getItemFromCompendium(item);
+        const itemEntity = await BRTUtils.getItemFromCompendium(item);
 
         if (itemEntity && itemEntity.name === itemData.name) {
           this.addToItemData(itemEntity, itemData);
@@ -163,7 +163,7 @@ export class LootChatCard {
 
   async createChatCard(table) {
     const chatData = await this.prepareCharCart(table);
-    addRollModeToChatData(chatData, this.rollMode);
+    BRTUtils.addRollModeToChatData(chatData, this.rollMode);
     ChatMessage.create(chatData);
   }
 }

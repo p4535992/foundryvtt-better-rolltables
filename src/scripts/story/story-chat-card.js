@@ -1,4 +1,4 @@
-import { addRollModeToChatData } from "../core/utils.js";
+import { BRTUtils } from "../core/utils";
 
 export class StoryChatCard {
   constructor(tableEntity) {
@@ -25,7 +25,7 @@ export class StoryChatCard {
     if (options.gmOnly) {
       chatData.whisper = [game.users.find((u) => u.isGM).id];
     } else {
-      addRollModeToChatData(chatData);
+      BRTUtils.addRollModeToChatData(chatData);
     }
 
     ChatMessage.create(chatData);

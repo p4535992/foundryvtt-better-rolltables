@@ -1,6 +1,6 @@
-import { findInCompendiumById } from "../core/utils.js";
 import { BRTCONFIG } from "../core/config.js";
 import { CONSTANTS } from "../constants/constants.js";
+import { BRTUtils } from "../core/utils.js";
 
 export class LootManipulator {
   /**
@@ -14,7 +14,7 @@ export class LootManipulator {
         .getSpellCache()
         .filter((spell) => getProperty(spell, BRTCONFIG.SPELL_LEVEL_PATH) === level),
       spell = spells[Math.floor(Math.random() * spells.length)];
-    return findInCompendiumById(spell.collection, spell._id);
+    return BRTUtils.findInCompendiumById(spell.collection, spell._id);
   }
 
   /**

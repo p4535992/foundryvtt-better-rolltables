@@ -1,5 +1,5 @@
 import { StoryBoolCondition } from "./story-bool-condition.js";
-import * as Utils from "../core/utils.js";
+import { BRTUtils } from "../core/utils.js";
 import { warn } from "../lib.js";
 
 export class StoryBuilder {
@@ -34,7 +34,7 @@ export class StoryBuilder {
         }
       } else if (entry.type === 2) {
         /** entity type 2 is when an entity inside a compendium is linked */
-        const entity = await Utils.findInCompendiumByName(entry.documentCollection, entry.text);
+        const entity = await BRTUtils.findInCompendiumByName(entry.documentCollection, entry.text);
         if (!entity) {
           errorString = `entity ${entry.text} not found in compendium ${entry.documentCollection}`;
         } else if (entity.documentCollection === "JournalEntry") {
@@ -147,12 +147,12 @@ export class StoryBuilder {
     if (tableMatch) {
       /** if it's a compendium the match is 'tablename.id' if it's a rolltable the match is directly the id */
 
-      const out = Utils.separateIdComendiumName(tableMatch[2]);
+      const out = BRTUtils.separateIdComendiumName(tableMatch[2]);
       const tableId = out.nameOrId;
       const compendiumName = out.compendiumName;
       let table;
       if (compendiumName) {
-        table = await Utils.findInCompendiumById(compendiumName, tableId);
+        table = await BRTUtils.findInCompendiumById(compendiumName, tableId);
       } else {
         table = game.tables.get(tableId);
       }

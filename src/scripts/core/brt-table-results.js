@@ -1,8 +1,8 @@
-import * as Utils from "./utils.js";
-import * as BRTHelper from "./brt-helper.js";
 import { BRTBuilder } from "./brt-builder.js";
 import { BRTCONFIG } from "./config.js";
 import { CONSTANTS } from "../constants/constants.js";
+import { BRTBetterHelpers } from "./brt-helper.js";
+import { BRTUtils } from "./utils.js";
 
 export class BetterResults {
   constructor(tableResults) {
@@ -61,12 +61,12 @@ export class BetterResults {
           const innerTableName = matches[3];
 
           if (!commandName && innerTableName) {
-            const out = Utils.separateIdComendiumName(innerTableName);
+            const out = BRTUtils.separateIdComendiumName(innerTableName);
             const tableName = out.nameOrId;
             const tableCompendiumName = out.compendiumName;
 
             if (tableCompendiumName) {
-              table = await Utils.findInCompendiumByName(tableCompendiumName, tableName);
+              table = await BRTUtils.findInCompendiumByName(tableCompendiumName, tableName);
             } else {
               table = game.tables.getName(tableName);
             }
@@ -92,7 +92,7 @@ export class BetterResults {
 
         // if a table definition is found, the textString is the rollFormula to be rolled on that table
         if (table) {
-          const numberRolls = await BRTHelper.tryRoll(textString);
+          const numberRolls = await BRTBetterHelpers.tryRoll(textString);
           const brtBuilder = new BRTBuilder(table);
           const innerResults = await brtBuilder.betterRoll(numberRolls);
 
@@ -157,7 +157,7 @@ export class BetterResults {
     const regex = /\[{2}(\w*[^\]])\]{2}/g;
     let matches;
     while ((matches = regex.exec(tableText)) != null) {
-      tableText = tableText.replace(matches[0], await BRTHelper.tryRoll(matches[1]));
+      tableText = tableText.replace(matches[0], await BRTBetterHelpers.tryRoll(matches[1]));
     }
 
     return tableText;
@@ -185,7 +185,7 @@ export class BetterResults {
         }
         const rollFormula = match[1];
         const currencyString = match[2];
-        const amount = await BRTHelper.tryRoll(rollFormula);
+        const amount = await BRTBetterHelpers.tryRoll(rollFormula);
 
         currenciesToAdd[currencyString] = (currenciesToAdd[currencyString] || 0) + amount;
       }

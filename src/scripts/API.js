@@ -3,7 +3,6 @@ import { BetterResults } from "./core/brt-table-results.js";
 import { BRTCONFIG } from "./core/config.js";
 import { LootChatCard } from "./loot/loot-chat-card.js";
 import { LootCreator } from "./loot/loot-creator.js";
-import { getRandomItemFromCompendium } from "./core/utils.js";
 import { CompendiumToRollTableHelpers } from "./apps/compendium-to-rolltable/compendium-to-rollTable-helpers.js";
 import { RollFromCompendiumAsRollTableHelpers } from "./apps/roll-from-compendium-as-rolltable/roll-from-compendium-as-rolltable-helpers.js";
 import { BRTLootHelpers } from "./loot/loot-helpers.js";
@@ -216,18 +215,19 @@ const API = {
     return await RollFromCompendiumAsRollTableHelpers.rollCompendiumAsRollTable(compendium, hideChatMessage);
   },
 
-  // async addItemsToActor(inAttributes) {
-  //   // if (!Array.isArray(inAttributes)) {
-  //   //   throw error("rollCompendiumAsRollTable | inAttributes must be of type array");
-  //   // }
-  //   // const [uuidOrItem] = inAttributes;
-  //   if (typeof inAttributes !== "object") {
-  //     throw error("rollCompendiumAsRollTable | inAttributes must be of type object");
-  //   }
-  //   const actor = inAttributes.actor;
-  //   const itemsData = inAttributes.itemsData
-  //   return await RollTableToActorHelpers.addItemsToActor(actor,itemsData);
-  // },
+  async addRollTableItemsToActor(inAttributes) {
+    // if (!Array.isArray(inAttributes)) {
+    //   throw error("rollCompendiumAsRollTable | inAttributes must be of type array");
+    // }
+    // const [uuidOrItem] = inAttributes;
+    if (typeof inAttributes !== "object") {
+      throw error("rollCompendiumAsRollTable | inAttributes must be of type object");
+    }
+    const table = inAttributes.table;
+    const actor = inAttributes.actor;
+    const actorWithItems = await RollTableToActorHelpers.addRollTableItemsToActor(table, actor);
+    return actorWithItems;
+  },
 };
 
 export default API;

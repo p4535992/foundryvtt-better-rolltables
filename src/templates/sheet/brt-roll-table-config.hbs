@@ -7,18 +7,18 @@
     </header>
 
     <fieldset>
-        
+
         <main class="better-rolltables">
             <h2>{{textType}}</h2>
-            <input type="hidden" 
-                name="flags.better-rolltables.table-type" 
+            <input type="hidden"
+                name="flags.better-rolltables.table-type"
                     value="{{data.flags.better-rolltables.table-type}}"/>
             {{#ifcontain better-rolltables.table-type "loot"}}
             <div class="form-group">
                 <label>{{localize 'better-rolltables.CurrencyLoot'}}</label>
                 <input type="text"
                     placeholder="{{localize 'better-rolltables.CurrencyLootPlaceholder'}}"
-                    name="flags.better-rolltables.table-currency-string" 
+                    name="flags.better-rolltables.table-currency-string"
                     value="{{data.flags.better-rolltables.table-currency-string}}" />
             </div>
             <div class="form-group">
@@ -26,25 +26,25 @@
                 <input type="text"
                     placeholder="{{localize 'better-rolltables.LootActorNamePlaceholder'}}" name="flags.better-rolltables.loot-actor-name"
                     value="{{data.flags.better-rolltables.loot-actor-name}}" />
-            </div>            
+            </div>
             {{/ifcontain}}
             <div class="form-group">
                 <label for="flags.better-rolltables.loot-amount-key">{{localize 'better-rolltables.LootRollAmount'}}</label>
                 <input type="text"
                     placeholder="{{localize 'better-rolltables.LootRollAmountPlaceholder'}}"
-                    name="flags.better-rolltables.loot-amount-key" 
+                    name="flags.better-rolltables.loot-amount-key"
                     value="{{data.flags.better-rolltables.loot-amount-key}}" />
             </div>
 
             <div class="form-group">
                 <label>{{localize "better-rolltables.label.tableTextHiddenTable"}}</label>
                 <input type="checkbox"
-                    name="flags.better-rolltables.brt-hidden-table" 
+                    name="flags.better-rolltables.brt-hidden-table"
                     {{checked data.flags.better-rolltables.brt-hidden-table}} />
             </div>
 
         </main>
-        
+
     </fieldset>
 
     <div class="form-group stacked">
@@ -96,11 +96,20 @@
                     <th class="result-details">
                         <label>{{ localize "TABLE.ResultDetails" }}</label>
                     </th>
-                    
+
                     <th class="result-brt-quantity-formula">
                         <label>{{ localize "better-rolltables.label.quantityFormula" }}</label>
                     </th>
-                    
+
+                    {{#ifcontain better-rolltables.table-type "harvest"}}
+                    <th class="result-brt-dc">
+                        <label>{{ localize "better-rolltables.label.dc" }}</label>
+                    </th>
+                    <th class="result-brt-skill">
+                        <label>{{ localize "better-rolltables.label.skill" }}</label>
+                    </th>
+                    {{/ifcontain}}
+
                     <th class="result-weight">
                         <label>{{ localize "TABLE.ResultWeight" }}</label>
                     </th>
@@ -172,26 +181,26 @@
 
                 <td class="result-brt-quantity-formula">
 					{{#if result.isText}}
-                        <input class="result-better-rolltables-formula" placeholder="{{localize better-rolltables.Formula}}" 
+                        <input class="result-better-rolltables-formula" placeholder="{{localize better-rolltables.Formula}}"
                             type="hidden"
-                            name="results.{{i}}.flags.better-rolltables.brt-result-formula.formula" 
+                            name="results.{{i}}.flags.better-rolltables.brt-result-formula.formula"
                             value="{{result.flags.better-rolltables.brt-result-formula.formula}}"
                         />
 					{{else if result.isDocument}}
-                        <input class="result-better-rolltables-formula" placeholder="{{localize better-rolltables.Formula}}" 
+                        <input class="result-better-rolltables-formula" placeholder="{{localize better-rolltables.Formula}}"
                             type="text"
-                            name="results.{{i}}.flags.better-rolltables.brt-result-formula.formula" 
+                            name="results.{{i}}.flags.better-rolltables.brt-result-formula.formula"
                             value="{{result.flags.better-rolltables.brt-result-formula.formula}}"
                             />
 					{{else if result.isCompendium}}
-                        <input class="result-better-rolltables-formula" placeholder="{{localize better-rolltables.Formula}}" 
+                        <input class="result-better-rolltables-formula" placeholder="{{localize better-rolltables.Formula}}"
                             type="text"
-                            name="results.{{i}}.flags.better-rolltables.brt-result-formula.formula" 
+                            name="results.{{i}}.flags.better-rolltables.brt-result-formula.formula"
                             value="{{result.flags.better-rolltables.brt-result-formula.formula}}"
                             />
 					{{/if}}
                 </td>
-                
+
                 <td class="result-weight">
                     <input type="text" name="results.{{i}}.weight" value="{{result.weight}}" placeholder="1" data-dtype="Number"/>
                 </td>
@@ -255,6 +264,11 @@
         {{#ifcontain better-rolltables.table-type "story"}}
         <button class="better-rolltables-roll-story" type="button">
             <i class="fas fa-book"></i>{{localize "better-rolltables.label.betterRolltableRoll"}}
+        </button>
+        {{/ifcontain}}
+        {{#ifcontain better-rolltables.table-type "harvest"}}
+        <button class="better-rolltables-roll-harvest" type="button">
+            <i class="fa-solid fa-wheat-awn-circle-exclamation"></i>{{localize "better-rolltables.label.betterRolltableRoll"}}
         </button>
         {{/ifcontain}}
     </footer>

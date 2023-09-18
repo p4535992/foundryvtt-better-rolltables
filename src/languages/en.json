@@ -173,7 +173,9 @@
       },
       "betterRolltableRoll": "Roll+",
       "quantityFormula": "Qt.",
-      "editResult": "Edit Result"
+      "editResult": "Edit Result",
+      "dc": "DC",
+      "skill": "Skill"
     }
   }
 }

@@ -1,13 +1,22 @@
+import { BetterTables } from "../../better-tables";
 import { CONSTANTS } from "../../constants/constants";
 import SETTINGS from "../../constants/settings";
 
 export class RollTableToActorHelpers {
+  static async addRollTableItemsToActor(table, actor) {
+    let brt = new BetterTables();
+    const results = await brt.getBetterTableResults(table);
+    const itemsData = await RollTableToActorHelpers.resultsToItemsData(results);
+    const actorWithItems = await RollTableToActorHelpers.addItemsToActor(actor, itemsData);
+    return actorWithItems;
+  }
+
   /**
    * Add rolltable results to actor
    * @param {TableResult[]}results
    * @return {void} array of item data
    */
-  static async addResultsToControlledTokens(results) {
+  static async addResultsToControlledTokens(results, stackSame = true) {
     // Grab the items
     let itemsData = await RollTableToActorHelpers.resultsToItemsData(results);
     if (itemsData.length === 0) {
@@ -22,7 +31,7 @@ export class RollTableToActorHelpers {
     }
     // Add the items
     for (const actor of controlledActors) {
-      await RollTableToActorHelpers.addItemsToActor(actor, itemsData);
+      await RollTableToActorHelpers.addItemsToActor(actor, itemsData, stackSame);
     }
 
     // Notify the user of items added
@@ -63,7 +72,7 @@ export class RollTableToActorHelpers {
   /**
    * Converts a list of results into a list of item data
    * @param {TableResult[]}results
-   * @return {Object[]} array of item data
+   * @return {Promise<{Object[]}>} array of item data
    */
   static async resultsToItemsData(results) {
     const itemsData = [];
@@ -92,7 +101,9 @@ export class RollTableToActorHelpers {
     }
     const stackedItemsData = [];
     for (const item of itemsData) {
-      const match = stackedItemsData.find((i) => RollTableToActorHelpers.itemMatches(i, item));
+      const match = stackedItemsData.find((i) => {
+        return RollTableToActorHelpers.itemMatches(i, item);
+      });
       if (!match) {
         stackedItemsData.push(item);
       } else {
@@ -111,23 +122,31 @@ export class RollTableToActorHelpers {
    * @param {Object[]} itemsData
    * @returns {Promise<itemsData>}
    */
-  static async addItemsToActor(actor, itemsData) {
+  static async addItemsToActor(actor, itemsData, stackSame = true) {
     const stackAttribute = game.settings.get(CONSTANTS.MODULE_ID, SETTINGS.QUANTITY_PROPERTY_PATH);
+    const priceAttribute = game.settings.get(CONSTANTS.MODULE_ID, SETTINGS.PRICE_PROPERTY_PATH) ?? 0;
     if (!stackAttribute) {
       return Item.create(itemsData, { parent: actor });
     }
     const items = [];
     for (const item of itemsData) {
-      const match = actor.getEmbeddedCollection("Item").find((i) => {
-        return RollTableToActorHelpers.itemMatches(i, item);
-      });
-      if (match) {
-        // const newStack = getProperty(match.system, stackAttribute) + (getProperty(item.system, stackAttribute) ?? 1);
-        const newStack = getProperty(match, stackAttribute) + (getProperty(item, stackAttribute) ?? 1);
-        await match.update({
-          //   [`system.${stackAttribute}`]: newStack,
-          [`${stackAttribute}`]: newStack,
+      if (stackSame) {
+        const match = actor.getEmbeddedCollection("Item").find((i) => {
+          return RollTableToActorHelpers.itemMatches(i, item);
         });
+        if (match) {
+          // const newStack = getProperty(match.system, stackAttribute) + (getProperty(item.system, stackAttribute) ?? 1);
+          const newStack = getProperty(match, stackAttribute) + (getProperty(item, stackAttribute) ?? 1);
+          const newPrice = getProperty(match, priceAttribute) + (getProperty(item, priceAttribute) ?? 0);
+          await match.update({
+            //   [`system.${stackAttribute}`]: newStack,
+            [`${stackAttribute}`]: newStack,
+            [`${priceAttribute}`]: newPrice,
+          });
+        } else {
+          const i = await Item.create(itemsData, { parent: actor });
+          items.push(i);
+        }
       } else {
         const i = await Item.create(itemsData, { parent: actor });
         items.push(i);

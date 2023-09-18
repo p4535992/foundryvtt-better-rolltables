@@ -1,6 +1,6 @@
 import { BetterRT } from "../better-table-view.js";
 import { BetterTables } from "../better-tables.js";
-import { getIconByEntityType } from "../core/utils.js";
+import { BRTUtils } from "../core/utils.js";
 import { setApi } from "../../module.js";
 import API from "../API.js";
 import { registerSettings } from "../settings.js";
@@ -94,7 +94,7 @@ class BetterRolltableHooks {
 
     /** return fas icon based on document name */
     Handlebars.registerHelper("entity-icon", function (documentName) {
-      return getIconByEntityType(documentName);
+      return BRTUtils.getIconByEntityType(documentName);
     });
 
     Handlebars.registerHelper("format-currencies", function (currenciesData) {

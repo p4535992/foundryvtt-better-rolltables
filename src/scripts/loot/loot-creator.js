@@ -1,8 +1,8 @@
-import { getItemFromCompendium } from "../core/utils.js";
 import { BRTCONFIG } from "../core/config.js";
 import { LootManipulator } from "./loot-manipulation.js";
 import { CONSTANTS } from "../constants/constants.js";
 import { RollTableToActorHelpers } from "../apps/rolltable-to-actor/rolltable-to-actor-helpers.js";
+import { BRTUtils } from "../core/utils.js";
 
 export class LootCreator {
   /**
@@ -60,7 +60,7 @@ export class LootCreator {
       items.push(newItem);
     }
     return items;
-    // const items = await RollTableToActorHelpers.addItemsToActor(this.actor, this.betterResults);
+    // const items = await RollTableToActorHelpers.addItemsToActor(this.actor, this.betterResults, stackSame);
     // return items;
   }
 
@@ -73,12 +73,12 @@ export class LootCreator {
    * @returns {Item} the create Item (foundry item)
    */
   async _createLootItem(item, actor, stackSame = true, customLimit = 0) {
-    const newItemData = await this.buildItemData(item),
-      itemPrice = getProperty(newItemData, BRTCONFIG.PRICE_PROPERTY_PATH) || 0,
-      embeddedItems = [...actor.getEmbeddedCollection("Item").values()],
-      originalItem = embeddedItems.find(
-        (i) => i.name === newItemData.name && itemPrice === getProperty(i, BRTCONFIG.PRICE_PROPERTY_PATH)
-      );
+    const newItemData = await this.buildItemData(item);
+    const itemPrice = getProperty(newItemData, BRTCONFIG.PRICE_PROPERTY_PATH) || 0;
+    const embeddedItems = [...actor.getEmbeddedCollection("Item").values()];
+    const originalItem = embeddedItems.find(
+      (i) => i.name === newItemData.name && itemPrice === getProperty(i, BRTCONFIG.PRICE_PROPERTY_PATH)
+    );
 
     /** if the item is already owned by the actor (same name and same PRICE) */
     if (originalItem && stackSame) {
@@ -132,7 +132,7 @@ export class LootCreator {
       existingItem = false;
     /** Try first to load item from compendium */
     if (item.collection) {
-      existingItem = await getItemFromCompendium(item);
+      existingItem = await BRTUtils.getItemFromCompendium(item);
       itemData = duplicate(existingItem);
       itemData.type = BRTCONFIG.ITEM_LOOT_TYPE;
     }
@@ -249,7 +249,7 @@ export class LootCreator {
       const newItem = await this._createLootItem(item, targetActor, stackSame, customLimit);
       items.push(newItem);
     }
-    // const items = await RollTableToActorHelpers.addResultsToControlledTokens(this.betterResults);
+    // const items = await RollTableToActorHelpers.addResultsToControlledTokens(this.betterResults, stackSame);
     // return items;
   }
 }

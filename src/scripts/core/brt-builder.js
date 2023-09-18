@@ -1,8 +1,7 @@
-import * as BRTHelper from "./brt-helper.js";
-import * as Utils from "../core/utils.js";
 import { BRTCONFIG } from "./config.js";
-import { addRollModeToChatData } from "../core/utils.js";
+import { BRTUtils } from "../core/utils.js";
 import { CONSTANTS } from "../constants/constants.js";
+import { BRTBetterHelpers } from "./brt-helper.js";
 
 export class BRTBuilder {
   constructor(tableEntity) {
@@ -16,7 +15,7 @@ export class BRTBuilder {
    */
   async betterRoll(rollsAmount = undefined) {
     this.mainRoll = undefined;
-    rollsAmount = rollsAmount || (await BRTHelper.rollsAmount(this.table));
+    rollsAmount = rollsAmount || (await BRTBetterHelpers.rollsAmount(this.table));
     this.results = await this.rollManyOnTable(rollsAmount, this.table);
     return this.results;
   }
@@ -27,7 +26,9 @@ export class BRTBuilder {
    */
   async createChatCard(results, rollMode = null) {
     let msgData = { roll: this.mainRoll, messageData: {} };
-    if (rollMode) addRollModeToChatData(msgData.messageData, rollMode);
+    if (rollMode) {
+      BRTUtils.addRollModeToChatData(msgData.messageData, rollMode);
+    }
     await this.table.toMessage(results, msgData);
   }
 
@@ -110,13 +111,13 @@ export class BRTBuilder {
         if (entry.type === CONST.TABLE_RESULT_TYPES.TEXT) {
           formulaAmount = "";
         }
-        const entryAmount = await BRTHelper.tryRoll(formulaAmount);
+        const entryAmount = await BRTBetterHelpers.tryRoll(formulaAmount);
 
         let innerTable;
         if (entry.type === CONST.TABLE_RESULT_TYPES.DOCUMENT && entry.documentCollection === "RollTable") {
           innerTable = game.tables.get(entry.documentId);
         } else if (entry.type === CONST.TABLE_RESULT_TYPES.COMPENDIUM) {
-          const entityInCompendium = await Utils.findInCompendiumByName(entry.documentCollection, entry.text);
+          const entityInCompendium = await BRTUtils.findInCompendiumByName(entry.documentCollection, entry.text);
           if (entityInCompendium !== undefined && entityInCompendium.documentName === "RollTable") {
             innerTable = entityInCompendium;
           }
