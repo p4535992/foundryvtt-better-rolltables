@@ -11,7 +11,10 @@
       }
     },
     "Buttons": {
-      "GenerateLoot": "Generate Loot",
+      "GenerateLoot": "Generate Loot on Actor",
+      "GenerateLootToken": "Generate Loot on selected tokens",
+      "GenerateHarvest": "Generate Harvest on Actor",
+      "GenerateHarvestToken": "Generate Harvest on selected tokens",
       "Currency": {
         "label": "Currency",
         "Share": "Share",
@@ -175,11 +178,7 @@
       "quantityFormula": "Qt.",
       "editResult": "Edit Result",
       "dc": "DC",
-      "skill": "Skill",
-      "OrderByDCAsc": "Order by DC (1 - 9)",
-      "OrderByDCDesc": "Order by DC (9 - 1)",
-      "OrderBySkillAsc": "Order by Skill (A - Z)",
-      "OrderBySkillDesc": "Order by Skill (Z - A)"
+      "skill": "Skill"
     }
   }
 }

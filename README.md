@@ -28,7 +28,9 @@ Implementing for example the Treasure Hoard" Tables from the Dungeon master manu
 - Roll on multiple tables with roll formulas
 - Auto create a loot actor to store generated loot
 - Automatically select a random spells when a scroll item is selected
+- A table can specify multiple currencies (with roll formulas) to always be awarded
 - Adds an option to change the table roll to GM only.
+- Adds the option to automatically import rolled items in controlled actors
 
 ## NOTES ABOUT UPDATE FROM 1.8.95 for FVTT 9 to 1.9.1 FVTT 10
 
@@ -43,13 +45,6 @@ A special ty to the original authors [Ultrakorne#6240](https://discordapp.com/us
 [![Overview video](https://img.youtube.com/vi/TRg4y0joOKA/0.jpg)](https://www.youtube.com/watch?v=TRg4y0joOKA)
 
 [How to Wiki](https://github.com/p4535992/foundryvtt-better-rolltables/blob/master/wiki/Home.md)
-
-## Features ##
-
-* Roll on multiple tables with roll formulas
-* Auto create a loot actor to store generated loot
-* Auto roll random spells when a scroll is selected as loot
-* A table can specify multiple currencies (with roll formulas) to always be awarded
 
 ## How to use it
 
@@ -121,4 +116,13 @@ Any issues, bugs, or feature requests are always welcome to be reported directly
 
 ## License
 
+- **[sortable](https://gist.github.com/code-boxx/45ebe489b99583dc170564113b1ad24e)** : [Code Boxx](https://gist.github.com/code-boxx/45ebe489b99583dc170564113b1ad24e#file-0-js-sortable-table-md)
+- **[Roll Table Importer](https://github.com/ClipplerBlood/roll-table-importer)** : [???]()
+
+
 This package is under an [MIT license](LICENSE) and the [Foundry Virtual Tabletop Limited License Agreement for module development](https://foundryvtt.com/article/license/).
+
+## Credit
+
+- [code-boxx](https://github.com/code-boxx) and the module [sortable](https://gist.github.com/code-boxx/45ebe489b99583dc170564113b1ad24e)
+- [ClipplerBlood](https://github.com/ClipplerBlood) and the module [Roll Table Importer](https://github.com/ClipplerBlood/roll-table-importer)

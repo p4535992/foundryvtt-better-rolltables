@@ -42,7 +42,7 @@
                     name="flags.better-rolltables.brt-hidden-table"
                     {{checked data.flags.better-rolltables.brt-hidden-table}} />
             </div>
-
+            <!--
             {{#ifcontain better-rolltables.table-type "harvest"}}
             <div class="form-group">
                 <a class='normalize-dcs-asc' data-tooltip='{{localize 'better-rolltables.label.OrderByDCAsc'}}' data-tooltip-direction='UP'>
@@ -59,7 +59,7 @@
                 </a>
             </div>
             {{/ifcontain}}
-
+            -->
         </main>
 
     </fieldset>
@@ -262,6 +262,11 @@
     <footer class="sheet-footer flexrow">
         {{#ifcontain better-rolltables.table-type "loot"}}
         <button id="BRT-gen-loot" class="generate" type="button"><i class="fas fa-coins"></i>{{localize "better-rolltables.Buttons.GenerateLoot"}}</button>
+        <button id="BRT-gen-loot-token" class="generate" type="button"><i class="fa-solid fa-user-group"></i>{{localize "better-rolltables.Buttons.GenerateLootToken"}}</button>
+        {{/ifcontain}}
+        {{#ifcontain better-rolltables.table-type "harvest"}}
+        <button id="BRT-gen-harvest" class="generate" type="button"><i class="fas fa-coins"></i>{{localize "better-rolltables.Buttons.GenerateHarvest"}}</button>
+        <button id="BRT-gen-harvest-token" class="generate" type="button"><i class="fa-solid fa-user-group"></i>{{localize "better-rolltables.Buttons.GenerateHarvestToken"}}</button>
         {{/ifcontain}}
         {{#if owner}}
         <button class="submit" type="submit"><i class="fas fa-save"></i> {{ localize "TABLE.Update" }}</button>

@@ -138,6 +138,17 @@ const API = {
    * @param {('blindroll'|'gmroll'|'selfroll')} options.rollMode The roll mode
    * @returns {Promise<void>}
    */
+  async generateLootOnSelectedToken(tableEntity, options = {}) {
+    return await BRTLootHelpers.addLootToSelectedToken(tableEntity, null, options);
+  },
+
+  /**
+   *
+   * @param {RollTable} tableEntity
+   * @param {Object} options
+   * @param {('blindroll'|'gmroll'|'selfroll')} options.rollMode The roll mode
+   * @returns {Promise<void>}
+   */
   async generateChatLoot(tableEntity, options = null) {
     return await BRTLootHelpers.generateChatLoot(tableEntity, options);
   },
@@ -155,6 +166,17 @@ const API = {
    */
   async generateHarvest(tableEntity, options = {}) {
     return await BRTHarvestHelpers.generateHarvest(tableEntity, options);
+  },
+
+  /**
+   *
+   * @param {RollTable} tableEntity
+   * @param {Object} options
+   * @param {('blindroll'|'gmroll'|'selfroll')} options.rollMode The roll mode
+   * @returns {Promise<void>}
+   */
+  async generateHarvestOnSelectedToken(tableEntity, options = {}) {
+    return await BRTHarvestHelpers.addHarvestToSelectedToken(tableEntity, null, options);
   },
 
   /**
@@ -193,6 +215,14 @@ const API = {
   /* ======================================================== */
   /* NEW API INTEGRATION */
   /* ======================================================== */
+
+  async compendiumToRollTableWithDialog() {
+    return await CompendiumToRollTableHelpers.compendiumToRollTableWithDialog();
+  },
+
+  async compendiumToRollTableWithDialogSpecialCaseHarvester() {
+    return await CompendiumToRollTableHelpers.compendiumToRollTableWithDialogSpecialCaseHarvester();
+  },
 
   /**
    * @module game.modules.get('better-rolltables').api.createRollTableFromCompendium

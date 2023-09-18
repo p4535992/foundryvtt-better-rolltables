@@ -1,3 +1,4 @@
+import { sortable } from "../../libs/sortable";
 import API from "../API";
 import { CONSTANTS } from "../constants/constants";
 import { error, i18n } from "../lib";
@@ -227,6 +228,8 @@ export class BetterRollTableBetterConfig extends RollTableConfig {
       .forEach((el) => el.addEventListener("click", this._openRichEditor.bind(this)));
     // TODO
     // html.querySelector(".toggle-editor").addEventListener("click", (ev) => this._toggleSimpleEditor(ev, html));
+
+    sortable(html.querySelector(".table-results"));
   }
 
   /* -------------------------------------------- */

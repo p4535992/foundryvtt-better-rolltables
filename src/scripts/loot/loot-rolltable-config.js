@@ -232,6 +232,9 @@ export class BetterRollTableLootConfig extends RollTableConfig {
     html
       .querySelectorAll("#BRT-gen-loot")
       .forEach((el) => el.addEventListener("click", this._onBetterRollTablesGenerateLoot.bind(this)));
+    html
+      .querySelectorAll("#BRT-gen-loot-token")
+      .forEach((el) => el.addEventListener("click", this._onBetterRollTablesGenerateLootToken.bind(this)));
   }
 
   /* -------------------------------------------- */
@@ -332,6 +335,28 @@ export class BetterRollTableLootConfig extends RollTableConfig {
     }
     const tableEntity = this.document;
     await API.generateLoot(tableEntity);
+    if (event.currentTarget) {
+      event.currentTarget.disabled = false;
+    } else {
+      event.target.disabled = false;
+    }
+  }
+
+  /**
+   * Handle drawing a result from the RollTable
+   * @param {Event} event
+   * @private
+   */
+  async _onBetterRollTablesGenerateLootToken(event) {
+    event.preventDefault();
+    await this.submit({ preventClose: true, preventRender: true });
+    if (event.currentTarget) {
+      event.currentTarget.disabled = true;
+    } else {
+      event.target.disabled = true;
+    }
+    const tableEntity = this.document;
+    await API.generateLootOnSelectedToken(tableEntity);
     if (event.currentTarget) {
       event.currentTarget.disabled = false;
     } else {

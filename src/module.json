@@ -43,6 +43,7 @@
       "email": ""
     }
   ],
+  "scripts": [],
   "esmodules": ["module.js"],
   "styles": ["styles/brt.css"],
   "packs": [

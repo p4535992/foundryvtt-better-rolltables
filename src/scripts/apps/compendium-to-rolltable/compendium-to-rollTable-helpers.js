@@ -26,7 +26,7 @@ export class CompendiumToRollTableHelpers {
   /**
    * Tested to work with FoundryVTT V11, direct compatibility with DnD5e & SFRPG. Thorough testing still required.
    */
-  static async compendiumHarvesterToRollTableWithDialog({ weightPredicate = null } = {}) {
+  static async compendiumToRollTableWithDialogSpecialCaseHarvester({ weightPredicate = null } = {}) {
     let allCompendiums = [game.packs.get("")];
     let itemTypes = await game.documentTypes.Item.sort();
     const documents = new CompendiumToRollTableSpecialHarvestDialog(

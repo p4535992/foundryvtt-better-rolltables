@@ -1,7 +1,7 @@
 import API from "../API";
 import { CONSTANTS } from "../constants/constants";
 import { BetterRollTableBetterConfig } from "../core/brt-rolltable-config";
-import { i18n } from "../lib";
+import { i18n, error } from "../lib";
 
 export class BetterRollTableHarvestConfig extends RollTableConfig {
   /** @inheritdoc */
@@ -232,6 +232,9 @@ export class BetterRollTableHarvestConfig extends RollTableConfig {
     html
       .querySelectorAll("#BRT-gen-harvest")
       .forEach((el) => el.addEventListener("click", this._onBetterRollTablesGenerateHarvest.bind(this)));
+    html
+      .querySelectorAll("#BRT-gen-harvest-token")
+      .forEach((el) => el.addEventListener("click", this._onBetterRollTablesGenerateHarvestToken.bind(this)));
   }
 
   /* -------------------------------------------- */
@@ -332,6 +335,28 @@ export class BetterRollTableHarvestConfig extends RollTableConfig {
     }
     const tableEntity = this.document;
     await API.generateHarvest(tableEntity);
+    if (event.currentTarget) {
+      event.currentTarget.disabled = false;
+    } else {
+      event.target.disabled = false;
+    }
+  }
+
+  /**
+   * Handle drawing a result from the RollTable
+   * @param {Event} event
+   * @private
+   */
+  async _onBetterRollTablesGenerateHarvestToken(event) {
+    event.preventDefault();
+    await this.submit({ preventClose: true, preventRender: true });
+    if (event.currentTarget) {
+      event.currentTarget.disabled = true;
+    } else {
+      event.target.disabled = true;
+    }
+    const tableEntity = this.document;
+    await API.generateHarvestOnSelectedToken(tableEntity);
     if (event.currentTarget) {
       event.currentTarget.disabled = false;
     } else {

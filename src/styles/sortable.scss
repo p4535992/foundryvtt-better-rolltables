@@ -1,0 +1,47 @@
+/* CSS IS OPTIONAL - FOR COSMETICS ONLY */
+/* FEEL FREE TO CREATE YOUR OWN STYLES & DISCARD THIS */
+
+/* (A) SORTABLE TABLE */
+.better-rolltables-sorta {
+  border-collapse: collapse;
+}
+
+/* (B) CELLS */
+.better-rolltables-sorta td,
+.better-rolltables-sorta th {
+  padding: 10px;
+  text-align: left;
+}
+
+/* (C) HEADER */
+.better-rolltables-sorta thead {
+  font-weight: 700;
+  color: #fff;
+  background: #000;
+}
+.better-rolltables-sorta thead *::selection {
+  background: none;
+}
+
+/* (D) BODY */
+.better-rolltables-sorta tbody tr:nth-child(even) {
+  background: #f2f2f2;
+}
+
+/* (E) UP/DOWN COLORS */
+.better-rolltables-sortup {
+  background: #a11010;
+}
+.better-rolltables-sortdown {
+  background: #2c2cf9;
+}
+.better-rolltables-sortup::before,
+.sortdown::before {
+  padding-right: 5px;
+}
+.better-rolltables-sortup::before {
+  content: "\21E7";
+}
+.better-rolltables-sortdown::before {
+  content: "\21E9";
+}
