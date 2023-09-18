@@ -1,6 +1,7 @@
 import { BetterTables } from "../../better-tables";
 import { CONSTANTS } from "../../constants/constants";
 import SETTINGS from "../../constants/settings";
+import { BRTCONFIG } from "../../core/config";
 import { BRTUtils } from "../../core/utils";
 
 export class RollTableToActorHelpers {
@@ -206,13 +207,17 @@ export class RollTableToActorHelpers {
 
   /**
    *
-   * @param {boolean} stackSame Should same items be stacked together? Default = true
-   * @returns
+   * @param {Actor} actor to which to add items to
+   * @param {TableResult[]} results
+   * @param {boolean} stackSame if true add quantity to an existing item of same name in the current actor
+   * @param {number} customLimit
+   *
+   * @returns {object[]} items
    */
-  static async addItemsToActorOld(actor, results, stackSame = true) {
+  static async addItemsToActorOld(actor, results, stackSame = true, customLimit = 0) {
     const items = [];
     for (const item of results) {
-      const newItem = await RollTableToActorHelpers._createHarvestItem(item, actor, stackSame);
+      const newItem = await RollTableToActorHelpers._createItem(item, actor, stackSame, customLimit);
       items.push(newItem);
     }
     return items;
@@ -229,7 +234,7 @@ export class RollTableToActorHelpers {
    *
    * @returns {object[]} items
    */
-  static async addItemsToTokenOld(token, stackSame = true, isTokenActor = false, customLimit = 0) {
+  static async addItemsToTokenOld(token, results, stackSame = true, isTokenActor = false, customLimit = 0) {
     const items = [];
     for (const item of results) {
       // Create the item making sure to pass the token actor and not the base actor

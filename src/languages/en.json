@@ -11,10 +11,14 @@
       }
     },
     "Buttons": {
-      "GenerateLoot": "Generate Loot on Actor",
-      "GenerateLootToken": "Generate Loot on selected tokens",
-      "GenerateHarvest": "Generate Harvest on Actor",
-      "GenerateHarvestToken": "Generate Harvest on selected tokens",
+      "GenerateLoot": "Gen. Actor",
+      "GenerateLootTooltip": "Generate Loot on existent Actor or a new one",
+      "GenerateLootToken": "Gen. Token",
+      "GenerateLootTokenTooltip": "Generate Loot on selected tokens",
+      "GenerateHarvest": "Gen. Actor",
+      "GenerateHarvestTooltip": "Generate Harvest on existent Actor or a new one",
+      "GenerateHarvestToken": "Gen. Token",
+      "GenerateHarvestTokenTooltip": "Generate Harvest on selected tokens",
       "Currency": {
         "label": "Currency",
         "Share": "Share",
@@ -175,6 +179,7 @@
         "ToggleSimple": "Simple Editor"
       },
       "betterRolltableRoll": "Roll+",
+      "betterRolltableRollTooltip": "Roll the table with BRT",
       "quantityFormula": "Qt.",
       "editResult": "Edit Result",
       "dc": "DC",

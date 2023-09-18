@@ -32,7 +32,7 @@ const SETTINGS = {
   // Style settings
 
   // System Settings
-
+  DEFAULT_ACTOR_NPC_TYPE: "systemDefaultActorNpcType",
   DEFAULT_LOOT_SHEET: "systemDefaultLootSheet",
   DEFAULT_SPELL_COMPENDIUM: "systemDefaultSpellCompendium",
   QUANTITY_PROPERTY_PATH: "systemQuantityPropertyPath",
@@ -60,6 +60,13 @@ const SETTINGS = {
   },
 
   DEFAULTS: () => ({
+    [SETTINGS.DEFAULT_ACTOR_NPC_TYPE]: {
+      scope: "world",
+      config: false,
+      system: true,
+      type: String,
+      default: SYSTEMS.DATA.DEFAULT_ACTOR_NPC_TYPE,
+    },
     [SETTINGS.DEFAULT_LOOT_SHEET]: {
       scope: "world",
       config: false,

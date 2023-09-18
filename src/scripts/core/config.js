@@ -61,17 +61,11 @@ export const BRTCONFIG = {
 
   // START DEFAULT SYSTEM SETTINGS
 
-  //   QUANTITY_PROPERTY_PATH: "system.quantity",
-  //   PRICE_PROPERTY_PATH: "system.price",
-  //   SPELL_LEVEL_PATH: "system.level",
-  //   ITEM_LOOT_TYPE: "loot",
-  //   SCROLL_REGEX: /\s*Spell\s*Scroll\s*(\d+|cantrip)/i,
-
-  QUANTITY_PROPERTY_PATH: SYSTEMS.DATA.QUANTITY_PROPERTY_PATH ?? "system.quantity",
-  PRICE_PROPERTY_PATH: SYSTEMS.DATA.PRICE_PROPERTY_PATH ?? "system.price",
-  SPELL_LEVEL_PATH: SYSTEMS.DATA.SPELL_LEVEL_PATH ?? "system.level",
-  ITEM_LOOT_TYPE: SYSTEMS.DATA.ITEM_LOOT_TYPE ?? "loot",
-  SCROLL_REGEX: SYSTEMS.DATA.SCROLL_REGEX ?? /\s*Spell\s*Scroll\s*(\d+|cantrip)/i,
+  // QUANTITY_PROPERTY_PATH: "system.quantity",
+  // PRICE_PROPERTY_PATH: "system.price",
+  // SPELL_LEVEL_PATH: "system.level",
+  // ITEM_LOOT_TYPE: "loot",
+  // SCROLL_REGEX: /\s*Spell\s*Scroll\s*(\d+|cantrip)/i,
 
   // END DEFAULT SYSTEM SETTINGS
 };

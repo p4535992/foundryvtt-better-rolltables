@@ -1,4 +1,5 @@
 export default {
+  DEFAULT_ACTOR_NPC_TYPE: "npc",
   DEFAULT_LOOT_SHEET: "pf2e.LootSheetPF2e",
   DEFAULT_SPELL_COMPENDIUM: "pf2e.spells-srd",
   QUANTITY_PROPERTY_PATH: "system.quantity.value",

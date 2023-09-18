@@ -90,7 +90,8 @@ export class BetterRT {
       };
     } else if (selectedTableType === BRTCONFIG.TABLE_TYPE_BETTER) {
       // newRollButton.getElementsByTagName("i")[0].className = "fas fa-dice";
-      newRollButton.innerHTML = '<i class ="fas fa-dice-d20"></i> Roll+';
+      newRollButton.innerHTML =
+        '<i class ="fas fa-dice-d20"></i> ' + i18n(`${CONSTANTS.MODULE_ID}.label.betterRolltableRoll`);
       newRollButton.onclick = async function () {
         // await game.betterTables.betterTableRoll(tableEntity);
         await API.betterTableRoll(tableEntity);

@@ -2,6 +2,7 @@ import { BRTCONFIG } from "../core/config.js";
 import { CONSTANTS } from "../constants/constants.js";
 import { RollTableToActorHelpers } from "../apps/rolltable-to-actor/rolltable-to-actor-helpers.js";
 import { BRTLootHelpers } from "./loot-helpers.js";
+import SETTINGS from "../constants/settings.js";
 
 export class LootCreator {
   /**
@@ -20,7 +21,7 @@ export class LootCreator {
     if (!this.actor) {
       this.actor = await Actor.create({
         name: actorName || "New Loot",
-        // type: "npc",
+        type: game.settings.get(CONSTANTS.MODULE_ID, SETTINGS.DEFAULT_ACTOR_NPC_TYPE),
         img: `modules/${CONSTANTS.MODULE_ID}/assets/artwork/chest.webp`,
         sort: 12000,
         token: { actorLink: true },
@@ -66,7 +67,13 @@ export class LootCreator {
    * @returns {object[]} items
    */
   async addItemsToToken(token, stackSame = true, isTokenActor = false, customLimit = 0) {
-    const items = RollTableToActorHelpers.addItemsToTokenOld(token, stackSame, isTokenActor, customLimit);
+    const items = RollTableToActorHelpers.addItemsToTokenOld(
+      token,
+      this.betterResults,
+      stackSame,
+      isTokenActor,
+      customLimit
+    );
     return items;
   }
 }
