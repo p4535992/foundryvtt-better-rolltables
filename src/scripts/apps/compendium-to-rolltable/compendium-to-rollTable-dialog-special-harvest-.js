@@ -91,7 +91,7 @@ export class CompendiumToRollTableSpecialHarvestDialog {
         text: e.name,
         type: CONST.TABLE_RESULT_TYPES.COMPENDIUM,
         collection: compendium.type,
-        resultId: e.id,
+        resultId: e.id ? e.id : e._id,
         img: e.thumbnail || e.img || CONFIG.RollTable.resultIcon,
         weight: 1,
         range: [i + 1, i + 1],
