@@ -1,6 +1,6 @@
 @import "./rich-edit.scss";
 @import "./rolltable-sheet.scss";
-@import "./sortable.scss";
+// @import "./sortable.scss";
 
 .vtt {
   --better-rolltables-icon-size: 32px;
@@ -161,7 +161,9 @@
                 width: 43%;
                 margin-left: 3px;
               }
-              .result-better-rolltables-formula {
+              .result-better-rolltables-formula,
+              .result-brt-dc-value,
+              .result-brt-skill-value {
                 width: 14%;
                 margin-left: 3px;
                 &::placeholder {
@@ -226,12 +228,6 @@
         margin: 0.1em;
         padding: 0.1em;
       }
-    }
-  }
-  ol.table-results .table-result {
-    .result-quantity-formula {
-      flex: 0 0 50px;
-      text-align: center;
     }
   }
 }

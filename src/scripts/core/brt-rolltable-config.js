@@ -10,7 +10,7 @@ export class BetterRollTableBetterConfig extends RollTableConfig {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["sheet", "roll-table-config", `${CONSTANTS.MODULE_ID}-roll-table-config`],
       template: `modules/${CONSTANTS.MODULE_ID}/templates/sheet/brt-roll-table-config.hbs`,
-      width: 800,
+      width: 1000,
       height: "auto",
       closeOnSubmit: false,
       viewPermission: CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER,
@@ -218,7 +218,7 @@ export class BetterRollTableBetterConfig extends RollTableConfig {
     html.querySelector(".normalize-weights").addEventListener("click", this._onNormalizeWeights.bind(this));
 
     html
-      .querySelectorAll(".better-rolltables-roll-better")
+      .querySelector(".better-rolltables-roll-better")
       .addEventListener("click", this._onBetterRollTablesRoll.bind(this));
 
     // Edit a Result
@@ -229,7 +229,7 @@ export class BetterRollTableBetterConfig extends RollTableConfig {
     // TODO
     // html.querySelector(".toggle-editor").addEventListener("click", (ev) => this._toggleSimpleEditor(ev, html));
 
-    sortable(html.querySelector(".table-results"));
+    // sortable(html.querySelector(".table-results"));
   }
 
   /* -------------------------------------------- */

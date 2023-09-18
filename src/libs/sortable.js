@@ -87,7 +87,7 @@ export function sortable(instance, data) {
 
     // (D2) GET DATA FROM HEADER
     data = {};
-    keys = [];
+    let keys = [];
     for (let c of instance.head.rows[0].cells) {
       data[c.innerHTML] = [];
       keys.push(c.innerHTML);

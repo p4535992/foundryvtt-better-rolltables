@@ -9,6 +9,7 @@ import { BetterRollTableBetterConfig } from "../core/brt-rolltable-config.js";
 import SETTINGS from "../constants/settings.js";
 import { BetterRollTableLootConfig } from "../loot/loot-rolltable-config.js";
 import { BetterRollTableStoryConfig } from "../story/story-rolltable-config.js";
+import { BetterRollTableHarvestConfig } from "../harvest/harvest-rolltable-config.js";
 
 /**
  * @module BetterRollTables.BetterRolltableHooks
@@ -157,6 +158,10 @@ class BetterRolltableHooks {
     });
     RollTables.registerSheet(CONSTANTS.MODULE_ID, BetterRollTableStoryConfig, {
       label: "BRT - Story Rolltable",
+      makeDefault: false,
+    });
+    RollTables.registerSheet(CONSTANTS.MODULE_ID, BetterRollTableHarvestConfig, {
+      label: "BRT - Harvest Rolltable",
       makeDefault: false,
     });
   }

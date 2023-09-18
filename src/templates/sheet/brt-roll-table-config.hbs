@@ -119,10 +119,10 @@
                     </th>
 
                     {{#ifcontain better-rolltables.table-type "harvest"}}
-                    <th class="result-brt-dc">
+                    <th class="result-brt-dc-value">
                         <label>{{ localize "better-rolltables.label.dc" }}</label>
                     </th>
-                    <th class="result-brt-skill">
+                    <th class="result-brt-skill-value">
                         <label>{{ localize "better-rolltables.label.skill" }}</label>
                     </th>
                     {{/ifcontain}}
@@ -217,6 +217,15 @@
                             />
 					{{/if}}
                 </td>
+
+               
+                <td class="result-brt-dc-value">
+                    <input class="result-brt-dc-value" type="text" name="results.{{i}}.flags.better-rolltables.brt-dc-value" value="{{result.flags.better-rolltables.brt-dc-value}}" placeholder="1" />
+                </td>
+                <td class="result-brt-skill-value">
+                    <input class="result-brt-skill-value" type="text" name="results.{{i}}.flags.better-rolltables.brt-skill-value" value="{{result.flags.better-rolltables.brt-skill-value}}" placeholder="arc" />
+                </td>
+               
 
                 <td class="result-weight">
                     <input type="text" name="results.{{i}}.weight" value="{{result.weight}}" placeholder="1" data-dtype="Number"/>
