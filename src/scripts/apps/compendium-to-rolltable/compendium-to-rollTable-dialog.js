@@ -1,3 +1,6 @@
+import { BRTCONFIG } from "../../core/config";
+import { debug } from "../../lib";
+
 /**
  * @href https://gist.github.com/crazycalya/0cd20cd12b1a344d21302a794cb229ff
  * @href https://gist.github.com/p4535992/3151778781055a6f68281a0bfd8da1a2
@@ -24,11 +27,16 @@ export class CompendiumToRollTableDialog extends Dialog {
       compendiumSelect = `<input type="text" value="${allCompendiums[0].metadata.id}" readonly=true name="compendiumSelect" style="width: 8em;">${allCompendiums[0].metadata.id}</input>`;
     }
 
+    function capitalize(string) {
+      if (typeof string === "string") return string[0].toUpperCase() + string.substring(1);
+      return string;
+    }
+
     let itemTypeSelect = ``;
     for (let i = 0; i < itemTypesLength; i++)
       itemTypeSelect += `
             <div class="form-group has-boxes">
-                <label>${this.capitalize(itemTypes[i])}</label>
+                <label>${capitalize(itemTypes[i])}</label>
                 <div class="form-fields">
                     <input type="checkbox" value="${itemTypes[i]}" class="itemTypeCheckbox">
                 </div>
@@ -55,7 +63,7 @@ export class CompendiumToRollTableDialog extends Dialog {
     for (let i = 0; i < spellLevelLength; i++) {
       spellLevelSelect += `
             <div class="form-group has-boxes">
-                <label>${this.capitalize(spellLevel[i])}</label>
+                <label>${capitalize(spellLevel[i])}</label>
                 <div class="form-fields">
                     <input type="checkbox" value="${[i]}" class="spellLevelCheckbox">
                 </div>
@@ -94,7 +102,7 @@ export class CompendiumToRollTableDialog extends Dialog {
     for (let i = 0; i < itemRarityLength; i++) {
       itemRaritySelect += `
             <div class="form-group has-boxes">
-                <label>${this.capitalize(itemRarity[i])}</label>
+                <label>${capitalize(itemRarity[i])}</label>
                 <div class="form-fields">
                     <input type="checkbox" value="${itemRarity[i]}" class="itemRarityCheckbox">
                 </div>
@@ -214,12 +222,15 @@ export class CompendiumToRollTableDialog extends Dialog {
 
               let compendium = await game.packs.get(selected);
 
+              let msg = compendium.metadata.label;
+
               ui.notifications.info(game.i18n.format(`${BRTCONFIG.NAMESPACE}.api.msg.startRolltableGeneration`, msg));
               const document = await this.fromCompendium(
                 customFilters,
                 nameFilters,
                 selectedItems,
                 selectedSpellLevels,
+                filterRarity,
                 selectedRarities,
                 weightPredicate,
                 compendium
@@ -315,10 +326,10 @@ export class CompendiumToRollTableDialog extends Dialog {
 
   /* ======================================== */
 
-  capitalize(string) {
-    if (typeof string === "string") return string[0].toUpperCase() + string.substring(1);
-    return string;
-  }
+  // capitalize(string) {
+  //   if (typeof string === "string") return string[0].toUpperCase() + string.substring(1);
+  //   return string;
+  // }
 
   getValueByPath(obj, path) {
     let parts = path.split(".");
@@ -400,6 +411,7 @@ export class CompendiumToRollTableDialog extends Dialog {
     nameFilters,
     selectedItems,
     selectedSpellLevels,
+    filterRarity,
     selectedRarities,
     weightPredicate,
     compendium,
@@ -440,7 +452,7 @@ export class CompendiumToRollTableDialog extends Dialog {
     }
     const results = filteredEntries.map((entry, i) => {
       debug("Compendium Item:");
-      debug(e);
+      debug(entry);
       debug("Compendium Index:");
       debug(i);
 
@@ -459,7 +471,7 @@ export class CompendiumToRollTableDialog extends Dialog {
 
     // const results = await compendium.index.map((e, i) => {
     //         debug("Compendium Item:");
-    //         debug(e);
+    //         debug(entry);
     //         debug("Compendium Index:");
     //         debug(i);
     //     return {

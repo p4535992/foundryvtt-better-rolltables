@@ -1,5 +1,6 @@
 import { CONSTANTS } from "../../constants/constants";
 import { BRTCONFIG } from "../../core/config";
+import { warn } from "../../lib";
 import { CompendiumToRollTableDialog } from "./compendium-to-rollTable-dialog";
 import { CompendiumToRollTableSpecialHarvestDialog } from "./compendium-to-rollTable-dialog-special-harvest-";
 
@@ -27,20 +28,24 @@ export class CompendiumToRollTableHelpers {
    * Tested to work with FoundryVTT V11, direct compatibility with DnD5e & SFRPG. Thorough testing still required.
    */
   static async compendiumToRollTableWithDialogSpecialCaseHarvester({ weightPredicate = null } = {}) {
-    let allCompendiums = [game.packs.get("")];
+    if (!game.modules.get("harvester")?.active) {
+      warn(`You must activate the module 'harvester'`, true);
+      return;
+    }
+    let allCompendiums = [game.packs.get("harvester.harvest")];
     let itemTypes = await game.documentTypes.Item.sort();
     const documents = new CompendiumToRollTableSpecialHarvestDialog(
       allCompendiums,
       itemTypes,
       ({ weightPredicate = null } = {})
-    ).render(true);
+    );
     return documents;
   }
 
   static async compendiumToRollTable(compendiumName, tableName, { weightPredicate = null } = {}) {
     const compendium = game.packs.get(compendiumName);
-    let msg = { name: compendiumName, tableName: tableName },
-      api_msg = CONSTANTS.MODULE_ID + ".api | ";
+    let msg = { name: compendiumName, tableName: tableName };
+    let api_msg = CONSTANTS.MODULE_ID + ".api | ";
 
     if (compendium === undefined) {
       api.msg += game.i18n.format(`${BRTCONFIG.NAMESPACE}.api.msg.compendiumNotFound`, msg);

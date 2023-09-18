@@ -1,4 +1,5 @@
 import { CONSTANTS } from "../../constants/constants";
+import { BRTCONFIG } from "../../core/config";
 import { debug } from "../../lib";
 import { CompendiumToRollTableDialog } from "./compendium-to-rollTable-dialog";
 
@@ -7,9 +8,17 @@ import { CompendiumToRollTableDialog } from "./compendium-to-rollTable-dialog";
  * @href https://gist.github.com/p4535992/3151778781055a6f68281a0bfd8da1a2
  * @href https://www.reddit.com/r/FoundryVTT/comments/11lbjln/converting_a_compendium_into_a_rollable_table/
  */
-export class CompendiumToRollTableSpecialHarvestDialog extends CompendiumToRollTableDialog {
+export class CompendiumToRollTableSpecialHarvestDialog {
   constructor(allCompendiums, itemTypes) {
-    super(allCompendiums, itemTypes);
+    // super(allCompendiums, itemTypes);
+    let compendium = allCompendiums[0];
+
+    let msg = compendium.metadata.label;
+
+    ui.notifications.info(game.i18n.format(`${BRTCONFIG.NAMESPACE}.api.msg.startRolltableGeneration`, msg));
+    const document = this.fromCompendium(compendium);
+    ui.notifications.info(game.i18n.format(`${BRTCONFIG.NAMESPACE}.api.msg.rolltableGenerationFinished`, msg));
+    return document;
   }
 
   /**
@@ -54,16 +63,7 @@ export class CompendiumToRollTableSpecialHarvestDialog extends CompendiumToRollT
    * @param {*} options
    * @returns
    */
-  async fromCompendium(
-    customFilters,
-    nameFilters,
-    selectedItems,
-    selectedSpellLevels,
-    selectedRarities,
-    weightPredicate,
-    compendium,
-    options = {}
-  ) {
+  async fromCompendium(compendium, options = {}) {
     // Ported from Foundry's existing RollTable.fromFolder()
     const results = await compendium.index.map((e, i) => {
       console.log("Compendium Item:");
@@ -100,7 +100,7 @@ export class CompendiumToRollTableSpecialHarvestDialog extends CompendiumToRollT
         flags: {
           [`${CONSTANTS.MODULE_ID}`]: {
             [`${CONSTANTS.FLAGS.RESULTS_FORMULA_KEY_FORMULA}`]: 1,
-            [`${CONSTANTS.FLAGS.HARVEST_DC_VALUE_KEY}`]: dc ?? 0,
+            [`${CONSTANTS.FLAGS.HARVEST_DC_VALUE_KEY}`]: dcValue ?? 0,
             [`${CONSTANTS.FLAGS.HARVEST_SKILL_VALUE_KEY}`]: skillDenom ?? "",
           },
         },
@@ -128,6 +128,11 @@ export class CompendiumToRollTableSpecialHarvestDialog extends CompendiumToRollT
           description: `A random table created from the contents of the ${compendiumName} compendium filter for the system source value '${key}'.`,
           results: values,
           formula: formula ?? `1d${value.length}`,
+          flags: {
+            [`${CONSTANTS.MODULE_ID}`]: {
+              [`${CONSTANTS.FLAGS.TABLE_TYPE_KEY}`]: CONSTANTS.TABLE_TYPE_HARVEST,
+            },
+          },
         },
         options
       );

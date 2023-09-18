@@ -1,5 +1,6 @@
 import API from "../API";
 import { CONSTANTS } from "../constants/constants";
+import { RichResultEdit } from "../core/brt-result-editor";
 import { BetterRollTableBetterConfig } from "../core/brt-rolltable-config";
 import { i18n } from "../lib";
 
