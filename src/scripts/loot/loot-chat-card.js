@@ -154,8 +154,8 @@ export class LootChatCard {
       user: game.user._id,
       content: cardHtml,
       flags: {
-        betterTables: {
-          loot: chatCardData,
+        [`${CONSTANTS.MODULE_ID}`]: {
+          [`${CONSTANTS.FLAGS.LOOT}`]: chatCardData,
         },
       },
     };

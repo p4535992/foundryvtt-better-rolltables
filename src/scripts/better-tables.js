@@ -82,7 +82,7 @@ export class BetterTables {
 
   async roll(tableEntity) {
     const data = await BetterTables.prepareCardData(tableEntity);
-    return data.flags?.betterTables?.loot;
+    return getProperty(data, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.LOOT}`); //data.flags?.betterTables?.loot;
   }
 
   /**
@@ -195,7 +195,6 @@ export class BetterTables {
    */
   static async menuCallBackRollTable(rolltableId) {
     const rolltable = game.tables.get(rolltableId);
-    //await game.betterTables.betterTableRoll(rolltable);
     await API.betterTableRoll(rolltable);
   }
 
@@ -213,9 +212,10 @@ export class BetterTables {
   }
 
   static async _renderMessage(message) {
+    const dataMessageLoot = getProperty(message, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.LOOT}`);
     const cardHtml = await renderTemplate(
       `modules/${CONSTANTS.MODULE_ID}/templates/loot-chat-card.hbs`,
-      message.flags.betterTables.loot
+      dataMessageLoot //message.flags.betterTables.loot
     );
     message.content = cardHtml;
     return message;
@@ -226,7 +226,7 @@ export class BetterTables {
       user: message.data.user,
       content: cardHtml,
       flags: {
-        betterTables: {
+        better-rolltables: {
           loot: data
         }
       }
@@ -305,8 +305,8 @@ export class BetterTables {
     if (
       game.system.id === "dnd5e" &&
       game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.SHOW_CURRENCY_SHARE_BUTTON) &&
-      message.flags?.betterTables?.loot.currency &&
-      Object.keys(message.flags.betterTables.loot.currency).length > 0
+      getProperty(message, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.LOOT_CURRENCY}`) && // message.flags?.betterTables?.loot.currency &&
+      Object.keys(getProperty(message, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.LOOT_CURRENCY}`)).length > 0 // message.flags.betterTables.loot.currency)
     ) {
       // Currency share button
       const currencyShareButton = $(
@@ -358,7 +358,7 @@ export class BetterTables {
     ).map((x) => x.dataset.userId);
     if (!usersId) return undefined;
 
-    const currenciesToShare = message.flags.betterTables.loot.currency;
+    const currenciesToShare = getProperty(message, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.LOOT_CURRENCY}`); //message.flags.betterTables.loot.currency;
     const usersCount = usersId.length;
     const share = Object.keys(currenciesToShare)
       .map((x) => ({ [x]: Math.floor(currenciesToShare[x] / usersCount) }))
@@ -376,7 +376,7 @@ export class BetterTables {
       await user.character.update({ currency: currency });
     }
     const newMessage = await BetterTables._renderMessage(
-      mergeObject(message, { "flags.betterTables.loot.shared": true })
+      mergeObject(message, { [`flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.LOOT_SHARED}`]: true }) //"flags.betterTables.loot.shared"
     );
     await BetterTables.updateChatMessage(message, newMessage);
   }
@@ -395,7 +395,6 @@ export class BetterTables {
               `${BRTCONFIG.NAMESPACE}.DrawReroll`
             )}"><i class="fas fa-dice-d20"></i></a>`
           ).click(async () => {
-            //await game.betterTables.generateChatLoot(rolltable);
             await API.generateChatLoot(rolltable);
           });
           $(link).after(rollNode);
@@ -418,7 +417,6 @@ export class BetterTables {
               `${BRTCONFIG.NAMESPACE}.DrawReroll`
             )}"><i class="fas fa-dice-d20"></i></a>`
           ).click(async () => {
-            //await game.betterTables.generateChatLoot(document);
             await API.generateChatLoot(document);
           });
           $(link).after(rollNode);
@@ -487,7 +485,6 @@ export class BetterTables {
               `${BRTCONFIG.NAMESPACE}.DrawReroll`
             )}"><i class="fas fa-dice-d20"></i></a>`
           ).click(async () => {
-            //await game.betterTables.generateChatLoot(rolltable);
             await API.generateChatLoot(rolltable);
           });
           $(link).after(rollNode);
@@ -510,7 +507,6 @@ export class BetterTables {
               `${BRTCONFIG.NAMESPACE}.DrawReroll`
             )}"><i class="fas fa-dice-d20"></i></a>`
           ).click(async () => {
-            // await game.betterTables.generateChatLoot(document);
             await API.generateChatLoot(document);
           });
           $(link).after(rollNode);

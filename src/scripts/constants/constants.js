@@ -3,6 +3,9 @@ export const CONSTANTS = {
   PATH: "modules/better-rolltables",
   TYPES: ["none", "better", "loot", "harvest", "story"],
   FLAGS: {
+    LOOT: "loot",
+    LOOT_CURRENCY: "loot.currency",
+    LOOT_SHARED: "loot.shared",
     // saved data keys (used e.g. in the rolltableEntity.data.flags)
     TABLE_TYPE_KEY: "table-type",
     GENERIC_AMOUNT_KEY: "loot-amount-key",
@@ -11,6 +14,7 @@ export const CONSTANTS = {
     LOOT_AMOUNT_KEY: "loot-amount-key",
     LOOT_ACTOR_NAME_KEY: "loot-actor-name",
 
+    HARVEST: "harvest",
     HARVEST_AMOUNT_KEY: "loot-amount-key",
     HARVEST_DC_VALUE_KEY: "brt-dc-value",
     HARVEST_SKILL_VALUE_KEY: "brt-skill-value",

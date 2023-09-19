@@ -1,3 +1,4 @@
+import API from "../../API";
 import { BetterTables } from "../../better-tables";
 import { CONSTANTS } from "../../constants/constants";
 import SETTINGS from "../../constants/settings";
@@ -394,7 +395,7 @@ export class RollTableToActorHelpers {
    * @returns {Item}
    */
   static async _getRandomSpell(level) {
-    const spells = game.betterTables
+    const spells = API.betterTables
         .getSpellCache()
         .filter((spell) => getProperty(spell, BRTCONFIG.SPELL_LEVEL_PATH) === level),
       spell = spells[Math.floor(Math.random() * spells.length)];

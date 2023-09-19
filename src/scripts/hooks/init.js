@@ -133,12 +133,10 @@ class BetterRolltableHooks {
       }
     });
 
-    //await game.betterTables.updateSpellCache();
     await API.updateSpellCache();
   }
 
   static foundryInit() {
-    // game.betterTables = new BetterTables();
     registerSettings();
 
     Hooks.on("getCompendiumDirectoryEntryContext", BetterTables.enhanceCompendiumContextMenu);

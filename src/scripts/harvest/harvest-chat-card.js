@@ -150,8 +150,8 @@ export class HarvestChatCard {
       user: game.user._id,
       content: cardHtml,
       flags: {
-        betterTables: {
-          harvest: chatCardData,
+        [`${CONSTANTS.MODULE_ID}`]: {
+          [`${CONSTANTS.FLAGS.HARVEST}`]: chatCardData,
         },
       },
     };

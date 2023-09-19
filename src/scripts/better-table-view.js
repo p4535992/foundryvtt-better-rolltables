@@ -71,7 +71,6 @@ export class BetterRT {
     if (selectedTableType === BRTCONFIG.TABLE_TYPE_LOOT) {
       newRollButton.getElementsByTagName("i")[0].className = "fas fa-gem";
       newRollButton.onclick = async function () {
-        //await game.betterTables.generateChatLoot(tableEntity);
         await API.generateChatLoot(tableEntity);
       };
 
@@ -85,7 +84,6 @@ export class BetterRT {
     } else if (selectedTableType === BRTCONFIG.TABLE_TYPE_STORY) {
       newRollButton.getElementsByTagName("i")[0].className = "fas fa-book";
       newRollButton.onclick = async function () {
-        //await game.betterTables.generateChatStory(tableEntity);
         await API.generateChatStory(tableEntity);
       };
     } else if (selectedTableType === BRTCONFIG.TABLE_TYPE_BETTER) {
@@ -93,7 +91,6 @@ export class BetterRT {
       newRollButton.innerHTML =
         '<i class ="fas fa-dice-d20"></i> ' + i18n(`${CONSTANTS.MODULE_ID}.label.betterRolltableRoll`);
       newRollButton.onclick = async function () {
-        // await game.betterTables.betterTableRoll(tableEntity);
         await API.betterTableRoll(tableEntity);
       };
     }
@@ -269,7 +266,6 @@ export class BetterRT {
       `${BRTCONFIG.NAMESPACE}.Buttons.GenerateLoot`
     )}`;
     generateLootBtn.onclick = async () => {
-      //await game.betterTables.generateLoot(tableEntity);
       await API.generateLoot(tableEntity);
     };
 
