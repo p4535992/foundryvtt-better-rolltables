@@ -6,141 +6,100 @@
 
 The api is reachable from the variable `game.modules.get('better-rolltables').api` or from the socket libary `socketLib` on the variable `game.modules.get('better-rolltables').socket` if present and active.
 
+# OLD API
 
-## OLD API
+### Roll a table
 
-### roll(tableEntity:RollTable):void ⇒ <code>Promise&lt;void&gt;</code>
+`game.modules.get("better-rolltables").api.roll(tableEntity)` ⇒ `Promise<{flavor: *, sound: string, user: *, content: *}>`
 
-`game.modules.get("better-rolltables").api.roll(tableEntity)` ⇒ `Promise<object>`
+Roll a table as a Better table in chat
 
-Creates an item pile token at a location, or an item pile actor, or both at the same time.
+**Returns**: `Promise<object<{flavor: *, sound: string, user: *, content: *}>>` - Details of the chatcard message created
 
-**Returns**: `Promise<object<{tokenUuid: string, actorUuid: string}>>` - The UUID of the token and/or actor that was just created.
-
-| Param                    | Type                    | Default | Description                                                                                                           |
-|--------------------------|-------------------------|---------|-----------------------------------------------------------------------------------------------------------------------|
-| options                  | `object`                |         | Options to pass to the function                                                                                       |
-| [options.position]       | `object/boolean`        | `false` | Where to create the item pile, with x and y coordinates                                                               |
-| [options.sceneId]        | `string/boolean`        | `false` | Which scene to create the item pile on                                                                                |
-| [options.tokenOverrides] | `object`                | `{}`    | Token data to apply onto the newly created token                                                                      |
-| [options.actorOverrides] | `object`                | `{}`    | Actor data to apply to the newly created actor (if unlinked)                                                          |
-| [options.itemPileFlags]  | `object`                | `{}`    | Item pile specific flags to apply to the token and actor - see [pile flag defaults](constants.md#pile-flag-defaults)  |
-| [options.items]          | `Array/boolean`         | `false` | Any items to create on the item pile                                                                                  |
-| [options.createActor]    | `boolean`               | `false` | Whether to create a new item pile actor                                                                               |
-| [options.pileActorName]  | `string/boolean`        | `false` | The UUID, ID, or name of the actor to use when creating this item pile                                                |
-| [options.folder]         | `string/boolean/Folder` | `false` | The folder object, folder ID, or folder name to put the new item pile actor                                           |
-
----
-
-**Returns**: <code>Promise&lt;void&gt;</code> - Return nothing
-
-| Param | Type | Description | Note |
-| --- | --- | --- | --- |
-| item | <code>string or Item</code> | The uuid of the item or the item object himself | If you use the module 'Item Macro' the variable value is 'item' |
-| type | <code>string</code> | The type of the item to choose (background,backpack,base,class,consumable,equipment,feat,loot,spell,subclass,tool,weapon) | |
-| name | <code>string</code> | OPTIONAL: The new name of the item | |
-| image | <code>string</code> | OPTIONAL: The path to the new image of the item | |
-| prefix | <code>string</code> | OPTIONAL: Applied a prefix on the name of the item | |
-| suffix | <code>string</code> | OPTIONAL: Applied a suffix on the name of the item | |
+| Param                    | Type                    | Default | Description                                            |
+|--------------------------|-------------------------|---------|--------------------------------------------------------|
+| tableEntity              | `RollTable`             |         | tableEntity rolltable to generate content from         |
+                                        |
 
 **Example**:
 
-```
-game.modules.get('better-rolltables').api.retrieveAndApplyBonuses({
-    item: "Actor.7bm6EK8jnopnGRS4.Item.kowQq6PhIxid2ei5",
-    type: "weapon"
-})
-
-```
-
-
-
-* `roll(tableEntity)`
-* `betterTableRoll(tableEntity,options)`
-* `generateChatStory()`
-* `createTableFromCompendium(tableName, compendium, weightPredicateObject)`
-* `generateLoot(tableEntity,options)`
-* `generateChatLoot(tableEntity,options)`
-* `addLootToSelectedToken(tableEntity, token, options)`
-* `rollCompendiumAsRolltable(compendium)`
-
-The `options` Argument is optional.
-
-You can check the [better-tables.js](../src/scripts/better-tables.js)
-for all available methods.
-
-See the [options page](./Options-Argument-for-API-methods.md) for optional
-arguments.
-
-## Roll tables from macros
-Available from _Better RollTables_ v1.1
-
-### Roll loot in Chat:
 ```js
-const table = game.tables.getName("Loot Table");
-game.betterTables.generateChatLoot(table);
+const tableEntity  = game.tables.getName("Loot Table");
+game.modules.get('better-rolltables').api.roll(tableEntity)
+
 ```
 
-### Roll a loot table to and populate an Actor:
-Note: This will be changed soon to allow overriding the actor.
-Currently the actor is taken from the loot table.
+---
+
+
+### Roll a table with options
+
+`game.modules.get("better-rolltables").api.betterTableRoll(tableEntity,options)` ⇒ `Promise<{flavor: *, sound: string, user: *, content: *}>`
+
+Roll a table as a Better table in chat with options
+
+**Returns**: `Promise<object<{flavor: *, sound: string, user: *, content: *}>>` - Details of the chatcard message created
+
+| Param                    | Type                    | Default | Description                                            |
+|--------------------------|-------------------------|---------|--------------------------------------------------------|
+| tableEntity              | `RollTable`             |         | tableEntity rolltable to generate content from         |
+| options                  | `object`                |         | OPTIONAL: Options to pass to the function                        |
+| [options.rollMode]       | `string`                |         | Type of rollMode for the chat card: 'blindroll'|'gmroll'|'selfroll' |
+
+**Example**:
 
 ```js
-const table = game.tables.getName("Loot Table");
-game.betterTables.generateLoot(table);
+const tableEntity  = game.tables.getName("Loot Table");
+game.modules.get('better-rolltables').api.betterTableRoll(tableEntity, options: { rollMode: 'blindroll'});
+
 ```
-### Populate a token with Loot
 
-With #141 support for a token argument was added to `addLootToSelectedToken ()`.
-This allows macros or other modules to give a single token or an array of tokens to the method to be used.
+---
 
-As a fallback the there still is a check for currently controlled tokens.
-The `[options](./Options-Argument-for-API-methods.md)` argument currently has no effect on the method.
+### Generate Chat Story
 
-## Example
+`game.modules.get("better-rolltables").api.generateChatStory(tableEntity,options)` ⇒ `Promise<void>`
 
-Where `token` is either a token or an array of tokens (like `canvas.tokens.controlled`).
+Generate a story
 
-```javascript
-const name = 'myLootRolltable',
-          rolltable = game.tables.getName(name);
+**Returns**: `Promise<void>` - Details of the chatcard message created
 
-game.betterTables.addLootToSelectedToken(rolltable, token);
-```
-### Roll a story table:
+| Param                    | Type                    | Default | Description                                            |
+|--------------------------|-------------------------|---------|--------------------------------------------------------|
+| tableEntity              | `RollTable`             |         | tableEntity rolltable to generate content from         |
+
+**Example**:
+
 ```js
-const table = game.tables.getName("Random NPC");
-game.betterTables.generateChatStory(table);
+const tableEntity  = game.tables.getName("Loot Table");
+game.modules.get('better-rolltables').api.generateChatStory(tableEntity);
+
 ```
 
-### Roll a table as a Better table:
-```js
-const table = game.tables.getName("Random NPC");
-game.betterTables.betterTableRoll(table);
-```
+---
 
-The above code works when your table is in the world.
-To roll on a table from a compendium you need to have the code for that.
-See the example below.
 
-### Roll a table that is inside a compendium
-```js
-(async () => {
-const compendiumContent = await game.packs.get("name.of.the.compendium").getContent();
-const table = compendiumContent .find(i => i.name === `Treasure Hoard: Challenge 11-16`);
-game.betterTables.generateLoot(table);
-})()
-```
+### Create a Table from a compendium
 
-## Generate rolltables from compendia
-### Examples
-#### Compendium to rolltable
+`game.modules.get("better-rolltables").api.createTableFromCompendium(compendiumName, tableName, { weightPredicate })` ⇒ `Promise<Document>`
+
+Create a new RollTable by extracting entries from a compendium.
+
+**Returns**: `Promise<Document>` - Details of the chatcard message created
+
+| Param                    | Type                    | Default | Description                                            |
+|--------------------------|-------------------------|---------|--------------------------------------------------------|
+| compendiumName           | `string`                |         | the name of the compendium to use for the table generation  |
+|  tableName               | `string`                |         | OPTIONAL: the name of the table entity that will be created |
+|  weightPredicate         | `function(Document)`    |         | OPTIONAL: a function that returns a weight (number) that will be used for the tableResult weight for that given entity. returning 0 will exclude the entity from appearing in the table |
+
+**Example**:
 
 Using `createTableFromCompendium()` and omitting the optional weightPredicate in a macro or a module.
 The following example will take the content of the compendium **dnd5e.items** and create a new rollable table named **My table name**.
 
 ```js
-game.betterTables.createTableFromCompendium("My table name", "dnd5e.items");
+game.modules.get("better-rolltables").api.createTableFromCompendium("My table name", "dnd5e.items");
 ```
 
 You can also filter the entries taken from the the referenced compendium or customize
@@ -154,7 +113,7 @@ Entries/tableResults with a weight of `0` will be removed.
 #### Filtering the entries
 
 ```js
-game.betterTables.createTableFromCompendium(
+game.modules.get("better-rolltables").api.createTableFromCompendium(
  "001 TABLE",
  "dnd5e.items",
  { weightPredicate: predicate }
@@ -177,7 +136,7 @@ When not (just) using the predicate function to filter unwanted entries it can b
 to change the weights.
 
 ```js
-game.betterTables.createTableFromCompendium("RarityWeightedTable",
+game.modules.get("better-rolltables").api.createTableFromCompendium("RarityWeightedTable",
     "dnd5e.items",
     { weightPredicate: rarityFilter }
 );
@@ -204,4 +163,108 @@ function rarityFilter(entity) {
 
 
 
-## NEW API
+---
+
+### Generate Loot
+
+`game.modules.get("better-rolltables").api.generateLoot(tableEntity,options)` ⇒ `Promise<{flavor: *, sound: string, user: *, content: *}>`
+
+Generate a loot
+
+**Returns**: `Promise<object<{flavor: *, sound: string, user: *, content: *}>>` - Details of the chatcard message created
+
+| Param                    | Type                    | Default | Description                                            |
+|--------------------------|-------------------------|---------|--------------------------------------------------------|
+| tableEntity              | `RollTable`             |         | tableEntity rolltable to generate content from         |
+| options                  | `object`                |         | OPTIONAL: Options to pass to the function                        |
+| [options.rollMode]       | `string`                |         | Type of rollMode for the chat card: 'blindroll'|'gmroll'|'selfroll' |
+
+**Example**:
+
+```js
+const tableEntity  = game.tables.getName("Loot Table");
+game.modules.get('better-rolltables').api.generateLoot(tableEntity, options: { rollMode: 'blindroll'});
+
+```
+
+---
+
+
+### Generate Chat Loot
+
+`game.modules.get("better-rolltables").api.generateChatLoot(tableEntity,options)` ⇒ `Promise<{flavor: *, sound: string, user: *, content: *}>`
+
+Generate a chat loot
+
+**Returns**: `Promise<object<{flavor: *, sound: string, user: *, content: *}>>` - Details of the chatcard message created
+
+| Param                    | Type                    | Default | Description                                            |
+|--------------------------|-------------------------|---------|--------------------------------------------------------|
+| tableEntity              | `RollTable`             |         | tableEntity rolltable to generate content from         |
+| options                  | `object`                |         | OPTIONAL: Options to pass to the function                        |
+| [options.rollMode]       | `string`                |         | Type of rollMode for the chat card: 'blindroll'|'gmroll'|'selfroll' |
+
+**Example**:
+
+```js
+const tableEntity  = game.tables.getName("Loot Table");
+game.modules.get('better-rolltables').api.generateChatLoot(tableEntity, options: { rollMode: 'blindroll'});
+
+```
+
+---
+
+### Add Loot to selected token
+
+`game.modules.get("better-rolltables").api.addLootToSelectedToken(tableEntity, token, options)` ⇒ `Promise<void>`
+
+Add loot to selcted token ( or the one passed as a argument)
+
+**Returns**: `Promise<void>` - Details of the chatcard message created
+
+| Param                    | Type                    | Default | Description                                            |
+|--------------------------|-------------------------|---------|--------------------------------------------------------|
+| tableEntity              | `RollTable`             |         | tableEntity rolltable to generate content from         |
+| token                    | `TokenDocument`         |         | OPTIONAL: is either a token or an array of tokens (like `canvas.tokens.controlled`).  |
+| options                  | `object`                |         | OPTIONAL: Options to pass to the function              |
+| [options.rollMode]       | `string`                |         | Type of rollMode for the chat card: 'blindroll'|'gmroll'|'selfroll' |
+
+**Example**:
+
+```js
+const tableEntity  = game.tables.getName("Loot Table");
+game.modules.get('better-rolltables').api.generateChatLoot(tableEntity, options: { rollMode: 'blindroll'});
+
+```
+
+---
+
+
+### Roll compendium as rolltable
+
+`game.modules.get("better-rolltables").api.rollCompendiumAsRolltable(compendium)` ⇒ `Promise<void>`
+
+Roll compendium as rolltable
+
+**Returns**: `Promise<void>` - Details of the chatcard message created
+
+| Param                    | Type                    | Default | Description                                            |
+|--------------------------|-------------------------|---------|--------------------------------------------------------|
+| compendium               | `Compendium`            |         | compendium to generate content from         |
+
+**Example**:
+
+```js
+(async () => {
+const compendiumContent = await game.packs.get("name.of.the.compendium").getContent();
+const table = compendiumContent .find(i => i.name === `Treasure Hoard: Challenge 11-16`);
+game.modules.get("better-rolltables").api.generateLoot(table);
+})()
+
+```
+
+---
+
+# NEW API
+
+WHEN I WILL FIND THE TIME...

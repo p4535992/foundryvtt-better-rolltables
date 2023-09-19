@@ -26,7 +26,10 @@ export class RollFromCompendiumAsRollTableHelpers {
       compendium: compendium,
       itemsData: [{ item: item, quantity: 1, fontSize: fontSize, type: 2 }],
     };
-    const cardHtml = await renderTemplate(`modules/${CONSTANTS.MODULE_ID}/templates/loot-chat-card.hbs`, chatCardData);
+    const cardHtml = await renderTemplate(
+      `modules/${CONSTANTS.MODULE_ID}/templates/card/loot-chat-card.hbs`,
+      chatCardData
+    );
     let chatData = {
       flavor: `Rolled from compendium ${item.pack}`,
       sound: "sounds/dice.wav",

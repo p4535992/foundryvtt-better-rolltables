@@ -90,7 +90,7 @@ export class HarvestChatCard {
   }
 
   async renderMessage(data) {
-    return renderTemplate(`modules/${CONSTANTS.MODULE_ID}/templates/harvest-chat-card.hbs`, data);
+    return renderTemplate(`modules/${CONSTANTS.MODULE_ID}/templates/card/harvest-chat-card.hbs`, data);
   }
 
   async getBRTFolder() {

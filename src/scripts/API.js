@@ -27,6 +27,15 @@ const API = {
 
   /**
    *
+   * @param {RollTable} tableEntity rolltable to generate content from
+   * @returns {Promise<{flavor: *, sound: string, user: *, content: *}>}
+   */
+  async roll(tableEntity) {
+    return await this.betterTables.roll(tableEntity);
+  },
+
+  /**
+   *
    * @param {RollTable} tableEntity
    * @param {Object} options
    * @param {('blindroll'|'gmroll'|'selfroll')} options.rollMode The roll mode
@@ -77,13 +86,7 @@ const API = {
   },
 
   /**
-   * @module BetterRolltables.API.createTableFromCompendium
-   *
    * @description Create a new RollTable by extracting entries from a compendium.
-   *
-   * @version 1.0.1
-   * @since 1.8.7
-   *
    * @param {string} compendiumName the name of the compendium to use for the table generation
    * @param {string} tableName the name of the table entity that will be created
    * @param {function(Document)} weightPredicate a function that returns a weight (number) that will be used

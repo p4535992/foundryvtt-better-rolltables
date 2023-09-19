@@ -93,7 +93,7 @@ export class LootChatCard {
   }
 
   async renderMessage(data) {
-    return renderTemplate(`modules/${CONSTANTS.MODULE_ID}/templates/loot-chat-card.hbs`, data);
+    return renderTemplate(`modules/${CONSTANTS.MODULE_ID}/templates/card/loot-chat-card.hbs`, data);
   }
 
   async getBRTFolder() {

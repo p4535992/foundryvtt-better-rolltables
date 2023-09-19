@@ -7,6 +7,8 @@ import API from "./API.js";
 import { CONSTANTS } from "./constants/constants.js";
 import { i18n } from "./lib.js";
 import SETTINGS from "./constants/settings.js";
+import { HarvestChatCard } from "./harvest/harvest-chat-card.js";
+import { StoryChatCard } from "./story/story-chat-card.js";
 
 export class BetterTables {
   constructor() {
@@ -80,6 +82,10 @@ export class BetterTables {
     }
   }
 
+  /**
+   * @param {RollTable} tableEntity rolltable to generate content from
+   * @returns {Promise<{flavor: *, sound: string, user: *, content: *}>}
+   */
   async roll(tableEntity) {
     const data = await BetterTables.prepareCardData(tableEntity);
     return getProperty(data, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.LOOT}`); //data.flags?.betterTables?.loot;
@@ -214,7 +220,7 @@ export class BetterTables {
   static async _renderMessage(message) {
     const dataMessageLoot = getProperty(message, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.LOOT}`);
     const cardHtml = await renderTemplate(
-      `modules/${CONSTANTS.MODULE_ID}/templates/loot-chat-card.hbs`,
+      `modules/${CONSTANTS.MODULE_ID}/templates/card/loot-chat-card.hbs`,
       dataMessageLoot //message.flags.betterTables.loot
     );
     message.content = cardHtml;
@@ -255,9 +261,26 @@ export class BetterTables {
     const br = new BetterResults(results);
     const betterResults = await br.buildResults(tableEntity);
     const currencyData = br.getCurrencyData();
-
-    const lootChatCard = new LootChatCard(betterResults, currencyData);
-    return lootChatCard.prepareCharCart(tableEntity);
+    // TODO REPLACE LOOT CARD WITH DEFAULT ONE
+    if (this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) !== CONSTANTS.TABLE_TYPE_BETTER) {
+      const betterChatCard = new LootChatCard(betterResults, currencyData);
+      return betterChatCard.prepareCharCart(tableEntity);
+    } else if (
+      this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) !== CONSTANTS.TABLE_TYPE_LOOT
+    ) {
+      const lootChatCard = new LootChatCard(betterResults, currencyData);
+      return lootChatCard.prepareCharCart(tableEntity);
+    } else if (
+      this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) !== CONSTANTS.TABLE_TYPE_STORY
+    ) {
+      const storyChatCard = new StoryChatCard(betterResults);
+      return storyChatCard.prepareCharCart(tableEntity);
+    } else if (
+      this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) !== CONSTANTS.TABLE_TYPE_HARVEST
+    ) {
+      const harvestChatCard = new HarvestChatCard(betterResults);
+      return harvestChatCard.prepareCharCart(tableEntity);
+    }
   }
 
   static async _toggleCurrenciesShareSection(message, html) {

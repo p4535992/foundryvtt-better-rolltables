@@ -64,7 +64,7 @@ A special ty to the original authors [Ultrakorne#6240](https://discordapp.com/us
 
 ## Api
 
-TODO...
+All informations about the api can be found here [API](./wiki/api/api.md)
 
 # Build
 
