@@ -55,12 +55,22 @@ export class BetterTables {
     return await API.generateChatStory(tableEntity);
   }
 
+  /**
+   * @param {*} tableEntity
+   * @param {*} options
+   * @returns {Promise<TableResult[]>}
+   */
   async getBetterTableResults(tableEntity, options = null) {
     const brtBuilder = new BRTBuilder(tableEntity);
     const results = await brtBuilder.betterRoll(options);
     return results;
   }
 
+  /**
+   * @param {*} tableEntity
+   * @param {*} options
+   * @returns {Promise<TableResult[]>}
+   */
   async betterTableRoll(tableEntity, options = null) {
     let rollMode = options && "rollMode" in options ? options.rollMode : null;
     if (String(getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${BRTCONFIG.HIDDEN_TABLE}`)) === "true") {
@@ -80,6 +90,7 @@ export class BetterTables {
     } else {
       await brtBuilder.createChatCard(results, rollMode);
     }
+    return results;
   }
 
   /**

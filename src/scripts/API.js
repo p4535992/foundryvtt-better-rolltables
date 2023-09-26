@@ -30,8 +30,8 @@ const API = {
    * @param {RollTable} tableEntity rolltable to generate content from
    * @returns {Promise<{flavor: *, sound: string, user: *, content: *}>}
    */
-  async roll(tableEntity) {
-    return await this.betterTables.roll(tableEntity);
+  async roll(tableEntity, options = null) {
+    return await this.betterTables.roll(tableEntity, options);
   },
 
   /**
@@ -42,7 +42,7 @@ const API = {
    * @param {string|number} [options.rollsAmount]  The rolls amount value
    * @param {string|number} [options.dc]  The dc value
    * @param {string} [options.skill]  The skill denomination
-   * @returns {Promise<void>}
+   * @returns {Promise<TableResult[]>}
    */
   async betterTableRoll(tableEntity, options = null) {
     return await this.betterTables.betterTableRoll(tableEntity, options);

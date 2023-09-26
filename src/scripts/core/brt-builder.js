@@ -13,24 +13,29 @@ export class BRTBuilder {
    * @param {*} rollsAmount
    * @returns {array} results
    */
-  async betterRoll({ rollsAmount = undefined, dc = undefined, skill = undefined }) {
+  async betterRoll(options) {
+    let rollsAmount = options.rollsAmount || undefined;
+
     this.mainRoll = undefined;
 
+    let dc = options.dc || undefined;
+    let skill = options.skill || undefined;
+    let resultsUpdate = this.table.results;
     // Filter by dc
     if (dc && parseInt(dc) >= 0) {
-      this.table.results = this.table.results.filter((r) => {
+      resultsUpdate = resultsUpdate.filter((r) => {
         return getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_DC_VALUE_KEY}`) >= parseInt(dc);
       });
     }
     // Filter by skill
     if (skill) {
-      this.table.results = this.table.results.filter((r) => {
+      resultsUpdate = resultsUpdate.filter((r) => {
         return getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_SKILL_VALUE_KEY}`) === skill;
       });
     }
 
-    rollsAmount = rollsAmount || (await BRTBetterHelpers.rollsAmount(this.table));
-    let resultsTmp = await this.rollManyOnTable(rollsAmount, this.table);
+    rollsAmount = rollsAmount || (await BRTBetterHelpers.rollsAmount(tableTmp));
+    let resultsTmp = await this.rollManyOnTable(rollsAmount, tableTmp, options);
     this.results = resultsTmp;
     return this.results;
   }
@@ -52,18 +57,14 @@ export class BRTBuilder {
    * @param {amount} amount               The number of results to draw
    * @param {RollTable} table             The rollTable object
    * @param {object} [options={}]         Optional arguments which customize the draw
-   * @param {Roll} [options.roll]                   An optional pre-configured Roll instance which defines the dice
-   *                                                roll to use
+   * @param {Roll} [options.roll]                   An optional pre-configured Roll instance which defines the dice roll to use
    * @param {boolean} [options.recursive=true]      Allow drawing recursively from inner RollTable results
    * @param {boolean} [options.displayChat=true]    Automatically display the drawn results in chat? Default is true
-   * @param {('blindroll'|'gmroll'|'selfroll')} [options.rollMode]             Customize the roll mode used to display the drawn results
-   * @param {string|number} [options.rollsAmount]  The rolls amount value
-   * @param {string|number} [options.dc]  The dc value
-   * @param {string} [options.skill]  The skill denomination
+   * @param {number} [options._depth]  The rolls amount value
    *
    * @returns {Promise<Array{RollTableResult}>} The drawn results
    */
-  async rollManyOnTable(amount, table, { roll = null, recursive = true, _depth = 0 } = {}) {
+  async rollManyOnTable(amount, table, { roll = null, recursive = true, _depth = 0 } = {}, options = null) {
     const maxRecursions = 5;
     let msg = "";
     // Prevent infinite recursion
