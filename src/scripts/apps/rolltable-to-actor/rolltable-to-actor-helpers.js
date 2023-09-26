@@ -6,9 +6,9 @@ import { BRTCONFIG } from "../../core/config";
 import { BRTUtils } from "../../core/utils";
 
 export class RollTableToActorHelpers {
-  static async addRollTableItemsToActor(table, actor) {
+  static async addRollTableItemsToActor(table, actor, options = null) {
     let brt = new BetterTables();
-    const results = await brt.getBetterTableResults(table);
+    const results = await brt.getBetterTableResults(table, options);
     const itemsData = await RollTableToActorHelpers.resultsToItemsData(results);
     const actorWithItems = await RollTableToActorHelpers.addItemsToActor(actor, itemsData);
     return actorWithItems;

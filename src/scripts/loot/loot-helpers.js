@@ -32,7 +32,11 @@ export class BRTLootHelpers {
     const brtBuilder = new BRTBuilder(tableEntity);
 
     for (const token of tokenstack) {
-      const results = await brtBuilder.betterRoll(customRoll);
+      const results = await brtBuilder({
+        rollsAmount: customRoll ?? options?.rollsAmount,
+        dc: options.dc,
+        skill: options.skill,
+      });
       const br = new BetterResults(results);
       const betterResults = await br.buildResults(tableEntity);
       const currencyData = br.getCurrencyData();
@@ -51,7 +55,11 @@ export class BRTLootHelpers {
    */
   static async generateLoot(tableEntity, options = {}) {
     const builder = new BRTBuilder(tableEntity);
-    const results = await builder.betterRoll();
+    const results = await builder.betterRoll({
+      rollsAmount: options?.rollsAmount,
+      dc: options?.dc,
+      skill: options?.skill,
+    });
     const br = new BetterResults(results);
     const betterResults = await br.buildResults(tableEntity);
     const currencyData = br.getCurrencyData();
@@ -77,7 +85,11 @@ export class BRTLootHelpers {
       rollMode = "gmroll";
     }
     const brtBuilder = new BRTBuilder(tableEntity);
-    const results = await brtBuilder.betterRoll();
+    const results = await brtBuilder.betterRoll({
+      rollsAmount: options?.rollsAmount,
+      dc: options?.dc,
+      skill: options?.skill,
+    });
     const br = new BetterResults(results);
     const betterResults = await br.buildResults(tableEntity);
     const currencyData = br.getCurrencyData();

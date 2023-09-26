@@ -39,7 +39,8 @@ const API = {
    * @param {RollTable} tableEntity
    * @param {Object} options
    * @param {('blindroll'|'gmroll'|'selfroll')} [options.rollMode] The roll mode
-   * @param {string} [options.dc]  The dc value
+   * @param {string|number} [options.rollsAmount]  The rolls amount value
+   * @param {string|number} [options.dc]  The dc value
    * @param {string} [options.skill]  The skill denomination
    * @returns {Promise<void>}
    */
@@ -119,7 +120,8 @@ const API = {
    * @param {TokenDocument} token
    * @param {Object} options
    * @param {('blindroll'|'gmroll'|'selfroll')} [options.rollMode] The roll mode
-   * @param {string} [options.dc]  The dc value
+   * @param {string|number} [options.rollsAmount]  The rolls amount value
+   * @param {string|number} [options.dc]  The dc value
    * @param {string} [options.skill]  The skill denomination
    * @returns {Promise<void>}
    */
@@ -132,7 +134,8 @@ const API = {
    * @param {RollTable} tableEntity
    * @param {Object} options
    * @param {('blindroll'|'gmroll'|'selfroll')} [options.rollMode] The roll mode
-   * @param {string} [options.dc]  The dc value
+   * @param {string|number} [options.rollsAmount]  The rolls amount value
+   * @param {string|number} [options.dc]  The dc value
    * @param {string} [options.skill]  The skill denomination
    * @returns {Promise<void>}
    */
@@ -145,7 +148,8 @@ const API = {
    * @param {RollTable} tableEntity
    * @param {Object} options
    * @param {('blindroll'|'gmroll'|'selfroll')} [options.rollMode] The roll mode
-   * @param {string} [options.dc]  The dc value
+   * @param {string|number} [options.rollsAmount]  The rolls amount value
+   * @param {string|number} [options.dc]  The dc valuee
    * @param {string} [options.skill]  The skill denomination
    * @returns {Promise<void>}
    */
@@ -158,7 +162,8 @@ const API = {
    * @param {RollTable} tableEntity
    * @param {Object} options
    * @param {('blindroll'|'gmroll'|'selfroll')} [options.rollMode] The roll mode
-   * @param {string} [options.dc]  The dc value
+   * @param {string|number} [options.rollsAmount]  The rolls amount value
+   * @param {string|number} [options.dc]  The dc value
    * @param {string} [options.skill]  The skill denomination
    * @returns {Promise<void>}
    */
@@ -175,7 +180,8 @@ const API = {
    * @param {RollTable} tableEntity
    * @param {Object} options
    * @param {('blindroll'|'gmroll'|'selfroll')} [options.rollMode] The roll mode
-   * @param {string} [options.dc]  The dc value
+   * @param {string|number} [options.rollsAmount]  The rolls amount value
+   * @param {string|number} [options.dc]  The dc value
    * @param {string} [options.skill]  The skill denomination
    * @returns {Promise<void>}
    */
@@ -188,7 +194,8 @@ const API = {
    * @param {RollTable} tableEntity
    * @param {Object} options
    * @param {('blindroll'|'gmroll'|'selfroll')} [options.rollMode] The roll mode
-   * @param {string} [options.dc]  The dc value
+   * @param {string|number} [options.rollsAmount]  The rolls amount value
+   * @param {string|number} [options.dc]  The dc value
    * @param {string} [options.skill]  The skill denomination
    * @returns {Promise<void>}
    */
@@ -201,7 +208,8 @@ const API = {
    * @param {RollTable} tableEntity
    * @param {Object} options
    * @param {('blindroll'|'gmroll'|'selfroll')} [options.rollMode] The roll mode
-   * @param {string} [options.dc]  The dc value
+   * @param {string|number} [options.rollsAmount]  The rolls amount value
+   * @param {string|number} [options.dc]  The dc value
    * @param {string} [options.skill]  The skill denomination
    * @returns {Promise<void>}
    */
@@ -297,7 +305,8 @@ const API = {
     }
     const table = inAttributes.table;
     const actor = inAttributes.actor;
-    const actorWithItems = await RollTableToActorHelpers.addRollTableItemsToActor(table, actor);
+    const options = inAttributes.options;
+    const actorWithItems = await RollTableToActorHelpers.addRollTableItemsToActor(table, actor, options);
     return actorWithItems;
   },
 };

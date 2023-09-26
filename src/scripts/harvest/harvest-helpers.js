@@ -32,7 +32,11 @@ export class BRTHarvestHelpers {
     const brtBuilder = new BRTBuilder(tableEntity);
 
     for (const token of tokenstack) {
-      const results = await brtBuilder.betterRoll(customRoll);
+      const results = await brtBuilder.betterRoll({
+        rollsAmount: customRoll ?? options?.rollsAmount,
+        dc: options?.dc,
+        skill: options?.skill,
+      });
       const br = new BetterResults(results);
       const betterResults = await br.buildResults(tableEntity);
       const harvestCreator = new HarvestCreator(betterResults);
@@ -49,7 +53,11 @@ export class BRTHarvestHelpers {
    */
   static async generateHarvest(tableEntity, options = {}) {
     const builder = new BRTBuilder(tableEntity);
-    const results = await builder.betterRoll();
+    const results = await builder.betterRoll({
+      rollsAmount: options?.rollsAmount,
+      dc: options?.dc,
+      skill: options?.skill,
+    });
     const br = new BetterResults(results);
     const betterResults = await br.buildResults(tableEntity);
     const harvestCreator = new HarvestCreator(betterResults);
@@ -73,7 +81,11 @@ export class BRTHarvestHelpers {
       rollMode = "gmroll";
     }
     const brtBuilder = new BRTBuilder(tableEntity);
-    const results = await brtBuilder.betterRoll();
+    const results = await brtBuilder.betterRoll({
+      rollsAmount: options?.rollsAmount,
+      dc: options?.dc,
+      skill: options?.skill,
+    });
     const br = new BetterResults(results);
     const betterResults = await br.buildResults(tableEntity);
     const harvestChatCard = new HarvestChatCard(betterResults, rollMode);

@@ -55,9 +55,9 @@ export class BetterTables {
     return await API.generateChatStory(tableEntity);
   }
 
-  async getBetterTableResults(tableEntity) {
+  async getBetterTableResults(tableEntity, options = null) {
     const brtBuilder = new BRTBuilder(tableEntity);
-    const results = await brtBuilder.betterRoll();
+    const results = await brtBuilder.betterRoll(options);
     return results;
   }
 
@@ -68,7 +68,7 @@ export class BetterTables {
     }
 
     const brtBuilder = new BRTBuilder(tableEntity);
-    const results = await brtBuilder.betterRoll();
+    const results = await brtBuilder.betterRoll(options);
 
     if (game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.USE_CONDENSED_BETTERROLL)) {
       const br = new BetterResults(results);
@@ -86,8 +86,8 @@ export class BetterTables {
    * @param {RollTable} tableEntity rolltable to generate content from
    * @returns {Promise<{flavor: *, sound: string, user: *, content: *}>}
    */
-  async roll(tableEntity) {
-    const data = await BetterTables.prepareCardData(tableEntity);
+  async roll(tableEntity, options = null) {
+    const data = await BetterTables.prepareCardData(tableEntity, options);
     return getProperty(data, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.LOOT}`); //data.flags?.betterTables?.loot;
   }
 
@@ -262,9 +262,9 @@ export class BetterTables {
    * @param {RollTable} tableEntity rolltable to generate content from
    * @returns {Promise<{flavor: *, sound: string, user: *, content: *}>}
    */
-  static async prepareCardData(tableEntity) {
+  static async prepareCardData(tableEntity, options = null) {
     const brtBuilder = new BRTBuilder(tableEntity);
-    const results = await brtBuilder.betterRoll();
+    const results = await brtBuilder.betterRoll(options);
 
     const br = new BetterResults(results);
     const betterResults = await br.buildResults(tableEntity);
