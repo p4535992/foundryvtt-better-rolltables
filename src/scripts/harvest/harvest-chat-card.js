@@ -112,8 +112,15 @@ export class HarvestChatCard {
   async prepareCharCart(table) {
     await this.findOrCreateItems();
 
+    const htmlDescription = await TextEditor.enrichHTML(table.description, {
+      async: true,
+      secrets: table.isOwner,
+      documents: true,
+    });
+
     const chatCardData = {
       tableData: table,
+      htmlDescription: htmlDescription,
       itemsData: this.itemsData,
       compendium: table.pack,
       id: table.id,

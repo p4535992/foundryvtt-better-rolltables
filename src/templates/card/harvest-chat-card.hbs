@@ -1,10 +1,10 @@
 <div class="table-draw" data-table-id="{{ this.id }}" {{#if this.compendium}}data-pack="{{this.compendium}}"{{/if}} {{#if this.id}}data-id="{{this.id}}"{{/if}}>
-    {{#if tableData.description}}
-    <div class="table-description">{{tableData.description}}</div>
+    {{#if htmlDescription}}
+    <div class="table-description">{{{htmlDescription}}}</div>
     {{/if}}
     <!--
-    {{#if description}}
-    <div class="table-description">{{{description}}}</div>
+    {{#if htmlDescription}}
+    <div class="table-description">{{{htmlDescription}}}</div>
     {{/if}}
     -->
     {{{ rollHTML }}}
