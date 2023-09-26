@@ -38,7 +38,9 @@ const API = {
    *
    * @param {RollTable} tableEntity
    * @param {Object} options
-   * @param {('blindroll'|'gmroll'|'selfroll')} options.rollMode The roll mode
+   * @param {('blindroll'|'gmroll'|'selfroll')} [options.rollMode] The roll mode
+   * @param {string} [options.dc]  The dc value
+   * @param {string} [options.skill]  The skill denomination
    * @returns {Promise<void>}
    */
   async betterTableRoll(tableEntity, options = null) {
@@ -116,7 +118,9 @@ const API = {
    * @param {RollTable} tableEntity
    * @param {TokenDocument} token
    * @param {Object} options
-   * @param {('blindroll'|'gmroll'|'selfroll')} options.rollMode The roll mode
+   * @param {('blindroll'|'gmroll'|'selfroll')} [options.rollMode] The roll mode
+   * @param {string} [options.dc]  The dc value
+   * @param {string} [options.skill]  The skill denomination
    * @returns {Promise<void>}
    */
   async addLootToSelectedToken(tableEntity, token = null, options = null) {
@@ -127,7 +131,9 @@ const API = {
    *
    * @param {RollTable} tableEntity
    * @param {Object} options
-   * @param {('blindroll'|'gmroll'|'selfroll')} options.rollMode The roll mode
+   * @param {('blindroll'|'gmroll'|'selfroll')} [options.rollMode] The roll mode
+   * @param {string} [options.dc]  The dc value
+   * @param {string} [options.skill]  The skill denomination
    * @returns {Promise<void>}
    */
   async generateLoot(tableEntity, options = {}) {
@@ -138,7 +144,9 @@ const API = {
    *
    * @param {RollTable} tableEntity
    * @param {Object} options
-   * @param {('blindroll'|'gmroll'|'selfroll')} options.rollMode The roll mode
+   * @param {('blindroll'|'gmroll'|'selfroll')} [options.rollMode] The roll mode
+   * @param {string} [options.dc]  The dc value
+   * @param {string} [options.skill]  The skill denomination
    * @returns {Promise<void>}
    */
   async generateLootOnSelectedToken(tableEntity, options = {}) {
@@ -149,7 +157,9 @@ const API = {
    *
    * @param {RollTable} tableEntity
    * @param {Object} options
-   * @param {('blindroll'|'gmroll'|'selfroll')} options.rollMode The roll mode
+   * @param {('blindroll'|'gmroll'|'selfroll')} [options.rollMode] The roll mode
+   * @param {string} [options.dc]  The dc value
+   * @param {string} [options.skill]  The skill denomination
    * @returns {Promise<void>}
    */
   async generateChatLoot(tableEntity, options = null) {
@@ -164,7 +174,9 @@ const API = {
    *
    * @param {RollTable} tableEntity
    * @param {Object} options
-   * @param {('blindroll'|'gmroll'|'selfroll')} options.rollMode The roll mode
+   * @param {('blindroll'|'gmroll'|'selfroll')} [options.rollMode] The roll mode
+   * @param {string} [options.dc]  The dc value
+   * @param {string} [options.skill]  The skill denomination
    * @returns {Promise<void>}
    */
   async generateHarvest(tableEntity, options = {}) {
@@ -175,7 +187,9 @@ const API = {
    *
    * @param {RollTable} tableEntity
    * @param {Object} options
-   * @param {('blindroll'|'gmroll'|'selfroll')} options.rollMode The roll mode
+   * @param {('blindroll'|'gmroll'|'selfroll')} [options.rollMode] The roll mode
+   * @param {string} [options.dc]  The dc value
+   * @param {string} [options.skill]  The skill denomination
    * @returns {Promise<void>}
    */
   async generateHarvestOnSelectedToken(tableEntity, options = {}) {
@@ -186,7 +200,9 @@ const API = {
    *
    * @param {RollTable} tableEntity
    * @param {Object} options
-   * @param {('blindroll'|'gmroll'|'selfroll')} options.rollMode The roll mode
+   * @param {('blindroll'|'gmroll'|'selfroll')} [options.rollMode] The roll mode
+   * @param {string} [options.dc]  The dc value
+   * @param {string} [options.skill]  The skill denomination
    * @returns {Promise<void>}
    */
   async generateChatHarvest(tableEntity, options = null) {

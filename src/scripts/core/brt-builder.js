@@ -41,7 +41,9 @@ export class BRTBuilder {
    *                                                roll to use
    * @param {boolean} [options.recursive=true]      Allow drawing recursively from inner RollTable results
    * @param {boolean} [options.displayChat=true]    Automatically display the drawn results in chat? Default is true
-   * @param {string} [options.rollMode]             Customize the roll mode used to display the drawn results
+   * @param {('blindroll'|'gmroll'|'selfroll')} [options.rollMode]             Customize the roll mode used to display the drawn results
+   * @param {string} [options.dc]  The dc value
+   * @param {string} [options.skill]  The skill denomination
    *
    * @returns {Promise<Array{RollTableResult}>} The drawn results
    */
@@ -91,7 +93,9 @@ export class BRTBuilder {
        *                                                roll to use
        * @param {boolean} [options.recursive=true]      Allow drawing recursively from inner RollTable results
        * @param {boolean} [options.displayChat=true]    Automatically display the drawn results in chat? Default is true
-       * @param {string} [options.rollMode]             Customize the roll mode used to display the drawn results
+       * @param {('blindroll'|'gmroll'|'selfroll')} [options.rollMode]             Customize the roll mode used to display the drawn results
+       * @param {string} [options.dc]  The dc value
+       * @param {string} [options.skill]  The skill denomination
        * @returns {Promise<{RollTableDraw}>}  The drawn results
        */
       const draw = await table.drawMany(resultToDraw, {
