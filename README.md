@@ -116,6 +116,7 @@ Any issues, bugs, or feature requests are always welcome to be reported directly
 
 ## License
 
+- **[Enhanced RollTable Sheet](https://gitlab.com/koboldworks/agnostic/rolltable-sheet)** : [MIT](https://gitlab.com/koboldworks/agnostic/rolltable-sheet/-/blob/main/LICENSE)
 - **[sortable](https://gist.github.com/code-boxx/45ebe489b99583dc170564113b1ad24e)** : [Code Boxx](https://gist.github.com/code-boxx/45ebe489b99583dc170564113b1ad24e#file-0-js-sortable-table-md)
 - **[Roll Table Importer](https://github.com/ClipplerBlood/roll-table-importer)** : [???]()
 
@@ -124,5 +125,6 @@ This package is under an [MIT license](LICENSE) and the [Foundry Virtual Tableto
 
 ## Credit
 
+- [code-boxxKoboldworks](https://gitlab.com/koboldworks) and the module [Enhanced RollTable Sheet](https://gitlab.com/koboldworks/agnostic/rolltable-sheet)
 - [code-boxx](https://github.com/code-boxx) and the module [sortable](https://gist.github.com/code-boxx/45ebe489b99583dc170564113b1ad24e)
 - [ClipplerBlood](https://github.com/ClipplerBlood) and the module [Roll Table Importer](https://github.com/ClipplerBlood/roll-table-importer)

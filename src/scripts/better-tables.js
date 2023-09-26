@@ -166,6 +166,14 @@ export class BetterTables {
         },
       });
 
+      options.push({
+        name: i18n(`${BRTCONFIG.NAMESPACE}.api.msg.generateRolltableFromCompendiumWithFilters`),
+        icon: '<i class="fa-solid fa-arrows-split-up-and-left"></i>',
+        callback: (li) => {
+          API.compendiumToRollTableWithDialog(li.data("pack"));
+        },
+      });
+
       if (game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.ADD_ROLL_IN_COMPENDIUM_CONTEXTMENU)) {
         options.push({
           name: i18n(`${BRTCONFIG.NAMESPACE}.api.msg.rollCompendiumAsRolltable`),

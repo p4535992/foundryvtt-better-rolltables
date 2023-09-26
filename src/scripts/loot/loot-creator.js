@@ -76,4 +76,8 @@ export class LootCreator {
     );
     return items;
   }
+
+  async buildItemData(item) {
+    return await RollTableToActorHelpers.buildItemData(item);
+  }
 }

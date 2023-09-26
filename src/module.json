@@ -74,6 +74,15 @@
       "private": false,
       "flags": {},
       "module": "better-rolltables"
+    },
+    {
+      "name": "brt-harvest-harvester",
+      "label": "BRT - Harvest Tables (Harvester Module Integration)",
+      "path": "packs/harvest-harvester-tables",
+      "type": "RollTable",
+      "private": false,
+      "flags": {},
+      "module": "better-rolltables"
     }
   ],
   "languages": [

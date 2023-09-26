@@ -1,6 +1,6 @@
 import { CONSTANTS } from "../../constants/constants";
 import { BRTCONFIG } from "../../core/config";
-import { debug } from "../../lib";
+import { debug, log } from "../../lib";
 import { CompendiumToRollTableDialog } from "./compendium-to-rollTable-dialog";
 
 /**
@@ -33,10 +33,12 @@ export class CompendiumToRollTableSpecialHarvestDialog {
    * const result = groupBy(arr, "type");
    * console.log(result); // Output: { A: [{type: "A"}, {type: "A"}], B: [{type: "B"}] }
    */
-  _groupBy(array, property) {
-    return array.reduce((memo, x) => {
-      memo[x[property]] ||= [];
-      memo[x[property]].push(x);
+  _groupBy(arr, property) {
+    return arr.reduce(function (memo, x) {
+      if (!memo[getProperty(x, property)]) {
+        memo[getProperty(x, property)] = [];
+      }
+      memo[getProperty(x, property)].push(x);
       return memo;
     }, {});
   }
@@ -47,8 +49,12 @@ export class CompendiumToRollTableSpecialHarvestDialog {
     }
     const skillValueToCheck = String(skillValue).toLowerCase().trim();
 
-    const r = this.skillMap[skillValueToCheck];
+    const r = this.skillMap.get(skillValueToCheck);
     return r;
+  }
+
+  _containsNumbers(str) {
+    return /\d/.test(str);
   }
 
   /**
@@ -65,47 +71,68 @@ export class CompendiumToRollTableSpecialHarvestDialog {
    */
   async fromCompendium(compendium, options = {}) {
     // Ported from Foundry's existing RollTable.fromFolder()
-    const results = await compendium.index.map((e, i) => {
-      console.log("Compendium Item:");
-      console.log(e);
-      console.log("Compendium Index:");
-      console.log(i);
+    // const results = Promise.all(await compendium.index.map(async (es, i) => {
+    const results = await Promise.all(
+      compendium.contents.map(async (es, i) => {
+        log("Compendium Item:" + es);
+        log("Compendium Index:" + i);
+        const e = await fromUuid(es.uuid);
+        const dcValue = getProperty(e, `system.description.chat`);
+        const skillValue = getProperty(e, `system.description.unidentified`);
+        const sourceValue = getProperty(e, `system.source`);
 
-      const dcValue = getProperty(e, `system.description.chat`);
-      const skillValue = getProperty(e, `system.description.unidentified`);
+        const skillDenom = this._convertToSkillDenomination(skillValue) ?? skillValue;
 
-      const skillDenom = this._convertToSkillDenomination(skillValue);
+        let nameTmp = e.name;
+        let has1d = false;
+        if (nameTmp.includes("1d")) {
+          nameTmp = nameTmp.replace("1d", "");
+          has1d = true;
+        }
+        let num = 1;
+        if (this._containsNumbers(nameTmp)) {
+          let numStr = nameTmp.match(/\d+/)[0]; //nameTmp.replace(/\D/g, "");
+          num = has1d ? "1d" + parseInt(numStr) : String(parseInt(numStr));
+          if (num <= 0) {
+            num = 1;
+          }
+          // let arrNames = nameTmp.replace(numStr, "").split("(");
+          // let newName = arrNames?.length > 0 ? arrNames[0] : nameTmp;
+        }
 
-      // https://foundryvtt.com/api/v8/data.TableResultData.html
-      // _id	string The _id which uniquely identifies this TableResult embedded document
-      // type	string	<optional> A result sub-type from CONST.TABLE_RESULT_TYPES (COMPENDIUM: 2, DOCUMENT: 1, TEXT: 0)
-      // text	string	<optional> The text which describes the table result
-      // img	string	<optional> An image file url that represents the table result
-      // collection	string	<optional> A named collection from which this result is drawn
-      // resultId	string	<optional> The _id of a Document within the collection this result references
-      // weight	number	<optional> The probabilistic weight of this result relative to other results
-      // range	Array.<number>	<optional> A length 2 array of ascending integers which defines the range of dice roll totals which produce this drawn result
-      // drawn	boolean	<optional> false Has this result already been drawn (without replacement)
-      // flags	object	<optional> {} An object of optional key/value flags
-      return {
-        text: e.name,
-        type: CONST.TABLE_RESULT_TYPES.COMPENDIUM,
-        collection: compendium.type,
-        resultId: e.id ? e.id : e._id,
-        img: e.thumbnail || e.img || CONFIG.RollTable.resultIcon,
-        weight: 1,
-        range: [i + 1, i + 1],
-        documentCollection: `${compendium.metadata.packageName}.${compendium.metadata.name}`,
-        drawn: false,
-        flags: {
-          [`${CONSTANTS.MODULE_ID}`]: {
-            [`${CONSTANTS.FLAGS.RESULTS_FORMULA_KEY_FORMULA}`]: 1,
-            [`${CONSTANTS.FLAGS.HARVEST_DC_VALUE_KEY}`]: dcValue ?? 0,
-            [`${CONSTANTS.FLAGS.HARVEST_SKILL_VALUE_KEY}`]: skillDenom ?? "",
+        // https://foundryvtt.com/api/v8/data.TableResultData.html
+        // _id	string The _id which uniquely identifies this TableResult embedded document
+        // type	string	<optional> A result sub-type from CONST.TABLE_RESULT_TYPES (COMPENDIUM: 2, DOCUMENT: 1, TEXT: 0)
+        // text	string	<optional> The text which describes the table result
+        // img	string	<optional> An image file url that represents the table result
+        // collection	string	<optional> A named collection from which this result is drawn
+        // resultId	string	<optional> The _id of a Document within the collection this result references
+        // weight	number	<optional> The probabilistic weight of this result relative to other results
+        // range	Array.<number>	<optional> A length 2 array of ascending integers which defines the range of dice roll totals which produce this drawn result
+        // drawn	boolean	<optional> false Has this result already been drawn (without replacement)
+        // flags	object	<optional> {} An object of optional key/value flags
+        return {
+          text: e.name,
+          type: CONST.TABLE_RESULT_TYPES.COMPENDIUM,
+          collection: compendium.type,
+          resultId: e.id ? e.id : e._id,
+          img: e.thumbnail || e.img || CONFIG.RollTable.resultIcon,
+          weight: 1,
+          range: [i + 1, i + 1],
+          documentCollection: `${compendium.metadata.packageName}.${compendium.metadata.name}`,
+          drawn: false,
+          flags: {
+            [`${CONSTANTS.MODULE_ID}`]: {
+              [`${CONSTANTS.FLAGS.RESULTS_FORMULA_KEY_FORMULA}`]: String(num) ?? "1",
+              [`${CONSTANTS.FLAGS.HARVEST_DC_VALUE_KEY}`]: String(dcValue) ?? "0",
+              [`${CONSTANTS.FLAGS.HARVEST_SKILL_VALUE_KEY}`]: skillDenom ?? "",
+              [`${CONSTANTS.FLAGS.HARVEST_SOURCE_VALUE_KEY}`]: sourceValue ?? "",
+            },
           },
-        },
-      };
-    });
+        };
+      })
+    );
+
     return await this.createCompendiumFromData(compendium.metadata.label, results, `1d${results.length}`, options);
   }
 
@@ -117,7 +144,10 @@ export class CompendiumToRollTableSpecialHarvestDialog {
    * @param {*} options
    */
   async createCompendiumFromData(compendiumName, results, formula, options = {}) {
-    const resultsGroupedBySystemOrigin = this._groupBy(results, `system.source`);
+    const resultsGroupedBySystemOrigin = this._groupBy(
+      results,
+      `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_SOURCE_VALUE_KEY}`
+    );
     const documents = [];
 
     for (const [key, values] of Object.entries(resultsGroupedBySystemOrigin)) {
@@ -127,7 +157,7 @@ export class CompendiumToRollTableSpecialHarvestDialog {
           name: "Better Harvester | " + key + " RollTable",
           description: `A random table created from the contents of the ${compendiumName} compendium filter for the system source value '${key}'.`,
           results: values,
-          formula: formula ?? `1d${value.length}`,
+          formula: `1d${values.length}`,
           flags: {
             [`${CONSTANTS.MODULE_ID}`]: {
               [`${CONSTANTS.FLAGS.TABLE_TYPE_KEY}`]: CONSTANTS.TABLE_TYPE_HARVEST,
@@ -136,6 +166,7 @@ export class CompendiumToRollTableSpecialHarvestDialog {
         },
         options
       );
+      await document.normalize();
       documents.push(document);
     }
     return documents;

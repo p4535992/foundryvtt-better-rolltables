@@ -1,6 +1,7 @@
 import { BRTCONFIG } from "../core/config.js";
 import { CONSTANTS } from "../constants/constants.js";
 import { BRTUtils } from "../core/utils.js";
+import { HarvestCreator } from "./harvest-creator.js";
 
 /**
  * create a chat card based on the content of the object HarvestData

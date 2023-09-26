@@ -4,10 +4,11 @@
       "msg": {
         "compendiumEmpty": "Compendium named {title} ({name}) is empty.`",
         "compendiumNotFound": "Compendium << {name} >> not found.",
-        "generateRolltableFromCompendium": "Generate rolltable.",
+        "generateRolltableFromCompendium": "BRT Generate rolltable.",
+        "generateRolltableFromCompendiumWithFilters": "BRT Generate rolltable with Filters (BETA Tested only on Dnd5e).",
         "startRolltableGeneration": "Starting generation of rolltable for {title} ({name}) with {compendiumSize} entries.",
         "rolltableGenerationFinished": "Rolltable generation for {title} ({name}) finished.",
-        "rollCompendiumAsRolltable": "Rolling compendium as rolltable (BRT)."
+        "rollCompendiumAsRolltable": "BRT Rolling compendium as rolltable."
       }
     },
     "Buttons": {
@@ -95,6 +96,10 @@
             "Tags": {
               "Title": "Tags Settings",
               "Description": "Settings for the Tags of BetterRolltables"
+            },
+            "enableOldBehavior": {
+              "Title": "Enable Old Behavior",
+              "Description": "Re-enable the old 1.9.X behaviour if you really want..."
             }
           }
         }

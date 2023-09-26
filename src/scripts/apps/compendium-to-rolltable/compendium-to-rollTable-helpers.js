@@ -13,8 +13,17 @@ export class CompendiumToRollTableHelpers {
   /**
    * Tested to work with FoundryVTT V11, direct compatibility with DnD5e & SFRPG. Thorough testing still required.
    */
-  static async compendiumToRollTableWithDialog({ weightPredicate = null } = {}) {
-    let allCompendiums = await game.packs.contents;
+  static async compendiumToRollTableWithDialog(compendiumName, { weightPredicate = null } = {}) {
+    let allCompendiums = [];
+    if (compendiumName) {
+      if (!game.packs.getName(compendiumName)) {
+        warn(`No compendium found with id '${compendiumName}'`, true);
+        return;
+      }
+      allCompendiums = [game.packs.get(compendiumName)];
+    } else {
+      allCompendiums = await game.packs.contents;
+    }
     let itemTypes = await game.documentTypes.Item.sort();
     const documents = new CompendiumToRollTableDialog(
       allCompendiums,

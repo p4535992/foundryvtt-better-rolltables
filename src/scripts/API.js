@@ -219,8 +219,8 @@ const API = {
   /* NEW API INTEGRATION */
   /* ======================================================== */
 
-  async compendiumToRollTableWithDialog() {
-    return await CompendiumToRollTableHelpers.compendiumToRollTableWithDialog();
+  async compendiumToRollTableWithDialog(compendiumName = null, { weightPredicate = null } = {}) {
+    return await CompendiumToRollTableHelpers.compendiumToRollTableWithDialog(compendiumName, { weightPredicate });
   },
 
   async compendiumToRollTableWithDialogSpecialCaseHarvester() {

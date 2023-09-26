@@ -56,4 +56,8 @@ export class HarvestCreator {
     );
     return items;
   }
+
+  async buildItemData(item) {
+    return await RollTableToActorHelpers.buildItemData(item);
+  }
 }
