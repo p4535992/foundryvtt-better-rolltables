@@ -64,7 +64,7 @@ export class BRTBuilder {
    *
    * @returns {Promise<Array{RollTableResult}>} The drawn results
    */
-  async rollManyOnTable(amount, table, { roll = null, recursive = true, _depth = 0 } = {}, options = null) {
+  async rollManyOnTable(amount, table, { roll = null, recursive = true, _depth = 0 } = {}) {
     const maxRecursions = 5;
     let msg = "";
     // Prevent infinite recursion
@@ -106,14 +106,12 @@ export class BRTBuilder {
        * Draw multiple results from a RollTable, constructing a final synthetic Roll as a dice pool of inner rolls.
        * @param {number} number               The number of results to draw
        * @param {object} [options={}]         Optional arguments which customize the draw
-       * @param {Roll} [options.roll]                   An optional pre-configured Roll instance which defines the dice
-       *                                                roll to use
+       * @param {Roll} [options.roll]                   An optional pre-configured Roll instance which defines the dice roll to use (An existing Roll instance to use for drawing from the table)
        * @param {boolean} [options.recursive=true]      Allow drawing recursively from inner RollTable results
        * @param {boolean} [options.displayChat=true]    Automatically display the drawn results in chat? Default is true
-       * @param {('blindroll'|'gmroll'|'selfroll')} [options.rollMode]             Customize the roll mode used to display the drawn results
-       * @param {string|number} [options.rollsAmount]  The rolls amount value
-       * @param {string|number} [options.dc]  The dc value
-       * @param {string} [options.skill]  The skill denomination
+       * @param {('blindroll'|'gmroll'|'selfroll')} [options.rollMode]             Customize the roll mode used to display the drawn results (The chat roll mode to use when displaying the result)
+       * @param {Array.<TableResult>} [options.results] One or more table results which have been drawn
+       * @param {boolean} [options.displayChat] Whether to automatically display the results in chat
        * @returns {Promise<{RollTableDraw}>}  The drawn results
        */
       const draw = await table.drawMany(resultToDraw, {
