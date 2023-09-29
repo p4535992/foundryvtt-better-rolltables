@@ -155,7 +155,7 @@ export class CompendiumToRollTableSpecialHarvestDialog {
       const document = await RollTable.create(
         {
           name: "Better Harvester | " + key + " RollTable",
-          description: `A random table created from the contents of the ${compendiumName} compendium filter for the system source value '${key}'.`,
+          description: `Rolltable created from the '${compendiumName}' compendium filter for the system source value '${key}'.`,
           results: values,
           formula: `1d${values.length}`,
           flags: {
@@ -163,6 +163,7 @@ export class CompendiumToRollTableSpecialHarvestDialog {
               [`${CONSTANTS.FLAGS.TABLE_TYPE_KEY}`]: CONSTANTS.TABLE_TYPE_HARVEST,
             },
           },
+          img: "icons/svg/pawprint.svg",
         },
         options
       );
