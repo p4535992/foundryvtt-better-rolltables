@@ -18,24 +18,8 @@ export class BRTBuilder {
 
     this.mainRoll = undefined;
 
-    let dc = options.dc || undefined;
-    let skill = options.skill || undefined;
-    let resultsUpdate = this.table.results;
-    // Filter by dc
-    if (dc && parseInt(dc) >= 0) {
-      resultsUpdate = resultsUpdate.filter((r) => {
-        return getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_DC_VALUE_KEY}`) >= parseInt(dc);
-      });
-    }
-    // Filter by skill
-    if (skill) {
-      resultsUpdate = resultsUpdate.filter((r) => {
-        return getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_SKILL_VALUE_KEY}`) === skill;
-      });
-    }
-
-    rollsAmount = rollsAmount || (await BRTBetterHelpers.rollsAmount(tableTmp));
-    let resultsTmp = await this.rollManyOnTable(rollsAmount, tableTmp, options);
+    rollsAmount = rollsAmount || (await BRTBetterHelpers.rollsAmount(this.table));
+    let resultsTmp = await this.rollManyOnTable(rollsAmount, this.table, options);
     this.results = resultsTmp;
     return this.results;
   }
@@ -64,7 +48,7 @@ export class BRTBuilder {
    *
    * @returns {Promise<Array{RollTableResult}>} The drawn results
    */
-  async rollManyOnTable(amount, table, { roll = null, recursive = true, _depth = 0 } = {}) {
+  async rollManyOnTable(amount, table, { roll = null, recursive = true, _depth = 0, dc = null, skill = null } = {}) {
     const maxRecursions = 5;
     let msg = "";
     // Prevent infinite recursion
@@ -77,6 +61,22 @@ export class BRTBuilder {
     }
 
     let drawnResults = [];
+
+    // let dc = options.dc || undefined;
+    // let skill = options.skill || undefined;
+    let resultsUpdate = this.table.results;
+    // Filter by dc
+    if (dc && parseInt(dc) >= 0) {
+      resultsUpdate = resultsUpdate.filter((r) => {
+        return getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_DC_VALUE_KEY}`) >= parseInt(dc);
+      });
+    }
+    // Filter by skill
+    if (skill) {
+      resultsUpdate = resultsUpdate.filter((r) => {
+        return getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_SKILL_VALUE_KEY}`) === skill;
+      });
+    }
 
     while (amount > 0) {
       let resultToDraw = amount;
@@ -119,6 +119,7 @@ export class BRTBuilder {
         recursive: false,
         displayChat: false,
         rollMode: "gmroll",
+        filters: options,
       });
       if (!this.mainRoll) {
         this.mainRoll = draw.roll;
@@ -144,7 +145,27 @@ export class BRTBuilder {
         }
 
         if (innerTable) {
-          const innerResults = await this.rollManyOnTable(entryAmount, innerTable, { _depth: _depth + 1 });
+          let resultsInnerUpdate = innerTable.results;
+          // Filter by dc
+          if (dc && parseInt(dc) >= 0) {
+            resultsInnerUpdate = resultsInnerUpdate.filter((r) => {
+              return (
+                getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_DC_VALUE_KEY}`) >= parseInt(dc)
+              );
+            });
+          }
+          // Filter by skill
+          if (skill) {
+            resultsInnerUpdate = resultsInnerUpdate.filter((r) => {
+              return (
+                getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_SKILL_VALUE_KEY}`) === skill
+              );
+            });
+          }
+
+          let innerOptions = mergeObject(deepClone(option), { _depth: _depth + 1 });
+
+          const innerResults = await this.rollManyOnTable(entryAmount, innerTable, innerOptions);
           drawnResults = drawnResults.concat(innerResults);
         } else {
           //   for (let i = 0; i < entryAmount; i++) {
