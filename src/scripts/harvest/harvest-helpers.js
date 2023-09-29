@@ -1,5 +1,6 @@
 import { CONSTANTS } from "../constants/constants";
 import { BRTBuilder } from "../core/brt-builder";
+import { BRTBetterHelpers } from "../core/brt-helper";
 import { BetterResults } from "../core/brt-table-results";
 import { BRTCONFIG } from "../core/config";
 import { HarvestChatCard } from "./harvest-chat-card";
@@ -29,13 +30,23 @@ export class BRTHarvestHelpers {
 
     ui.notifications.info(CONSTANTS.MODULE_ID + " | API | Harvest generation started.");
 
+    let rollsAmount = options?.rollsAmount || (await BRTBetterHelpers.rollsAmount(tableEntity)) || undefined;
+    let dc =
+      options?.dc ||
+      getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_DC_VALUE_KEY}`) ||
+      undefined;
+    let skill =
+      options?.skill ||
+      getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_SKILL_VALUE_KEY}`) ||
+      undefined;
+
     const brtBuilder = new BRTBuilder(tableEntity);
 
     for (const token of tokenstack) {
       const results = await brtBuilder.betterRoll({
-        rollsAmount: customRoll ?? options?.rollsAmount,
-        dc: options?.dc,
-        skill: options?.skill,
+        rollsAmount: customRoll ?? rollsAmount,
+        dc: dc,
+        skill: skill,
       });
       const br = new BetterResults(results);
       const betterResults = await br.buildResults(tableEntity);
@@ -52,11 +63,21 @@ export class BRTHarvestHelpers {
    * @param {*} tableEntity
    */
   static async generateHarvest(tableEntity, options = {}) {
+    let rollsAmount = options?.rollsAmount || (await BRTBetterHelpers.rollsAmount(tableEntity)) || undefined;
+    let dc =
+      options?.dc ||
+      getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_DC_VALUE_KEY}`) ||
+      undefined;
+    let skill =
+      options?.skill ||
+      getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_SKILL_VALUE_KEY}`) ||
+      undefined;
+
     const builder = new BRTBuilder(tableEntity);
     const results = await builder.betterRoll({
-      rollsAmount: options?.rollsAmount,
-      dc: options?.dc,
-      skill: options?.skill,
+      rollsAmount: rollsAmount,
+      dc: dc,
+      skill: skill,
     });
     const br = new BetterResults(results);
     const betterResults = await br.buildResults(tableEntity);
@@ -80,11 +101,22 @@ export class BRTHarvestHelpers {
     if (String(getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${BRTCONFIG.HIDDEN_TABLE}`)) === "true") {
       rollMode = "gmroll";
     }
+
+    let rollsAmount = options?.rollsAmount || (await BRTBetterHelpers.rollsAmount(tableEntity)) || undefined;
+    let dc =
+      options?.dc ||
+      getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_DC_VALUE_KEY}`) ||
+      undefined;
+    let skill =
+      options?.skill ||
+      getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_SKILL_VALUE_KEY}`) ||
+      undefined;
+
     const brtBuilder = new BRTBuilder(tableEntity);
     const results = await brtBuilder.betterRoll({
-      rollsAmount: options?.rollsAmount,
-      dc: options?.dc,
-      skill: options?.skill,
+      rollsAmount: rollsAmount,
+      dc: dc,
+      skill: skill,
     });
     const br = new BetterResults(results);
     const betterResults = await br.buildResults(tableEntity);

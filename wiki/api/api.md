@@ -45,6 +45,9 @@ Roll a table as a Better table in chat with options
 | tableEntity              | `RollTable`             |         | tableEntity rolltable to generate content from         |
 | options                  | `object`                |         | OPTIONAL: Options to pass to the function                        |
 | [options.rollMode]       | `string`                |         | Type of rollMode for the chat card: 'blindroll'|'gmroll'|'selfroll' |
+| [options.rollsAmount]    | `string or number`      |         | The rolls amount value  |
+| [options.dc]             | `string or number`      |         | The dc value (only for Harvest type rolltable) |
+| [options.skill]          | `string`                |         | The skill denomination (only for Harvest type rolltable) |
 
 **Example**:
 
@@ -52,6 +55,13 @@ Roll a table as a Better table in chat with options
 const tableEntity  = game.tables.getName("Loot Table");
 game.modules.get('better-rolltables').api.betterTableRoll(tableEntity, options: { rollMode: 'blindroll'});
 
+
+let tableHarvester = game.tables.get("KyItttMdWxH4hGNf");
+game.modules.get("better-rolltables").api.betterTableRoll(tableHarvester, {
+   rollMode: "gmroll",
+   dc: 10,
+   skill: "med"
+});
 ```
 
 ---
@@ -178,6 +188,9 @@ Generate a loot
 | tableEntity              | `RollTable`             |         | tableEntity rolltable to generate content from         |
 | options                  | `object`                |         | OPTIONAL: Options to pass to the function                        |
 | [options.rollMode]       | `string`                |         | Type of rollMode for the chat card: 'blindroll'|'gmroll'|'selfroll' |
+| [options.rollsAmount]    | `string or number`      |         | The rolls amount value  |
+| [options.dc]             | `string or number`      |         | The dc value (only for Harvest type rolltable) |
+| [options.skill]          | `string`                |         | The skill denomination (only for Harvest type rolltable) |
 
 **Example**:
 
@@ -203,6 +216,9 @@ Generate a chat loot
 | tableEntity              | `RollTable`             |         | tableEntity rolltable to generate content from         |
 | options                  | `object`                |         | OPTIONAL: Options to pass to the function                        |
 | [options.rollMode]       | `string`                |         | Type of rollMode for the chat card: 'blindroll'|'gmroll'|'selfroll' |
+| [options.rollsAmount]    | `string or number`      |         | The rolls amount value  |
+| [options.dc]             | `string or number`      |         | The dc value (only for Harvest type rolltable) |
+| [options.skill]          | `string`                |         | The skill denomination (only for Harvest type rolltable) |
 
 **Example**:
 
@@ -228,6 +244,9 @@ Add loot to selcted token ( or the one passed as a argument)
 | token                    | `TokenDocument`         |         | OPTIONAL: is either a token or an array of tokens (like `canvas.tokens.controlled`).  |
 | options                  | `object`                |         | OPTIONAL: Options to pass to the function              |
 | [options.rollMode]       | `string`                |         | Type of rollMode for the chat card: 'blindroll'|'gmroll'|'selfroll' |
+| [options.rollsAmount]    | `string or number`      |         | The rolls amount value  |
+| [options.dc]             | `string or number`      |         | The dc value (only for Harvest type rolltable) |
+| [options.skill]          | `string`                |         | The skill denomination (only for Harvest type rolltable) |
 
 **Example**:
 

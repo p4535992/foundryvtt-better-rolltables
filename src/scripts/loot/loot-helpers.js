@@ -29,13 +29,14 @@ export class BRTLootHelpers {
 
     ui.notifications.info(CONSTANTS.MODULE_ID + " | API | Loot generation started.");
 
+    let rollsAmount = options?.rollsAmount || (await BRTBetterHelpers.rollsAmount(tableEntity)) || undefined;
     const brtBuilder = new BRTBuilder(tableEntity);
 
     for (const token of tokenstack) {
-      const results = await brtBuilder({
-        rollsAmount: customRoll ?? options?.rollsAmount,
-        dc: options.dc,
-        skill: options.skill,
+      const results = await brtBuilder.betterRoll({
+        rollsAmount: customRoll ?? rollsAmount,
+        dc: undefined,
+        skill: undefined,
       });
       const br = new BetterResults(results);
       const betterResults = await br.buildResults(tableEntity);
@@ -54,11 +55,12 @@ export class BRTLootHelpers {
    * @param {*} tableEntity
    */
   static async generateLoot(tableEntity, options = {}) {
+    let rollsAmount = options?.rollsAmount || (await BRTBetterHelpers.rollsAmount(tableEntity)) || undefined;
     const builder = new BRTBuilder(tableEntity);
     const results = await builder.betterRoll({
-      rollsAmount: options?.rollsAmount,
-      dc: options?.dc,
-      skill: options?.skill,
+      rollsAmount: rollsAmount,
+      dc: undefined,
+      skill: undefined,
     });
     const br = new BetterResults(results);
     const betterResults = await br.buildResults(tableEntity);
@@ -84,11 +86,13 @@ export class BRTLootHelpers {
     if (String(getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${BRTCONFIG.HIDDEN_TABLE}`)) === "true") {
       rollMode = "gmroll";
     }
+
+    let rollsAmount = options?.rollsAmount || (await BRTBetterHelpers.rollsAmount(tableEntity)) || undefined;
     const brtBuilder = new BRTBuilder(tableEntity);
     const results = await brtBuilder.betterRoll({
-      rollsAmount: options?.rollsAmount,
-      dc: options?.dc,
-      skill: options?.skill,
+      rollsAmount: rollsAmount,
+      dc: undefined,
+      skill: undefined,
     });
     const br = new BetterResults(results);
     const betterResults = await br.buildResults(tableEntity);

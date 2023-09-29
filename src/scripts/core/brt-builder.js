@@ -15,11 +15,9 @@ export class BRTBuilder {
    * @returns {array} results
    */
   async betterRoll(options) {
-    let rollsAmount = options.rollsAmount || undefined;
+    let rollsAmount = options.rollsAmount || (await BRTBetterHelpers.rollsAmount(this.table)) || undefined;
 
     this.mainRoll = undefined;
-
-    rollsAmount = rollsAmount || (await BRTBetterHelpers.rollsAmount(this.table));
     let resultsTmp = await this.rollManyOnTable(rollsAmount, this.table, options);
     this.results = resultsTmp;
     return this.results;

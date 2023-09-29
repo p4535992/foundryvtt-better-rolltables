@@ -3,11 +3,11 @@
 - [BREAKING CHANGES] Do not update just before a sessione take you time to mak some test
 - Better API integration with many new options
 - Better multisystem integration
-- New feature: Convert compendium to rooltable with or without filter
+- New feature: Add api method to convert compendium to rooltable with or without filter
 - Every BRT Type Table has is own sheet
-- Removed old Tag feature
-- Removed old panel behaviour
-- New Feature: New HARVEST Table Typewith filer for the result
+- Removed old Tag feature (i will look to a integration with the taggere module later)
+- Removed old panel html behaviour
+- New Feature: New HARVEST Table Type with filter for the result base on dc and skill string
 - New Feature: Import table results on actor and or token
 - Removed old integration with lootshet, just use whatever you like Item Piles, Dfred Pocket Change ecc. (Item Piles integration not excluded in the future)
 - New Feature: Edit table result type Document/Compendium (render sheet) or type Text with Prose Mirror (ty to koboldworks for the inspiration)
@@ -15,7 +15,8 @@
 - New Feature: Generates appropriate weight value to results based on range, as opposed to doing the inverse with base sheet (ty to koboldworks for the inspiration).
 - New Feature: Allows editing a text result in ProseMirror (ty to koboldworks for the inspiration).
 - Add module settings for re-enable the old 1.9.X behaviour if you really want...
-- Integration with the module [Better Harvesting & Looting](https://github.com/OhhLoz/Harvester)
+- Integration with the module [Better Harvesting & Looting](https://github.com/OhhLoz/Harvester), checkout the big compendium
+- Documentation for api and use cases on demand...
 
 ### 1.9.4
 

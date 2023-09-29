@@ -336,7 +336,7 @@ export class BetterRollTable {
     // Filter by dc
     if (dc && parseInt(dc) >= 0) {
       resultsUpdate = resultsUpdate.filter((r) => {
-        return getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_DC_VALUE_KEY}`) >= parseInt(dc);
+        return getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_DC_VALUE_KEY}`) <= parseInt(dc);
       });
     }
     // Filter by skill
