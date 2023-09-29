@@ -141,7 +141,7 @@ export class BetterRT {
             formulaInput.placeholder = i18n(`${BRTCONFIG.NAMESPACE}.Formula`);
             formulaInput.type = "text";
             formulaInput.disabled = !editable;
-            /** based on the name of the elents the value will be added in the preUpdateRollTable and override the table.data */
+            /** based on the name of the elements the value will be added in the preUpdateRollTable and override the table.data */
             formulaInput.name = `results.${index}.flags.${CONSTANTS.MODULE_ID}.${BRTCONFIG.RESULTS_FORMULA_KEY_FORMULA}`;
             if (tableText.classList.contains("result-target")) {
               formulaInput.value =

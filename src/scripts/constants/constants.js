@@ -21,6 +21,7 @@ export const CONSTANTS = {
     HARVEST_SOURCE_VALUE_KEY: "brt-source-value",
     // TODO HARVEST_ACTOR_NAME_KEY: "brt-actor-name",
 
+    /** @deprecated used on the old html view */
     RESULTS_FORMULA_KEY: "brt-result-formula",
     RESULTS_FORMULA_KEY_FORMULA: "brt-result-formula.formula",
     HIDDEN_TABLE: "brt-hidden-table",
