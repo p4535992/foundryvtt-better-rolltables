@@ -102,8 +102,8 @@ export class BRTBetterHelpers {
           warn(`Compendium ${result.documentCollection} was not found`);
         }
       }
-      // let findDocument = (await compendium.getDocuments()).find((m) => m.id === `${result.documentId}`);
-      let findDocument = compendium.contents.find((m) => m.id === `${result.documentId}`);
+      let findDocument = (await compendium.getDocuments()).find((m) => m.id === `${result.documentId}`);
+      // let findDocument = compendium.contents.find((m) => m.id === `${result.documentId}`);
       if (!findDocument) {
         if (throwError) {
           throw error(`The "${result.documentId}" document was not found in Compendium ${result.documentCollection}`);
@@ -121,8 +121,8 @@ export class BRTBetterHelpers {
           warn(`Collection ${result.documentCollection} was not found`);
         }
       }
-      // let findDocument = (await compendium.contents).find((m) => m.id === `${result.documentId}`);
-      let findDocument = compendium.contents.find((m) => m.id === `${result.documentId}`);
+      let findDocument = (await compendium.getDocuments()).find((m) => m.id === `${result.documentId}`);
+      // let findDocument = compendium.contents.find((m) => m.id === `${result.documentId}`);
       if (!findDocument) {
         if (throwError) {
           throw error(`The "${result.documentId}" document was not found in collection ${result.documentCollection}`);

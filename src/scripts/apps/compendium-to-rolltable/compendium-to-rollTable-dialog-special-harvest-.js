@@ -1,4 +1,5 @@
 import { CONSTANTS } from "../../constants/constants";
+import { BRTBetterHelpers } from "../../core/brt-helper";
 import { BRTCONFIG } from "../../core/config";
 import { debug, log } from "../../lib";
 import { CompendiumToRollTableDialog } from "./compendium-to-rollTable-dialog";
@@ -127,6 +128,7 @@ export class CompendiumToRollTableSpecialHarvestDialog {
               [`${CONSTANTS.FLAGS.HARVEST_DC_VALUE_KEY}`]: String(dcValue) ?? "0",
               [`${CONSTANTS.FLAGS.HARVEST_SKILL_VALUE_KEY}`]: skillDenom ?? "",
               [`${CONSTANTS.FLAGS.HARVEST_SOURCE_VALUE_KEY}`]: sourceValue ?? "",
+              [`${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`]: es.uuid ?? "",
             },
           },
         };
