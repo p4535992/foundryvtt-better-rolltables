@@ -1,3 +1,10 @@
+### 2.0.1
+
+- Some bug fix
+- Regenerate packs
+- Add flag for uuid
+- Add code for automatic generate uuid referecne fom table result
+
 ### 2.0.0 [BREAKING CHANGES]
 
 - [BREAKING CHANGES] Do not update just before a sessione take you time to mak some test
