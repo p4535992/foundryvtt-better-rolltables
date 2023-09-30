@@ -2,6 +2,7 @@ import { BRTCONFIG } from "../core/config.js";
 import { CONSTANTS } from "../constants/constants.js";
 import { BRTUtils } from "../core/utils.js";
 import { HarvestCreator } from "./harvest-creator.js";
+import { BRTBetterHelpers } from "../core/brt-helper.js";
 
 /**
  * create a chat card based on the content of the object HarvestData
@@ -22,7 +23,7 @@ export class HarvestChatCard {
     const harvestCreator = new HarvestCreator(this.betterResults);
     for (const item of this.betterResults) {
       if (item.type === CONST.TABLE_RESULT_TYPES.TEXT) {
-        this.addToItemData({
+        await this.addToItemData({
           id: item.text,
           text: item.text,
           img: item.img,
@@ -39,14 +40,14 @@ export class HarvestChatCard {
         const itemEntity = await BRTUtils.getItemFromCompendium(item);
 
         if (itemEntity && itemEntity.name === itemData.name) {
-          this.addToItemData(itemEntity, itemData);
+          await this.addToItemData(itemEntity, itemData);
           continue;
         }
       }
 
       const itemEntity = game.items.getName(itemData.name);
       if (itemEntity) {
-        this.addToItemData(itemEntity, itemData);
+        await this.addToItemData(itemEntity, itemData);
         continue;
       }
 
@@ -55,11 +56,11 @@ export class HarvestChatCard {
 
       setProperty(itemData, "permission.default", CONST.DOCUMENT_PERMISSION_LEVELS.OBSERVER);
       const newItem = await Item.create(itemData);
-      this.addToItemData(newItem, itemData);
+      await this.addToItemData(newItem, itemData);
     }
   }
 
-  addToItemData(itemEntity, data) {
+  async addToItemData(itemEntity, data) {
     const existingItem = this.itemsData.find((i) => i.item.id === itemEntity.id);
     const quantity = getProperty(data, BRTCONFIG.QUANTITY_PROPERTY_PATH) || 1;
 
@@ -70,9 +71,15 @@ export class HarvestChatCard {
       const fontSize = Math.max(60, 100 - Math.max(0, (itemEntity.name || itemEntity.text).length - 27) * 2);
 
       let type = undefined;
-      if (itemEntity.isText) type = CONST.TABLE_RESULT_TYPES.TEXT;
-      else if (itemEntity.pack) type = CONST.TABLE_RESULT_TYPES.COMPENDIUM;
-      else type = CONST.TABLE_RESULT_TYPES.DOCUMENT;
+      if (itemEntity.isText) {
+        type = CONST.TABLE_RESULT_TYPES.TEXT;
+      } else if (itemEntity.pack) {
+        type = CONST.TABLE_RESULT_TYPES.COMPENDIUM;
+      } else {
+        type = CONST.TABLE_RESULT_TYPES.DOCUMENT;
+      }
+
+      const resultDoc = itemEntity; // await BRTBetterHelpers.retrieveDocumentFromResult(itemEntity);
 
       this.itemsData.push({
         documentName: itemEntity.documentName,
@@ -80,9 +87,11 @@ export class HarvestChatCard {
         type: type,
         item: {
           id: itemEntity.id,
+          _id: itemEntity.id,
           name: itemEntity.name,
           img: itemEntity.img,
           text: itemEntity.text,
+          uuid: resultDoc?.uuid ?? "",
         },
         quantity: quantity,
         fontSize: fontSize,

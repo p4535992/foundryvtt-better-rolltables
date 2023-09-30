@@ -1,3 +1,7 @@
+### 2.0.2
+
+- Update chat card templates
+
 ### 2.0.1
 
 - Some bug fix

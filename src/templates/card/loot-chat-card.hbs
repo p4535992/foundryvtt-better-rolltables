@@ -27,19 +27,19 @@
         {{#each itemsData as |itemData|}}
             {{#switch itemData.type}}
                 {{#case 0}}
-                    <li class="table-result flexrow" data-result-id="{{ itemData.item._id }}">
+                    <li class="table-result flexrow" data-result-id="{{ itemData.item._id }}" data-result-uuid="">
                         <img class="result-image" src="{{itemData.item.img}}">
                         <div class="result-text">{{{itemData.item.text}}}</div>
                     </li>
                 {{/case}}
                 {{#case 1}}
-                    <li class="table-result flexrow" data-result-id="{{ itemData.item._id }}" data-result-uuid="{{itemData.documentName}}.{{itemData.item.id}}">
+                    <li class="table-result flexrow" data-result-id="{{ itemData.item._id }}" data-result-uuid="{{itemData.item.uuid}}">
                         <img class="result-image" src="{{itemData.item.img}}">
                         <div class="result-text" style="font-size: {{itemData.fontSize}}%;">
                             <a class="content-link" draggable="true"
                             data-entity="{{itemData.documentName}}"
                             data-id="{{itemData.item.id}}"
-                            data-uuid="{{itemData.documentName}}.{{itemData.item.id}}"
+                            data-uuid="{{itemData.item.uuid}}"
                             data-tooltip="Loot Item">
                                 <i class="fas {{entity-icon itemData.documentName}}"></i> {{{itemData.item.name}}}
                             </a>
@@ -48,13 +48,13 @@
                     </li>
                 {{/case}}
                 {{#case 2}}
-                    <li class="table-result flexrow" data-result-id="{{ itemData.item._id }}" data-result-uuid="Compendium.{{itemData.compendiumName}}{{itemData.item.pack}}.{{itemData.item.id}}">
+                    <li class="table-result flexrow" data-result-id="{{ itemData.item._id }}" data-result-uuid="{{itemData.item.uuid}}">
                         <img class="result-image" src="{{itemData.item.img}}">
                         <div class="result-text" style="font-size: {{itemData.fontSize}}%;">
                             <a class="content-link" draggable="true"
                             data-pack="{{#if itemData.compendiumName}}{{itemData.compendiumName}}{{else}}{{itemData.item.pack}}{{/if}}"
                             data-id="{{itemData.item.id}}"
-                            data-uuid="Compendium.{{itemData.compendiumName}}{{itemData.item.pack}}.{{itemData.item.id}}"
+                            data-uuid="{{itemData.item.uuid}}"
                             data-tooltip="Loot Item">
                                 <i class="fas {{entity-icon itemData.documentName}}"></i> {{{itemData.item.name}}}
                             </a>
