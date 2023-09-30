@@ -43,11 +43,12 @@ export class BRTHarvestHelpers {
     const brtBuilder = new BRTBuilder(tableEntity);
 
     for (const token of tokenstack) {
-      const results = await brtBuilder.betterRoll({
+      const resultsBrt = await brtBuilder.betterRoll({
         rollsAmount: customRoll ?? rollsAmount,
         dc: dc,
         skill: skill,
       });
+      const results = resultsBrt?.results;
       const br = new BetterResults(results);
       const betterResults = await br.buildResults(tableEntity);
       const harvestCreator = new HarvestCreator(betterResults);
@@ -63,6 +64,11 @@ export class BRTHarvestHelpers {
    * @param {*} tableEntity
    */
   static async generateHarvest(tableEntity, options = {}) {
+    let rollMode = options?.rollMode ?? null;
+    if (String(getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${BRTCONFIG.HIDDEN_TABLE}`)) === "true") {
+      rollMode = "gmroll";
+    }
+
     let rollsAmount = options?.rollsAmount || (await BRTBetterHelpers.rollsAmount(tableEntity)) || undefined;
     let dc =
       options?.dc ||
@@ -74,11 +80,12 @@ export class BRTHarvestHelpers {
       undefined;
 
     const builder = new BRTBuilder(tableEntity);
-    const results = await builder.betterRoll({
+    const resultsBrt = await builder.betterRoll({
       rollsAmount: rollsAmount,
       dc: dc,
       skill: skill,
     });
+    const results = resultsBrt?.results;
     const br = new BetterResults(results);
     const betterResults = await br.buildResults(tableEntity);
     const harvestCreator = new HarvestCreator(betterResults);
@@ -87,17 +94,13 @@ export class BRTHarvestHelpers {
     await harvestCreator.addItemsToActor();
 
     if (game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.ALWAYS_SHOW_GENERATED_HARVEST_AS_MESSAGE)) {
-      let rollMode = options && "rollMode" in options ? options.rollMode : null;
-      if (String(getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${BRTCONFIG.HIDDEN_TABLE}`)) === "true") {
-        rollMode = "gmroll";
-      }
       const harvestChatCard = new HarvestChatCard(betterResults, rollMode);
       await harvestChatCard.createChatCard(tableEntity);
     }
   }
 
   static async generateChatHarvest(tableEntity, options = null) {
-    let rollMode = options && "rollMode" in options ? options.rollMode : null;
+    let rollMode = options?.rollMode ?? null;
     if (String(getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${BRTCONFIG.HIDDEN_TABLE}`)) === "true") {
       rollMode = "gmroll";
     }
@@ -113,11 +116,12 @@ export class BRTHarvestHelpers {
       undefined;
 
     const brtBuilder = new BRTBuilder(tableEntity);
-    const results = await brtBuilder.betterRoll({
+    const resultsBrt = await brtBuilder.betterRoll({
       rollsAmount: rollsAmount,
       dc: dc,
       skill: skill,
     });
+    const results = resultsBrt?.results;
     const br = new BetterResults(results);
     const betterResults = await br.buildResults(tableEntity);
     const harvestChatCard = new HarvestChatCard(betterResults, rollMode);

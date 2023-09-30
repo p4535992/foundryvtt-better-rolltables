@@ -161,6 +161,7 @@ export class CompendiumToRollTableSpecialHarvestDialog {
           flags: {
             [`${CONSTANTS.MODULE_ID}`]: {
               [`${CONSTANTS.FLAGS.TABLE_TYPE_KEY}`]: CONSTANTS.TABLE_TYPE_HARVEST,
+              [`${CONSTANTS.FLAGS.HARVEST_SOURCE_VALUE_KEY}`]: key ?? "",
             },
           },
           img: "icons/svg/pawprint.svg",

@@ -62,7 +62,8 @@ export class BetterTables {
    */
   async getBetterTableResults(tableEntity, options = null) {
     const brtBuilder = new BRTBuilder(tableEntity);
-    const results = await brtBuilder.betterRoll(options);
+    const resultBrt = await brtBuilder.betterRoll(options);
+    const results = resultBrt?.results;
     return results;
   }
 
@@ -72,13 +73,14 @@ export class BetterTables {
    * @returns {Promise<TableResult[]>}
    */
   async betterTableRoll(tableEntity, options = null) {
-    let rollMode = options && "rollMode" in options ? options.rollMode : null;
+    let rollMode = options?.rollMode ?? null;
     if (String(getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${BRTCONFIG.HIDDEN_TABLE}`)) === "true") {
       rollMode = "gmroll";
     }
 
     const brtBuilder = new BRTBuilder(tableEntity);
-    const results = await brtBuilder.betterRoll(options);
+    const resultBrt = await brtBuilder.betterRoll(options);
+    const results = resultBrt?.results;
 
     if (game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.USE_CONDENSED_BETTERROLL)) {
       const br = new BetterResults(results);
@@ -275,7 +277,8 @@ export class BetterTables {
    */
   static async prepareCardData(tableEntity, options = null) {
     const brtBuilder = new BRTBuilder(tableEntity);
-    const results = await brtBuilder.betterRoll(options);
+    const resultBrt = await brtBuilder.betterRoll(options);
+    const results = resultBrt?.results;
 
     const br = new BetterResults(results);
     const betterResults = await br.buildResults(tableEntity);

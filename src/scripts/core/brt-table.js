@@ -334,7 +334,7 @@ export class BetterRollTable {
     let skill = this.options.skill || undefined;
     let resultsUpdate = this.table.results.filter((r) => !r.drawn && Number.between(value, ...r.range));
     // Filter by dc
-    if (dc && parseInt(dc) >= 0) {
+    if (dc && parseInt(dc) > 0) {
       resultsUpdate = resultsUpdate.filter((r) => {
         return getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_DC_VALUE_KEY}`) <= parseInt(dc);
       });

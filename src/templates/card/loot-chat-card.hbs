@@ -23,50 +23,46 @@
             <button class="better-rolltables-share-currencies-button">{{localize 'better-rolltables.Buttons.Currency.Share' }}</button>
         </section>
     {{/unlessEmpty}}
-    <!--
-    <ol class="table-results">
-        {{#each results}}
-        <li class="table-result flexrow" data-result-id="{{ this._id }}">
-            <img class="result-image" src="{{this.icon}}"/>
-            <div class="result-text">{{{this.text}}}</div>
-        </li>
-        {{/each}}
-    </ol>
-    -->
     <ol class="table-results">
         {{#each itemsData as |itemData|}}
-        <li class="table-result flexrow" data-result-id="{{ itemData.item._id }}">
-            <img class="result-image" src="{{itemData.item.img}}">
             {{#switch itemData.type}}
                 {{#case 0}}
-                <div class="result-text">{{{itemData.item.text}}}</div>
+                    <li class="table-result flexrow" data-result-id="{{ itemData.item._id }}">
+                        <img class="result-image" src="{{itemData.item.img}}">
+                        <div class="result-text">{{{itemData.item.text}}}</div>
+                    </li>
                 {{/case}}
                 {{#case 1}}
-                    <div class="result-text" style="font-size: {{itemData.fontSize}}%;">
-                        <a class="content-link" draggable="true"
-                           data-entity="{{itemData.documentName}}"
-                           data-id="{{itemData.item.id}}"
-                           data-uuid="{{itemData.documentName}}.{{itemData.item.id}}"
-                           data-tooltip="Loot Item">
-                            <i class="fas {{entity-icon itemData.documentName}}"></i> {{{itemData.item.name}}}
-                        </a>
-                        {{#ifgt itemData.quantity 1 }}<strong>&nbsp; &#xD7; {{itemData.quantity}}</strong>{{/ifgt}}
-                    </div>
+                    <li class="table-result flexrow" data-result-id="{{ itemData.item._id }}" data-result-uuid="{{itemData.documentName}}.{{itemData.item.id}}">
+                        <img class="result-image" src="{{itemData.item.img}}">
+                        <div class="result-text" style="font-size: {{itemData.fontSize}}%;">
+                            <a class="content-link" draggable="true"
+                            data-entity="{{itemData.documentName}}"
+                            data-id="{{itemData.item.id}}"
+                            data-uuid="{{itemData.documentName}}.{{itemData.item.id}}"
+                            data-tooltip="Loot Item">
+                                <i class="fas {{entity-icon itemData.documentName}}"></i> {{{itemData.item.name}}}
+                            </a>
+                            {{#ifgt itemData.quantity 1 }}<strong>&nbsp; &#xD7; {{itemData.quantity}}</strong>{{/ifgt}}
+                        </div>
+                    </li>
                 {{/case}}
                 {{#case 2}}
-                    <div class="result-text" style="font-size: {{itemData.fontSize}}%;">
-                        <a class="content-link" draggable="true"
-                           data-pack="{{#if itemData.compendiumName}}{{itemData.compendiumName}}{{else}}{{itemData.item.pack}}{{/if}}"
-                           data-id="{{itemData.item.id}}"
-                           data-uuid="Compendium.{{itemData.compendiumName}}{{itemData.item.pack}}.{{itemData.item.id}}"
-                           data-tooltip="Loot Item">
-                            <i class="fas {{entity-icon itemData.documentName}}"></i> {{{itemData.item.name}}}
-                        </a>
-                        {{#ifgt itemData.quantity 1 }}<strong>&nbsp; &#xD7; {{itemData.quantity}}</strong>{{/ifgt}}
-                    </div>
+                    <li class="table-result flexrow" data-result-id="{{ itemData.item._id }}" data-result-uuid="Compendium.{{itemData.compendiumName}}{{itemData.item.pack}}.{{itemData.item.id}}">
+                        <img class="result-image" src="{{itemData.item.img}}">
+                        <div class="result-text" style="font-size: {{itemData.fontSize}}%;">
+                            <a class="content-link" draggable="true"
+                            data-pack="{{#if itemData.compendiumName}}{{itemData.compendiumName}}{{else}}{{itemData.item.pack}}{{/if}}"
+                            data-id="{{itemData.item.id}}"
+                            data-uuid="Compendium.{{itemData.compendiumName}}{{itemData.item.pack}}.{{itemData.item.id}}"
+                            data-tooltip="Loot Item">
+                                <i class="fas {{entity-icon itemData.documentName}}"></i> {{{itemData.item.name}}}
+                            </a>
+                            {{#ifgt itemData.quantity 1 }}<strong>&nbsp; &#xD7; {{itemData.quantity}}</strong>{{/ifgt}}
+                        </div>
+                    </li>
                 {{/case}}
             {{/switch}}
-        </li>
         {{/each}}
     </ol>
 </div>

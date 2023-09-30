@@ -1,4 +1,5 @@
 import { CONSTANTS } from "../constants/constants.js";
+import { warn } from "../lib.js";
 import { BRTCONFIG } from "./config.js";
 
 export class BRTBetterHelpers {
@@ -87,6 +88,51 @@ export class BRTBetterHelpers {
       return BRTBetterHelpers.tryRoll(rollFormula);
     } else {
       return 1;
+    }
+  }
+
+  static async retrieveDocumentFromResult(result, throwError) {
+    if (result.type === CONST.TABLE_RESULT_TYPES.COMPENDIUM) {
+      // Compendium.world.prodottifiniti.Item.cGvOfBMe8XQjL8ra
+      let compendium = game.packs.get(`${result.documentCollection}`);
+      if (!compendium) {
+        if (throwError) {
+          throw error(`Compendium ${result.documentCollection} was not found`);
+        } else {
+          warn(`Compendium ${result.documentCollection} was not found`);
+        }
+      }
+      // let findDocument = (await compendium.getDocuments()).find((m) => m.id === `${result.documentId}`);
+      let findDocument = compendium.contents.find((m) => m.id === `${result.documentId}`);
+      if (!findDocument) {
+        if (throwError) {
+          throw error(`The "${result.documentId}" document was not found in Compendium ${result.documentCollection}`);
+        } else {
+          warn(`The "${result.documentId}" document was not found in Compendium ${result.documentCollection}`);
+        }
+      }
+      return findDocument;
+    } else if (result.type === CONST.TABLE_RESULT_TYPES.DOCUMENT) {
+      let compendium = game.collections.get(result.documentCollection);
+      if (!compendium) {
+        if (throwError) {
+          throw error(`Collection ${result.documentCollection} was not found`);
+        } else {
+          warn(`Collection ${result.documentCollection} was not found`);
+        }
+      }
+      // let findDocument = (await compendium.contents).find((m) => m.id === `${result.documentId}`);
+      let findDocument = compendium.contents.find((m) => m.id === `${result.documentId}`);
+      if (!findDocument) {
+        if (throwError) {
+          throw error(`The "${result.documentId}" document was not found in collection ${result.documentCollection}`);
+        } else {
+          warn(`The "${result.documentId}" document was not found in collection ${result.documentCollection}`);
+        }
+      }
+      return findDocument;
+    } else {
+      return null;
     }
   }
 }

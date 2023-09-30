@@ -1,5 +1,6 @@
 import API from "../API";
 import { CONSTANTS } from "../constants/constants";
+import { BRTBetterHelpers } from "../core/brt-helper";
 import { RichResultEdit } from "../core/brt-result-editor";
 import { BetterRollTableBetterConfig } from "../core/brt-rolltable-config";
 import { i18n, error } from "../lib";
@@ -35,17 +36,22 @@ export class BetterRollTableHarvestConfig extends RollTableConfig {
       async: true,
       secrets: this.object.isOwner,
     });
-    const results = this.document.results.map((result) => {
-      result = result.toObject(false);
-      result.isText = result.type === CONST.TABLE_RESULT_TYPES.TEXT;
-      result.isDocument = result.type === CONST.TABLE_RESULT_TYPES.DOCUMENT;
-      result.isCompendium = result.type === CONST.TABLE_RESULT_TYPES.COMPENDIUM;
-      result.img = result.img || CONFIG.RollTable.resultIcon;
-      result.text = TextEditor.decodeHTML(result.text);
-      // grab the formula
-      // result.qtFormula = getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.}`;
-      return result;
-    });
+    const results = await Promise.all(
+      this.document.results.map(async (result) => {
+        result = result.toObject(false);
+        result.isText = result.type === CONST.TABLE_RESULT_TYPES.TEXT;
+        result.isDocument = result.type === CONST.TABLE_RESULT_TYPES.DOCUMENT;
+        result.isCompendium = result.type === CONST.TABLE_RESULT_TYPES.COMPENDIUM;
+        result.img = result.img || CONFIG.RollTable.resultIcon;
+        result.text = TextEditor.decodeHTML(result.text);
+        const resultDoc = await BRTBetterHelpers.retrieveDocumentFromResult(result, false);
+        result.uuid = resultDoc?.uuid ?? "";
+        // grab the formula
+        // result.qtFormula = getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.}`;
+        setProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`, result.uuid);
+        return result;
+      })
+    );
     results.sort((a, b) => a.range[0] - b.range[0]);
 
     // Merge data and return;
@@ -249,29 +255,8 @@ export class BetterRollTableHarvestConfig extends RollTableConfig {
     event.preventDefault();
     const tableResult = event.currentTarget.closest(".table-result");
     const result = this.document.results.get(tableResult.dataset.resultId);
-
-    if (result.type === CONST.TABLE_RESULT_TYPES.COMPENDIUM) {
-      // Compendium.world.prodottifiniti.Item.cGvOfBMe8XQjL8ra
-      let compendium = game.packs.get(`${result.documentCollection}`);
-      if (!compendium) {
-        throw error(`Compendium ${result.documentCollection} was not found`);
-      }
-      let findDocument = (await compendium.getDocuments()).find((m) => m.id === `${result.documentId}`);
-      if (!findDocument) {
-        throw error(`The "${result.documentId}" document was not found in Compendium ${result.documentCollection}`);
-      }
-      // const doc = await fromUuid(findDocument.uuid);
-      // doc.sheet.render(true);
-      findDocument.sheet.render(true);
-    } else if (result.type === CONST.TABLE_RESULT_TYPES.DOCUMENT) {
-      let compendium = game.collections.get(result.documentCollection);
-      if (!compendium) {
-        throw error(`Collection ${result.documentCollection} was not found`);
-      }
-      let findDocument = (await compendium.contents).find((m) => m.id === `${result.documentId}`);
-      if (!findDocument) {
-        throw error(`The "${result.documentId}" document was not found in collection ${result.documentCollection}`);
-      }
+    let findDocument = await BRTBetterHelpers.retrieveDocumentFromResult(result, true);
+    if (findDocument) {
       findDocument.sheet.render(true);
     }
   }

@@ -108,3 +108,22 @@ export function dialogWarning(message, icon = "fas fa-exclamation-triangle") {
 }
 
 // =========================================================================================
+
+export function isEmptyObject(obj) {
+  // because Object.keys(new Date()).length === 0;
+  // we have to do some additional check
+  if (obj === null || obj === undefined) {
+    return true;
+  }
+  if (isRealNumber(obj)) {
+    return false;
+  }
+  const result =
+    obj && // null and undefined check
+    Object.keys(obj).length === 0; // || Object.getPrototypeOf(obj) === Object.prototype);
+  return result;
+}
+
+export function isRealNumber(inNumber) {
+  return !isNaN(inNumber) && typeof inNumber === "number" && isFinite(inNumber);
+}

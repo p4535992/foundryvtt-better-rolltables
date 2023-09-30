@@ -94,11 +94,12 @@ export class BetterResults {
         if (table) {
           const numberRolls = await BRTBetterHelpers.tryRoll(textString);
           const brtBuilder = new BRTBuilder(table);
-          const innerResults = await brtBuilder.betterRoll({
+          const innerResultsBrt = await brtBuilder.betterRoll({
             rollsAmount: numberRolls,
             dc: undefined,
             skill: undefined,
           });
+          const innerResults = innerResultsBrt?.results;
 
           this.tableResults = this.tableResults.concat(innerResults);
         } else if (textString) {

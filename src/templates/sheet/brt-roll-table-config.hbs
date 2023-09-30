@@ -60,6 +60,13 @@
             -->
             {{#ifcontain better-rolltables.table-type "harvest"}}
             <div class="form-group">
+                <label for="flags.better-rolltables.brt-source-value">{{ localize 'better-rolltables.label.source' }}</label>
+                <input type="text"
+                    placeholder="{{localize 'better-rolltables.label.sourcePlaceholder'}}"
+                    name="flags.better-rolltables.brt-source-value"
+                    value="{{data.flags.better-rolltables.brt-source-value}}" />
+            </div>
+            <div class="form-group">
                 <label for="flags.better-rolltables.brt-dc-value">{{ localize 'better-rolltables.label.dc' }}</label>
                 <input type="text"
                     placeholder="0"
@@ -165,8 +172,30 @@
             </thead>
             <tbody>
                 {{#each results as |result i|}}
+
+                {{#if result.isText}}
                 <tr class="table-result flexrow {{#if result.drawn}}drawn{{/if}}" data-result-id="{{result._id}}">
+                {{else if result.isDocument}}
+                <tr class="table-result flexrow {{#if result.drawn}}drawn{{/if}}" data-result-id="{{result._id}}" data-result-uuid="{{result.uuid}}">
+                {{else if result.isCompendium}}
+                <tr class="table-result flexrow {{#if result.drawn}}drawn{{/if}}" data-result-id="{{result._id}}" data-result-uuid="{{result.uuid}}">
+                {{/if}}
+
                 <input type="hidden" name="results.{{i}}._id" value="{{result._id}}"/>
+
+                {{#if result.isText}}
+                    <input type="hidden" 
+                        name="results.{{i}}.flags.better-rolltables.brt-result-uuid" 
+                        value=""/>
+                {{else if result.isDocument}}
+                    <input type="hidden" 
+                        name="results.{{i}}.flags.better-rolltables.brt-result-uuid" 
+                        value="{{result.flags.better-rolltables.brt-result-uuid}}"/>
+                {{else if result.isCompendium}}
+                    <input type="hidden" 
+                        name="results.{{i}}.flags.better-rolltables.brt-result-uuid" 
+                        value="{{result.flags.better-rolltables.brt-result-uuid}}"/>
+                {{/if}}
 
                 <td class="result-image">
                     <img src="{{result.img}}" data-edit="results.{{i}}.img" width="32" height="32"/>
@@ -232,7 +261,7 @@
 					{{/if}}
                 </td>
 
-               
+
                 <td class="result-brt-dc-value">
                     <input class="result-brt-dc-value" type="text" name="results.{{i}}.flags.better-rolltables.brt-dc-value" value="{{result.flags.better-rolltables.brt-dc-value}}" placeholder="1" />
                 </td>

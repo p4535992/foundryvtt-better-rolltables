@@ -15,12 +15,35 @@ export class BRTBuilder {
    * @returns {array} results
    */
   async betterRoll(options) {
-    let rollsAmount = options.rollsAmount || (await BRTBetterHelpers.rollsAmount(this.table)) || undefined;
+    let rollsAmount = options?.rollsAmount || (await BRTBetterHelpers.rollsAmount(this.table)) || undefined;
+    let dc =
+      options?.dc ||
+      getProperty(this.table, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_DC_VALUE_KEY}`) ||
+      undefined;
+    let skill =
+      options?.skill ||
+      getProperty(this.table, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_SKILL_VALUE_KEY}`) ||
+      undefined;
 
     this.mainRoll = undefined;
-    let resultsTmp = await this.rollManyOnTable(rollsAmount, this.table, options);
+
+    let resultsBrt = await this.rollManyOnTable(rollsAmount, this.table, options);
+    // Patch add uuid to every each result for better module compatibility
+    let resultsTmp = [];
+    for (const r of resultsBrt?.results ?? []) {
+      let rTmp = r;
+      let rDoc = await BRTBetterHelpers.retrieveDocumentFromResult(r, false);
+      if (!getProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`) && rDoc.uuid) {
+        setProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`, rDoc.uuid ?? "");
+      }
+      resultsTmp.push(rTmp);
+    }
+
     this.results = resultsTmp;
-    return this.results;
+    return {
+      roll: this.mainRoll,
+      results: this.results,
+    };
   }
 
   /**
@@ -157,7 +180,11 @@ export class BRTBuilder {
       amount -= resultToDraw;
     }
 
-    return drawnResults;
+    return {
+      roll: this.mainRoll,
+      results: drawnResults,
+    };
+    // return drawnResults;
   }
 
   /**
@@ -183,11 +210,21 @@ export class BRTBuilder {
    * const customResults = await table.roll({roll});
    * ```
    */
-  async roll({ roll = null, recursive = true, _depth = 0 } = {}) {
-    const resultsBrt = await this.rollManyOnTable(1, this.table, { roll, recursive, _depth });
+  async roll({ roll = null, recursive = true, _depth = 0, dc = null, skill = null } = {}) {
+    let resultsBrt = await this.rollManyOnTable(1, this.table, { roll, recursive, _depth, dc, skill });
+    // Patch add uuid to every each result for better module compatibility
+    let resultsTmp = [];
+    for (const r of resultsBrt?.results ?? []) {
+      let rTmp = r;
+      let rDoc = await BRTBetterHelpers.retrieveDocumentFromResult(r, false);
+      if (!getProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`) && rDoc.uuid) {
+        setProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`, rDoc.uuid ?? "");
+      }
+      resultsTmp.push(rTmp);
+    }
     return {
-      roll: roll,
-      results: resultsBrt,
+      roll: resultsBrt.roll,
+      results: resultsTmp,
     };
   }
 }

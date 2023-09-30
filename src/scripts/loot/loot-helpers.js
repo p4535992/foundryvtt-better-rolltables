@@ -34,11 +34,12 @@ export class BRTLootHelpers {
     const brtBuilder = new BRTBuilder(tableEntity);
 
     for (const token of tokenstack) {
-      const results = await brtBuilder.betterRoll({
+      const resultsBrt = await brtBuilder.betterRoll({
         rollsAmount: customRoll ?? rollsAmount,
         dc: undefined,
         skill: undefined,
       });
+      const results = resultsBrt?.results;
       const br = new BetterResults(results);
       const betterResults = await br.buildResults(tableEntity);
       const currencyData = br.getCurrencyData();
@@ -56,13 +57,19 @@ export class BRTLootHelpers {
    * @param {*} tableEntity
    */
   static async generateLoot(tableEntity, options = {}) {
+    let rollMode = options?.rollMode ?? null;
+    if (String(getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${BRTCONFIG.HIDDEN_TABLE}`)) === "true") {
+      rollMode = "gmroll";
+    }
+
     let rollsAmount = options?.rollsAmount || (await BRTBetterHelpers.rollsAmount(tableEntity)) || undefined;
     const builder = new BRTBuilder(tableEntity);
-    const results = await builder.betterRoll({
+    const resultsBrt = await builder.betterRoll({
       rollsAmount: rollsAmount,
       dc: undefined,
       skill: undefined,
     });
+    const results = resultsBrt?.results;
     const br = new BetterResults(results);
     const betterResults = await br.buildResults(tableEntity);
     const currencyData = br.getCurrencyData();
@@ -73,28 +80,25 @@ export class BRTLootHelpers {
     await lootCreator.addItemsToActor();
 
     if (game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.ALWAYS_SHOW_GENERATED_LOOT_AS_MESSAGE)) {
-      let rollMode = options && "rollMode" in options ? options.rollMode : null;
-      if (String(getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${BRTCONFIG.HIDDEN_TABLE}`)) === "true") {
-        rollMode = "gmroll";
-      }
       const lootChatCard = new LootChatCard(betterResults, currencyData, rollMode);
       await lootChatCard.createChatCard(tableEntity);
     }
   }
 
   static async generateChatLoot(tableEntity, options = null) {
-    let rollMode = options && "rollMode" in options ? options.rollMode : null;
+    let rollMode = options?.rollMode ?? null;
     if (String(getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${BRTCONFIG.HIDDEN_TABLE}`)) === "true") {
       rollMode = "gmroll";
     }
 
     let rollsAmount = options?.rollsAmount || (await BRTBetterHelpers.rollsAmount(tableEntity)) || undefined;
     const brtBuilder = new BRTBuilder(tableEntity);
-    const results = await brtBuilder.betterRoll({
+    const resultsBrt = await brtBuilder.betterRoll({
       rollsAmount: rollsAmount,
       dc: undefined,
       skill: undefined,
     });
+    const results = resultsBrt?.results;
     const br = new BetterResults(results);
     const betterResults = await br.buildResults(tableEntity);
     const currencyData = br.getCurrencyData();

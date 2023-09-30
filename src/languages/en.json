@@ -188,7 +188,9 @@
       "quantityFormula": "Qt.",
       "editResult": "Edit Result",
       "dc": "DC",
-      "skill": "Skill"
+      "skill": "Skill",
+      "source": "Source reference",
+      "sourcePlaceholder": "some string"
     }
   }
 }

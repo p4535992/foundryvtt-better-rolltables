@@ -9,6 +9,7 @@ export const CONSTANTS = {
     // saved data keys (used e.g. in the rolltableEntity.data.flags)
     TABLE_TYPE_KEY: "table-type",
     GENERIC_AMOUNT_KEY: "loot-amount-key",
+    GENERIC_RESULT_UUID: "brt-result-uuid",
 
     LOOT_CURRENCY_STRING_KEY: "table-currency-string",
     LOOT_AMOUNT_KEY: "loot-amount-key",
