@@ -65,9 +65,11 @@ export class LootChatCard {
   async addToItemData(itemEntity, data) {
     const existingItem = this.itemsData.find((i) => i.item.id === itemEntity.id);
     const quantity = getProperty(data, BRTCONFIG.QUANTITY_PROPERTY_PATH) || 1;
+    const weight = getProperty(data, BRTCONFIG.WEIGHT_PROPERTY_PATH) || 0;
 
     if (existingItem) {
       existingItem.quantity = +existingItem.quantity + +quantity;
+      existingItem.weight = +existingItem.weight + +weight;
     } else {
       // we will scale down the font size if an item name is too long
       const fontSize = Math.max(60, 100 - Math.max(0, (itemEntity.name || itemEntity.text).length - 27) * 2);
@@ -96,6 +98,7 @@ export class LootChatCard {
           uuid: resultDoc?.uuid ?? "",
         },
         quantity: quantity,
+        weight: weight,
         fontSize: fontSize,
       });
     }

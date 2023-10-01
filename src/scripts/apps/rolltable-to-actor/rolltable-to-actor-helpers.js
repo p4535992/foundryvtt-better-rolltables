@@ -2,19 +2,31 @@ import API from "../../API";
 import { BetterTables } from "../../better-tables";
 import { CONSTANTS } from "../../constants/constants";
 import SETTINGS from "../../constants/settings";
+import { BRTBetterHelpers } from "../../core/brt-helper";
 import { BRTCONFIG } from "../../core/config";
 import { BRTUtils } from "../../core/utils";
-import { info, warn } from "../../lib";
+import { info, isRealNumber, warn } from "../../lib";
 
 export class RollTableToActorHelpers {
-  static async retrieveItemsFromRollTableResult(table, options = null) {
+  static async retrieveItemsDataFromRollTableResult(table, options = null) {
     let brt = new BetterTables();
     const results = await brt.getBetterTableResults(table, options);
-    const itemsData = await RollTableToActorHelpers.resultsToItemsData(results);
+    let itemsData = await RollTableToActorHelpers.resultsToItemsData(results);
     if (itemsData.length === 0) {
       return;
     }
     itemsData = RollTableToActorHelpers.preStackItems(itemsData);
+    return itemsData;
+  }
+
+  static async retrieveItemsDataFromRollTableResultSpecialHarvester(table, options = null) {
+    let brt = new BetterTables();
+    const results = await brt.getBetterTableResults(table, options);
+    let itemsData = await RollTableToActorHelpers.resultsToItemsData(results);
+    if (itemsData.length === 0) {
+      return;
+    }
+    itemsData = RollTableToActorHelpers.preStackItemsSpecialHarvester(itemsData);
     return itemsData;
   }
 
@@ -117,10 +129,24 @@ export class RollTableToActorHelpers {
       if (!r.documentId) {
         continue;
       }
-      const collection = game.collections.get(r.documentCollection) ?? game.packs.get(r.documentCollection);
-      let document = (await collection?.get(r.documentId)) ?? (await collection?.getDocument(r.documentId));
+      // NOTE: The formulaAmount calculation is already done on the betterRoll Method
+      let document = null;
+      if (getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`)) {
+        document = await fromUuid(
+          getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`)
+        );
+        if (!document) {
+          const collection = game.collections.get(r.documentCollection) ?? game.packs.get(r.documentCollection);
+          document = (await collection?.get(r.documentId)) ?? (await collection?.getDocument(r.documentId));
+        }
+      } else {
+        const collection = game.collections.get(r.documentCollection) ?? game.packs.get(r.documentCollection);
+        document = (await collection?.get(r.documentId)) ?? (await collection?.getDocument(r.documentId));
+      }
       if (document instanceof Item) {
-        itemsData.push(document.toObject());
+        const itemTmp = document.toObject();
+        itemTmp.uuid = document.uuid;
+        itemsData.push(itemTmp);
       } else {
         warn(`The Table Result is not a item`, false, r);
       }
@@ -134,7 +160,27 @@ export class RollTableToActorHelpers {
    * @return {*[]|*}
    */
   static preStackItems(itemsData) {
+    return RollTableToActorHelpers._preStackItemsImpl(itemsData, false, false, false);
+  }
+
+  /**
+   * Preemptively stacks all items in the itemsData, if possible
+   * @param itemsData
+   * @return {*[]|*}
+   */
+  static preStackItemsSpecialHarvester(itemsData) {
+    return RollTableToActorHelpers._preStackItemsImpl(itemsData, false, true, true);
+  }
+
+  /**
+   * Preemptively stacks all items in the itemsData, if possible
+   * @param itemsData
+   * @return {*[]|*}
+   */
+  static _preStackItemsImpl(itemsData, ignoreQuantity = false, ignorePrice = false, ignoreWeight = false) {
     const stackAttribute = game.settings.get(CONSTANTS.MODULE_ID, SETTINGS.QUANTITY_PROPERTY_PATH);
+    const priceAttribute = game.settings.get(CONSTANTS.MODULE_ID, SETTINGS.PRICE_PROPERTY_PATH);
+    const weightAttribute = game.settings.get(CONSTANTS.MODULE_ID, SETTINGS.WEIGHT_PROPERTY_PATH);
     if (!stackAttribute) {
       return itemsData;
     }
@@ -148,8 +194,18 @@ export class RollTableToActorHelpers {
       } else {
         // const newStack = getProperty(match.system, stackAttribute) + (getProperty(item.system, stackAttribute) ?? 1);
         // setProperty(match, `system.${stackAttribute}`, newStack);
-        const newStack = getProperty(match, stackAttribute) + (getProperty(item, stackAttribute) ?? 1);
-        setProperty(match, `${stackAttribute}`, newStack);
+        if (!ignoreQuantity) {
+          const newStack = getProperty(match, stackAttribute) + (getProperty(item, stackAttribute) ?? 1);
+          setProperty(match, `${stackAttribute}`, newStack);
+        }
+        if (!ignorePrice) {
+          const newPrice = getProperty(match, priceAttribute) + (getProperty(item, priceAttribute) ?? 1);
+          setProperty(match, `${priceAttribute}`, newPrice);
+        }
+        if (!ignoreWeight) {
+          const newWeight = getProperty(match, weightAttribute) + (getProperty(item, weightAttribute) ?? 1);
+          setProperty(match, `${weightAttribute}`, newWeight);
+        }
       }
     }
     return stackedItemsData;
@@ -163,7 +219,8 @@ export class RollTableToActorHelpers {
    */
   static async addItemsToActor(actor, itemsData, stackSame = true) {
     const stackAttribute = game.settings.get(CONSTANTS.MODULE_ID, SETTINGS.QUANTITY_PROPERTY_PATH);
-    const priceAttribute = game.settings.get(CONSTANTS.MODULE_ID, SETTINGS.PRICE_PROPERTY_PATH) ?? 0;
+    const priceAttribute = game.settings.get(CONSTANTS.MODULE_ID, SETTINGS.PRICE_PROPERTY_PATH);
+    const weightAttribute = game.settings.get(CONSTANTS.MODULE_ID, SETTINGS.WEIGHT_PROPERTY_PATH_PROPERTY_PATH);
     if (!stackAttribute) {
       return Item.create(itemsData, { parent: actor });
     }
@@ -177,10 +234,12 @@ export class RollTableToActorHelpers {
           // const newStack = getProperty(match.system, stackAttribute) + (getProperty(item.system, stackAttribute) ?? 1);
           const newStack = getProperty(match, stackAttribute) + (getProperty(item, stackAttribute) ?? 1);
           const newPrice = getProperty(match, priceAttribute) + (getProperty(item, priceAttribute) ?? 0);
+          const newWeight = getProperty(match, weightAttribute) + (getProperty(item, weightAttribute) ?? 0);
           await match.update({
             //   [`system.${stackAttribute}`]: newStack,
             [`${stackAttribute}`]: newStack,
             [`${priceAttribute}`]: newPrice,
+            [`${weightAttribute}`]: newWeight,
           });
         } else {
           const i = await Item.create(itemsData, { parent: actor });
@@ -302,13 +361,25 @@ export class RollTableToActorHelpers {
     /** if the item is already owned by the actor (same name and same PRICE) */
     if (originalItem && stackSame) {
       /** add quantity to existing item */
-      const newItemQty = getProperty(newItemData, BRTCONFIG.QUANTITY_PROPERTY_PATH) || 1,
-        originalQty = getProperty(originalItem, BRTCONFIG.QUANTITY_PROPERTY_PATH) || 1,
-        updateItem = { _id: originalItem.id },
-        newQty = RollTableToActorHelpers._handleLimitedQuantity(newItemQty, originalQty, customLimit);
+
+      const stackAttribute = game.settings.get(CONSTANTS.MODULE_ID, SETTINGS.QUANTITY_PROPERTY_PATH);
+      const priceAttribute = game.settings.get(CONSTANTS.MODULE_ID, SETTINGS.PRICE_PROPERTY_PATH);
+      const weightAttribute = game.settings.get(CONSTANTS.MODULE_ID, SETTINGS.WEIGHT_PROPERTY_PATH);
+
+      const newItemQty = getProperty(newItemData, stackAttribute) || 1;
+      const originalQty = getProperty(originalItem, stackAttribute) || 1;
+      const updateItem = { _id: originalItem.id };
+      const newQty = RollTableToActorHelpers._handleLimitedQuantity(newItemQty, originalQty, customLimit);
 
       if (newQty != newItemQty) {
-        setProperty(updateItem, BRTCONFIG.QUANTITY_PROPERTY_PATH, newQty);
+        setProperty(updateItem, stackAttribute, newQty);
+
+        const newPrice = getProperty(originalItem, priceAttribute) + (getProperty(newItemData, priceAttribute) ?? 1);
+        setProperty(updateItem, `${priceAttribute}`, newPrice);
+
+        const newWeight = getProperty(originalItem, weightAttribute) + (getProperty(newItemData, weightAttribute) ?? 1);
+        setProperty(updateItem, `${weightAttribute}`, newWeight);
+
         await actor.updateEmbeddedDocuments("Item", [updateItem]);
       }
       return actor.items.get(originalItem.id);

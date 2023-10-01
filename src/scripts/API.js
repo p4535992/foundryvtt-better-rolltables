@@ -310,7 +310,7 @@ const API = {
     return actorWithItems;
   },
 
-  async retrieveItemsFromRollTableResult(inAttributes) {
+  async retrieveItemsDataFromRollTableResult(inAttributes) {
     // if (!Array.isArray(inAttributes)) {
     //   throw error("rollCompendiumAsRollTable | inAttributes must be of type array");
     // }
@@ -320,8 +320,25 @@ const API = {
     }
     const table = inAttributes.table;
     const options = inAttributes.options;
-    const actorWithItems = await RollTableToActorHelpers.retrieveItemsFromRollTableResult(table, options);
-    return actorWithItems;
+    const itemsDataToReturn = await RollTableToActorHelpers.retrieveItemsDataFromRollTableResult(table, options);
+    return itemsDataToReturn;
+  },
+
+  async retrieveItemsDataFromRollTableResultSpecialHarvester(inAttributes) {
+    // if (!Array.isArray(inAttributes)) {
+    //   throw error("rollCompendiumAsRollTable | inAttributes must be of type array");
+    // }
+    // const [uuidOrItem] = inAttributes;
+    if (typeof inAttributes !== "object") {
+      throw error("rollCompendiumAsRollTable | inAttributes must be of type object");
+    }
+    const table = inAttributes.table;
+    const options = inAttributes.options;
+    const itemsDataToReturn = await RollTableToActorHelpers.retrieveItemsDataFromRollTableResultSpecialHarvester(
+      table,
+      options
+    );
+    return itemsDataToReturn;
   },
 };
 

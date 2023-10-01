@@ -37,45 +37,6 @@ export const GROUP_TAGS = "Tags";
 // }
 
 export function registerSettings() {
-  //   let defaultSpellCompendium = undefined;
-  //   let defaultLootSheet = undefined;
-
-  //   if (game.system.id === "dnd5e") {
-  //     defaultSpellCompendium = "dnd5e.spells";
-  //     (defaultLootSheet = "dnd5e.LootSheet5eNPC"),
-  //       (systemSheets = Object.values(CONFIG.Actor.sheetClasses.npc).map((s) => ({
-  //         id: s.id,
-  //         label: s.label,
-  //       })));
-
-  //     BRTCONFIG.QUANTITY_PROPERTY_PATH = "system.quantity";
-  //     BRTCONFIG.PRICE_PROPERTY_PATH = "system.price";
-  //     BRTCONFIG.SPELL_LEVEL_PATH = "system.level";
-  //   }
-
-  //   if (game.system.id === "pf2e") {
-  //     defaultLootSheet = "pf2e.LootSheetPF2e";
-  //     defaultSpellCompendium = "pf2e.spells-srd";
-
-  //     BRTCONFIG.QUANTITY_PROPERTY_PATH = "system.quantity.value";
-  //     BRTCONFIG.PRICE_PROPERTY_PATH = "system.price.value";
-  //     BRTCONFIG.SPELL_LEVEL_PATH = "system.level.value";
-  //     BRTCONFIG.ITEM_LOOT_TYPE = "treasure";
-  //     // pf2e scroll is "Scroll of 1st-level Spell"
-  //     BRTCONFIG.SCROLL_REGEX = /\s*Scroll\s*of\s*(\d+)/gi;
-  //   }
-
-  //   if (game.system.id === "pf1") {
-  //     defaultLootSheet = "PF1.ActorSheetPFNPCLoot";
-  //     defaultSpellCompendium = "pf1.spells";
-
-  //     BRTCONFIG.QUANTITY_PROPERTY_PATH = "system.quantity";
-  //     BRTCONFIG.PRICE_PROPERTY_PATH = "system.price";
-  //     BRTCONFIG.SPELL_LEVEL_PATH = "system.level";
-  //     BRTCONFIG.ITEM_LOOT_TYPE = "loot";
-  //     BRTCONFIG.SCROLL_REGEX = /\s*Scroll\s*of\s*(\d+)/gi;
-  //   }
-
   for (let [name, data] of Object.entries(SETTINGS.GET_DEFAULT())) {
     game.settings.register(CONSTANTS.MODULE_ID, name, data);
   }
@@ -84,6 +45,7 @@ export function registerSettings() {
   let defaultActorNpcType = SYSTEMS.DATA.DEFAULT_ACTOR_NPC_TYPE;
   let defaultLootSheet = SYSTEMS.DATA.DEFAULT_SPELL_COMPENDIUM;
   BRTCONFIG.QUANTITY_PROPERTY_PATH = SYSTEMS.DATA.QUANTITY_PROPERTY_PATH;
+  BRTCONFIG.WEIGHT_PROPERTY_PATH = SYSTEMS.DATA.WEIGHT_PROPERTY_PATH;
   BRTCONFIG.PRICE_PROPERTY_PATH = SYSTEMS.DATA.PRICE_PROPERTY_PATH;
   BRTCONFIG.SPELL_LEVEL_PATH = SYSTEMS.DATA.SPELL_LEVEL_PATH;
   BRTCONFIG.ITEM_LOOT_TYPE = SYSTEMS.DATA.ITEM_LOOT_TYPE;

@@ -1,3 +1,8 @@
+### 2.0.5
+
+- Add weight property to multisystem behaviour
+- Add a better results to items data method with uuid on teh returned result
+
 ### 2.0.4
 
 - Update pack and add flag result custom name

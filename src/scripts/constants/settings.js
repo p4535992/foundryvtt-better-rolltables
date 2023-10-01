@@ -36,6 +36,7 @@ const SETTINGS = {
   DEFAULT_LOOT_SHEET: "systemDefaultLootSheet",
   DEFAULT_SPELL_COMPENDIUM: "systemDefaultSpellCompendium",
   QUANTITY_PROPERTY_PATH: "systemQuantityPropertyPath",
+  WEIGHT_PROPERTY_PATH: "systemWeightPropertyPath",
   PRICE_PROPERTY_PATH: "systemPricePropertyPath",
   SPELL_LEVEL_PATH: "systemSpellLevelPath",
   ITEM_LOOT_TYPE: "systemItemLootType",
@@ -87,6 +88,13 @@ const SETTINGS = {
       system: true,
       type: String,
       default: SYSTEMS.DATA.QUANTITY_PROPERTY_PATH,
+    },
+    [SETTINGS.WEIGHT_PROPERTY_PATH]: {
+      scope: "world",
+      config: false,
+      system: true,
+      type: String,
+      default: SYSTEMS.DATA.WEIGHT_PROPERTY_PATH,
     },
     [SETTINGS.PRICE_PROPERTY_PATH]: {
       scope: "world",
