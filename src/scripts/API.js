@@ -292,7 +292,8 @@ const API = {
     }
     const compendium = inAttributes.compendium;
     const hideChatMessage = inAttributes.hideChatMessage;
-    return await RollFromCompendiumAsRollTableHelpers.rollCompendiumAsRollTable(compendium, hideChatMessage);
+    const obj = await RollFromCompendiumAsRollTableHelpers.rollCompendiumAsRollTable(compendium, hideChatMessage);
+    return obj;
   },
 
   async addRollTableItemsToActor(inAttributes) {
@@ -307,7 +308,7 @@ const API = {
     const actor = inAttributes.actor;
     const options = inAttributes.options;
     const actorWithItems = await RollTableToActorHelpers.addRollTableItemsToActor(table, actor, options);
-    return actorWithItems;
+    return actorWithItems ?? [];
   },
 
   async retrieveItemsDataFromRollTableResult(inAttributes) {
@@ -321,7 +322,7 @@ const API = {
     const table = inAttributes.table;
     const options = inAttributes.options;
     const itemsDataToReturn = await RollTableToActorHelpers.retrieveItemsDataFromRollTableResult(table, options);
-    return itemsDataToReturn;
+    return itemsDataToReturn ?? [];
   },
 
   async retrieveItemsDataFromRollTableResultSpecialHarvester(inAttributes) {
@@ -338,7 +339,7 @@ const API = {
       table,
       options
     );
-    return itemsDataToReturn;
+    return itemsDataToReturn ?? [];
   },
 };
 

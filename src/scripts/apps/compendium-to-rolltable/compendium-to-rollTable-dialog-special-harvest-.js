@@ -181,6 +181,12 @@ export class CompendiumToRollTableSpecialHarvestDialog {
     const documents = [];
 
     for (const [key, values] of Object.entries(resultsGroupedBySystemOrigin)) {
+      // For table not make sense in this case
+      let firstDcValue = 0;
+      let firstSkillDenom =
+        values?.length > 0
+          ? getProperty(values[0], `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_SKILL_VALUE_KEY}`)
+          : "";
       //options.renderSheet = options.renderSheet ?? true;
       const document = await RollTable.create(
         {
@@ -191,6 +197,8 @@ export class CompendiumToRollTableSpecialHarvestDialog {
           flags: {
             [`${CONSTANTS.MODULE_ID}`]: {
               [`${CONSTANTS.FLAGS.TABLE_TYPE_KEY}`]: CONSTANTS.TABLE_TYPE_HARVEST,
+              [`${CONSTANTS.FLAGS.HARVEST_DC_VALUE_KEY}`]: String(firstDcValue) ?? "0",
+              [`${CONSTANTS.FLAGS.HARVEST_SKILL_VALUE_KEY}`]: firstSkillDenom ?? "",
               [`${CONSTANTS.FLAGS.HARVEST_SOURCE_VALUE_KEY}`]: key ?? "",
             },
           },

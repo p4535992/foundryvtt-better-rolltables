@@ -146,6 +146,21 @@ export class RollTableToActorHelpers {
       if (document instanceof Item) {
         const itemTmp = document.toObject();
         itemTmp.uuid = document.uuid;
+        // Update with custom name if present
+        if (!getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`)) {
+          setProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`, itemTmp.name);
+        } else {
+          setProperty(
+            itemTmp,
+            `name`,
+            getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`)
+          );
+        }
+        // Merge flags brt to item data
+        if (!getProperty(itemTmp, `flags.${CONSTANTS.MODULE_ID}`)) {
+          setProperty(itemTmp, `flags.${CONSTANTS.MODULE_ID}`, {});
+        }
+        mergeObject(itemTmp.flags[CONSTANTS.MODULE_ID], getProperty(r, `flags.${CONSTANTS.MODULE_ID}`));
         itemsData.push(itemTmp);
       } else {
         warn(`The Table Result is not a item`, false, r);

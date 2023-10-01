@@ -1,4 +1,4 @@
-### 2.0.5-6
+### 2.0.5-6-7
 
 - Bug fix
 - Add weight property to multisystem behaviour
