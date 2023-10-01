@@ -309,6 +309,20 @@ const API = {
     const actorWithItems = await RollTableToActorHelpers.addRollTableItemsToActor(table, actor, options);
     return actorWithItems;
   },
+
+  async retrieveItemsFromRollTableResult(inAttributes) {
+    // if (!Array.isArray(inAttributes)) {
+    //   throw error("rollCompendiumAsRollTable | inAttributes must be of type array");
+    // }
+    // const [uuidOrItem] = inAttributes;
+    if (typeof inAttributes !== "object") {
+      throw error("rollCompendiumAsRollTable | inAttributes must be of type object");
+    }
+    const table = inAttributes.table;
+    const options = inAttributes.options;
+    const actorWithItems = await RollTableToActorHelpers.retrieveItemsFromRollTableResult(table, options);
+    return actorWithItems;
+  },
 };
 
 export default API;

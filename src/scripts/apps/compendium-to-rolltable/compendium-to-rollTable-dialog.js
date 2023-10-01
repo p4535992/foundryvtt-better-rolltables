@@ -418,7 +418,8 @@ export class CompendiumToRollTableDialog extends Dialog {
     options = {}
   ) {
     // Ported from Foundry's existing RollTable.fromFolder()
-    const entries = await compendium.getDocuments();
+    // const entries = await compendium.getDocuments();
+    const entries = compendium.contents;
     const filteredEntries = entries.filter((entry) => {
       let customFiltersValid = customFilters.every(({ filterPath, filterRequirements }) => {
         let filterPathValue = this.getValueByPath(entry, filterPath);

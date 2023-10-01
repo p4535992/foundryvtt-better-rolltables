@@ -1,3 +1,7 @@
+### 2.0.3 
+
+- Emergency bug fixing replace getDocuments() with contents on compendium 
+
 ### 2.0.2
 
 - Update chat card templates

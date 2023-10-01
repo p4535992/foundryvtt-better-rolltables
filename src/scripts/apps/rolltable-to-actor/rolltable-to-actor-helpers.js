@@ -4,14 +4,48 @@ import { CONSTANTS } from "../../constants/constants";
 import SETTINGS from "../../constants/settings";
 import { BRTCONFIG } from "../../core/config";
 import { BRTUtils } from "../../core/utils";
+import { info, warn } from "../../lib";
 
 export class RollTableToActorHelpers {
+  static async retrieveItemsFromRollTableResult(table, options = null) {
+    let brt = new BetterTables();
+    const results = await brt.getBetterTableResults(table, options);
+    const itemsData = await RollTableToActorHelpers.resultsToItemsData(results);
+    if (itemsData.length === 0) {
+      return;
+    }
+    itemsData = RollTableToActorHelpers.preStackItems(itemsData);
+    return itemsData;
+  }
+
   static async addRollTableItemsToActor(table, actor, options = null) {
     let brt = new BetterTables();
     const results = await brt.getBetterTableResults(table, options);
     const itemsData = await RollTableToActorHelpers.resultsToItemsData(results);
     const actorWithItems = await RollTableToActorHelpers.addItemsToActor(actor, itemsData);
-    return actorWithItems;
+    // Notify the user of items added
+    let itemNames = itemsData
+      .map((i) => {
+        const itemStackAttribute = game.settings.get(CONSTANTS.MODULE_ID, SETTINGS.QUANTITY_PROPERTY_PATH);
+        if (!itemStackAttribute) {
+          return i.name;
+        }
+        // const stack = parseInt(getProperty(i.system, itemStackAttribute));
+        const stack = parseInt(getProperty(i, itemStackAttribute));
+        if (stack <= 1) {
+          return i.name;
+        }
+        return `${stack} ${i.name}`;
+      })
+      .join(", ");
+    const actorNames = controlledActors.map((a) => a.name).join(", ");
+    const infoStr = RollTableToActorHelpers._stringInject(i18n(`${CONSTANTS.MODULE_ID}.label.importSuccess`), [
+      itemNames,
+      actorNames,
+    ]);
+    info(infoStr, true);
+    const items = itemsData;
+    return items;
   }
 
   /**
@@ -57,7 +91,7 @@ export class RollTableToActorHelpers {
       itemNames,
       actorNames,
     ]);
-    ui.notifications.info(infoStr);
+    info(infoStr, true);
     const items = itemsData;
     return items;
   }
@@ -87,6 +121,8 @@ export class RollTableToActorHelpers {
       let document = (await collection?.get(r.documentId)) ?? (await collection?.getDocument(r.documentId));
       if (document instanceof Item) {
         itemsData.push(document.toObject());
+      } else {
+        warn(`The Table Result is not a item`, false, r);
       }
     }
     return itemsData;
