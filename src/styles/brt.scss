@@ -150,41 +150,6 @@
             top: 0;
             z-index: 1;
           }
-          .table-result {
-            border: unset;
-            border-bottom: 1px solid var(--better-rolltables-header-border);
-            &:nth-child(2n) {
-              background: var(--better-rolltables-faintest-color);
-            }
-            .result-details {
-              .result-target-short {
-                width: 43%;
-                margin-left: 3px;
-              }
-              .result-better-rolltables-formula,
-              .result-brt-dc-value,
-              .result-brt-skill-value {
-                width: 14%;
-                margin-left: 3px;
-                &::placeholder {
-                  font-size: 12px;
-                }
-                &::-webkit-input-placeholder {
-                  font-size: 12px;
-                }
-                &::-moz-placeholder {
-                  font-size: 12px;
-                }
-                &:-ms-input-placeholder {
-                  font-size: 12px;
-                }
-              }
-              .result-target-mid {
-                width: 84%;
-                margin-left: 3px;
-              }
-            }
-          }
           .table-result.drawn {
             opacity: 0.5;
             z-index: 0;

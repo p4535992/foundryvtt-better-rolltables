@@ -1,7 +1,7 @@
 import { CONSTANTS } from "../../constants/constants";
 import { BRTBetterHelpers } from "../../core/brt-helper";
 import { BRTCONFIG } from "../../core/config";
-import { debug, log } from "../../lib";
+import { debug, getSubstring, log } from "../../lib";
 import { CompendiumToRollTableDialog } from "./compendium-to-rollTable-dialog";
 
 /**
@@ -74,7 +74,8 @@ export class CompendiumToRollTableSpecialHarvestDialog {
     // Ported from Foundry's existing RollTable.fromFolder()
     // const results = Promise.all(await compendium.index.map(async (es, i) => {
     const results = await Promise.all(
-      compendium.contents.map(async (es, i) => {
+      // compendium.contents.map(async (es, i) => {
+      compendium.index.contents.map(async (es, i) => {
         log("Compendium Item:" + es);
         log("Compendium Index:" + i);
         const e = await fromUuid(es.uuid);
@@ -91,14 +92,40 @@ export class CompendiumToRollTableSpecialHarvestDialog {
           has1d = true;
         }
         let num = 1;
+        let newName = TextEditor.decodeHTML(e.name);
         if (this._containsNumbers(nameTmp)) {
           let numStr = nameTmp.match(/\d+/)[0]; //nameTmp.replace(/\D/g, "");
           num = has1d ? "1d" + parseInt(numStr) : String(parseInt(numStr));
           if (num <= 0) {
             num = 1;
           }
-          // let arrNames = nameTmp.replace(numStr, "").split("(");
-          // let newName = arrNames?.length > 0 ? arrNames[0] : nameTmp;
+          let stringToCheck = getSubstring(newName, "(", ")");
+          stringToCheck = stringToCheck.replace(/[0-9]/g, "");
+          stringToCheck = stringToCheck.replace(" x", "");
+          stringToCheck = stringToCheck.replace("x ", "");
+          stringToCheck = stringToCheck ?? "";
+
+          let arrNames = newName.replace(numStr, "").split("(");
+          if (arrNames.length > 0) {
+            newName = arrNames?.length > 0 ? arrNames[0] : nameTmp;
+          }
+          // newName = newName.replace("(", "");
+          // newName = newName.replace(")", "");
+          newName = newName.trim() + " " + stringToCheck.trim();
+          newName = newName.replace("scales", "scale"); // scales
+          newName = newName.replace("Scales", "Scale"); // scales
+          newName = newName.replace("plates", "plate"); // plates
+          newName = newName.replace("Plates", "Plate"); // plates
+          newName = newName.replace("vials", "vial"); // vials
+          newName = newName.replace("Vials", "Vial"); // vials
+          newName = newName.replace("sacks", "sack"); // sacks
+          newName = newName.replace("Sacks", "Sack"); // sacks
+          newName = newName.replace("fins", "fin"); //
+          newName = newName.replace("Fins", "Fin"); //
+          newName = newName.replace("claws", "claw"); //
+          newName = newName.replace("Claws", "Claw"); //
+          newName = newName.replace(" x", "");
+          newName = newName.trim();
         }
 
         // https://foundryvtt.com/api/v8/data.TableResultData.html
@@ -129,6 +156,7 @@ export class CompendiumToRollTableSpecialHarvestDialog {
               [`${CONSTANTS.FLAGS.HARVEST_SKILL_VALUE_KEY}`]: skillDenom ?? "",
               [`${CONSTANTS.FLAGS.HARVEST_SOURCE_VALUE_KEY}`]: sourceValue ?? "",
               [`${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`]: es.uuid ?? "",
+              [`${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`]: newName ?? "",
             },
           },
         };

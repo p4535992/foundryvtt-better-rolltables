@@ -1,3 +1,7 @@
+### 2.0.4
+
+- Update pack and add flag result custom name
+
 ### 2.0.3 
 
 - Emergency bug fixing replace getDocuments() with contents on compendium 

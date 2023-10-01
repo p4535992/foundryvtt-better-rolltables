@@ -127,3 +127,7 @@ export function isEmptyObject(obj) {
 export function isRealNumber(inNumber) {
   return !isNaN(inNumber) && typeof inNumber === "number" && isFinite(inNumber);
 }
+
+export function getSubstring(string, char1, char2) {
+  return string.slice(string.indexOf(char1) + 1, string.lastIndexOf(char2));
+}

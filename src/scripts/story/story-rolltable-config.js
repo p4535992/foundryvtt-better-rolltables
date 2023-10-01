@@ -48,7 +48,16 @@ export class BetterRollTableStoryConfig extends RollTableConfig {
         result.uuid = resultDoc?.uuid ?? "";
         // grab the formula
         // result.qtFormula = getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.}`;
-        setProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`, result.uuid);
+        if (result.isDocument || result.isCompendium) {
+          setProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`, result.uuid);
+          if (!getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`)) {
+            setProperty(
+              result,
+              `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`,
+              result.text
+            );
+          }
+        }
         return result;
       })
     );
