@@ -287,3 +287,17 @@ game.modules.get("better-rolltables").api.generateLoot(table);
 # NEW API
 
 WHEN I WILL FIND THE TIME...
+
+# TODO
+
+```
+let tableHarvester = game.tables.getName("Better Harvester | Aarakocra RollTable");
+game.modules.get("better-rolltables").api.retrieveItemsDataFromRollTableResultSpecialHarvester({
+   table: tableHarvester, 
+   options: {
+      rollMode: "gmroll",
+      dc: 10,
+      skill: "med"
+   }
+});
+```
