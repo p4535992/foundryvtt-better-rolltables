@@ -91,7 +91,11 @@ export class BRTBetterHelpers {
     }
   }
 
-  static async retrieveDocumentFromResult(result, throwError) {
+  static async retrieveDocumentFromResultOnlyUuid(result, throwError) {
+    return BRTBetterHelpers.retrieveDocumentFromResult(result, throwError, true);
+  }
+
+  static async retrieveDocumentFromResult(result, throwError, onlyUuid = false) {
     if (result.type === CONST.TABLE_RESULT_TYPES.COMPENDIUM) {
       // Compendium.world.prodottifiniti.Item.cGvOfBMe8XQjL8ra
       let compendium = game.packs.get(`${result.documentCollection}`);
@@ -102,8 +106,13 @@ export class BRTBetterHelpers {
           warn(`Compendium ${result.documentCollection} was not found`);
         }
       }
-      // let findDocument = (await compendium.getDocuments()).find((m) => m.id === `${result.documentId}`);
-      let findDocument = compendium.contents.find((m) => m.id === `${result.documentId}`);
+      let findDocument = null;
+      if (onlyUuid) {
+        findDocument = compendium.contents.find((m) => m.id === `${result.documentId}`);
+      } else {
+        findDocument = (await compendium.getDocuments()).find((m) => m.id === `${result.documentId}`);
+      }
+      // let findDocument = compendium.contents.find((m) => m.id === `${result.documentId}`);
       if (!findDocument) {
         if (throwError) {
           throw error(`The "${result.documentId}" document was not found in Compendium ${result.documentCollection}`);
@@ -121,14 +130,18 @@ export class BRTBetterHelpers {
           warn(`Collection ${result.documentCollection} was not found`);
         }
       }
-      // let findDocument = (await compendium.getDocuments()).find((m) => m.id === `${result.documentId}`);
-      let findDocument = compendium.contents.find((m) => m.id === `${result.documentId}`);
-      if (!findDocument) {
-        if (throwError) {
-          throw error(`The "${result.documentId}" document was not found in collection ${result.documentCollection}`);
-        } else {
-          warn(`The "${result.documentId}" document was not found in collection ${result.documentCollection}`);
+      if (compendium) {
+        let findDocument = (await compendium.getDocuments()).find((m) => m.id === `${result.documentId}`);
+        // let findDocument = compendium.contents.find((m) => m.id === `${result.documentId}`);
+        if (!findDocument) {
+          if (throwError) {
+            throw error(`The "${result.documentId}" document was not found in collection ${result.documentCollection}`);
+          } else {
+            warn(`The "${result.documentId}" document was not found in collection ${result.documentCollection}`);
+          }
         }
+      } else {
+        findDocument = fromUuid(`${result.documentName}.${result.documentId}`); // Actor.KjoEEN077oSC4WG4
       }
       return findDocument;
     } else {

@@ -32,7 +32,7 @@ export class BRTBuilder {
     let resultsTmp = [];
     for (const r of resultsBrt?.results ?? []) {
       let rTmp = r;
-      let rDoc = await BRTBetterHelpers.retrieveDocumentFromResult(r, false);
+      let rDoc = await BRTBetterHelpers.retrieveDocumentFromResultOnlyUuid(r, false);
       if (!getProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`) && rDoc.uuid) {
         setProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`, rDoc.uuid ?? "");
       }
@@ -216,7 +216,7 @@ export class BRTBuilder {
     let resultsTmp = [];
     for (const r of resultsBrt?.results ?? []) {
       let rTmp = r;
-      let rDoc = await BRTBetterHelpers.retrieveDocumentFromResult(r, false);
+      let rDoc = await BRTBetterHelpers.retrieveDocumentFromResultOnlyUuid(r, false);
       if (!getProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`) && rDoc.uuid) {
         setProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`, rDoc.uuid ?? "");
       }

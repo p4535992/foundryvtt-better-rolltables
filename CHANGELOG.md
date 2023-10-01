@@ -1,5 +1,6 @@
-### 2.0.5
+### 2.0.5-6
 
+- Bug fix
 - Add weight property to multisystem behaviour
 - Add a better results to items data method with uuid on teh returned result
 

@@ -44,7 +44,7 @@ export class BetterRollTableHarvestConfig extends RollTableConfig {
         result.isCompendium = result.type === CONST.TABLE_RESULT_TYPES.COMPENDIUM;
         result.img = result.img || CONFIG.RollTable.resultIcon;
         result.text = TextEditor.decodeHTML(result.text);
-        const resultDoc = await BRTBetterHelpers.retrieveDocumentFromResult(result, false);
+        const resultDoc = await BRTBetterHelpers.retrieveDocumentFromResultOnlyUuid(result, false);
         result.uuid = resultDoc?.uuid ?? "";
         // grab the formula
         // result.qtFormula = getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.}`;
