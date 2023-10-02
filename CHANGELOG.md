@@ -1,3 +1,7 @@
+### 2.0.8
+
+- Little css fix
+
 ### 2.0.5-6-7
 
 - Bug fix

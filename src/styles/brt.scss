@@ -69,6 +69,7 @@
       background: var(--better-rolltables-background);
       padding: 0.5em;
       grid-template-rows: min-content min-content auto var(--better-rolltables-icon-size);
+      overflow-y: scroll;
       header.sheet-header {
         grid-area: SheetHeader;
       }
