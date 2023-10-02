@@ -300,4 +300,26 @@ game.modules.get("better-rolltables").api.retrieveItemsDataFromRollTableResultSp
       skill: "med"
    }
 });
+
+
+const returnArr = await game.modules.get("better-rolltables").api.retrieveItemsDataFromRollTableResultSpecialHarvester({
+    table: tableHarvester, 
+    options: {
+    rollMode: "gmroll",
+    dc: dcValue,
+    skill: skillDenom
+    }
+});
+
+const itemsData = await game.modules.get("better-rolltables").api.retrieveItemsDataFromRollTableResult({
+    table: tableHarvester, 
+    options: {
+        rollMode: "gmroll",
+        dc: dcValue,
+        skill: skillDenom
+    }
+});
+
+
+
 ```
