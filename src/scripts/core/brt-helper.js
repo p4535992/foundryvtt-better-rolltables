@@ -122,16 +122,22 @@ export class BRTBetterHelpers {
       }
       return findDocument;
     } else if (result.type === CONST.TABLE_RESULT_TYPES.DOCUMENT) {
-      let compendium = game.collections.get(result.documentCollection);
-      if (!compendium) {
+      let collection = game.collections.get(result.documentCollection);
+      if (!collection) {
         if (throwError) {
           throw error(`Collection ${result.documentCollection} was not found`);
         } else {
           warn(`Collection ${result.documentCollection} was not found`);
         }
       }
-      if (compendium) {
-        let findDocument = (await compendium.getDocuments()).find((m) => m.id === `${result.documentId}`);
+      if (collection) {
+        let findDocument = null;
+        if (onlyUuid) {
+          findDocument = collection.contents.find((m) => m.id === `${result.documentId}`);
+        } else {
+          findDocument = collection.contents.find((m) => m.id === `${result.documentId}`);
+          // findDocument = (await collection.getDocuments()).find((m) => m.id === `${result.documentId}`);
+        }
         // let findDocument = compendium.contents.find((m) => m.id === `${result.documentId}`);
         if (!findDocument) {
           if (throwError) {
@@ -145,6 +151,9 @@ export class BRTBetterHelpers {
       }
       return findDocument;
     } else {
+      warn(
+        `The uuid can be retrieved only from result type '${CONST.TABLE_RESULT_TYPES.COMPENDIUM}' or '${CONST.TABLE_RESULT_TYPES.DOCUMENT}'`
+      );
       return null;
     }
   }

@@ -1,3 +1,7 @@
+### 2.0.9
+
+- Bug fix https://github.com/p4535992/foundryvtt-better-rolltables/issues/2
+
 ### 2.0.8
 
 - Little css fix
@@ -12,9 +16,9 @@
 
 - Update pack and add flag result custom name
 
-### 2.0.3 
+### 2.0.3
 
-- Emergency bug fixing replace getDocuments() with contents on compendium 
+- Emergency bug fixing replace getDocuments() with contents on compendium
 
 ### 2.0.2
 
@@ -51,11 +55,11 @@
 
 - Adds an option to change the table roll to GM only. Add the hidden table checkbox feature on the roll drawn from rolltable (liKe the ol kandashi module)
 
-### 1.9.3 
+### 1.9.3
 
-- upgrade for fvtt11 
+- upgrade for fvtt11
 
-### 1.9.2 
+### 1.9.2
 
 - Fixed a retrocomaptibility error on flags for formula text
 
@@ -183,7 +187,7 @@
 ### v1.6.4
 
 - Exposed API to get story reults via macro 'game.betterTables.getStoryResults(table)' (thanks jsabol)
-- Added macro only function to add generated loot to selected token with 'game.betterTables.addLootToSelectedToken(table)' (Thanks VaderDojo for the code) 
+- Added macro only function to add generated loot to selected token with 'game.betterTables.addLootToSelectedToken(table)' (Thanks VaderDojo for the code)
 
 ### v1.6.3
 
