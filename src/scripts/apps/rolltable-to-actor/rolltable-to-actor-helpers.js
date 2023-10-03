@@ -2,7 +2,7 @@ import API from "../../API";
 import { BetterTables } from "../../better-tables";
 import { CONSTANTS } from "../../constants/constants";
 import SETTINGS from "../../constants/settings";
-import { BRTBetterHelpers } from "../../core/brt-helper";
+import { BRTBetterHelpers } from "../../better/brt-helper";
 import { BRTCONFIG } from "../../core/config";
 import { BRTUtils } from "../../core/utils";
 import { info, isRealNumber, warn } from "../../lib";

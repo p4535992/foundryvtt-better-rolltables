@@ -1,7 +1,7 @@
 import { BRTBuilder } from "./brt-builder.js";
 import { BRTCONFIG } from "./config.js";
 import { CONSTANTS } from "../constants/constants.js";
-import { BRTBetterHelpers } from "./brt-helper.js";
+import { BRTBetterHelpers } from "../better/brt-helper.js";
 import { BRTUtils } from "./utils.js";
 
 export class BetterResults {

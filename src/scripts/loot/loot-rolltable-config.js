@@ -1,8 +1,8 @@
 import API from "../API";
 import { CONSTANTS } from "../constants/constants";
-import { BRTBetterHelpers } from "../core/brt-helper";
+import { BRTBetterHelpers } from "../better/brt-helper";
 import { RichResultEdit } from "../core/brt-result-editor";
-import { BetterRollTableBetterConfig } from "../core/brt-rolltable-config";
+import { BetterRollTableBetterConfig } from "../better/brt-rolltable-config";
 import { i18n } from "../lib";
 
 export class BetterRollTableLootConfig extends RollTableConfig {

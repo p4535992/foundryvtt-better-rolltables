@@ -9,7 +9,7 @@ import { i18n } from "./lib.js";
 import SETTINGS from "./constants/settings.js";
 import { HarvestChatCard } from "./harvest/harvest-chat-card.js";
 import { StoryChatCard } from "./story/story-chat-card.js";
-import { BetterChatCard } from "./core/brt-chat-card.js";
+import { BetterChatCard } from "./better/brt-chat-card.js";
 
 export class BetterTables {
   constructor() {

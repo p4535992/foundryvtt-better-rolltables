@@ -1,6 +1,6 @@
 import { CONSTANTS } from "../constants/constants.js";
 import { log } from "../lib.js";
-import { BRTBetterHelpers } from "./brt-helper.js";
+import { BRTBetterHelpers } from "../better/brt-helper.js";
 import { BRTCONFIG } from "./config.js";
 
 export class BetterRollTable {

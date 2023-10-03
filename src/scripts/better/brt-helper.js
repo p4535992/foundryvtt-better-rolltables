@@ -1,6 +1,6 @@
 import { CONSTANTS } from "../constants/constants.js";
 import { warn } from "../lib.js";
-import { BRTCONFIG } from "./config.js";
+import { BRTCONFIG } from "../core/config.js";
 
 export class BRTBetterHelpers {
   /**

@@ -1,7 +1,7 @@
 import { BRTCONFIG } from "../core/config.js";
 import { CONSTANTS } from "../constants/constants.js";
 import { BRTUtils } from "../core/utils.js";
-import { BRTBetterHelpers } from "../core/brt-helper.js";
+import { BRTBetterHelpers } from "./brt-helper.js";
 import { RollTableToActorHelpers } from "../apps/rolltable-to-actor/rolltable-to-actor-helpers.js";
 
 /**

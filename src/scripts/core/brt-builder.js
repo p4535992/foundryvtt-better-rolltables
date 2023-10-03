@@ -1,7 +1,7 @@
 import { BRTCONFIG } from "./config.js";
 import { BRTUtils } from "../core/utils.js";
 import { CONSTANTS } from "../constants/constants.js";
-import { BRTBetterHelpers } from "./brt-helper.js";
+import { BRTBetterHelpers } from "../better/brt-helper.js";
 import { BetterRollTable } from "./brt-table.js";
 
 export class BRTBuilder {

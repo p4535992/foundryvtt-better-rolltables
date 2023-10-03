@@ -3,7 +3,7 @@ import API from "../API";
 import { CONSTANTS } from "../constants/constants";
 import { error, i18n, warn } from "../lib";
 import { BRTBetterHelpers } from "./brt-helper";
-import { RichResultEdit } from "./brt-result-editor";
+import { RichResultEdit } from "../core/brt-result-editor";
 
 export class BetterRollTableBetterConfig extends RollTableConfig {
   /** @inheritdoc */

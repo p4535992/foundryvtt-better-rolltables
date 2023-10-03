@@ -1,7 +1,7 @@
 import { RollTableToActorHelpers } from "../apps/rolltable-to-actor/rolltable-to-actor-helpers";
 import { CONSTANTS } from "../constants/constants";
 import { BRTBuilder } from "../core/brt-builder";
-import { BRTBetterHelpers } from "../core/brt-helper";
+import { BRTBetterHelpers } from "../better/brt-helper";
 import { BetterResults } from "../core/brt-table-results";
 import { BRTCONFIG } from "../core/config";
 import { LootChatCard } from "./loot-chat-card";

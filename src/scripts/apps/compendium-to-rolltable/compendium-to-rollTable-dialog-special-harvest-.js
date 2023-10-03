@@ -1,5 +1,5 @@
 import { CONSTANTS } from "../../constants/constants";
-import { BRTBetterHelpers } from "../../core/brt-helper";
+import { BRTBetterHelpers } from "../../better/brt-helper";
 import { BRTCONFIG } from "../../core/config";
 import { debug, getSubstring, log } from "../../lib";
 import { CompendiumToRollTableDialog } from "./compendium-to-rollTable-dialog";

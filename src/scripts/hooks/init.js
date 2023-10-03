@@ -5,7 +5,7 @@ import { setApi } from "../../module.js";
 import API from "../API.js";
 import { registerSettings } from "../settings.js";
 import { CONSTANTS } from "../constants/constants.js";
-import { BetterRollTableBetterConfig } from "../core/brt-rolltable-config.js";
+import { BetterRollTableBetterConfig } from "../better/brt-rolltable-config.js";
 import SETTINGS from "../constants/settings.js";
 import { BetterRollTableLootConfig } from "../loot/loot-rolltable-config.js";
 import { BetterRollTableStoryConfig } from "../story/story-rolltable-config.js";
