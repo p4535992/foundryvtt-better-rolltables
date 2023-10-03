@@ -78,6 +78,7 @@ export class BetterRollTableHarvestConfig extends RollTableConfig {
     if (this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) !== CONSTANTS.TABLE_TYPE_HARVEST) {
       await this.document.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY, CONSTANTS.TABLE_TYPE_HARVEST);
     }
+    brtData.tableType = CONSTANTS.TABLE_TYPE_HARVEST;
     brtData.textType =
       i18n(`${CONSTANTS.MODULE_ID}.${"TypePrefixLabel"}`) + " " + i18n(`${CONSTANTS.MODULE_ID}.${"TypeHarvest"}`) + "";
 

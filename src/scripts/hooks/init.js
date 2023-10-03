@@ -80,6 +80,10 @@ class BetterRolltableHooks {
       return options.inverse(this);
     });
 
+    Handlebars.registerHelper("ifEquals", function (arg1, arg2, options) {
+      return arg1 == arg2 ? options.fn(this) : options.inverse(this);
+    });
+
     /** checks if the first argument is greater than the second argument */
     Handlebars.registerHelper("ifgt", function (a, b, options) {
       return a > b ? options.fn(this) : options.inverse(this);

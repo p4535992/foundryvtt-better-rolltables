@@ -1,4 +1,4 @@
-### 2.0.9-10
+### 2.0.9-10-11
 
 - Bug fix https://github.com/p4535992/foundryvtt-better-rolltables/issues/2
 

@@ -13,7 +13,7 @@
             <input type="hidden"
                 name="flags.better-rolltables.table-type"
                     value="{{data.flags.better-rolltables.table-type}}"/>
-            {{#ifcontain better-rolltables.table-type "loot"}}
+            {{#ifEquals @root.tableType "loot"}}
             <div class="form-group">
                 <label>{{localize 'better-rolltables.CurrencyLoot'}}</label>
                 <input type="text"
@@ -27,7 +27,7 @@
                     placeholder="{{localize 'better-rolltables.LootActorNamePlaceholder'}}" name="flags.better-rolltables.loot-actor-name"
                     value="{{data.flags.better-rolltables.loot-actor-name}}" />
             </div>
-            {{/ifcontain}}
+            {{/ifEquals}}
             <div class="form-group">
                 <label for="flags.better-rolltables.loot-amount-key">{{localize 'better-rolltables.LootRollAmount'}}</label>
                 <input type="text"
@@ -58,7 +58,7 @@
                 </a>
             </div>
             -->
-            {{#ifcontain better-rolltables.table-type "harvest"}}
+            {{#ifEquals @root.tableType "harvest"}}
             <div class="form-group">
                 <label for="flags.better-rolltables.brt-source-value">{{ localize 'better-rolltables.label.source' }}</label>
                 <input type="text"
@@ -80,7 +80,7 @@
                     name="flags.better-rolltables.brt-skill-value"
                     value="{{data.flags.better-rolltables.brt-skill-value}}" />
             </div>
-            {{/ifcontain}}
+            {{/ifEquals}}
         </main>
 
     </fieldset>
@@ -139,14 +139,14 @@
                         <label>{{ localize "better-rolltables.label.quantityFormula" }}</label>
                     </th>
 
-                    {{#ifcontain better-rolltables.table-type "harvest"}}
+                    {{#ifEquals @root.tableType "harvest"}}
                     <th class="result-brt-dc-value">
                         <label>{{ localize "better-rolltables.label.dc" }}</label>
                     </th>
                     <th class="result-brt-skill-value">
                         <label>{{ localize "better-rolltables.label.skill" }}</label>
                     </th>
-                    {{/ifcontain}}
+                    {{/ifEquals}}
 
                     <th class="result-weight">
                         <label>{{ localize "TABLE.ResultWeight" }}</label>
@@ -268,14 +268,14 @@
 					{{/if}}
                 </td>
 
-                {{#ifcontain better-rolltables.table-type "harvest"}}
+                {{#ifEquals @root.tableType "harvest"}}
                 <td class="result-brt-dc-value">
                     <input class="result-brt-dc-value" type="text" name="results.{{i}}.flags.better-rolltables.brt-dc-value" value="{{result.flags.better-rolltables.brt-dc-value}}" placeholder="1" />
                 </td>
                 <td class="result-brt-skill-value">
                     <input class="result-brt-skill-value" type="text" name="results.{{i}}.flags.better-rolltables.brt-skill-value" value="{{result.flags.better-rolltables.brt-skill-value}}" placeholder="arc" />
                 </td>
-                {{/ifcontain}}
+                {{/ifEquals}}
 
                 <td class="result-weight">
                     <input type="text" name="results.{{i}}.weight" value="{{result.weight}}" placeholder="1" data-dtype="Number"/>
@@ -319,38 +319,38 @@
 
     <!-- Roll Table Footer -->
     <footer class="sheet-footer flexrow">
-        {{#ifcontain better-rolltables.table-type "loot"}}
+        {{#ifEquals @root.tableType "loot"}}
         <button id="BRT-gen-loot" class="generate" type="button" data-tooltip='{{localize 'better-rolltables.Buttons.GenerateLootTooltip'}}' data-tooltip-direction='UP'><i class="fas fa-coins"></i>{{localize "better-rolltables.Buttons.GenerateLoot"}}</button>
         <button id="BRT-gen-loot-token" class="generate" type="button" data-tooltip='{{localize 'better-rolltables.Buttons.GenerateLootTokenTooltip'}}' data-tooltip-direction='UP'><i class="fa-solid fa-user-group"></i>{{localize "better-rolltables.Buttons.GenerateLootToken"}}</button>
-        {{/ifcontain}}
-        {{#ifcontain better-rolltables.table-type "harvest"}}
+        {{/ifEquals}}
+        {{#ifEquals @root.tableType "harvest"}}
         <button id="BRT-gen-harvest" class="generate" type="button" data-tooltip='{{localize 'better-rolltables.Buttons.GenerateHarvestTooltip'}}' data-tooltip-direction='UP'><i class="fas fa-coins"></i>{{localize "better-rolltables.Buttons.GenerateHarvest"}}</button>
         <button id="BRT-gen-harvest-token" class="generate" type="button" data-tooltip='{{localize 'better-rolltables.Buttons.GenerateHarvestTokenTooltip'}}' data-tooltip-direction='UP'><i class="fa-solid fa-user-group"></i>{{localize "better-rolltables.Buttons.GenerateHarvestToken"}}</button>
-        {{/ifcontain}}
+        {{/ifEquals}}
         {{#if owner}}
         <button class="submit" type="submit"><i class="fas fa-save"></i> {{ localize "TABLE.Update" }}</button>
         <button class="reset" type="button"><i class="fas fa-undo"></i> {{ localize "TABLE.Reset" }}</button>
         {{/if}}
         <button class="roll" type="button"><i class="fas fa-dice-d20"></i> {{ localize "TABLE.Roll" }}</button>
-        {{#ifcontain better-rolltables.table-type "better"}}
+        {{#ifEquals @root.tableType "better"}}
         <button class="better-rolltables-roll-better" type="button" data-tooltip='{{localize 'better-rolltables.label.betterRolltableRollTooltip'}}' data-tooltip-direction='UP'>
             <i class="fa-solid fa-dice"></i> {{ localize "better-rolltables.label.betterRolltableRoll" }}
         </button>
-        {{/ifcontain}}
-        {{#ifcontain better-rolltables.table-type "loot"}}
+        {{/ifEquals}}
+        {{#ifEquals @root.tableType "loot"}}
         <button class="better-rolltables-roll-loot" type="button" data-tooltip='{{localize 'better-rolltables.label.betterRolltableRollTooltip'}}' data-tooltip-direction='UP'>
             <i class="fas fa-gem"></i>{{localize "better-rolltables.label.betterRolltableRoll"}}
         </button>
-        {{/ifcontain}}
-        {{#ifcontain better-rolltables.table-type "story"}}
+        {{/ifEquals}}
+        {{#ifEquals @root.tableType "story"}}
         <button class="better-rolltables-roll-story" type="button" data-tooltip='{{localize 'better-rolltables.label.betterRolltableRollTooltip'}}' data-tooltip-direction='UP'>
             <i class="fas fa-book"></i>{{localize "better-rolltables.label.betterRolltableRoll"}}
         </button>
-        {{/ifcontain}}
-        {{#ifcontain better-rolltables.table-type "harvest"}}
+        {{/ifEquals}}
+        {{#ifEquals @root.tableType "harvest"}}
         <button class="better-rolltables-roll-harvest" type="button" data-tooltip='{{localize 'better-rolltables.label.betterRolltableRollTooltip'}}' data-tooltip-direction='UP'>
             <i class="fa-solid fa-wheat-awn-circle-exclamation"></i>{{localize "better-rolltables.label.betterRolltableRoll"}}
         </button>
-        {{/ifcontain}}
+        {{/ifEquals}}
     </footer>
 </form>
