@@ -96,6 +96,7 @@ export class BRTBetterHelpers {
   }
 
   static async retrieveDocumentFromResult(result, throwError, onlyUuid = false) {
+    let findDocument = null;
     if (result.type === CONST.TABLE_RESULT_TYPES.COMPENDIUM) {
       // Compendium.world.prodottifiniti.Item.cGvOfBMe8XQjL8ra
       let compendium = game.packs.get(`${result.documentCollection}`);
@@ -106,7 +107,6 @@ export class BRTBetterHelpers {
           warn(`Compendium ${result.documentCollection} was not found`);
         }
       }
-      let findDocument = null;
       if (onlyUuid) {
         findDocument = compendium.contents.find((m) => m.id === `${result.documentId}`);
       } else {
@@ -120,7 +120,6 @@ export class BRTBetterHelpers {
           warn(`The "${result.documentId}" document was not found in Compendium ${result.documentCollection}`);
         }
       }
-      return findDocument;
     } else if (result.type === CONST.TABLE_RESULT_TYPES.DOCUMENT) {
       let collection = game.collections.get(result.documentCollection);
       if (!collection) {
@@ -131,7 +130,6 @@ export class BRTBetterHelpers {
         }
       }
       if (collection) {
-        let findDocument = null;
         if (onlyUuid) {
           findDocument = collection.contents.find((m) => m.id === `${result.documentId}`);
         } else {
@@ -148,13 +146,24 @@ export class BRTBetterHelpers {
         }
       } else {
         findDocument = fromUuid(`${result.documentName}.${result.documentId}`); // Actor.KjoEEN077oSC4WG4
+        if (!findDocument) {
+          if (throwError) {
+            throw error(
+              `The "${result.documentId}" document was not found in collection ${result.documentName}.${result.documentId}`
+            );
+          } else {
+            warn(
+              `The "${result.documentId}" document was not found in collection ${result.documentName}.${result.documentId}`
+            );
+          }
+        }
       }
-      return findDocument;
     } else {
       warn(
         `The uuid can be retrieved only from result type '${CONST.TABLE_RESULT_TYPES.COMPENDIUM}' or '${CONST.TABLE_RESULT_TYPES.DOCUMENT}'`
       );
-      return null;
+      findDocument = null;
     }
+    return findDocument;
   }
 }
