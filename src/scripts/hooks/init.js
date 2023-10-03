@@ -51,9 +51,9 @@ class BetterRolltableHooks {
     // const moduleSettings = new Settings();
     // moduleSettings.registerSettings();
 
-    if (game.settings.get(CONSTANTS.MODULE_ID, SETTINGS.ENABLE_OLD_BEHAVIOR)) {
-      Hooks.on("renderRollTableConfig", BetterRT.enhanceRollTableView);
-    }
+    // if (game.settings.get(CONSTANTS.MODULE_ID, SETTINGS.ENABLE_OLD_BEHAVIOR)) {
+    //   Hooks.on("renderRollTableConfig", BetterRT.enhanceRollTableView);
+    // }
     Hooks.on("renderChatMessage", BetterTables.handleChatMessageButtons);
     Hooks.on("renderJournalPageSheet", BetterTables.handleRolltableLink);
     Hooks.on("renderItemSheet", BetterTables.handleRolltableLink);

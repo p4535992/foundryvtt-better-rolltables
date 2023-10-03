@@ -219,14 +219,14 @@ export function registerSettings() {
 
   // =====================================================================
 
-  game.settings.register(CONSTANTS.MODULE_ID, "enableOldBehavior", {
-    name: `${CONSTANTS.MODULE_ID}.Settings.enableOldBehavior.name`,
-    hint: `${CONSTANTS.MODULE_ID}.Settings.enableOldBehavior.hint`,
-    scope: "world",
-    config: true,
-    default: false,
-    type: Boolean,
-  });
+  // game.settings.register(CONSTANTS.MODULE_ID, "enableOldBehavior", {
+  //   name: `${CONSTANTS.MODULE_ID}.Settings.enableOldBehavior.name`,
+  //   hint: `${CONSTANTS.MODULE_ID}.Settings.enableOldBehavior.hint`,
+  //   scope: "world",
+  //   config: true,
+  //   default: false,
+  //   type: Boolean,
+  // });
 
   // =====================================================================
 

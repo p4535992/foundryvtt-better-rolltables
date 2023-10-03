@@ -15,7 +15,7 @@ const SETTINGS = {
   SHOW_WARNING_BEFORE_REROLL: "show-warning-before-reroll",
   STICK_ROLLTABLE_HEADER: "stick-rolltable-header",
   ROLL_TABLE_FROM_JOURNAL: "roll-table-from-journal",
-  ENABLE_OLD_BEHAVIOR: "enableOldBehavior",
+  // ENABLE_OLD_BEHAVIOR: "enableOldBehavior",
 
   // Loot
   SHOW_CURRENCY_SHARE_BUTTON: "show-currency-share-button",
