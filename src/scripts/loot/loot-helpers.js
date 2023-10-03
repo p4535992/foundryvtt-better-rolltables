@@ -15,7 +15,7 @@ export class BRTLootHelpers {
    * @param {options} object
    * @returns
    */
-  static async addLootToSelectedToken(tableEntity, token = null, options = null) {
+  static async addLootToSelectedToken(tableEntity, token = null, options = {}) {
     let tokenstack = [];
     const isTokenActor = options && options?.isTokenActor;
     const stackSame = options && options?.stackSame ? options.stackSame : true;
@@ -85,7 +85,7 @@ export class BRTLootHelpers {
     }
   }
 
-  static async generateChatLoot(tableEntity, options = null) {
+  static async generateChatLoot(tableEntity, options = {}) {
     let rollMode = options?.rollMode ?? null;
     if (String(getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${BRTCONFIG.HIDDEN_TABLE}`)) === "true") {
       rollMode = "gmroll";

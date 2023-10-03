@@ -15,51 +15,56 @@ export class BetterRollTable {
   /*  Methods                                     */
   /* -------------------------------------------- */
 
-  // /**
-  //  * Display a result drawn from a RollTable in the Chat Log along.
-  //  * Optionally also display the Roll which produced the result and configure aspects of the displayed messages.
-  //  *
-  //  * @param {TableResult[]} results         An Array of one or more TableResult Documents which were drawn and should
-  //  *                                        be displayed.
-  //  * @param {object} [options={}]           Additional options which modify message creation
-  //  * @param {Roll} [options.roll]                 An optional Roll instance which produced the drawn results
-  //  * @param {Object} [options.messageData={}]     Additional data which customizes the created messages
-  //  * @param {Object} [options.messageOptions={}]  Additional options which customize the created messages
-  //  */
-  // async toMessage(results, { roll = null, messageData = {}, messageOptions = {} } = {}) {
-  //   const speaker = ChatMessage.getSpeaker();
+  /**
+   * Display a result drawn from a RollTable in the Chat Log along.
+   * Optionally also display the Roll which produced the result and configure aspects of the displayed messages.
+   *
+   * @param {TableResult[]} results         An Array of one or more TableResult Documents which were drawn and should
+   *                                        be displayed.
+   * @param {object} [options={}]           Additional options which modify message creation
+   * @param {Roll} [options.roll]                 An optional Roll instance which produced the drawn results
+   * @param {Object} [options.messageData={}]     Additional data which customizes the created messages
+   * @param {Object} [options.messageOptions={}]  Additional options which customize the created messages
+   */
+  async toMessage(results, { roll = null, messageData = {}, messageOptions = {} } = {}) {
+    const speaker = ChatMessage.getSpeaker();
 
-  //   // Construct chat data
-  //   const flavorKey = `TABLE.DrawFlavor${results.length > 1 ? "Plural" : ""}`;
-  //   messageData = foundry.utils.mergeObject(
-  //     {
-  //       flavor: game.i18n.format(flavorKey, { number: results.length, name: this.table.name }),
-  //       user: game.user.id,
-  //       speaker: speaker,
-  //       type: roll ? CONST.CHAT_MESSAGE_TYPES.ROLL : CONST.CHAT_MESSAGE_TYPES.OTHER,
-  //       roll: roll,
-  //       sound: roll ? CONFIG.sounds.dice : null,
-  //       flags: { "core.RollTable":  this.table.id },
-  //     },
-  //     messageData
-  //   );
+    // Construct chat data
+    const flavorKey = `TABLE.DrawFlavor${results.length > 1 ? "Plural" : ""}`;
+    messageData = foundry.utils.mergeObject(
+      {
+        flavor: game.i18n.format(flavorKey, { number: results.length, name: this.table.name }),
+        user: game.user.id,
+        speaker: speaker,
+        type: roll ? CONST.CHAT_MESSAGE_TYPES.ROLL : CONST.CHAT_MESSAGE_TYPES.OTHER,
+        roll: roll,
+        sound: roll ? CONFIG.sounds.dice : null,
+        flags: { "core.RollTable": this.table.id },
+      },
+      messageData
+    );
 
-  //   // Render the chat card which combines the dice roll with the drawn results
-  //   messageData.content = await renderTemplate(CONFIG.RollTable.resultTemplate, {
-  //     description: await TextEditor.enrichHTML(this.table.description, { documents: true, async: true }),
-  //     results: results.map((result) => {
-  //       const r = result.toObject(false);
-  //       r.text = result.getChatText();
-  //       r.icon = result.icon;
-  //       return r;
-  //     }),
-  //     rollHTML: this.table.displayRoll && roll ? await roll.render() : null,
-  //     table:  this.table,
-  //   });
+    // Render the chat card which combines the dice roll with the drawn results
+    // messageData.content = await renderTemplate(CONFIG.RollTable.resultTemplate, {
+    messageData.content = await renderTemplate(`modules/${CONSTANTS.MODULE_ID}/templates/card/better-chat-card.hbs`, {
+      description: await TextEditor.enrichHTML(this.table.description, { documents: true, async: true }),
+      results: results.map((result) => {
+        // PATCH
+        const isResultHidden =
+          !game.user.isGM && getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HIDDEN_TABLE}`);
 
-  //   // Create the chat message
-  //   return ChatMessage.implementation.create(messageData, messageOptions);
-  // }
+        const r = result.toObject(false);
+        r.text = result.getChatText();
+        r.icon = isResultHidden ? CONSTANTS.DEFAULT_HIDDEN_RESULT_IMAGE : result.icon; // PATCH
+        return r;
+      }),
+      rollHTML: this.table.displayRoll && roll ? await roll.render() : null,
+      table: this.table,
+    });
+
+    // Create the chat message
+    return ChatMessage.implementation.create(messageData, messageOptions);
+  }
 
   /* -------------------------------------------- */
 
@@ -165,6 +170,13 @@ export class BetterRollTable {
         messageOptions: { rollMode },
       });
     }
+
+    // PATCH SET FLAG FOR HIDDEN RESULT
+    const isTableHidden = getProperty(this.table, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HIDDEN_TABLE}`);
+    results.map((r) => {
+      r.hidden = isTableHidden ? true : false;
+      return r;
+    });
 
     // Return the Roll and the array of results
     return { roll, results };
@@ -302,8 +314,9 @@ export class BetterRollTable {
           const innerTable = pack ? await pack.getDocument(id) : game.tables.get(id);
           if (innerTable) {
             // const innerRoll = await innerTable.roll({ _depth: _depth + 1 });
-            const brtInnerTable = new BetterRollTable(innerTable, this.options);
-            const innerRoll = await brtInnerTable.drawMany({
+            const innerOptions = this.options;
+            const brtInnerTable = new BetterRollTable(innerTable, innerOptions);
+            const innerRoll = await brtInnerTable.drawMany(resultAmount, {
               roll: formulaAmount,
               recursive: true,
               displayChat: false,
@@ -333,17 +346,20 @@ export class BetterRollTable {
     let dc = this.options.dc || undefined;
     let skill = this.options.skill || undefined;
     let resultsUpdate = this.table.results.filter((r) => !r.drawn && Number.between(value, ...r.range));
-    // Filter by dc
-    if (dc && parseInt(dc) > 0) {
-      resultsUpdate = resultsUpdate.filter((r) => {
-        return getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_DC_VALUE_KEY}`) <= parseInt(dc);
-      });
-    }
-    // Filter by skill
-    if (skill) {
-      resultsUpdate = resultsUpdate.filter((r) => {
-        return getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_SKILL_VALUE_KEY}`) === skill;
-      });
+
+    if (this.table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_HARVEST) {
+      // Filter by dc
+      if (dc && parseInt(dc) > 0) {
+        resultsUpdate = resultsUpdate.filter((r) => {
+          return getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_DC_VALUE_KEY}`) <= parseInt(dc);
+        });
+      }
+      // Filter by skill
+      if (skill) {
+        resultsUpdate = resultsUpdate.filter((r) => {
+          return getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_SKILL_VALUE_KEY}`) === skill;
+        });
+      }
     }
     return resultsUpdate;
   }

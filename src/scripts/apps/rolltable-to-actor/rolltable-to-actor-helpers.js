@@ -8,7 +8,7 @@ import { BRTUtils } from "../../core/utils";
 import { info, isRealNumber, warn } from "../../lib";
 
 export class RollTableToActorHelpers {
-  static async retrieveItemsDataFromRollTableResult(table, options = null) {
+  static async retrieveItemsDataFromRollTableResult(table, options = {}) {
     let brt = new BetterTables();
     const results = await brt.getBetterTableResults(table, options);
     let itemsData = await RollTableToActorHelpers.resultsToItemsData(results);
@@ -19,7 +19,7 @@ export class RollTableToActorHelpers {
     return itemsData;
   }
 
-  static async retrieveItemsDataFromRollTableResultSpecialHarvester(table, options = null) {
+  static async retrieveItemsDataFromRollTableResultSpecialHarvester(table, options = {}) {
     let brt = new BetterTables();
     const results = await brt.getBetterTableResults(table, options);
     let itemsData = await RollTableToActorHelpers.resultsToItemsData(results);
@@ -30,7 +30,7 @@ export class RollTableToActorHelpers {
     return itemsData;
   }
 
-  static async addRollTableItemsToActor(table, actor, options = null) {
+  static async addRollTableItemsToActor(table, actor, options = {}) {
     let brt = new BetterTables();
     const results = await brt.getBetterTableResults(table, options);
     const itemsData = await RollTableToActorHelpers.resultsToItemsData(results);
@@ -126,7 +126,7 @@ export class RollTableToActorHelpers {
   static async resultsToItemsData(results) {
     const itemsData = [];
     for (const r of results) {
-      if (!r.documentId) {
+      if (!r.documentId || r.type === CONST.TABLE_RESULT_TYPES.TEXT) {
         continue;
       }
       // NOTE: The formulaAmount calculation is already done on the betterRoll Method

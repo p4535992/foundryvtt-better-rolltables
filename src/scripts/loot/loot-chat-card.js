@@ -113,7 +113,7 @@ export class LootChatCard {
       let historyFolder = game.folders.getName("Better RollTable Items");
       if (!historyFolder) {
         historyFolder = await Folder.create({
-          name: "Better RollTable Items",
+          name: "Better RollTable | Loot Items",
           parent: null,
           type: "Item",
         });

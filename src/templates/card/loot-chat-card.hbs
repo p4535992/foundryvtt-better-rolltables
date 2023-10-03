@@ -2,11 +2,6 @@
     {{#if htmlDescription}}
     <div class="table-description">{{{htmlDescription}}}</div>
     {{/if}}
-    <!--
-    {{#if htmlDescription}}
-    <div class="table-description">{{{htmlDescription}}}</div>
-    {{/if}}
-    -->
     {{{ rollHTML }}}
     {{#unlessEmpty currency}}
         <div class="table-description" style="font-size: 15px; text-align: center; font-weight:bold;">{{localize 'better-rolltables.Buttons.Currency.label'}} {{format-currencies currency}}

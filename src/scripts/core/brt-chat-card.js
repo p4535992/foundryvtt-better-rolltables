@@ -1,13 +1,13 @@
 import { BRTCONFIG } from "../core/config.js";
 import { CONSTANTS } from "../constants/constants.js";
 import { BRTUtils } from "../core/utils.js";
-import { HarvestCreator } from "./harvest-creator.js";
 import { BRTBetterHelpers } from "../core/brt-helper.js";
+import { RollTableToActorHelpers } from "../apps/rolltable-to-actor/rolltable-to-actor-helpers.js";
 
 /**
- * create a chat card based on the content of the object HarvestData
+ * create a chat card based on the content of the object LootData
  */
-export class HarvestChatCard {
+export class BetterChatCard {
   /**
    * @param {object} betterResults
    */
@@ -20,7 +20,6 @@ export class HarvestChatCard {
   }
 
   async findOrCreateItems() {
-    const harvestCreator = new HarvestCreator(this.betterResults);
     for (const item of this.betterResults) {
       if (item.type === CONST.TABLE_RESULT_TYPES.TEXT) {
         await this.addToItemData({
@@ -35,7 +34,7 @@ export class HarvestChatCard {
       this.numberOfDraws++;
       /** we pass though the data, since we might have some data manipulation that changes an existing item, in that case even if it was initially
        * existing or in a compendium we have to create a new one */
-      const itemData = await harvestCreator.buildItemData(item);
+      const itemData = await RollTableToActorHelpers.buildItemData(item);
       if (item.collection) {
         const itemEntity = await BRTUtils.getItemFromCompendium(item);
 
@@ -103,7 +102,7 @@ export class HarvestChatCard {
   }
 
   async renderMessage(data) {
-    return renderTemplate(`modules/${CONSTANTS.MODULE_ID}/templates/card/harvest-chat-card.hbs`, data);
+    return renderTemplate(`modules/${CONSTANTS.MODULE_ID}/templates/card/better-chat-card.hbs`, data);
   }
 
   async getBRTFolder() {
@@ -111,7 +110,7 @@ export class HarvestChatCard {
       let historyFolder = game.folders.getName("Better RollTable Items");
       if (!historyFolder) {
         historyFolder = await Folder.create({
-          name: "Better RollTable | Harvest Items",
+          name: "Better RollTable | Better Items",
           parent: null,
           type: "Item",
         });
@@ -171,7 +170,7 @@ export class HarvestChatCard {
       content: cardHtml,
       flags: {
         [`${CONSTANTS.MODULE_ID}`]: {
-          [`${CONSTANTS.FLAGS.HARVEST}`]: chatCardData,
+          [`${CONSTANTS.FLAGS.BETTER}`]: chatCardData,
         },
       },
     };

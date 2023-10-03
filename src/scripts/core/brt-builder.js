@@ -14,7 +14,7 @@ export class BRTBuilder {
    * @param {*} rollsAmount
    * @returns {array} results
    */
-  async betterRoll(options) {
+  async betterRoll(options = {}) {
     let rollsAmount = options?.rollsAmount || (await BRTBetterHelpers.rollsAmount(this.table)) || undefined;
     let dc =
       options?.dc ||
@@ -32,9 +32,11 @@ export class BRTBuilder {
     let resultsTmp = [];
     for (const r of resultsBrt?.results ?? []) {
       let rTmp = r;
-      let rDoc = await BRTBetterHelpers.retrieveDocumentFromResultOnlyUuid(r, false);
-      if (!getProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`) && rDoc.uuid) {
-        setProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`, rDoc.uuid ?? "");
+      if (rTmp.type !== CONST.TABLE_RESULT_TYPES.TEXT) {
+        let rDoc = await BRTBetterHelpers.retrieveDocumentFromResultOnlyUuid(r, false);
+        if (!getProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`) && rDoc.uuid) {
+          setProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`, rDoc.uuid ?? "");
+        }
       }
       resultsTmp.push(rTmp);
     }
@@ -216,9 +218,11 @@ export class BRTBuilder {
     let resultsTmp = [];
     for (const r of resultsBrt?.results ?? []) {
       let rTmp = r;
-      let rDoc = await BRTBetterHelpers.retrieveDocumentFromResultOnlyUuid(r, false);
-      if (!getProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`) && rDoc.uuid) {
-        setProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`, rDoc.uuid ?? "");
+      if (rTmp.type !== CONST.TABLE_RESULT_TYPES.TEXT) {
+        let rDoc = await BRTBetterHelpers.retrieveDocumentFromResultOnlyUuid(r, false);
+        if (!getProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`) && rDoc.uuid) {
+          setProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`, rDoc.uuid ?? "");
+        }
       }
       resultsTmp.push(rTmp);
     }

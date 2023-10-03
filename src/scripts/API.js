@@ -30,7 +30,7 @@ const API = {
    * @param {RollTable} tableEntity rolltable to generate content from
    * @returns {Promise<{flavor: *, sound: string, user: *, content: *}>}
    */
-  async roll(tableEntity, options = null) {
+  async roll(tableEntity, options = {}) {
     return await this.betterTables.roll(tableEntity, options);
   },
 
@@ -44,7 +44,7 @@ const API = {
    * @param {string} [options.skill]  The skill denomination
    * @returns {Promise<TableResult[]>}
    */
-  async betterTableRoll(tableEntity, options = null) {
+  async betterTableRoll(tableEntity, options = {}) {
     return await this.betterTables.betterTableRoll(tableEntity, options);
   },
 
@@ -125,7 +125,7 @@ const API = {
    * @param {string} [options.skill]  The skill denomination
    * @returns {Promise<void>}
    */
-  async addLootToSelectedToken(tableEntity, token = null, options = null) {
+  async addLootToSelectedToken(tableEntity, token = null, options = {}) {
     return await BRTLootHelpers.addLootToSelectedToken(tableEntity, token, options);
   },
 
@@ -167,7 +167,7 @@ const API = {
    * @param {string} [options.skill]  The skill denomination
    * @returns {Promise<void>}
    */
-  async generateChatLoot(tableEntity, options = null) {
+  async generateChatLoot(tableEntity, options = {}) {
     return await BRTLootHelpers.generateChatLoot(tableEntity, options);
   },
 
@@ -213,7 +213,7 @@ const API = {
    * @param {string} [options.skill]  The skill denomination
    * @returns {Promise<void>}
    */
-  async generateChatHarvest(tableEntity, options = null) {
+  async generateChatHarvest(tableEntity, options = {}) {
     return await BRTHarvestHelpers.generateChatHarvest(tableEntity, options);
   },
 

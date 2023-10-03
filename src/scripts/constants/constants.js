@@ -35,4 +35,5 @@ export const CONSTANTS = {
   TABLE_TYPE_LOOT: "loot",
   TABLE_TYPE_HARVEST: "harvest",
   TABLE_TYPE_STORY: "story",
+  DEFAULT_HIDDEN_RESULT_IMAGE: "modules/better-rolltables/assets/artwork/unidentified-result.webp",
 };

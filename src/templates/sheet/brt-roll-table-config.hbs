@@ -268,14 +268,14 @@
 					{{/if}}
                 </td>
 
-
+                {{#ifcontain better-rolltables.table-type "harvest"}}
                 <td class="result-brt-dc-value">
                     <input class="result-brt-dc-value" type="text" name="results.{{i}}.flags.better-rolltables.brt-dc-value" value="{{result.flags.better-rolltables.brt-dc-value}}" placeholder="1" />
                 </td>
                 <td class="result-brt-skill-value">
                     <input class="result-brt-skill-value" type="text" name="results.{{i}}.flags.better-rolltables.brt-skill-value" value="{{result.flags.better-rolltables.brt-skill-value}}" placeholder="arc" />
                 </td>
-               
+                {{/ifcontain}}
 
                 <td class="result-weight">
                     <input type="text" name="results.{{i}}.weight" value="{{result.weight}}" placeholder="1" data-dtype="Number"/>
