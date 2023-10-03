@@ -1,4 +1,3 @@
-import { LootCreator } from "./loot-creator.js";
 import { BRTCONFIG } from "../core/config.js";
 import { CONSTANTS } from "../constants/constants.js";
 import { BRTUtils } from "../core/utils.js";
@@ -22,7 +21,6 @@ export class LootChatCard {
   }
 
   async findOrCreateItems() {
-    const lootCreator = new LootCreator(this.betterResults, this.currencyData);
     for (const item of this.betterResults) {
       if (item.type === CONST.TABLE_RESULT_TYPES.TEXT) {
         await this.addToItemData({
@@ -37,7 +35,7 @@ export class LootChatCard {
       this.numberOfDraws++;
       /** we pass though the data, since we might have some data manipulation that changes an existing item, in that case even if it was initially
        * existing or in a compendium we have to create a new one */
-      const itemData = await lootCreator.buildItemData(item);
+      const itemData = await RollTableToActorHelpers.buildItemData(item);
       if (item.collection) {
         const itemEntity = await BRTUtils.getItemFromCompendium(item);
 

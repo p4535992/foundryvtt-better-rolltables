@@ -339,6 +339,7 @@ export class RollTableToActorHelpers {
   /**
    *
    * @param {token} token
+   * @param {TableResult[]} results
    * @param {boolean} stackSame
    * @param {boolean} isTokenActor - is the token already the token actor?
    * @param {number} customLimit

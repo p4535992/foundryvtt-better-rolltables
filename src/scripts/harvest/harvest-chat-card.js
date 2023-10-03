@@ -1,7 +1,6 @@
 import { BRTCONFIG } from "../core/config.js";
 import { CONSTANTS } from "../constants/constants.js";
 import { BRTUtils } from "../core/utils.js";
-import { HarvestCreator } from "./harvest-creator.js";
 import { BRTBetterHelpers } from "../core/brt-helper.js";
 
 /**
@@ -20,7 +19,6 @@ export class HarvestChatCard {
   }
 
   async findOrCreateItems() {
-    const harvestCreator = new HarvestCreator(this.betterResults);
     for (const item of this.betterResults) {
       if (item.type === CONST.TABLE_RESULT_TYPES.TEXT) {
         await this.addToItemData({
@@ -35,7 +33,7 @@ export class HarvestChatCard {
       this.numberOfDraws++;
       /** we pass though the data, since we might have some data manipulation that changes an existing item, in that case even if it was initially
        * existing or in a compendium we have to create a new one */
-      const itemData = await harvestCreator.buildItemData(item);
+      const itemData = await RollTableToActorHelpers.buildItemData(item);
       if (item.collection) {
         const itemEntity = await BRTUtils.getItemFromCompendium(item);
 

@@ -1,10 +1,10 @@
+import { RollTableToActorHelpers } from "../apps/rolltable-to-actor/rolltable-to-actor-helpers";
 import { CONSTANTS } from "../constants/constants";
 import { BRTBuilder } from "../core/brt-builder";
 import { BRTBetterHelpers } from "../core/brt-helper";
 import { BetterResults } from "../core/brt-table-results";
 import { BRTCONFIG } from "../core/config";
 import { LootChatCard } from "./loot-chat-card";
-import { LootCreator } from "./loot-creator";
 
 export class BRTLootHelpers {
   /**
@@ -17,10 +17,10 @@ export class BRTLootHelpers {
    */
   static async addLootToSelectedToken(tableEntity, token = null, options = {}) {
     let tokenstack = [];
-    const isTokenActor = options && options?.isTokenActor;
-    const stackSame = options && options?.stackSame ? options.stackSame : true;
-    const customRoll = options && options?.customRole ? options.customRole : undefined;
-    const itemLimit = options && options?.itemLimit ? Number(options.itemLimit) : 0;
+    const isTokenActor = options?.isTokenActor;
+    const stackSame = options?.stackSame ? options.stackSame : true;
+    const customRoll = options?.customRole ? options.customRole : undefined;
+    const itemLimit = options?.itemLimit ? Number(options.itemLimit) : 0;
 
     if (null == token && canvas.tokens.controlled.length === 0) {
       return ui.notifications.error("Please select a token first");
@@ -43,10 +43,8 @@ export class BRTLootHelpers {
       const br = new BetterResults(results);
       const betterResults = await br.buildResults(tableEntity);
       const currencyData = br.getCurrencyData();
-      const lootCreator = new LootCreator(betterResults, currencyData);
-
-      await lootCreator.addCurrenciesToToken(token, isTokenActor);
-      await lootCreator.addItemsToToken(token, stackSame, isTokenActor, itemLimit);
+      await BRTLootHelpers.addCurrenciesToToken(token, currencyData, isTokenActor);
+      await RollTableToActorHelpers.addItemsToTokenOld(token, betterResults, stackSame, isTokenActor, itemLimit);
     }
 
     return ui.notifications.info(CONSTANTS.MODULE_ID + " | API | Loot generation complete.");
@@ -61,6 +59,9 @@ export class BRTLootHelpers {
     if (String(getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${BRTCONFIG.HIDDEN_TABLE}`)) === "true") {
       rollMode = "gmroll";
     }
+    const stackSame = options?.stackSame ? options.stackSame : true;
+    const customRoll = options?.customRole ? options.customRole : undefined;
+    const itemLimit = options?.itemLimit ? Number(options.itemLimit) : 0;
 
     let rollsAmount = options?.rollsAmount || (await BRTBetterHelpers.rollsAmount(tableEntity)) || undefined;
     const builder = new BRTBuilder(tableEntity);
@@ -73,11 +74,10 @@ export class BRTLootHelpers {
     const br = new BetterResults(results);
     const betterResults = await br.buildResults(tableEntity);
     const currencyData = br.getCurrencyData();
-    const lootCreator = new LootCreator(betterResults, currencyData);
 
-    await lootCreator.createActor(tableEntity);
-    await lootCreator.addCurrenciesToActor();
-    await lootCreator.addItemsToActor();
+    const actor = await BRTLootHelpers.createActor(tableEntity);
+    await BRTLootHelpers.addCurrenciesToActor(actor, currencyData);
+    await RollTableToActorHelpers.addItemsToActorOld(actor, betterResults, stackSame, itemLimit);
 
     if (game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.ALWAYS_SHOW_GENERATED_LOOT_AS_MESSAGE)) {
       const lootChatCard = new LootChatCard(betterResults, currencyData, rollMode);
@@ -150,5 +150,24 @@ export class BRTLootHelpers {
     } else {
       return await token.actor.update({ "system.currency": currencyData });
     }
+  }
+
+  static async createActor(table, overrideName = undefined) {
+    const actorName = overrideName || table.getFlag(CONSTANTS.MODULE_ID, BRTCONFIG.LOOT_ACTOR_NAME_KEY);
+    this.actor = game.actors.getName(actorName);
+    if (!this.actor) {
+      this.actor = await Actor.create({
+        name: actorName || "New Loot",
+        type: game.settings.get(CONSTANTS.MODULE_ID, SETTINGS.DEFAULT_ACTOR_NPC_TYPE),
+        img: `modules/${CONSTANTS.MODULE_ID}/assets/artwork/chest.webp`,
+        sort: 12000,
+        token: { actorLink: true },
+      });
+    }
+
+    // const lootSheet = game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.LOOT_SHEET_TO_USE_KEY);
+    // if (lootSheet in CONFIG.Actor.sheetClasses.npc) {
+    //   await this.actor.setFlag("core", "sheetClass", lootSheet);
+    // }
   }
 }
