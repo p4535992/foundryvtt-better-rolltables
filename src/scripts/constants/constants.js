@@ -4,6 +4,7 @@ export const CONSTANTS = {
   TYPES: ["none", "better", "loot", "harvest", "story"],
   FLAGS: {
     LOOT: "loot",
+    BETTER: "better",
     LOOT_CURRENCY: "loot.currency",
     LOOT_SHARED: "loot.shared",
     // saved data keys (used e.g. in the rolltableEntity.data.flags)

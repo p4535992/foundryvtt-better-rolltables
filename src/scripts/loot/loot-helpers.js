@@ -5,6 +5,7 @@ import { BRTBetterHelpers } from "../better/brt-helper";
 import { BetterResults } from "../core/brt-table-results";
 import { BRTCONFIG } from "../core/config";
 import { LootChatCard } from "./loot-chat-card";
+import { BRTUtils } from "../core/utils";
 
 export class BRTLootHelpers {
   /**
@@ -17,11 +18,6 @@ export class BRTLootHelpers {
    */
   static async addLootToSelectedToken(tableEntity, token = null, options = {}) {
     let tokenstack = [];
-    const isTokenActor = options?.isTokenActor;
-    const stackSame = options?.stackSame ? options.stackSame : true;
-    const customRoll = options?.customRole ? options.customRole : undefined;
-    const itemLimit = options?.itemLimit ? Number(options.itemLimit) : 0;
-
     if (null == token && canvas.tokens.controlled.length === 0) {
       return ui.notifications.error("Please select a token first");
     } else {
@@ -30,7 +26,15 @@ export class BRTLootHelpers {
 
     ui.notifications.info(CONSTANTS.MODULE_ID + " | API | Loot generation started.");
 
-    let rollsAmount = options?.rollsAmount || (await BRTBetterHelpers.rollsAmount(tableEntity)) || undefined;
+    options = BRTUtils.updateOptions(tableEntity, options);
+
+    const isTokenActor = options?.isTokenActor;
+    const stackSame = options?.stackSame;
+    const customRoll = options?.customRole;
+    const itemLimit = options?.itemLimit;
+
+    const rollsAmount = options?.rollsAmount;
+
     const brtBuilder = new BRTBuilder(tableEntity);
 
     for (const token of tokenstack) {
@@ -55,18 +59,18 @@ export class BRTLootHelpers {
    * @param {*} tableEntity
    */
   static async generateLoot(tableEntity, options = {}) {
-    let rollMode = options?.rollMode ?? null;
-    if (String(getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${BRTCONFIG.HIDDEN_TABLE}`)) === "true") {
-      rollMode = "gmroll";
-    }
-    const stackSame = options?.stackSame ? options.stackSame : true;
-    const customRoll = options?.customRole ? options.customRole : undefined;
-    const itemLimit = options?.itemLimit ? Number(options.itemLimit) : 0;
+    options = BRTUtils.updateOptions(tableEntity, options);
 
-    let rollsAmount = options?.rollsAmount || (await BRTBetterHelpers.rollsAmount(tableEntity)) || undefined;
+    const rollMode = options?.rollMode;
+    const stackSame = options?.stackSame;
+    const customRoll = options?.customRole;
+    const itemLimit = options?.itemLimit;
+
+    const rollsAmount = options?.rollsAmount;
+
     const builder = new BRTBuilder(tableEntity);
     const resultsBrt = await builder.betterRoll({
-      rollsAmount: rollsAmount,
+      rollsAmount: customRoll ?? rollsAmount,
       dc: undefined,
       skill: undefined,
     });
@@ -86,12 +90,11 @@ export class BRTLootHelpers {
   }
 
   static async generateChatLoot(tableEntity, options = {}) {
-    let rollMode = options?.rollMode ?? null;
-    if (String(getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${BRTCONFIG.HIDDEN_TABLE}`)) === "true") {
-      rollMode = "gmroll";
-    }
+    options = BRTUtils.updateOptions(tableEntity, options);
 
-    let rollsAmount = options?.rollsAmount || (await BRTBetterHelpers.rollsAmount(tableEntity)) || undefined;
+    const rollMode = options?.rollMode;
+    const rollsAmount = options?.rollsAmount;
+
     const brtBuilder = new BRTBuilder(tableEntity);
     const resultsBrt = await brtBuilder.betterRoll({
       rollsAmount: rollsAmount,

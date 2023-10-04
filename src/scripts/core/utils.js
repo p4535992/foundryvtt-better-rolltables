@@ -119,4 +119,70 @@ export class BRTUtils {
         return "";
     }
   }
+
+  /**
+   *
+   * @param {RollTable} tableEntity
+   * @param {Object} myObj description
+   * @param {number} myObj.a description
+   * @param {string} myObj.b description
+   * @returns {{rollsAmount: number, dc: number, skill: string, isTokenActor: boolean, stackSame: boolean, customRoll: string, itemLimit: number, rollMode: string}},
+   */
+  static async updateOptions(tableEntity, options = {}) {
+    let newOptions = {};
+    if (!options) {
+      options = {};
+    }
+
+    let rollsAmount = undefined;
+    if (options?.rollsAmount) {
+      if (isRealNumber(options?.rollsAmount)) {
+        rollsAmount = options?.rollsAmount;
+      } else {
+        rollsAmount = await BRTBetterHelpers.tryRoll(options?.rollsAmount);
+      }
+    } else {
+      rollsAmount = await BRTBetterHelpers.rollsAmount(tableEntity);
+    }
+
+    newOptions.rollsAmount = rollsAmount;
+
+    let dc =
+      options?.dc ||
+      getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_DC_VALUE_KEY}`) ||
+      undefined;
+
+    if (dc) {
+      if (isRealNumber(dc)) {
+        // DO NOTHING
+      } else {
+        dc = await BRTBetterHelpers.tryRoll(dc);
+      }
+    }
+    newOptions.dc = dc;
+
+    newOptions.skill =
+      options?.skill ||
+      getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_SKILL_VALUE_KEY}`) ||
+      undefined;
+
+    newOptions.isTokenActor = options?.isTokenActor;
+    newOptions.stackSame = options?.stackSame ? options.stackSame : true;
+
+    let customRole = options?.customRole ? options.customRole : undefined;
+    if (!customRole) {
+      customRole = options?.customRoll ? options.customRoll : undefined;
+    }
+    newOptions.customRoll = customRole;
+
+    newOptions.itemLimit = options?.itemLimit ? Number(options.itemLimit) : 0;
+
+    let rollMode = options?.rollMode ?? null;
+    if (String(getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${BRTCONFIG.HIDDEN_TABLE}`)) === "true") {
+      rollMode = "gmroll";
+    }
+    newOptions.rollMode;
+
+    return newOptions;
+  }
 }

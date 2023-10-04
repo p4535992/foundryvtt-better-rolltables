@@ -2,13 +2,14 @@ import { CONSTANTS } from "../constants/constants.js";
 import { log } from "../lib.js";
 import { BRTBetterHelpers } from "../better/brt-helper.js";
 import { BRTCONFIG } from "./config.js";
+import { BRTUtils } from "./utils.js";
 
 export class BetterRollTable {
   // extends RollTable {
 
   constructor(table, options) {
-    this.options = options;
     this.table = table;
+    this.options = BRTUtils.updateOptions(this.table, options);
   }
 
   /* -------------------------------------------- */
@@ -49,13 +50,9 @@ export class BetterRollTable {
     messageData.content = await renderTemplate(`modules/${CONSTANTS.MODULE_ID}/templates/card/better-chat-card.hbs`, {
       description: await TextEditor.enrichHTML(this.table.description, { documents: true, async: true }),
       results: results.map((result) => {
-        // PATCH
-        const isResultHidden =
-          !game.user.isGM && getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HIDDEN_TABLE}`);
-
         const r = result.toObject(false);
         r.text = result.getChatText();
-        r.icon = isResultHidden ? CONSTANTS.DEFAULT_HIDDEN_RESULT_IMAGE : result.icon; // PATCH
+        r.icon = result.icon;
         return r;
       }),
       rollHTML: this.table.displayRoll && roll ? await roll.render() : null,
@@ -108,7 +105,7 @@ export class BetterRollTable {
 
     // Forward drawn results to create chat messages
     if (displayChat) {
-      await this.table.toMessage(draw.results, {
+      await this.toMessage(draw.results, {
         roll: roll,
         messageOptions: { rollMode },
       });
@@ -130,7 +127,7 @@ export class BetterRollTable {
    * @param {string} [options.rollMode]             Customize the roll mode used to display the drawn results
    * @returns {Promise<{RollTableDraw}>}  The drawn results
    */
-  async drawMany(number, { roll = null, recursive = true, displayChat = true, rollMode = null, _depth = 0 } = {}) {
+  async drawMany(number, { roll = null, recursive = true, displayChat = false, rollMode = null, _depth = 0 } = {}) {
     let results = [];
     let updates = [];
     const rolls = [];
@@ -163,20 +160,24 @@ export class BetterRollTable {
       await this.table.updateEmbeddedDocuments("TableResult", updates, { diff: false });
     }
 
+    // PATCH SET FLAG FOR HIDDEN RESULT
+    const isTableHidden = getProperty(this.table, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HIDDEN_TABLE}`);
+    results.map((r) => {
+      if (isTableHidden) {
+        setProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HIDDEN_TABLE}`, true);
+      } else {
+        setProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HIDDEN_TABLE}`, false);
+      }
+      return r;
+    });
+
     // Forward drawn results to create chat messages
     if (displayChat && results.length) {
-      await this.table.toMessage(results, {
+      await this.toMessage(results, {
         roll: roll,
         messageOptions: { rollMode },
       });
     }
-
-    // PATCH SET FLAG FOR HIDDEN RESULT
-    const isTableHidden = getProperty(this.table, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HIDDEN_TABLE}`);
-    results.map((r) => {
-      r.hidden = isTableHidden ? true : false;
-      return r;
-    });
 
     // Return the Roll and the array of results
     return { roll, results };
@@ -428,5 +429,213 @@ export class BetterRollTable {
       },
       options
     );
+  }
+
+  /* -------------------------------------------- */
+  /*  Methods BRT                                   */
+  /* -------------------------------------------- */
+
+  /**
+   *
+   * @param {*} rollsAmount
+   * @returns {array} results
+   */
+  async betterRoll(options = {}) {
+    options = BRTUtils.updateOptions(this.table, options);
+
+    const rollsAmount = options?.rollsAmount;
+
+    this.mainRoll = undefined;
+
+    let resultsBrt = await this.rollManyOnTable(rollsAmount, this.table, options);
+    // Patch add uuid to every each result for better module compatibility
+    let resultsTmp = [];
+    for (const r of resultsBrt?.results ?? []) {
+      let rTmp = r;
+      if (rTmp.type !== CONST.TABLE_RESULT_TYPES.TEXT) {
+        let rDoc = await BRTBetterHelpers.retrieveDocumentFromResultOnlyUuid(r, false);
+        if (!getProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`) && rDoc.uuid) {
+          setProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`, rDoc.uuid ?? "");
+        }
+      }
+      resultsTmp.push(rTmp);
+    }
+
+    this.results = resultsTmp;
+    return {
+      roll: this.mainRoll,
+      results: this.results,
+    };
+  }
+
+  /**
+   *
+   * @param {array} results
+   */
+  async createChatCard(results, rollMode = null) {
+    let msgData = { roll: this.mainRoll, messageData: {} };
+    if (rollMode) {
+      BRTUtils.addRollModeToChatData(msgData.messageData, rollMode);
+    }
+    let brtTable = new BetterRollTable(this.table, options);
+    await brtTable.toMessage(results, msgData);
+    //await this.table.toMessage(results, msgData);
+  }
+
+  /**
+   * Draw multiple results from a RollTable, constructing a final synthetic Roll as a dice pool of inner rolls.
+   * @param {amount} amount               The number of results to draw
+   * @param {RollTable} table             The rollTable object
+   * @param {object} [options={}]         Optional arguments which customize the draw
+   * @param {Roll} [options.roll]                   An optional pre-configured Roll instance which defines the dice roll to use
+   * @param {boolean} [options.recursive=true]      Allow drawing recursively from inner RollTable results
+   * @param {boolean} [options.displayChat=false]    Automatically display the drawn results in chat? Default is true
+   * @param {number} [options._depth]  The rolls amount value
+   *
+   * @returns {Promise<Array{RollTableResult}>} The drawn results
+   */
+  async rollManyOnTable(
+    amount,
+    table,
+    options = {},
+    { roll = null, recursive = true, displayChat = false, _depth = 0 } = {}
+  ) {
+    options = mergeObject(options, {
+      roll: roll,
+      recursive: recursive,
+      displayChat: displayChat,
+      _depth: _depth,
+    });
+
+    const maxRecursions = 5;
+    // Prevent infinite recursion
+    if (_depth > maxRecursions) {
+      let msg = game.i18n.format(`${BRTCONFIG.NAMESPACE}.Strings.Warnings.MaxRecursion`, {
+        maxRecursions: maxRecursions,
+        tableId: table.id,
+      });
+      throw new Error(CONSTANTS.MODULE_ID + " | " + msg);
+    }
+
+    let drawnResults = [];
+
+    while (amount > 0) {
+      let resultToDraw = amount;
+      // if we draw without replacement we need to reset the table once all entries are drawn
+      if (!table.replacement) {
+        const resultsLeft = table.results.reduce(function (n, r) {
+          return n + !r.drawn;
+        }, 0);
+
+        if (resultsLeft === 0) {
+          await table.resetResults();
+          continue;
+        }
+
+        resultToDraw = Math.min(resultsLeft, amount);
+      }
+
+      if (!table.formula) {
+        let msg = game.i18n.format(`${BRTCONFIG.NAMESPACE}.RollTable.NoFormula`, {
+          name: table.name,
+        });
+        ui.notifications.error(CONSTANTS.MODULE_ID + " | " + msg);
+        return;
+      }
+
+      let brtTable = new BetterRollTable(table, options);
+      const draw = await brtTable.drawMany(amount, {
+        roll: roll,
+        recursive: recursive,
+        displayChat: false,
+        rollMode: "gmroll",
+      });
+      if (!this.mainRoll) {
+        this.mainRoll = draw.roll;
+      }
+
+      for (const entry of draw.results) {
+        let formulaAmount =
+          getProperty(entry, `flags.${BRTCONFIG.NAMESPACE}.${BRTCONFIG.RESULTS_FORMULA_KEY_FORMULA}`) || "";
+
+        if (entry.type === CONST.TABLE_RESULT_TYPES.TEXT) {
+          formulaAmount = "";
+        }
+        const entryAmount = await BRTBetterHelpers.tryRoll(formulaAmount);
+
+        let innerTable;
+        if (entry.type === CONST.TABLE_RESULT_TYPES.DOCUMENT && entry.documentCollection === "RollTable") {
+          innerTable = game.tables.get(entry.documentId);
+        } else if (entry.type === CONST.TABLE_RESULT_TYPES.COMPENDIUM) {
+          const entityInCompendium = await BRTUtils.findInCompendiumByName(entry.documentCollection, entry.text);
+          if (entityInCompendium !== undefined && entityInCompendium.documentName === "RollTable") {
+            innerTable = entityInCompendium;
+          }
+        }
+
+        if (innerTable) {
+          const innerOptions = options;
+          const innerResults = await this.rollManyOnTable(entryAmount, innerTable, innerOptions, {
+            roll: roll,
+            recursive: recursive,
+            displayChat: false,
+            _depth: _depth + 1,
+          });
+          drawnResults = drawnResults.concat(innerResults);
+        } else {
+          drawnResults = drawnResults.concat(Array(entryAmount).fill(entry));
+        }
+      }
+      amount -= resultToDraw;
+    }
+
+    return {
+      roll: this.mainRoll,
+      results: drawnResults,
+    };
+    // return drawnResults;
+  }
+
+  /**
+   * Evaluate a RollTable by rolling its formula and retrieving a drawn result.
+   *
+   * Note that this function only performs the roll and identifies the result, the RollTable#draw function should be
+   * called to formalize the draw from the table.
+   *
+   * @param {object} [options={}]       Options which modify rolling behavior
+   * @param {Roll} [options.roll]                   An alternative dice Roll to use instead of the default table formula
+   * @param {boolean} [options.recursive=true]   If a RollTable document is drawn as a result, recursively roll it
+   * @param {number} [options._depth]            An internal flag used to track recursion depth
+   * @returns {Promise<RollTableDraw>}  The Roll and results drawn by that Roll
+   *
+   * @example Draw results using the default table formula
+   * ```js
+   * const defaultResults = await table.roll();
+   * ```
+   *
+   * @example Draw results using a custom roll formula
+   * ```js
+   * const roll = new Roll("1d20 + @abilities.wis.mod", actor.getRollData());
+   * const customResults = await table.roll({roll});
+   * ```
+   */
+  async roll(options = {}, { roll = null, recursive = true, displayChat = false, _depth = 0 } = {}) {
+    let resultsBrt = await this.rollManyOnTable(1, this.table, options, { roll, recursive, _depth });
+    // Patch add uuid to every each result for better module compatibility
+    let resultsTmp = [];
+    for (const r of resultsBrt?.results ?? []) {
+      let rTmp = r;
+      if (rTmp.type !== CONST.TABLE_RESULT_TYPES.TEXT) {
+        let rDoc = await BRTBetterHelpers.retrieveDocumentFromResultOnlyUuid(r, false);
+        if (!getProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`) && rDoc.uuid) {
+          setProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`, rDoc.uuid ?? "");
+        }
+      }
+      resultsTmp.push(rTmp);
+    }
+    return {
+      roll: resultsBrt.roll,
+      results: resultsTmp,
+    };
   }
 }

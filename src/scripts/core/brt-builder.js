@@ -15,15 +15,9 @@ export class BRTBuilder {
    * @returns {array} results
    */
   async betterRoll(options = {}) {
-    let rollsAmount = options?.rollsAmount || (await BRTBetterHelpers.rollsAmount(this.table)) || undefined;
-    let dc =
-      options?.dc ||
-      getProperty(this.table, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_DC_VALUE_KEY}`) ||
-      undefined;
-    let skill =
-      options?.skill ||
-      getProperty(this.table, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_SKILL_VALUE_KEY}`) ||
-      undefined;
+    options = BRTUtils.updateOptions(this.table, options);
+
+    const rollsAmount = options?.rollsAmount;
 
     this.mainRoll = undefined;
 
@@ -57,7 +51,9 @@ export class BRTBuilder {
     if (rollMode) {
       BRTUtils.addRollModeToChatData(msgData.messageData, rollMode);
     }
-    await this.table.toMessage(results, msgData);
+    let brtTable = new BetterRollTable(this.table, options);
+    await brtTable.toMessage(results, msgData);
+    //await this.table.toMessage(results, msgData);
   }
 
   /**
@@ -72,40 +68,20 @@ export class BRTBuilder {
    *
    * @returns {Promise<Array{RollTableResult}>} The drawn results
    */
-  async rollManyOnTable(amount, table, { roll = null, recursive = true, _depth = 0, dc = null, skill = null } = {}) {
-    let options = {
+  async rollManyOnTable(
+    amount,
+    table,
+    options = {},
+    { roll = null, recursive = true, displayChat = false, _depth = 0 } = {}
+  ) {
+    options = mergeObject(options, {
       roll: roll,
       recursive: recursive,
+      displayChat: displayChat,
       _depth: _depth,
-      dc: dc,
-      skill: skill,
-    };
-
-    /*
-    if (!table.formula) {
-      let msg = game.i18n.format(`${BRTCONFIG.NAMESPACE}.RollTable.NoFormula`, {
-        name: table.name,
-      });
-      ui.notifications.error(CONSTANTS.MODULE_ID + " | " + msg);
-      return;
-    }
-
-    let brtTable = new BetterRollTable(table, options);
-    const draw = await brtTable.drawMany(amount, {
-      roll: roll,
-      recursive: recursive,
-      displayChat: false,
-      rollMode: "gmroll",
     });
-    if (!this.mainRoll) {
-      this.mainRoll = draw.roll;
-    }
-    return draw.results;
-    */
-    // =================================
 
     const maxRecursions = 5;
-    let msg = "";
     // Prevent infinite recursion
     if (_depth > maxRecursions) {
       let msg = game.i18n.format(`${BRTCONFIG.NAMESPACE}.Strings.Warnings.MaxRecursion`, {
@@ -172,8 +148,12 @@ export class BRTBuilder {
         }
 
         if (innerTable) {
-          const innerOptions = mergeObject(options, { _depth: _depth + 1 });
-          const innerResults = await this.rollManyOnTable(entryAmount, innerTable, innerOptions);
+          const innerOptions = options;
+          const innerResults = await this.rollManyOnTable(entryAmount, innerTable, innerOptions, {
+            roll: roll,
+            recursive: recursive,
+            _depth: _depth + 1,
+          });
           drawnResults = drawnResults.concat(innerResults);
         } else {
           drawnResults = drawnResults.concat(Array(entryAmount).fill(entry));
@@ -212,8 +192,8 @@ export class BRTBuilder {
    * const customResults = await table.roll({roll});
    * ```
    */
-  async roll({ roll = null, recursive = true, _depth = 0, dc = null, skill = null } = {}) {
-    let resultsBrt = await this.rollManyOnTable(1, this.table, { roll, recursive, _depth, dc, skill });
+  async roll(options = {}, { roll = null, recursive = true, displayChat = false, _depth = 0 } = {}) {
+    let resultsBrt = await this.rollManyOnTable(1, this.table, options, { roll, recursive, displayChat, _depth });
     // Patch add uuid to every each result for better module compatibility
     let resultsTmp = [];
     for (const r of resultsBrt?.results ?? []) {

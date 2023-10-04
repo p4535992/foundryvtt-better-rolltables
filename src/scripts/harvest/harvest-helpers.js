@@ -5,6 +5,8 @@ import { BRTBetterHelpers } from "../better/brt-helper";
 import { BetterResults } from "../core/brt-table-results";
 import { BRTCONFIG } from "../core/config";
 import { HarvestChatCard } from "./harvest-chat-card";
+import { isRealNumber } from "../lib";
+import { BRTUtils } from "../core/utils";
 
 export class BRTHarvestHelpers {
   /**
@@ -17,11 +19,6 @@ export class BRTHarvestHelpers {
    */
   static async addHarvestToSelectedToken(tableEntity, token = null, options = {}) {
     let tokenstack = [];
-    const isTokenActor = options?.isTokenActor;
-    const stackSame = options?.stackSame ? options.stackSame : true;
-    const customRoll = options?.customRole ? options.customRole : undefined;
-    const itemLimit = options?.itemLimit ? Number(options.itemLimit) : 0;
-
     if (null == token && canvas.tokens.controlled.length === 0) {
       return ui.notifications.error("Please select a token first");
     } else {
@@ -30,15 +27,16 @@ export class BRTHarvestHelpers {
 
     ui.notifications.info(CONSTANTS.MODULE_ID + " | API | Harvest generation started.");
 
-    let rollsAmount = options?.rollsAmount || (await BRTBetterHelpers.rollsAmount(tableEntity)) || undefined;
-    let dc =
-      options?.dc ||
-      getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_DC_VALUE_KEY}`) ||
-      undefined;
-    let skill =
-      options?.skill ||
-      getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_SKILL_VALUE_KEY}`) ||
-      undefined;
+    options = BRTUtils.updateOptions(tableEntity, options);
+
+    const isTokenActor = options?.isTokenActor;
+    const stackSame = options?.stackSame;
+    const customRoll = options?.customRoll;
+    const itemLimit = options?.itemLimit;
+
+    const rollsAmount = options?.rollsAmount;
+    const dc = options?.dc;
+    const skill = options?.skill;
 
     const brtBuilder = new BRTBuilder(tableEntity);
 
@@ -62,23 +60,16 @@ export class BRTHarvestHelpers {
    * @param {*} tableEntity
    */
   static async generateHarvest(tableEntity, options = {}) {
-    let rollMode = options?.rollMode ?? null;
-    if (String(getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${BRTCONFIG.HIDDEN_TABLE}`)) === "true") {
-      rollMode = "gmroll";
-    }
-    const stackSame = options?.stackSame ? options.stackSame : true;
-    const customRoll = options?.customRole ? options.customRole : undefined;
-    const itemLimit = options?.itemLimit ? Number(options.itemLimit) : 0;
+    options = BRTUtils.updateOptions(tableEntity, options);
 
-    let rollsAmount = options?.rollsAmount || (await BRTBetterHelpers.rollsAmount(tableEntity)) || undefined;
-    let dc =
-      options?.dc ||
-      getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_DC_VALUE_KEY}`) ||
-      undefined;
-    let skill =
-      options?.skill ||
-      getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_SKILL_VALUE_KEY}`) ||
-      undefined;
+    const rollMode = options?.rollMode;
+    const stackSame = options?.stackSame;
+    const customRoll = options?.customRole;
+    const itemLimit = options?.itemLimit;
+
+    const rollsAmount = options?.rollsAmount;
+    const dc = options?.dc;
+    const skill = options?.skill;
 
     const builder = new BRTBuilder(tableEntity);
     const resultsBrt = await builder.betterRoll({
@@ -99,20 +90,12 @@ export class BRTHarvestHelpers {
   }
 
   static async generateChatHarvest(tableEntity, options = {}) {
-    let rollMode = options?.rollMode ?? null;
-    if (String(getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${BRTCONFIG.HIDDEN_TABLE}`)) === "true") {
-      rollMode = "gmroll";
-    }
+    options = BRTUtils.updateOptions(tableEntity, options);
 
-    let rollsAmount = options?.rollsAmount || (await BRTBetterHelpers.rollsAmount(tableEntity)) || undefined;
-    let dc =
-      options?.dc ||
-      getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_DC_VALUE_KEY}`) ||
-      undefined;
-    let skill =
-      options?.skill ||
-      getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_SKILL_VALUE_KEY}`) ||
-      undefined;
+    const rollMode = options?.rollMode;
+    const rollsAmount = options?.rollsAmount;
+    const dc = options?.dc;
+    const skill = options?.skill;
 
     const brtBuilder = new BRTBuilder(tableEntity);
     const resultsBrt = await brtBuilder.betterRoll({
