@@ -80,7 +80,10 @@ export class BRTUtils {
    * @returns {object|boolean} item from compendium
    */
   static async getItemFromCompendium(result) {
-    return BRTUtils.findInCompendiumByName(result.collection, result.text);
+    let nameEntry = getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_NAME}`)
+      ? getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_NAME}`)
+      : result.text;
+    return BRTUtils.findInCompendiumByName(result.collection, nameEntry);
   }
 
   /**

@@ -1,6 +1,7 @@
 import { StoryBoolCondition } from "./story-bool-condition.js";
 import { BRTUtils } from "../core/utils.js";
 import { warn } from "../lib.js";
+import { CONSTANTS } from "../constants/constants.js";
 
 export class StoryBuilder {
   constructor(tableEntity) {
@@ -34,7 +35,13 @@ export class StoryBuilder {
         }
       } else if (entry.type === 2) {
         /** entity type 2 is when an entity inside a compendium is linked */
-        const entity = await BRTUtils.findInCompendiumByName(entry.documentCollection, entry.text);
+        let nameEntry = getProperty(
+          entry,
+          `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_NAME}`
+        )
+          ? getProperty(entry, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_NAME}`)
+          : entry.text;
+        const entity = await BRTUtils.findInCompendiumByName(entry.documentCollection, nameEntry);
         if (!entity) {
           errorString = `entity ${entry.text} not found in compendium ${entry.documentCollection}`;
         } else if (entity.documentCollection === "JournalEntry") {

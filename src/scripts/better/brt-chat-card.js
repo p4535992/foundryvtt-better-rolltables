@@ -21,10 +21,21 @@ export class BetterChatCard {
 
   async findOrCreateItems() {
     for (const result of this.betterResults) {
-      const customResultName = getProperty(
-        result,
-        `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`
-      );
+      let customResultName = undefined;
+      let customResultImg = undefined;
+      if (getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`)) {
+        customResultName = getProperty(
+          result,
+          `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`
+        );
+      }
+      if (getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`)) {
+        customResultImg = getProperty(
+          result,
+          `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`
+        );
+      }
+
       if (result.type === CONST.TABLE_RESULT_TYPES.TEXT) {
         await this.addToItemData({
           id: result.text,
@@ -46,6 +57,9 @@ export class BetterChatCard {
           if (customResultName && customResultName !== itemEntity.name) {
             setProperty(itemEntity, `name`, customResultName);
           }
+          if (customResultImg && customResultImg !== itemEntity.img) {
+            setProperty(itemEntity, `img`, customResultImg);
+          }
           await this.addToItemData(itemEntity, itemData);
           continue;
         }
@@ -55,6 +69,9 @@ export class BetterChatCard {
       if (itemEntity) {
         if (customResultName && customResultName !== itemEntity.name) {
           setProperty(itemEntity, `name`, customResultName);
+        }
+        if (customResultImg && customResultImg !== itemEntity.img) {
+          setProperty(itemEntity, `img`, customResultImg);
         }
         await this.addToItemData(itemEntity, itemData);
         continue;
@@ -67,6 +84,9 @@ export class BetterChatCard {
       const newItem = await Item.create(itemData);
       if (customResultName && customResultName !== newItem.name) {
         setProperty(newItem, `name`, customResultName);
+      }
+      if (customResultImg && customResultImg !== newItem.img) {
+        setProperty(newItem, `img`, customResultImg);
       }
       await this.addToItemData(newItem, itemData);
     }

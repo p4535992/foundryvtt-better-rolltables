@@ -27,7 +27,7 @@ export class BRTHarvestHelpers {
 
     ui.notifications.info(CONSTANTS.MODULE_ID + " | API | Harvest generation started.");
 
-    const brtTable = new BetterRollTable(table, options);
+    const brtTable = new BetterRollTable(tableEntity, options);
     await brtTable.initialize();
 
     const isTokenActor = brtTable.options?.isTokenActor;

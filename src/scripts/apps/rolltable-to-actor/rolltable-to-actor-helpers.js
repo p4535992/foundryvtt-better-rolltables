@@ -5,7 +5,7 @@ import SETTINGS from "../../constants/settings";
 import { BRTBetterHelpers } from "../../better/brt-helper";
 import { BRTCONFIG } from "../../core/config";
 import { BRTUtils } from "../../core/utils";
-import { info, isRealNumber, warn } from "../../lib";
+import { i18n, info, isRealNumber, warn } from "../../lib";
 
 export class RollTableToActorHelpers {
   static async retrieveItemsDataFromRollTableResult(table, options = {}) {
@@ -62,10 +62,12 @@ export class RollTableToActorHelpers {
 
   /**
    * Add rolltable results to actor
-   * @param {TableResult[]}results
+   * @param {TableResult[]} results
+   * @param {boolean} stackSame
+   * @param {number} customLimit
    * @return {void} array of item data
    */
-  static async addResultsToControlledTokens(results, stackSame = true) {
+  static async addResultsToControlledTokens(results, stackSame = true, customLimit = 0) {
     // Grab the items
     let itemsData = await RollTableToActorHelpers.resultsToItemsData(results);
     if (itemsData.length === 0) {
@@ -80,7 +82,7 @@ export class RollTableToActorHelpers {
     }
     // Add the items
     for (const actor of controlledActors) {
-      await RollTableToActorHelpers.addItemsToActor(actor, itemsData, stackSame);
+      await RollTableToActorHelpers.addItemsToActor(actor, itemsData, stackSame, customLimit);
     }
 
     // Notify the user of items added
@@ -124,13 +126,20 @@ export class RollTableToActorHelpers {
    * @return {Promise<{Object[]}>} array of item data
    */
   static async resultsToItemsData(results) {
+    let document = null;
     const itemsData = [];
     for (const r of results) {
       if (!r.documentId || r.type === CONST.TABLE_RESULT_TYPES.TEXT) {
-        continue;
+        if (getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`)) {
+          document = await fromUuid(
+            getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`)
+          );
+        }
+        if (!document) {
+          continue;
+        }
       }
       // NOTE: The formulaAmount calculation is already done on the betterRoll Method
-      let document = null;
       if (getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`)) {
         document = await fromUuid(
           getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`)
@@ -155,6 +164,15 @@ export class RollTableToActorHelpers {
             itemTmp,
             `name`,
             getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`)
+          );
+        }
+        if (!getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`)) {
+          setProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`, itemTmp.img);
+        } else {
+          setProperty(
+            itemTmp,
+            `img`,
+            getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`)
           );
         }
         // Merge flags brt to item data
@@ -215,7 +233,12 @@ export class RollTableToActorHelpers {
           setProperty(match, `${stackAttribute}`, newStack);
         }
         if (!ignorePrice) {
-          const newPrice = getProperty(match, priceAttribute) + (getProperty(item, priceAttribute) ?? 1);
+          const newPriceValue =
+            (getProperty(match, priceAttribute)?.value ?? 0) + (getProperty(item, priceAttribute)?.value ?? 0);
+          const newPrice = {
+            denomination: getProperty(item, priceAttribute)?.denomination,
+            value: newPriceValue,
+          };
           setProperty(match, `${priceAttribute}`, newPrice);
         }
         if (!ignoreWeight) {
@@ -231,12 +254,14 @@ export class RollTableToActorHelpers {
    * Adds the Items item to an actor, stacking them if possible
    * @param {Actor} actor
    * @param {Object[]} itemsData
+   * @param {boolean} stackSame
+   * @param {number} customLimit
    * @returns {Promise<itemsData>}
    */
-  static async addItemsToActor(actor, itemsData, stackSame = true) {
+  static async addItemsToActor(actor, itemsData, stackSame = true, customLimit = 0) {
     const stackAttribute = game.settings.get(CONSTANTS.MODULE_ID, SETTINGS.QUANTITY_PROPERTY_PATH);
     const priceAttribute = game.settings.get(CONSTANTS.MODULE_ID, SETTINGS.PRICE_PROPERTY_PATH);
-    const weightAttribute = game.settings.get(CONSTANTS.MODULE_ID, SETTINGS.WEIGHT_PROPERTY_PATH_PROPERTY_PATH);
+    const weightAttribute = game.settings.get(CONSTANTS.MODULE_ID, SETTINGS.WEIGHT_PROPERTY_PATH);
     if (!stackAttribute) {
       return Item.create(itemsData, { parent: actor });
     }
@@ -249,11 +274,23 @@ export class RollTableToActorHelpers {
         if (match) {
           // const newStack = getProperty(match.system, stackAttribute) + (getProperty(item.system, stackAttribute) ?? 1);
           const newStack = getProperty(match, stackAttribute) + (getProperty(item, stackAttribute) ?? 1);
-          const newPrice = getProperty(match, priceAttribute) + (getProperty(item, priceAttribute) ?? 0);
+          const newPriceValue =
+            (getProperty(match, priceAttribute)?.value ?? 0) + (getProperty(item, priceAttribute)?.value ?? 0);
+          const newPrice = {
+            denomination: getProperty(item, priceAttribute)?.denomination,
+            value: newPriceValue,
+          };
           const newWeight = getProperty(match, weightAttribute) + (getProperty(item, weightAttribute) ?? 0);
+
+          const newQty = RollTableToActorHelpers._handleLimitedQuantity(
+            newStack,
+            getProperty(item, stackAttribute),
+            customLimit
+          );
+
           await match.update({
             //   [`system.${stackAttribute}`]: newStack,
-            [`${stackAttribute}`]: newStack,
+            [`${stackAttribute}`]: newQty,
             [`${priceAttribute}`]: newPrice,
             [`${weightAttribute}`]: newWeight,
           });
@@ -326,19 +363,39 @@ export class RollTableToActorHelpers {
    *
    * @returns {object[]} items
    */
-  static async addItemsToActorOld(actor, results, stackSame = true, customLimit = 0) {
-    const items = [];
-    for (const item of results) {
-      const newItem = await RollTableToActorHelpers._createItem(item, actor, stackSame, customLimit);
-      items.push(newItem);
+  static async addResultsToActor(actor, results, stackSame = true, customLimit = 0) {
+    // Grab the items
+    let itemsData = await RollTableToActorHelpers.resultsToItemsData(results);
+    if (itemsData.length === 0) {
+      return;
     }
+    itemsData = RollTableToActorHelpers.preStackItems(itemsData);
+    const items = await RollTableToActorHelpers.addItemsToActor(actor, itemsData, stackSame, customLimit);
     return items;
-    // const items = await RollTableToActorHelpers.addItemsToActor(actor, results, stackSame);
-    // return items;
   }
 
   /**
+   * @deprecated
+   * @param {Actor} actor to which to add items to
+   * @param {TableResult[]} results
+   * @param {boolean} stackSame if true add quantity to an existing item of same name in the current actor
+   * @param {number} customLimit
    *
+   * @returns {object[]} items
+   */
+  static async addItemsToActorOld(actor, results, stackSame = true, customLimit = 0) {
+    // const items = [];
+    // for (const item of results) {
+    //   const newItem = await RollTableToActorHelpers._createItem(item, actor, stackSame, customLimit);
+    //   items.push(newItem);
+    // }
+    // return items;
+    const items = await RollTableToActorHelpers.addResultsToActor(actor, results, stackSame, customLimit);
+    return items;
+  }
+
+  /**
+   * @deprecated
    * @param {token} token
    * @param {TableResult[]} results
    * @param {boolean} stackSame
@@ -348,27 +405,27 @@ export class RollTableToActorHelpers {
    * @returns {object[]} items
    */
   static async addItemsToTokenOld(token, results, stackSame = true, isTokenActor = false, customLimit = 0) {
-    const items = [];
-    for (const item of results) {
-      // Create the item making sure to pass the token actor and not the base actor
-      const targetActor = isTokenActor ? token : token.actor;
-      const newItem = await RollTableToActorHelpers._createItem(item, targetActor, stackSame, customLimit);
-      items.push(newItem);
-    }
-    // const items = await RollTableToActorHelpers.addResultsToControlledTokens(results, stackSame);
-    // return items;
+    // const items = [];
+    // for (const item of results) {
+    //   // Create the item making sure to pass the token actor and not the base actor
+    //   const targetActor = isTokenActor ? token : token.actor;
+    //   const newItem = await RollTableToActorHelpers._createItem(item, targetActor, stackSame, customLimit);
+    //   items.push(newItem);
+    // }
+    const items = await RollTableToActorHelpers.addResultsToControlledTokens(results, stackSame);
+    return items;
   }
 
   /**
    *
-   * @param {object} item representation
+   * @param {TableResult} result representation
    * @param {Actor} actor to which to add items to
    * @param {boolean} stackSame if true add quantity to an existing item of same name in the current actor
    * @param {number} customLimit
    * @returns {Item} the create Item (foundry item)
    */
-  static async _createItem(item, actor, stackSame = true, customLimit = 0) {
-    const newItemData = await RollTableToActorHelpers.buildItemData(item);
+  static async _createItem(result, actor, stackSame = true, customLimit = 0) {
+    const newItemData = await RollTableToActorHelpers.buildItemData(result);
     const itemPrice = getProperty(newItemData, BRTCONFIG.PRICE_PROPERTY_PATH) || 0;
     const embeddedItems = [...actor.getEmbeddedCollection("Item").values()];
     const originalItem = embeddedItems.find(
@@ -435,12 +492,36 @@ export class RollTableToActorHelpers {
    * @returns
    */
   static async buildItemData(result) {
+    // PATCH 2023-10-04
+    let customResultName = undefined;
+    let customResultImg = undefined;
+    if (getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`)) {
+      customResultName = getProperty(
+        result,
+        `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`
+      );
+    }
+
+    if (getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`)) {
+      customResultImg = getProperty(
+        result,
+        `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`
+      );
+    }
     let itemData = {};
     let existingItem = false;
     /** Try first to load item from compendium */
     if (result.collection) {
       existingItem = await BRTUtils.getItemFromCompendium(result);
       itemData = duplicate(existingItem);
+
+      if (customResultName) {
+        itemData.name = customResultName;
+      }
+      if (customResultImg) {
+        itemData.img = customResultImg;
+      }
+
       itemData.type = BRTCONFIG.ITEM_LOOT_TYPE;
     }
 
@@ -450,18 +531,27 @@ export class RollTableToActorHelpers {
       existingItem = game.items.getName(result.text);
       if (existingItem) {
         itemData = duplicate(existingItem);
+
+        if (customResultName) {
+          itemData.name = customResultName;
+        }
+        if (customResultImg) {
+          itemData.img = customResultImg;
+        }
+
         itemData.type = BRTCONFIG.ITEM_LOOT_TYPE;
       }
     }
 
     const itemConversions = {
       Actor: {
-        text: `${result.text} Portrait`,
-        img: existingItem?.img || "icons/svg/mystery-man.svg",
+        text: customResultName ? `${customResultName} Portrait` : `${result.text} Portrait`,
+        img: customResultImg || existingItem?.img || "icons/svg/mystery-man.svg",
+        price: new Roll("1d20 + 10").roll({ async: false }).total || 1,
       },
       Scene: {
-        text: "Map of " + existingItem?.name,
-        img: existingItem?.thumb || "icons/svg/direction.svg",
+        text: customResultName ? `Map of ${customResultName}` : `Map of ${existingItem?.name}`,
+        img: customResultImg || existingItem?.thumb || "icons/svg/direction.svg",
         price: new Roll("1d20 + 10").roll({ async: false }).total || 1,
       },
     };

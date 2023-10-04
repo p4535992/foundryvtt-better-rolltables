@@ -3,6 +3,7 @@ import { CONSTANTS } from "../constants/constants.js";
 import { BRTBetterHelpers } from "../better/brt-helper.js";
 import { BRTUtils } from "./utils.js";
 import { BetterRollTable } from "./brt-table.js";
+import { isEmptyObject } from "../lib.js";
 
 export class BetterResults {
   constructor(tableResults) {
@@ -102,7 +103,8 @@ export class BetterResults {
 
           const innerResults = innerResultsBrt?.results;
 
-          this.tableResults = this.tableResults.concat(innerResults);
+          // this.tableResults = this.tableResults.concat(innerResults);
+          betterResults = betterResults.concat(innerResults);
         } else if (textString) {
           // if no table definition is found, the textString is the item name
           console.log(`results text ${textString.trim()} and commands ${commands}`);
@@ -113,6 +115,13 @@ export class BetterResults {
             betterResult.type = CONST.TABLE_RESULT_TYPES.TEXT;
           }
           betterResult.commands = commands;
+
+          // PATCH 2023-10-04
+          if (isEmptyObject(betterResult.flags)) {
+            betterResult.flags = {};
+          }
+          mergeObject(betterResult.flags, result.flags);
+
           betterResults.push(betterResult);
         }
       }
@@ -121,6 +130,13 @@ export class BetterResults {
       betterResult.img = result.thumbnail || result.img || CONFIG.RollTable.resultIcon;
       betterResult.collection = result.documentCollection;
       betterResult.text = result.text;
+
+      // PATCH 2023-10-04
+      if (isEmptyObject(betterResult.flags)) {
+        betterResult.flags = {};
+      }
+      mergeObject(betterResult.flags, result.flags);
+
       betterResults.push(betterResult);
     }
 
