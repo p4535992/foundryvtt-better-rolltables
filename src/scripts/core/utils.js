@@ -1,3 +1,4 @@
+import { BRTBetterHelpers } from "../better/brt-helper";
 import { CONSTANTS } from "../constants/constants";
 import { BRTCONFIG } from "./config";
 
@@ -123,9 +124,15 @@ export class BRTUtils {
   /**
    *
    * @param {RollTable} tableEntity
-   * @param {Object} myObj description
-   * @param {number} myObj.a description
-   * @param {string} myObj.b description
+   * @param {Object} options
+   * @param {number} options.rollsAmount
+   * @param {number} options.dc
+   * @param {string} options.skill
+   * @param {boolean} options.isTokenActor
+   * @param {boolean} options.stackSame
+   * @param {string} options.customRoll
+   * @param {number} options.itemLimit
+   * @param {string} options.rollMode
    * @returns {{rollsAmount: number, dc: number, skill: string, isTokenActor: boolean, stackSame: boolean, customRoll: string, itemLimit: number, rollMode: string}},
    */
   static async updateOptions(tableEntity, options = {}) {

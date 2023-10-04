@@ -1,5 +1,5 @@
 import { LootChatCard } from "./loot/loot-chat-card.js";
-import { BRTBuilder } from "./core/brt-builder.js";
+// import { BRTBuilder } from "./core/brt-builder.js";
 import { BetterResults } from "./core/brt-table-results.js";
 import { BRTUtils } from "./core/utils.js";
 import { BRTCONFIG } from "./core/config.js";
@@ -10,6 +10,7 @@ import SETTINGS from "./constants/settings.js";
 import { HarvestChatCard } from "./harvest/harvest-chat-card.js";
 import { StoryChatCard } from "./story/story-chat-card.js";
 import { BetterChatCard } from "./better/brt-chat-card.js";
+import { BetterRollTable } from "./core/brt-table.js";
 
 export class BetterTables {
   constructor() {
@@ -62,8 +63,11 @@ export class BetterTables {
    * @returns {Promise<TableResult[]>}
    */
   async getBetterTableResults(tableEntity, options = {}) {
-    const brtBuilder = new BRTBuilder(tableEntity);
-    const resultBrt = await brtBuilder.betterRoll(options);
+    // const brtBuilder = new BRTBuilder(tableEntity);
+    // const resultBrt = await brtBuilder.betterRoll(options);
+    const brtTable = new BetterRollTable(tableEntity, options);
+    const resultBrt = await brtTable.betterRoll();
+
     const results = resultBrt?.results;
     return results;
   }
@@ -74,14 +78,13 @@ export class BetterTables {
    * @returns {Promise<TableResult[]>}
    */
   async betterTableRoll(tableEntity, options = {}) {
-    let rollMode = options?.rollMode ?? null;
-    if (String(getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${BRTCONFIG.HIDDEN_TABLE}`)) === "true") {
-      rollMode = "gmroll";
-    }
+    // const brtBuilder = new BRTBuilder(tableEntity);
+    // const resultBrt = await brtBuilder.betterRoll(options);
+    const brtTable = new BetterRollTable(tableEntity, options);
+    const resultBrt = await brtTable.betterRoll();
 
-    const brtBuilder = new BRTBuilder(tableEntity);
-    const resultBrt = await brtBuilder.betterRoll(options);
     const results = resultBrt?.results;
+    let rollMode = brtTable.rollMode;
 
     if (game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.USE_CONDENSED_BETTERROLL)) {
       const br = new BetterResults(results);
@@ -296,8 +299,11 @@ export class BetterTables {
    * @returns {Promise<{flavor: *, sound: string, user: *, content: *}>}
    */
   static async prepareCardData(tableEntity, options = {}) {
-    const brtBuilder = new BRTBuilder(tableEntity);
-    const resultBrt = await brtBuilder.betterRoll(options);
+    // const brtBuilder = new BRTBuilder(tableEntity);
+    // const resultBrt = await brtBuilder.betterRoll(options);
+    const brtTable = new BetterRollTable(tableEntity, options);
+    const resultBrt = await brtTable.betterRoll();
+
     const results = resultBrt?.results;
 
     let rollMode = options?.rollMode ?? null;

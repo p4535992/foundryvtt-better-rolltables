@@ -1,11 +1,12 @@
 import { RollTableToActorHelpers } from "../apps/rolltable-to-actor/rolltable-to-actor-helpers";
 import { CONSTANTS } from "../constants/constants";
-import { BRTBuilder } from "../core/brt-builder";
+// import { BRTBuilder } from "../core/brt-builder";
 import { BRTBetterHelpers } from "../better/brt-helper";
 import { BetterResults } from "../core/brt-table-results";
 import { BRTCONFIG } from "../core/config";
 import { LootChatCard } from "./loot-chat-card";
 import { BRTUtils } from "../core/utils";
+import { BetterRollTable } from "../core/brt-table";
 
 export class BRTLootHelpers {
   /**
@@ -26,23 +27,28 @@ export class BRTLootHelpers {
 
     ui.notifications.info(CONSTANTS.MODULE_ID + " | API | Loot generation started.");
 
-    options = BRTUtils.updateOptions(tableEntity, options);
+    // options = BRTUtils.updateOptions(tableEntity, options);
 
-    const isTokenActor = options?.isTokenActor;
-    const stackSame = options?.stackSame;
-    const customRoll = options?.customRole;
-    const itemLimit = options?.itemLimit;
+    // const isTokenActor = options?.isTokenActor;
+    // const stackSame = options?.stackSame;
+    // const customRoll = options?.customRoll;
+    // const itemLimit = options?.itemLimit;
 
-    const rollsAmount = options?.rollsAmount;
+    // const rollsAmount = options?.rollsAmount;
+    // const dc = options?.dc;
+    // const skill = options?.skill;
+    // const brtBuilder = new BRTBuilder(tableEntity);
 
-    const brtBuilder = new BRTBuilder(tableEntity);
+    const brtTable = new BetterRollTable(table, options);
 
     for (const token of tokenstack) {
-      const resultsBrt = await brtBuilder.betterRoll({
-        rollsAmount: customRoll ?? rollsAmount,
-        dc: undefined,
-        skill: undefined,
-      });
+      //   const resultsBrt = await brtBuilder.betterRoll({
+      //     rollsAmount: customRoll ?? rollsAmount,
+      //     dc: undefined,
+      //     skill: undefined,
+      //   });
+      const resultsBrt = await brtTable.betterRoll();
+
       const results = resultsBrt?.results;
       const br = new BetterResults(results);
       const betterResults = await br.buildResults(tableEntity);
@@ -61,19 +67,21 @@ export class BRTLootHelpers {
   static async generateLoot(tableEntity, options = {}) {
     options = BRTUtils.updateOptions(tableEntity, options);
 
-    const rollMode = options?.rollMode;
-    const stackSame = options?.stackSame;
-    const customRoll = options?.customRole;
-    const itemLimit = options?.itemLimit;
+    // const customRoll = options?.customRole;
+    // const rollsAmount = options?.rollsAmount;
+    // const dc = options?.dc;
+    // const skill = options?.skill;
 
-    const rollsAmount = options?.rollsAmount;
+    // const builder = new BRTBuilder(tableEntity);
+    // const resultsBrt = await builder.betterRoll({
+    //   rollsAmount: customRoll ?? rollsAmount,
+    //   dc: undefined,
+    //   skill: undefined,
+    // });
 
-    const builder = new BRTBuilder(tableEntity);
-    const resultsBrt = await builder.betterRoll({
-      rollsAmount: customRoll ?? rollsAmount,
-      dc: undefined,
-      skill: undefined,
-    });
+    const brtTable = new BetterRollTable(tableEntity, options);
+    const resultsBrt = brtTable.betterRoll();
+
     const results = resultsBrt?.results;
     const br = new BetterResults(results);
     const betterResults = await br.buildResults(tableEntity);
@@ -90,17 +98,24 @@ export class BRTLootHelpers {
   }
 
   static async generateChatLoot(tableEntity, options = {}) {
-    options = BRTUtils.updateOptions(tableEntity, options);
+    // options = BRTUtils.updateOptions(tableEntity, options);
 
-    const rollMode = options?.rollMode;
-    const rollsAmount = options?.rollsAmount;
+    // const rollMode = options?.rollMode;
+    // const rollsAmount = options?.rollsAmount;
+    // const dc = options?.dc;
+    // const skill = options?.skill;
 
-    const brtBuilder = new BRTBuilder(tableEntity);
-    const resultsBrt = await brtBuilder.betterRoll({
-      rollsAmount: rollsAmount,
-      dc: undefined,
-      skill: undefined,
-    });
+    // const brtBuilder = new BRTBuilder(tableEntity);
+    // const resultsBrt = await brtBuilder.betterRoll({
+    //   rollsAmount: rollsAmount,
+    //   dc: dc,
+    //   skill: skill,
+    // });
+
+    const brtTable = new BetterRollTable(tableEntity, options);
+    const resultsBrt = await brtTable.betterRoll();
+    const rollMode = brtTable.rollMode;
+
     const results = resultsBrt?.results;
     const br = new BetterResults(results);
     const betterResults = await br.buildResults(tableEntity);
