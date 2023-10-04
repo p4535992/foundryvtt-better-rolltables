@@ -20,12 +20,16 @@ export class BetterChatCard {
   }
 
   async findOrCreateItems() {
-    for (const item of this.betterResults) {
-      if (item.type === CONST.TABLE_RESULT_TYPES.TEXT) {
+    for (const result of this.betterResults) {
+      const customResultName = getProperty(
+        result,
+        `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`
+      );
+      if (result.type === CONST.TABLE_RESULT_TYPES.TEXT) {
         await this.addToItemData({
-          id: item.text,
-          text: item.text,
-          img: item.img,
+          id: result.text,
+          text: result.text,
+          img: result.img,
           isText: true,
         });
         continue;
@@ -34,11 +38,14 @@ export class BetterChatCard {
       this.numberOfDraws++;
       /** we pass though the data, since we might have some data manipulation that changes an existing item, in that case even if it was initially
        * existing or in a compendium we have to create a new one */
-      const itemData = await RollTableToActorHelpers.buildItemData(item);
-      if (item.collection) {
-        const itemEntity = await BRTUtils.getItemFromCompendium(item);
+      const itemData = await RollTableToActorHelpers.buildItemData(result);
+      if (result.collection) {
+        const itemEntity = await BRTUtils.getItemFromCompendium(result);
 
         if (itemEntity && itemEntity.name === itemData.name) {
+          if (customResultName && customResultName !== itemEntity.name) {
+            setProperty(itemEntity, `name`, customResultName);
+          }
           await this.addToItemData(itemEntity, itemData);
           continue;
         }
@@ -46,6 +53,9 @@ export class BetterChatCard {
 
       const itemEntity = game.items.getName(itemData.name);
       if (itemEntity) {
+        if (customResultName && customResultName !== itemEntity.name) {
+          setProperty(itemEntity, `name`, customResultName);
+        }
         await this.addToItemData(itemEntity, itemData);
         continue;
       }
@@ -55,14 +65,17 @@ export class BetterChatCard {
 
       setProperty(itemData, "permission.default", CONST.DOCUMENT_PERMISSION_LEVELS.OBSERVER);
       const newItem = await Item.create(itemData);
+      if (customResultName && customResultName !== newItem.name) {
+        setProperty(newItem, `name`, customResultName);
+      }
       await this.addToItemData(newItem, itemData);
     }
   }
 
-  async addToItemData(itemEntity, data) {
+  async addToItemData(itemEntity, itemData) {
     const existingItem = this.itemsData.find((i) => i.item.id === itemEntity.id);
-    const quantity = getProperty(data, BRTCONFIG.QUANTITY_PROPERTY_PATH) || 1;
-    const weight = getProperty(data, BRTCONFIG.WEIGHT_PROPERTY_PATH) || 0;
+    const quantity = getProperty(itemData, BRTCONFIG.QUANTITY_PROPERTY_PATH) || 1;
+    const weight = getProperty(itemData, BRTCONFIG.WEIGHT_PROPERTY_PATH) || 0;
 
     if (existingItem) {
       existingItem.quantity = +existingItem.quantity + +quantity;

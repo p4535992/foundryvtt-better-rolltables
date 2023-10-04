@@ -430,15 +430,15 @@ export class RollTableToActorHelpers {
 
   /**
    *
-   * @param {object} item
+   * @param {TableResult} result
    * @returns
    */
-  static async buildItemData(item) {
-    let itemData = {},
-      existingItem = false;
+  static async buildItemData(result) {
+    let itemData = {};
+    let existingItem = false;
     /** Try first to load item from compendium */
-    if (item.collection) {
-      existingItem = await BRTUtils.getItemFromCompendium(item);
+    if (result.collection) {
+      existingItem = await BRTUtils.getItemFromCompendium(result);
       itemData = duplicate(existingItem);
       itemData.type = BRTCONFIG.ITEM_LOOT_TYPE;
     }
@@ -446,7 +446,7 @@ export class RollTableToActorHelpers {
     /** Try first to load item from item list */
     if (!existingItem) {
       /** if an item with this name exist we load that item data, otherwise we create a new one */
-      existingItem = game.items.getName(item.text);
+      existingItem = game.items.getName(result.text);
       if (existingItem) {
         itemData = duplicate(existingItem);
         itemData.type = BRTCONFIG.ITEM_LOOT_TYPE;
@@ -455,7 +455,7 @@ export class RollTableToActorHelpers {
 
     const itemConversions = {
       Actor: {
-        text: `${item.text} Portrait`,
+        text: `${result.text} Portrait`,
         img: existingItem?.img || "icons/svg/mystery-man.svg",
       },
       Scene: {
@@ -470,16 +470,23 @@ export class RollTableToActorHelpers {
     const createNewItem = !existingItem || convert;
 
     if (createNewItem) {
-      const name = convert ? convert?.text : item.text,
-        type = BRTCONFIG.ITEM_LOOT_TYPE,
-        img = convert ? convert?.img : item.img,
-        price = convert ? convert?.price : item.price || 0;
+      const name = convert ? convert?.text : result.text;
+      const type = BRTCONFIG.ITEM_LOOT_TYPE;
+      const img = convert ? convert?.img : result.img;
+      const price = convert ? convert?.price : result.price || 0;
 
-      itemData = { name: name, type, img: img, system: { price: price } }; // "icons/svg/mystery-man.svg"
+      itemData = {
+        name: name,
+        type: type,
+        img: img, // "icons/svg/mystery-man.svg"
+        system: {
+          price: price,
+        },
+      };
     }
 
-    if (Object.getOwnPropertyDescriptor(item, "commands") && item.commands) {
-      itemData = RollTableToActorHelpers._applyCommandToItemData(itemData, item.commands);
+    if (Object.getOwnPropertyDescriptor(result, "commands") && result.commands) {
+      itemData = RollTableToActorHelpers._applyCommandToItemData(itemData, result.commands);
     }
 
     if (!itemData) {

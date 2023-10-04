@@ -52,6 +52,8 @@ export class BRTUtils {
           return game.scenes.getName(entityName);
         case "Macro":
           return game.macros.getName(entityName);
+        case "Card":
+          return game.cards.getName(entityName);
       }
     }
   }
@@ -72,11 +74,11 @@ export class BRTUtils {
 
   /**
    *
-   * @param {object} item reference to item
+   * @param {TableResult} result reference to item
    * @returns {object|boolean} item from compendium
    */
-  static async getItemFromCompendium(item) {
-    return BRTUtils.findInCompendiumByName(item.collection, item.text);
+  static async getItemFromCompendium(result) {
+    return BRTUtils.findInCompendiumByName(result.collection, result.text);
   }
 
   /**
