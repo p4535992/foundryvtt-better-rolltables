@@ -106,6 +106,7 @@ export class BetterResults {
             rollsAmount: numberRolls,
           };
           const brtTable = new BetterRollTable(table, options);
+          await brtTable.initialize();
           const innerResultsBrt = await brtTable.betterRoll();
 
           const innerResults = innerResultsBrt?.results;

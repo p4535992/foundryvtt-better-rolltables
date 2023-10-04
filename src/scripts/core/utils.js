@@ -133,7 +133,7 @@ export class BRTUtils {
    * @param {string} options.customRoll
    * @param {number} options.itemLimit
    * @param {string} options.rollMode
-   * @returns {{rollsAmount: number, dc: number, skill: string, isTokenActor: boolean, stackSame: boolean, customRoll: string, itemLimit: number, rollMode: string}},
+   * @returns {Promise<{rollsAmount: number, dc: number, skill: string, isTokenActor: boolean, stackSame: boolean, customRoll: string, itemLimit: number, rollMode: string}>},
    */
   static async updateOptions(tableEntity, options = {}) {
     let newOptions = {};

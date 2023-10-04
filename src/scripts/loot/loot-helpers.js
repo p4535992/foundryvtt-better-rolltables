@@ -27,7 +27,7 @@ export class BRTLootHelpers {
 
     ui.notifications.info(CONSTANTS.MODULE_ID + " | API | Loot generation started.");
 
-    // options = BRTUtils.updateOptions(tableEntity, options);
+    // options = await BRTUtils.updateOptions(tableEntity, options);
 
     // const isTokenActor = options?.isTokenActor;
     // const stackSame = options?.stackSame;
@@ -40,6 +40,7 @@ export class BRTLootHelpers {
     // const brtBuilder = new BRTBuilder(tableEntity);
 
     const brtTable = new BetterRollTable(table, options);
+    await brtTable.initialize();
 
     for (const token of tokenstack) {
       //   const resultsBrt = await brtBuilder.betterRoll({
@@ -65,7 +66,7 @@ export class BRTLootHelpers {
    * @param {*} tableEntity
    */
   static async generateLoot(tableEntity, options = {}) {
-    options = BRTUtils.updateOptions(tableEntity, options);
+    options = await BRTUtils.updateOptions(tableEntity, options);
 
     // const customRoll = options?.customRole;
     // const rollsAmount = options?.rollsAmount;
@@ -80,6 +81,7 @@ export class BRTLootHelpers {
     // });
 
     const brtTable = new BetterRollTable(tableEntity, options);
+    await brtTable.initialize();
     const resultsBrt = brtTable.betterRoll();
 
     const results = resultsBrt?.results;
@@ -98,7 +100,7 @@ export class BRTLootHelpers {
   }
 
   static async generateChatLoot(tableEntity, options = {}) {
-    // options = BRTUtils.updateOptions(tableEntity, options);
+    // options = await BRTUtils.updateOptions(tableEntity, options);
 
     // const rollMode = options?.rollMode;
     // const rollsAmount = options?.rollsAmount;
@@ -113,6 +115,7 @@ export class BRTLootHelpers {
     // });
 
     const brtTable = new BetterRollTable(tableEntity, options);
+    await brtTable.initialize();
     const resultsBrt = await brtTable.betterRoll();
     const rollMode = brtTable.rollMode;
 

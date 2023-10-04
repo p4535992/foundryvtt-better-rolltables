@@ -13,7 +13,22 @@ export class BetterRollTable {
 
   constructor(table, options) {
     this.table = table;
-    let optionsTmp = BRTUtils.updateOptions(this.table, options);
+    this.options = mergeObject(
+      {
+        roll: null,
+        results: [],
+        recursive: true,
+        displayChat: false,
+        rollMode: null,
+        _depth: 0,
+      },
+      options
+    );
+    this.mainRoll = undefined;
+  }
+
+  async initialize() {
+    let optionsTmp = await BRTUtils.updateOptions(this.table, this.options);
     this.options = mergeObject(
       {
         roll: null,
@@ -150,7 +165,7 @@ export class BetterRollTable {
 
     // Roll the requested number of times, marking results as drawn
     for (let n = 0; n < number; n++) {
-      let draw = await this.roll({ roll, recursive, _depth });
+      let draw = await this.table.roll({ roll, recursive, _depth });
       if (draw.results.length) {
         rolls.push(draw.roll);
         results = results.concat(draw.results);
@@ -333,6 +348,7 @@ export class BetterRollTable {
             // const innerRoll = await innerTable.roll({ _depth: _depth + 1 });
             const innerOptions = this.options;
             const brtInnerTable = new BetterRollTable(innerTable, innerOptions);
+            await brtInnerTable.initialize();
             const innerRoll = await brtInnerTable.drawMany(resultAmount, {
               roll: formulaAmount,
               recursive: true,
@@ -551,8 +567,15 @@ export class BetterRollTable {
         return;
       }
 
-      let brtTable = new BetterRollTable(table, options);
-      const draw = await brtTable.drawMany(amount, {
+      // let brtTable = new BetterRollTable(this.table, options);
+      // await brtTable.initialize();
+      // const draw = await brtTable.drawMany(amount, {
+      //   roll: roll,
+      //   recursive: recursive,
+      //   displayChat: false,
+      //   rollMode: "gmroll",
+      // });
+      const draw = await this.drawMany(amount, {
         roll: roll,
         recursive: recursive,
         displayChat: false,
@@ -584,6 +607,7 @@ export class BetterRollTable {
         if (innerTable) {
           const innerOptions = options;
           const innerBrtTable = new BetterRollTable(innerTable, innerOptions);
+          await innerBrtTable.initialize();
           const innerResults = await innerBrtTable.rollManyOnTable(entryAmount, {
             roll: roll,
             recursive: recursive,

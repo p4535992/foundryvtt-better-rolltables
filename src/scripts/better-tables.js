@@ -66,6 +66,7 @@ export class BetterTables {
     // const brtBuilder = new BRTBuilder(tableEntity);
     // const resultBrt = await brtBuilder.betterRoll(options);
     const brtTable = new BetterRollTable(tableEntity, options);
+    await brtTable.initialize();
     const resultBrt = await brtTable.betterRoll();
 
     const results = resultBrt?.results;
@@ -81,6 +82,7 @@ export class BetterTables {
     // const brtBuilder = new BRTBuilder(tableEntity);
     // const resultBrt = await brtBuilder.betterRoll(options);
     const brtTable = new BetterRollTable(tableEntity, options);
+    await brtTable.initialize();
     const resultBrt = await brtTable.betterRoll();
 
     const results = resultBrt?.results;
@@ -110,10 +112,12 @@ export class BetterTables {
         const harvestChatCard = new HarvestChatCard(betterResults, rollMode);
         await harvestChatCard.createChatCard(tableEntity);
       } else {
-        await brtBuilder.createChatCard(results, rollMode);
+        // await brtBuilder.createChatCard(results, rollMode);
+        await brtTable.createChatCard(results, rollMode);
       }
     } else {
-      await brtBuilder.createChatCard(results, rollMode);
+      // await brtBuilder.createChatCard(results, rollMode);
+      await brtTable.createChatCard(results, rollMode);
     }
     return results;
   }
@@ -302,6 +306,7 @@ export class BetterTables {
     // const brtBuilder = new BRTBuilder(tableEntity);
     // const resultBrt = await brtBuilder.betterRoll(options);
     const brtTable = new BetterRollTable(tableEntity, options);
+    await brtTable.initialize();
     const resultBrt = await brtTable.betterRoll();
 
     const results = resultBrt?.results;

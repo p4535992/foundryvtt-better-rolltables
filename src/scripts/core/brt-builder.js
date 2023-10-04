@@ -15,7 +15,7 @@ export class BRTBuilder {
    * @returns {array} results
    */
   async betterRoll(options = {}) {
-    options = BRTUtils.updateOptions(this.table, options);
+    options = await BRTUtils.updateOptions(this.table, options);
 
     const rollsAmount = options?.rollsAmount;
 
@@ -52,6 +52,7 @@ export class BRTBuilder {
       BRTUtils.addRollModeToChatData(msgData.messageData, rollMode);
     }
     let brtTable = new BetterRollTable(this.table, options);
+    await brtTable.initialize();
     await brtTable.toMessage(results, msgData);
     //await this.table.toMessage(results, msgData);
   }
@@ -118,6 +119,7 @@ export class BRTBuilder {
       }
 
       let brtTable = new BetterRollTable(table, options);
+      await brtTable.initialize();
       const draw = await brtTable.drawMany(amount, {
         roll: roll,
         recursive: recursive,
