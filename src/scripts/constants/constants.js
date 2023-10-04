@@ -12,6 +12,8 @@ export const CONSTANTS = {
     GENERIC_AMOUNT_KEY: "loot-amount-key",
     GENERIC_RESULT_UUID: "brt-result-uuid",
     GENERIC_RESULT_CUSTOM_NAME: "brt-result-custom-name",
+    GENERIC_RESULT_ORIGINAL_NAME: "brt-result-original-name",
+    GENERIC_RESULT_CUSTOM_ICON: "brt-result-custom-icon",
 
     LOOT_CURRENCY_STRING_KEY: "table-currency-string",
     LOOT_AMOUNT_KEY: "loot-amount-key",

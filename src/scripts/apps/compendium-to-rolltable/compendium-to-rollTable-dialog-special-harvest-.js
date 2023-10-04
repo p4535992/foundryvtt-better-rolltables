@@ -157,6 +157,7 @@ export class CompendiumToRollTableSpecialHarvestDialog {
               [`${CONSTANTS.FLAGS.HARVEST_SOURCE_VALUE_KEY}`]: sourceValue ?? "",
               [`${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`]: es.uuid ?? "",
               [`${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`]: newName ?? "",
+              [`${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_NAME}`]: e.name ?? "",
             },
           },
         };

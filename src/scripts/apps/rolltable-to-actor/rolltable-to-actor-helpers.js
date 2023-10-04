@@ -147,6 +147,7 @@ export class RollTableToActorHelpers {
         const itemTmp = document.toObject();
         itemTmp.uuid = document.uuid;
         // Update with custom name if present
+        setProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_NAME}`, itemTmp.name);
         if (!getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`)) {
           setProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`, itemTmp.name);
         } else {

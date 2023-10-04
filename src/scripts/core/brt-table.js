@@ -165,7 +165,7 @@ export class BetterRollTable {
 
     // Roll the requested number of times, marking results as drawn
     for (let n = 0; n < number; n++) {
-      let draw = await this.table.roll({ roll, recursive, _depth });
+      let draw = await this.roll({ roll, recursive, _depth });
       if (draw.results.length) {
         rolls.push(draw.roll);
         results = results.concat(draw.results);
@@ -194,7 +194,10 @@ export class BetterRollTable {
     // PATCH SET FLAG FOR HIDDEN RESULT
     const isTableHidden = getProperty(this.table, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HIDDEN_TABLE}`);
     results.map((r) => {
-      if (isTableHidden) {
+      if (
+        isTableHidden ||
+        String(getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HIDDEN_TABLE}`)) === "true"
+      ) {
         setProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HIDDEN_TABLE}`, true);
       } else {
         setProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HIDDEN_TABLE}`, false);
@@ -345,7 +348,6 @@ export class BetterRollTable {
           const id = result.documentId;
           const innerTable = pack ? await pack.getDocument(id) : game.tables.get(id);
           if (innerTable) {
-            // const innerRoll = await innerTable.roll({ _depth: _depth + 1 });
             const innerOptions = this.options;
             const brtInnerTable = new BetterRollTable(innerTable, innerOptions);
             await brtInnerTable.initialize();
@@ -622,54 +624,91 @@ export class BetterRollTable {
       amount -= resultToDraw;
     }
 
-    return {
-      roll: this.mainRoll,
-      results: drawnResults,
-    };
-    // return drawnResults;
-  }
-
-  /**
-   * Evaluate a RollTable by rolling its formula and retrieving a drawn result.
-   *
-   * Note that this function only performs the roll and identifies the result, the RollTable#draw function should be
-   * called to formalize the draw from the table.
-   *
-   * @param {object} [options={}]       Options which modify rolling behavior
-   * @param {Roll} [options.roll]                   An alternative dice Roll to use instead of the default table formula
-   * @param {boolean} [options.recursive=true]   If a RollTable document is drawn as a result, recursively roll it
-   * @param {number} [options._depth]            An internal flag used to track recursion depth
-   *
-   * @returns {Promise<RollTableDraw>}  The Roll and results drawn by that Roll
-   *
-   * @example Draw results using the default table formula
-   * ```js
-   * const defaultResults = await table.roll();
-   * ```
-   *
-   * @example Draw results using a custom roll formula
-   * ```js
-   * const roll = new Roll("1d20 + @abilities.wis.mod", actor.getRollData());
-   * const customResults = await table.roll({roll});
-   * ```
-   */
-  async roll({ roll = null, recursive = true, displayChat = false, _depth = 0 } = {}) {
-    let resultsBrt = await this.rollManyOnTable(1, { roll, recursive, displayChat, _depth });
-    // Patch add uuid to every each result for better module compatibility
     let resultsTmp = [];
-    for (const r of resultsBrt?.results ?? []) {
+
+    for (const r of drawnResults ?? []) {
       let rTmp = r;
       if (rTmp.type !== CONST.TABLE_RESULT_TYPES.TEXT) {
+        // Patch add uuid to every each result for better module compatibility
         let rDoc = await BRTBetterHelpers.retrieveDocumentFromResultOnlyUuid(r, false);
         if (!getProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`) && rDoc.uuid) {
           setProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`, rDoc.uuid ?? "");
         }
+        setProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_NAME}`, r.text);
+        if (
+          getProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`) &&
+          getProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`) !== r.text
+        ) {
+          setProperty(
+            rTmp,
+            `text`,
+            getProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`)
+          );
+        }
+        setProperty(rTmp, `name`, rTmp.text);
       }
+
+      if (
+        getProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`) &&
+        getProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`) !== r.icon
+      ) {
+        setProperty(
+          rTmp,
+          `icon`,
+          getProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`)
+        );
+      }
+      setProperty(rTmp, `img`, rTmp.icon);
       resultsTmp.push(rTmp);
     }
+
     return {
-      roll: resultsBrt.roll,
+      roll: this.mainRoll,
       results: resultsTmp,
     };
   }
+
+  // /**
+  //  * Evaluate a RollTable by rolling its formula and retrieving a drawn result.
+  //  *
+  //  * Note that this function only performs the roll and identifies the result, the RollTable#draw function should be
+  //  * called to formalize the draw from the table.
+  //  *
+  //  * @param {object} [options={}]       Options which modify rolling behavior
+  //  * @param {Roll} [options.roll]                   An alternative dice Roll to use instead of the default table formula
+  //  * @param {boolean} [options.recursive=true]   If a RollTable document is drawn as a result, recursively roll it
+  //  * @param {number} [options._depth]            An internal flag used to track recursion depth
+  //  *
+  //  * @returns {Promise<RollTableDraw>}  The Roll and results drawn by that Roll
+  //  *
+  //  * @example Draw results using the default table formula
+  //  * ```js
+  //  * const defaultResults = await table.roll();
+  //  * ```
+  //  *
+  //  * @example Draw results using a custom roll formula
+  //  * ```js
+  //  * const roll = new Roll("1d20 + @abilities.wis.mod", actor.getRollData());
+  //  * const customResults = await table.roll({roll});
+  //  * ```
+  //  */
+  // async roll({ roll = null, recursive = true, displayChat = false, _depth = 0 } = {}) {
+  //   let resultsBrt = await this.rollManyOnTable(1, { roll, recursive, displayChat, _depth });
+  //   // Patch add uuid to every each result for better module compatibility
+  //   let resultsTmp = [];
+  //   for (const r of resultsBrt?.results ?? []) {
+  //     let rTmp = r;
+  //     if (rTmp.type !== CONST.TABLE_RESULT_TYPES.TEXT) {
+  //       let rDoc = await BRTBetterHelpers.retrieveDocumentFromResultOnlyUuid(r, false);
+  //       if (!getProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`) && rDoc.uuid) {
+  //         setProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`, rDoc.uuid ?? "");
+  //       }
+  //     }
+  //     resultsTmp.push(rTmp);
+  //   }
+  //   return {
+  //     roll: resultsBrt.roll,
+  //     results: resultsTmp,
+  //   };
+  // }
 }

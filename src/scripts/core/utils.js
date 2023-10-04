@@ -1,5 +1,6 @@
 import { BRTBetterHelpers } from "../better/brt-helper";
 import { CONSTANTS } from "../constants/constants";
+import { isRealNumber } from "../lib";
 import { BRTCONFIG } from "./config";
 
 export class BRTUtils {
