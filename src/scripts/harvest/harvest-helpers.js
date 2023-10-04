@@ -1,6 +1,5 @@
 import { RollTableToActorHelpers } from "../apps/rolltable-to-actor/rolltable-to-actor-helpers";
 import { CONSTANTS } from "../constants/constants";
-// import { BRTBuilder } from "../core/brt-builder";
 import { BRTBetterHelpers } from "../better/brt-helper";
 import { BetterResults } from "../core/brt-table-results";
 import { BRTCONFIG } from "../core/config";
@@ -28,27 +27,14 @@ export class BRTHarvestHelpers {
 
     ui.notifications.info(CONSTANTS.MODULE_ID + " | API | Harvest generation started.");
 
-    // options = await BRTUtils.updateOptions(tableEntity, options);
-
-    // const isTokenActor = options?.isTokenActor;
-    // const stackSame = options?.stackSame;
-    // const customRoll = options?.customRoll;
-    // const itemLimit = options?.itemLimit;
-
-    // const rollsAmount = options?.rollsAmount;
-    // const dc = options?.dc;
-    // const skill = options?.skill;
-    // const brtBuilder = new BRTBuilder(tableEntity);
-
     const brtTable = new BetterRollTable(table, options);
     await brtTable.initialize();
 
+    const isTokenActor = brtTable.options?.isTokenActor;
+    const stackSame = brtTable.options?.stackSame;
+    const itemLimit = brtTable.options?.itemLimit;
+
     for (const token of tokenstack) {
-      //   const resultsBrt = await brtBuilder.betterRoll({
-      //     rollsAmount: customRoll ?? rollsAmount,
-      //     dc: dc,
-      //     skill: skill,
-      //   });
       const resultsBrt = await brtTable.betterRoll();
 
       const results = resultsBrt?.results;
@@ -65,26 +51,13 @@ export class BRTHarvestHelpers {
    * @param {*} tableEntity
    */
   static async generateHarvest(tableEntity, options = {}) {
-    options = await BRTUtils.updateOptions(tableEntity, options);
-
-    const rollMode = options?.rollMode;
-    const stackSame = options?.stackSame;
-    const itemLimit = options?.itemLimit;
-
-    // const customRoll = options?.customRole;
-    // const rollsAmount = options?.rollsAmount;
-    // const dc = options?.dc;
-    // const skill = options?.skill;
-
-    // const builder = new BRTBuilder(tableEntity);
-    // const resultsBrt = await builder.betterRoll({
-    //   rollsAmount: customRoll ?? rollsAmount,
-    //   dc: dc,
-    //   skill: skill,
-    // });
-
     const brtTable = new BetterRollTable(tableEntity, options);
     await brtTable.initialize();
+
+    const isTokenActor = brtTable.options?.isTokenActor;
+    const stackSame = brtTable.options?.stackSame;
+    const itemLimit = brtTable.options?.itemLimit;
+
     const resultsBrt = brtTable.betterRoll();
 
     const results = resultsBrt?.results;
@@ -100,20 +73,6 @@ export class BRTHarvestHelpers {
   }
 
   static async generateChatHarvest(tableEntity, options = {}) {
-    // options = await  BRTUtils.updateOptions(tableEntity, options);
-
-    // const rollMode = options?.rollMode;
-    // const rollsAmount = options?.rollsAmount;
-    // const dc = options?.dc;
-    // const skill = options?.skill;
-
-    // const brtBuilder = new BRTBuilder(tableEntity);
-    // const resultsBrt = await brtBuilder.betterRoll({
-    //   rollsAmount: rollsAmount,
-    //   dc: dc,
-    //   skill: skill,
-    // });
-
     const brtTable = new BetterRollTable(tableEntity, options);
     await brtTable.initialize();
     const resultsBrt = await brtTable.betterRoll();

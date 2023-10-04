@@ -1,5 +1,4 @@
 import { LootChatCard } from "./loot/loot-chat-card.js";
-// import { BRTBuilder } from "./core/brt-builder.js";
 import { BetterResults } from "./core/brt-table-results.js";
 import { BRTUtils } from "./core/utils.js";
 import { BRTCONFIG } from "./core/config.js";
@@ -63,8 +62,6 @@ export class BetterTables {
    * @returns {Promise<TableResult[]>}
    */
   async getBetterTableResults(tableEntity, options = {}) {
-    // const brtBuilder = new BRTBuilder(tableEntity);
-    // const resultBrt = await brtBuilder.betterRoll(options);
     const brtTable = new BetterRollTable(tableEntity, options);
     await brtTable.initialize();
     const resultBrt = await brtTable.betterRoll();
@@ -79,8 +76,6 @@ export class BetterTables {
    * @returns {Promise<TableResult[]>}
    */
   async betterTableRoll(tableEntity, options = {}) {
-    // const brtBuilder = new BRTBuilder(tableEntity);
-    // const resultBrt = await brtBuilder.betterRoll(options);
     const brtTable = new BetterRollTable(tableEntity, options);
     await brtTable.initialize();
     const resultBrt = await brtTable.betterRoll();
@@ -112,11 +107,9 @@ export class BetterTables {
         const harvestChatCard = new HarvestChatCard(betterResults, rollMode);
         await harvestChatCard.createChatCard(tableEntity);
       } else {
-        // await brtBuilder.createChatCard(results, rollMode);
         await brtTable.createChatCard(results, rollMode);
       }
     } else {
-      // await brtBuilder.createChatCard(results, rollMode);
       await brtTable.createChatCard(results, rollMode);
     }
     return results;
@@ -303,8 +296,6 @@ export class BetterTables {
    * @returns {Promise<{flavor: *, sound: string, user: *, content: *}>}
    */
   static async prepareCardData(tableEntity, options = {}) {
-    // const brtBuilder = new BRTBuilder(tableEntity);
-    // const resultBrt = await brtBuilder.betterRoll(options);
     const brtTable = new BetterRollTable(tableEntity, options);
     await brtTable.initialize();
     const resultBrt = await brtTable.betterRoll();

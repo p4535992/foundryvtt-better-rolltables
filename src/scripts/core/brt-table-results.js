@@ -1,4 +1,3 @@
-// import { BRTBuilder } from "./brt-builder.js";
 import { BRTCONFIG } from "./config.js";
 import { CONSTANTS } from "../constants/constants.js";
 import { BRTBetterHelpers } from "../better/brt-helper.js";
@@ -94,20 +93,12 @@ export class BetterResults {
         // if a table definition is found, the textString is the rollFormula to be rolled on that table
         if (table) {
           const numberRolls = await BRTBetterHelpers.tryRoll(textString);
-
-          //   const brtBuilder = new BRTBuilder(table);
-          //   const innerResultsBrt = await brtBuilder.betterRoll({
-          //     rollsAmount: numberRolls,
-          //     dc: undefined,
-          //     skill: undefined,
-          //   });
-
           const options = {
             rollsAmount: numberRolls,
           };
-          const brtTable = new BetterRollTable(table, options);
-          await brtTable.initialize();
-          const innerResultsBrt = await brtTable.betterRoll();
+          const innerBrtTable = new BetterRollTable(table, options);
+          await innerBrtTable.initialize();
+          const innerResultsBrt = await innerBrtTable.betterRoll();
 
           const innerResults = innerResultsBrt?.results;
 
