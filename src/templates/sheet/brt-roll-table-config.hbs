@@ -28,6 +28,14 @@
                     value="{{data.flags.better-rolltables.loot-actor-name}}" />
             </div>
             {{/ifEquals}}
+            {{#ifEquals @root.tableType "harvest"}}
+            <div class="form-group">
+                <label>{{localize 'better-rolltables.LootActorName'}}</label>
+                <input type="text"
+                    placeholder="{{localize 'better-rolltables.LootActorNamePlaceholder'}}" name="flags.better-rolltables.loot-actor-name"
+                    value="{{data.flags.better-rolltables.loot-actor-name}}" />
+            </div>
+            {{/ifEquals}}
             <div class="form-group">
                 <label for="flags.better-rolltables.loot-amount-key">{{localize 'better-rolltables.LootRollAmount'}}</label>
                 <input type="text"

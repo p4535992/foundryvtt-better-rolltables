@@ -24,7 +24,7 @@ export const CONSTANTS = {
     HARVEST_DC_VALUE_KEY: "brt-dc-value",
     HARVEST_SKILL_VALUE_KEY: "brt-skill-value",
     HARVEST_SOURCE_VALUE_KEY: "brt-source-value",
-    // TODO HARVEST_ACTOR_NAME_KEY: "brt-actor-name",
+    HARVEST_ACTOR_NAME_KEY: "loot-actor-name",
 
     /** @deprecated used on the old html view */
     RESULTS_FORMULA_KEY: "brt-result-formula",
