@@ -82,35 +82,36 @@ export class BetterTables {
 
     const results = resultBrt?.results;
     let rollMode = brtTable.rollMode;
+    let roll = brtTable.mainRoll;
 
     if (game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.USE_CONDENSED_BETTERROLL)) {
       const br = new BetterResults(results);
       const betterResults = await br.buildResults(tableEntity);
 
       if (tableEntity.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_BETTER) {
-        const betterChatCard = new BetterChatCard(betterResults, rollMode);
+        const betterChatCard = new BetterChatCard(betterResults, rollMode, roll);
         await betterChatCard.createChatCard(tableEntity);
       } else if (
         tableEntity.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_LOOT
       ) {
         const currencyData = br.getCurrencyData();
-        const lootChatCard = new LootChatCard(betterResults, currencyData, rollMode);
+        const lootChatCard = new LootChatCard(betterResults, currencyData, rollMode, roll);
         await lootChatCard.createChatCard(tableEntity);
       } else if (
         tableEntity.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_STORY
       ) {
-        const storyChatCard = new StoryChatCard(betterResults);
+        const storyChatCard = new StoryChatCard(betterResults, rollMode, roll);
         await storyChatCard.createChatCard(tableEntity);
       } else if (
         tableEntity.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_HARVEST
       ) {
-        const harvestChatCard = new HarvestChatCard(betterResults, rollMode);
+        const harvestChatCard = new HarvestChatCard(betterResults, rollMode, roll);
         await harvestChatCard.createChatCard(tableEntity);
       } else {
-        await brtTable.createChatCard(results, rollMode);
+        await brtTable.createChatCard(results, rollMode, roll);
       }
     } else {
-      await brtTable.createChatCard(results, rollMode);
+      await brtTable.createChatCard(results, rollMode, roll);
     }
     return results;
   }
@@ -302,29 +303,30 @@ export class BetterTables {
 
     const results = resultBrt?.results;
 
-    let rollMode = options?.rollMode ?? null;
+    let rollMode = options?.rollMode || brtTable.rollMode || null;
+    let roll = options?.roll || brtTable.mainRoll || null;
 
     const br = new BetterResults(results);
     const betterResults = await br.buildResults(tableEntity);
 
     if (this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_BETTER) {
-      const betterChatCard = new BetterChatCard(betterResults, rollMode);
+      const betterChatCard = new BetterChatCard(betterResults, rollMode, roll);
       return betterChatCard.prepareCharCart(tableEntity);
     } else if (
       this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_LOOT
     ) {
       const currencyData = br.getCurrencyData();
-      const lootChatCard = new LootChatCard(betterResults, currencyData, rollMode);
+      const lootChatCard = new LootChatCard(betterResults, currencyData, rollMode, roll);
       return lootChatCard.prepareCharCart(tableEntity);
     } else if (
       this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_STORY
     ) {
-      const storyChatCard = new StoryChatCard(betterResults);
+      const storyChatCard = new StoryChatCard(betterResults, rollMode, roll);
       return storyChatCard.prepareCharCart(tableEntity);
     } else if (
       this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_HARVEST
     ) {
-      const harvestChatCard = new HarvestChatCard(betterResults, rollMode);
+      const harvestChatCard = new HarvestChatCard(betterResults, rollMode, roll);
       return harvestChatCard.prepareCharCart(tableEntity);
     }
   }

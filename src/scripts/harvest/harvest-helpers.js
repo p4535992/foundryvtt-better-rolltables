@@ -55,11 +55,14 @@ export class BRTHarvestHelpers {
     const brtTable = new BetterRollTable(tableEntity, options);
     await brtTable.initialize();
 
+    const resultsBrt = await brtTable.betterRoll();
+
     const isTokenActor = brtTable.options?.isTokenActor;
     const stackSame = brtTable.options?.stackSame;
     const itemLimit = brtTable.options?.itemLimit;
 
-    const resultsBrt = await brtTable.betterRoll();
+    const rollMode = brtTable.rollMode;
+    const roll = brtTable.mainRoll;
 
     const results = resultsBrt?.results;
     const br = new BetterResults(results);
@@ -68,7 +71,7 @@ export class BRTHarvestHelpers {
     await RollTableToActorHelpers.addItemsToActorOld(actor, betterResults, stackSame, itemLimit);
 
     if (game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.ALWAYS_SHOW_GENERATED_HARVEST_AS_MESSAGE)) {
-      const harvestChatCard = new HarvestChatCard(betterResults, rollMode);
+      const harvestChatCard = new HarvestChatCard(betterResults, rollMode, roll);
       await harvestChatCard.createChatCard(tableEntity);
     }
   }
@@ -77,12 +80,14 @@ export class BRTHarvestHelpers {
     const brtTable = new BetterRollTable(tableEntity, options);
     await brtTable.initialize();
     const resultsBrt = await brtTable.betterRoll();
+
     const rollMode = brtTable.rollMode;
+    const roll = brtTable.mainRoll;
 
     const results = resultsBrt?.results;
     const br = new BetterResults(results);
     const betterResults = await br.buildResults(tableEntity);
-    const harvestChatCard = new HarvestChatCard(betterResults, rollMode);
+    const harvestChatCard = new HarvestChatCard(betterResults, rollMode, roll);
 
     await harvestChatCard.createChatCard(tableEntity);
   }

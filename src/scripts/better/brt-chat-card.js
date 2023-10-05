@@ -11,10 +11,10 @@ export class BetterChatCard {
   /**
    * @param {object} betterResults
    */
-  constructor(betterResults, rollMode) {
+  constructor(betterResults, rollMode, roll) {
     this.betterResults = betterResults;
     this.rollMode = rollMode;
-
+    this.roll = roll;
     this.itemsData = [];
     this.numberOfDraws = 0;
   }
@@ -162,7 +162,10 @@ export class BetterChatCard {
       documents: true,
     });
 
+    const rollHTML = table.displayRoll && this.roll ? await this.roll.render() : null;
+
     const chatCardData = {
+      rollHTML: rollHTML,
       tableData: table,
       htmlDescription: htmlDescription,
       itemsData: this.itemsData,
@@ -196,7 +199,7 @@ export class BetterChatCard {
       });
     }
 
-    return {
+    const chatData = {
       flavor: flavorString,
       sound: "sounds/dice.wav",
       user: game.user._id,
@@ -207,6 +210,7 @@ export class BetterChatCard {
         },
       },
     };
+    return chatData;
   }
 
   async createChatCard(table) {

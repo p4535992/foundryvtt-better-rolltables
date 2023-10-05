@@ -12,11 +12,11 @@ export class LootChatCard {
    * @param {object} betterResults
    * @param {object} currencyData
    */
-  constructor(betterResults, currencyData, rollMode) {
+  constructor(betterResults, currencyData, rollMode, roll) {
     this.betterResults = betterResults;
     this.currencyData = currencyData;
     this.rollMode = rollMode;
-
+    this.roll = roll;
     this.itemsData = [];
     this.numberOfDraws = 0;
   }
@@ -163,7 +163,10 @@ export class LootChatCard {
       documents: true,
     });
 
+    const rollHTML = table.displayRoll && this.roll ? await this.roll.render() : null;
+
     const chatCardData = {
+      rollHTML: rollHTML,
       tableData: table,
       htmlDescription: htmlDescription,
       itemsData: this.itemsData,
@@ -198,7 +201,7 @@ export class LootChatCard {
       });
     }
 
-    return {
+    const chatData = {
       flavor: flavorString,
       sound: "sounds/dice.wav",
       user: game.user._id,
@@ -209,6 +212,7 @@ export class LootChatCard {
         },
       },
     };
+    return chatData;
   }
 
   async createChatCard(table) {

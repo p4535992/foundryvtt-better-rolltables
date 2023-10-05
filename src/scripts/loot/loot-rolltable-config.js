@@ -642,6 +642,10 @@ export class BetterRollTableLootConfig extends RollTableConfig {
     } else {
       event.target.disabled = true;
     }
+    // Set brt type
+    if (this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) !== CONSTANTS.TABLE_TYPE_LOOT) {
+      await this.document.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY, CONSTANTS.TABLE_TYPE_LOOT);
+    }
     const tableEntity = this.document;
     await API.generateChatLoot(tableEntity);
     if (event.currentTarget) {
@@ -666,6 +670,10 @@ export class BetterRollTableLootConfig extends RollTableConfig {
     } else {
       event.target.disabled = true;
     }
+    // Set brt type
+    if (this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) !== CONSTANTS.TABLE_TYPE_LOOT) {
+      await this.document.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY, CONSTANTS.TABLE_TYPE_LOOT);
+    }
     const tableEntity = this.document;
     await API.generateLoot(tableEntity);
     if (event.currentTarget) {
@@ -687,6 +695,10 @@ export class BetterRollTableLootConfig extends RollTableConfig {
       event.currentTarget.disabled = true;
     } else {
       event.target.disabled = true;
+    }
+    // Set brt type
+    if (this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) !== CONSTANTS.TABLE_TYPE_LOOT) {
+      await this.document.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY, CONSTANTS.TABLE_TYPE_LOOT);
     }
     const tableEntity = this.document;
     await API.generateLootOnSelectedToken(tableEntity);

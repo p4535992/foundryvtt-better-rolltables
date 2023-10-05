@@ -642,6 +642,10 @@ export class BetterRollTableHarvestConfig extends RollTableConfig {
     } else {
       event.target.disabled = true;
     }
+    // Set brt type
+    if (this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) !== CONSTANTS.TABLE_TYPE_HARVEST) {
+      await this.document.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY, CONSTANTS.TABLE_TYPE_HARVEST);
+    }
     const tableEntity = this.document;
     await API.generateChatHarvest(tableEntity);
     if (event.currentTarget) {
@@ -666,6 +670,10 @@ export class BetterRollTableHarvestConfig extends RollTableConfig {
     } else {
       event.target.disabled = true;
     }
+    // Set brt type
+    if (this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) !== CONSTANTS.TABLE_TYPE_HARVEST) {
+      await this.document.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY, CONSTANTS.TABLE_TYPE_HARVEST);
+    }
     const tableEntity = this.document;
     await API.generateHarvest(tableEntity);
     if (event.currentTarget) {
@@ -687,6 +695,10 @@ export class BetterRollTableHarvestConfig extends RollTableConfig {
       event.currentTarget.disabled = true;
     } else {
       event.target.disabled = true;
+    }
+    // Set brt type
+    if (this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) !== CONSTANTS.TABLE_TYPE_HARVEST) {
+      await this.document.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY, CONSTANTS.TABLE_TYPE_HARVEST);
     }
     const tableEntity = this.document;
     await API.generateHarvestOnSelectedToken(tableEntity);

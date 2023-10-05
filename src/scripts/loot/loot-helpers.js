@@ -56,11 +56,14 @@ export class BRTLootHelpers {
     const brtTable = new BetterRollTable(tableEntity, options);
     await brtTable.initialize();
 
+    const resultsBrt = await brtTable.betterRoll();
+
+    const rollMode = brtTable.rollMode;
+    const roll = brtTable.mainRoll;
+
     const isTokenActor = brtTable.options?.isTokenActor;
     const stackSame = brtTable.options?.stackSame;
     const itemLimit = brtTable.options?.itemLimit;
-
-    const resultsBrt = await brtTable.betterRoll();
 
     const results = resultsBrt?.results;
     const br = new BetterResults(results);
@@ -72,7 +75,7 @@ export class BRTLootHelpers {
     await RollTableToActorHelpers.addItemsToActorOld(actor, betterResults, stackSame, itemLimit);
 
     if (game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.ALWAYS_SHOW_GENERATED_LOOT_AS_MESSAGE)) {
-      const lootChatCard = new LootChatCard(betterResults, currencyData, rollMode);
+      const lootChatCard = new LootChatCard(betterResults, currencyData, rollMode, roll);
       await lootChatCard.createChatCard(tableEntity);
     }
   }
@@ -81,13 +84,15 @@ export class BRTLootHelpers {
     const brtTable = new BetterRollTable(tableEntity, options);
     await brtTable.initialize();
     const resultsBrt = await brtTable.betterRoll();
+
     const rollMode = brtTable.rollMode;
+    const roll = brtTable.mainRoll;
 
     const results = resultsBrt?.results;
     const br = new BetterResults(results);
     const betterResults = await br.buildResults(tableEntity);
     const currencyData = br.getCurrencyData();
-    const lootChatCard = new LootChatCard(betterResults, currencyData, rollMode);
+    const lootChatCard = new LootChatCard(betterResults, currencyData, rollMode, roll);
 
     await lootChatCard.createChatCard(tableEntity);
   }

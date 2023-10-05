@@ -187,6 +187,8 @@
       "betterRolltableRollTooltip": "Roll the table with BRT",
       "quantityFormula": "Qt.",
       "editResult": "Edit Result",
+      "dcHint": "DC (minimum value of the DC if present and > 0)",
+      "skillHint": "Skill (the skill string used for filter the results)",
       "dc": "DC",
       "skill": "Skill",
       "source": "Source reference",

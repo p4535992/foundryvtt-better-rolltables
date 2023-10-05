@@ -638,6 +638,10 @@ export class BetterRollTableStoryConfig extends RollTableConfig {
     } else {
       event.target.disabled = true;
     }
+    // Set brt type
+    if (this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) !== CONSTANTS.TABLE_TYPE_STORY) {
+      await this.document.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY, CONSTANTS.TABLE_TYPE_STORY);
+    }
     const tableEntity = this.document;
     await API.generateChatStory(tableEntity);
     if (event.currentTarget) {

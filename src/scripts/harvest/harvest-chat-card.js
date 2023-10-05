@@ -11,10 +11,10 @@ export class HarvestChatCard {
   /**
    * @param {object} betterResults
    */
-  constructor(betterResults, rollMode) {
+  constructor(betterResults, rollMode, roll) {
     this.betterResults = betterResults;
     this.rollMode = rollMode;
-
+    this.roll = roll;
     this.itemsData = [];
     this.numberOfDraws = 0;
   }
@@ -161,7 +161,10 @@ export class HarvestChatCard {
       documents: true,
     });
 
+    const rollHTML = table.displayRoll && this.roll ? await this.roll.render() : null;
+
     const chatCardData = {
+      rollHTML: rollHTML,
       tableData: table,
       htmlDescription: htmlDescription,
       itemsData: this.itemsData,
@@ -195,7 +198,7 @@ export class HarvestChatCard {
       });
     }
 
-    return {
+    const chatData = {
       flavor: flavorString,
       sound: "sounds/dice.wav",
       user: game.user._id,
@@ -206,6 +209,7 @@ export class HarvestChatCard {
         },
       },
     };
+    return chatData;
   }
 
   async createChatCard(table) {

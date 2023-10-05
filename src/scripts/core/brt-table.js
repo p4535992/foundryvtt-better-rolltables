@@ -3,6 +3,10 @@ import { log } from "../lib.js";
 import { BRTBetterHelpers } from "../better/brt-helper.js";
 import { BRTCONFIG } from "./config.js";
 import { BRTUtils } from "./utils.js";
+import { LootChatCard } from "../loot/loot-chat-card.js";
+import { StoryChatCard } from "../story/story-chat-card.js";
+import { HarvestChatCard } from "../harvest/harvest-chat-card.js";
+import { BetterChatCard } from "../better/brt-chat-card.js";
 
 export class BetterRollTable {
   // extends RollTable {
@@ -76,22 +80,62 @@ export class BetterRollTable {
       messageData
     );
 
-    // Render the chat card which combines the dice roll with the drawn results
-    // messageData.content = await renderTemplate(CONFIG.RollTable.resultTemplate, {
-    messageData.content = await renderTemplate(`modules/${CONSTANTS.MODULE_ID}/templates/card/better-chat-card.hbs`, {
-      description: await TextEditor.enrichHTML(this.table.description, { documents: true, async: true }),
-      results: results.map((result) => {
-        const r = result.toObject(false);
-        r.text = result.getChatText();
-        r.icon = result.icon;
-        return r;
-      }),
-      rollHTML: this.table.displayRoll && roll ? await roll.render() : null,
-      table: this.table,
-    });
+    // // Render the chat card which combines the dice roll with the drawn results
+    // // messageData.content = await renderTemplate(CONFIG.RollTable.resultTemplate, {
+    // messageData.content = await renderTemplate(`modules/${CONSTANTS.MODULE_ID}/templates/card/better-chat-card.hbs`, {
+    //   description: await TextEditor.enrichHTML(this.table.description, { documents: true, async: true }),
+    //   results: results.map((result) => {
+    //     const r = result.toObject(false);
+    //     r.text = result.getChatText();
+    //     r.icon = result.icon;
+    //     return r;
+    //   }),
+    //   rollHTML: this.table.displayRoll && roll ? await roll.render() : null,
+    //   table: this.table,
+    // });
 
-    // Create the chat message
-    return ChatMessage.implementation.create(messageData, messageOptions);
+    // // Create the chat message
+    // return ChatMessage.implementation.create(messageData, messageOptions);
+    // const rollHTML = this.table.displayRoll && roll ? await roll.render() : null;
+    let betterResults = results.map((result) => {
+      const r = result.toObject(false);
+      r.text = result.getChatText();
+      r.icon = result.icon;
+      return r;
+    });
+    if (this.table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_BETTER) {
+      const betterChatCard = new BetterChatCard(betterResults, this.rollMode, roll);
+      await betterChatCard.createChatCard(this.table);
+    } else if (this.table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_LOOT) {
+      const currencyData = br.getCurrencyData();
+      const lootChatCard = new LootChatCard(betterResults, currencyData, this.rollMode, roll);
+      await lootChatCard.createChatCard(this.table);
+    } else if (this.table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_STORY) {
+      const storyChatCard = new StoryChatCard(betterResults, this.rollMode, roll);
+      await storyChatCard.createChatCard(this.table);
+    } else if (
+      this.table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_HARVEST
+    ) {
+      const harvestChatCard = new HarvestChatCard(betterResults, this.rollMode, roll);
+      await harvestChatCard.createChatCard(this.table);
+    } else {
+      // Render the chat card which combines the dice roll with the drawn results
+      messageData.content = await renderTemplate(CONFIG.RollTable.resultTemplate, {
+        // messageData.content = await renderTemplate(`modules/${CONSTANTS.MODULE_ID}/templates/card/better-chat-card.hbs`, {
+        description: await TextEditor.enrichHTML(this.table.description, { documents: true, async: true }),
+        results: results.map((result) => {
+          const r = result.toObject(false);
+          r.text = result.getChatText();
+          r.icon = result.icon;
+          return r;
+        }),
+        rollHTML: this.table.displayRoll && roll ? await roll.render() : null,
+        table: this.table,
+      });
+
+      // Create the chat message
+      return ChatMessage.implementation.create(messageData, messageOptions);
+    }
   }
 
   /* -------------------------------------------- */

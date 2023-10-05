@@ -19,4 +19,18 @@ export class BRTStoryHelpers {
     storyChat.createChatCard(storyHtml);
     storyChat.createChatCard(storyGMHtml, { gmOnly: true });
   }
+
+  static async generateContentHtmlStory(tableEntity) {
+    const storyBuilder = new StoryBuilder(tableEntity);
+    await storyBuilder.drawStory();
+    const storyHtml = storyBuilder.getGeneratedStory();
+    return storyHtml;
+  }
+
+  static async generateContentGMHtmlStory(tableEntity) {
+    const storyBuilder = new StoryBuilder(tableEntity);
+    await storyBuilder.drawStory();
+    const storyGMHtml = storyBuilder.getGeneratedStoryGM();
+    return storyGMHtml;
+  }
 }
