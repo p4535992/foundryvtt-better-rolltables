@@ -7,6 +7,7 @@ import { HarvestChatCard } from "./harvest-chat-card";
 import { isRealNumber } from "../lib";
 import { BRTUtils } from "../core/utils";
 import { BetterRollTable } from "../core/brt-table";
+import SETTINGS from "../constants/settings";
 
 export class BRTHarvestHelpers {
   /**
@@ -58,7 +59,7 @@ export class BRTHarvestHelpers {
     const stackSame = brtTable.options?.stackSame;
     const itemLimit = brtTable.options?.itemLimit;
 
-    const resultsBrt = brtTable.betterRoll();
+    const resultsBrt = await brtTable.betterRoll();
 
     const results = resultsBrt?.results;
     const br = new BetterResults(results);
@@ -88,9 +89,9 @@ export class BRTHarvestHelpers {
 
   static async createActor(table, overrideName = undefined) {
     const actorName = overrideName || table.getFlag(CONSTANTS.MODULE_ID, BRTCONFIG.HARVEST_ACTOR_NAME_KEY);
-    this.actor = game.actors.getName(actorName);
-    if (!this.actor) {
-      this.actor = await Actor.create({
+    let actor = game.actors.getName(actorName);
+    if (!actor) {
+      actor = await Actor.create({
         name: actorName || "New Harvest",
         type: game.settings.get(CONSTANTS.MODULE_ID, SETTINGS.DEFAULT_ACTOR_NPC_TYPE),
         img: `modules/${CONSTANTS.MODULE_ID}/assets/artwork/chest.webp`,
@@ -98,5 +99,7 @@ export class BRTHarvestHelpers {
         token: { actorLink: true },
       });
     }
+
+    return actor;
   }
 }

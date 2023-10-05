@@ -6,6 +6,7 @@ import { BRTCONFIG } from "../core/config";
 import { LootChatCard } from "./loot-chat-card";
 import { BRTUtils } from "../core/utils";
 import { BetterRollTable } from "../core/brt-table";
+import SETTINGS from "../constants/settings";
 
 export class BRTLootHelpers {
   /**
@@ -59,7 +60,7 @@ export class BRTLootHelpers {
     const stackSame = brtTable.options?.stackSame;
     const itemLimit = brtTable.options?.itemLimit;
 
-    const resultsBrt = brtTable.betterRoll();
+    const resultsBrt = await brtTable.betterRoll();
 
     const results = resultsBrt?.results;
     const br = new BetterResults(results);
@@ -138,9 +139,9 @@ export class BRTLootHelpers {
 
   static async createActor(table, overrideName = undefined) {
     const actorName = overrideName || table.getFlag(CONSTANTS.MODULE_ID, BRTCONFIG.LOOT_ACTOR_NAME_KEY);
-    this.actor = game.actors.getName(actorName);
-    if (!this.actor) {
-      this.actor = await Actor.create({
+    let actor = game.actors.getName(actorName);
+    if (!actor) {
+      actor = await Actor.create({
         name: actorName || "New Loot",
         type: game.settings.get(CONSTANTS.MODULE_ID, SETTINGS.DEFAULT_ACTOR_NPC_TYPE),
         img: `modules/${CONSTANTS.MODULE_ID}/assets/artwork/chest.webp`,
@@ -151,7 +152,8 @@ export class BRTLootHelpers {
 
     // const lootSheet = game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.LOOT_SHEET_TO_USE_KEY);
     // if (lootSheet in CONFIG.Actor.sheetClasses.npc) {
-    //   await this.actor.setFlag("core", "sheetClass", lootSheet);
+    //   await actor.setFlag("core", "sheetClass", lootSheet);
     // }
+    return actor;
   }
 }

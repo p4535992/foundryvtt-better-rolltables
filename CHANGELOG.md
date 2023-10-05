@@ -1,6 +1,11 @@
+### 2.0.14
+
+- Bug fix create actor feature and rsync rolltable config
+
 ### 2.0.13
 
-- Many bug fix and big clean up of the codee
+- Many bug fix and big clean up of the code
+- 
 ### 2.0.9-10-11-12
 
 - Bug fix https://github.com/p4535992/foundryvtt-better-rolltables/issues/2
