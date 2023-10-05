@@ -4,7 +4,7 @@ import { BRTUtils } from "./core/utils.js";
 import { BRTCONFIG } from "./core/config.js";
 import API from "./API.js";
 import { CONSTANTS } from "./constants/constants.js";
-import { i18n } from "./lib.js";
+import { debug, i18n } from "./lib.js";
 import SETTINGS from "./constants/settings.js";
 import { HarvestChatCard } from "./harvest/harvest-chat-card.js";
 import { StoryChatCard } from "./story/story-chat-card.js";
@@ -580,6 +580,18 @@ export class BetterTables {
           });
           $(link).after(rollNode);
         });
+    }
+  }
+
+  static async checkRenderDefaultRollTableConfig(rollTableConfig, html, rollTable) {
+    if (rollTableConfig.object.sheet.template !== "templates/sheets/roll-table-config.html") {
+      return;
+    } else {
+      debug(`Set table type to null for default sheet rolltable config`);
+      // If the flas is not null
+      if (!rollTableConfig.object.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY)) {
+        await rollTableConfig.object.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY, null);
+      }
     }
   }
 }
