@@ -158,6 +158,7 @@ export class CompendiumToRollTableSpecialHarvestDialog {
               [`${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`]: es.uuid ?? "",
               [`${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`]: newName ?? "",
               [`${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_NAME}`]: e.name ?? "",
+              [`${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_ICON}`]: e.img ?? "",
             },
           },
         };

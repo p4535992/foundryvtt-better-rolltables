@@ -196,4 +196,48 @@ export class BRTUtils {
 
     return newOptions;
   }
+
+  static async addToItemData(itemsData, itemEntity, itemData) {
+    const existingItem = itemsData.find((i) => i.item.id === itemEntity.id);
+    const quantity = getProperty(itemData, BRTCONFIG.QUANTITY_PROPERTY_PATH) || 1;
+    const weight = getProperty(itemData, BRTCONFIG.WEIGHT_PROPERTY_PATH) || 0;
+
+    if (existingItem) {
+      existingItem.quantity = +existingItem.quantity + +quantity;
+      existingItem.weight = +existingItem.weight + +weight;
+    } else {
+      // we will scale down the font size if an item name is too long
+      const fontSize = Math.max(60, 100 - Math.max(0, (itemEntity.name || itemEntity.text).length - 27) * 2);
+
+      let type = undefined;
+      if (itemEntity.isText) {
+        type = CONST.TABLE_RESULT_TYPES.TEXT;
+      } else if (itemEntity.pack) {
+        type = CONST.TABLE_RESULT_TYPES.COMPENDIUM;
+      } else {
+        type = CONST.TABLE_RESULT_TYPES.DOCUMENT;
+      }
+
+      const resultDoc = itemEntity; // await BRTBetterHelpers.retrieveDocumentFromResult(itemEntity);
+
+      itemsData.push({
+        documentName: itemEntity.documentName,
+        compendiumName: itemEntity.pack,
+        type: type,
+        item: {
+          id: itemEntity.id,
+          _id: itemEntity.id,
+          name: itemEntity.name,
+          img: itemEntity.img,
+          text: itemEntity.text,
+          uuid: resultDoc?.uuid ?? "",
+        },
+        quantity: quantity,
+        weight: weight,
+        fontSize: fontSize,
+      });
+    }
+
+    return itemsData;
+  }
 }

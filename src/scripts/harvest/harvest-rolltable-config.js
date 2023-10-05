@@ -76,6 +76,19 @@ export class BetterRollTableHarvestConfig extends RollTableConfig {
               result.text
             );
           }
+
+          setProperty(
+            result,
+            `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_ICON}`,
+            result.icon
+          );
+          if (!getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`)) {
+            setProperty(
+              result,
+              `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`,
+              result.icon
+            );
+          }
         }
         return result;
       })

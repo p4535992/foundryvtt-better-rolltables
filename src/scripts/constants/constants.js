@@ -14,6 +14,8 @@ export const CONSTANTS = {
     GENERIC_RESULT_CUSTOM_NAME: "brt-result-custom-name",
     GENERIC_RESULT_ORIGINAL_NAME: "brt-result-original-name",
     GENERIC_RESULT_CUSTOM_ICON: "brt-result-custom-icon",
+    GENERIC_RESULT_ORIGINAL_ICON: "brt-result-original-icon",
+    GENERIC_RESULT_HIDDEN_TABLE: "brt-hidden-table",
 
     LOOT_CURRENCY_STRING_KEY: "table-currency-string",
     LOOT_AMOUNT_KEY: "loot-amount-key",
@@ -39,4 +41,5 @@ export const CONSTANTS = {
   TABLE_TYPE_HARVEST: "harvest",
   TABLE_TYPE_STORY: "story",
   DEFAULT_HIDDEN_RESULT_IMAGE: "modules/better-rolltables/assets/artwork/unidentified-result.webp",
+  DEFAULT_HIDDEN_RESULT_TEXT: "???",
 };

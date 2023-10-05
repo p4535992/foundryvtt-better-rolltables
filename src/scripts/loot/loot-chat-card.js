@@ -18,7 +18,15 @@ export class LootChatCard {
     this.rollMode = rollMode;
     this.roll = roll;
     this.itemsData = [];
+    this.itemsDataGM = [];
     this.numberOfDraws = 0;
+    this.atLeastOneRollIsHidden = false;
+    for (const result of this.betterResults) {
+      if (getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_HIDDEN_TABLE}`)) {
+        this.atLeastOneRollIsHidden = true;
+        break;
+      }
+    }
   }
 
   async findOrCreateItems() {
@@ -37,8 +45,14 @@ export class LootChatCard {
           `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`
         );
       }
+
+      if (getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_HIDDEN_TABLE}`)) {
+        customResultName = CONSTANTS.DEFAULT_HIDDEN_RESULT_TEXT;
+        customResultImg = CONSTANTS.DEFAULT_HIDDEN_RESULT_IMAGE;
+      }
+
       if (result.type === CONST.TABLE_RESULT_TYPES.TEXT) {
-        await this.addToItemData({
+        this.itemsData = await BRTUtils.addToItemData(this.itemsData, {
           id: result.text,
           text: result.text,
           img: result.img,
@@ -51,6 +65,7 @@ export class LootChatCard {
       /** we pass though the data, since we might have some data manipulation that changes an existing item, in that case even if it was initially
        * existing or in a compendium we have to create a new one */
       const itemData = await RollTableToActorHelpers.buildItemData(result);
+
       if (result.collection) {
         const itemEntity = await BRTUtils.getItemFromCompendium(result);
 
@@ -61,7 +76,8 @@ export class LootChatCard {
           if (customResultImg && customResultImg !== itemEntity.img) {
             setProperty(itemEntity, `img`, customResultImg);
           }
-          await this.addToItemData(itemEntity, itemData);
+
+          this.itemsData = await BRTUtils.addToItemData(this.itemsData, itemEntity, itemData);
           continue;
         }
       }
@@ -74,7 +90,7 @@ export class LootChatCard {
         if (customResultImg && customResultImg !== itemEntity.img) {
           setProperty(itemEntity, `img`, customResultImg);
         }
-        await this.addToItemData(itemEntity, itemData);
+        this.itemsData = await BRTUtils.addToItemData(this.itemsData, itemEntity, itemData);
         continue;
       }
 
@@ -89,49 +105,7 @@ export class LootChatCard {
       if (customResultImg && customResultImg !== newItem.img) {
         setProperty(newItem, `img`, customResultImg);
       }
-      await this.addToItemData(newItem, itemData);
-    }
-  }
-
-  async addToItemData(itemEntity, itemData) {
-    const existingItem = this.itemsData.find((i) => i.item.id === itemEntity.id);
-    const quantity = getProperty(itemData, BRTCONFIG.QUANTITY_PROPERTY_PATH) || 1;
-    const weight = getProperty(itemData, BRTCONFIG.WEIGHT_PROPERTY_PATH) || 0;
-
-    if (existingItem) {
-      existingItem.quantity = +existingItem.quantity + +quantity;
-      existingItem.weight = +existingItem.weight + +weight;
-    } else {
-      // we will scale down the font size if an item name is too long
-      const fontSize = Math.max(60, 100 - Math.max(0, (itemEntity.name || itemEntity.text).length - 27) * 2);
-
-      let type = undefined;
-      if (itemEntity.isText) {
-        type = CONST.TABLE_RESULT_TYPES.TEXT;
-      } else if (itemEntity.pack) {
-        type = CONST.TABLE_RESULT_TYPES.COMPENDIUM;
-      } else {
-        type = CONST.TABLE_RESULT_TYPES.DOCUMENT;
-      }
-
-      const resultDoc = itemEntity; // await BRTBetterHelpers.retrieveDocumentFromResult(itemEntity);
-
-      this.itemsData.push({
-        documentName: itemEntity.documentName,
-        compendiumName: itemEntity.pack,
-        type: type,
-        item: {
-          id: itemEntity.id,
-          _id: itemEntity.id,
-          name: itemEntity.name,
-          img: itemEntity.img,
-          text: itemEntity.text,
-          uuid: resultDoc?.uuid ?? "",
-        },
-        quantity: quantity,
-        weight: weight,
-        fontSize: fontSize,
-      });
+      this.itemsData = await BRTUtils.addToItemData(this.itemsData, newItem, itemData);
     }
   }
 

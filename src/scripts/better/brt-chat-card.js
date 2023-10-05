@@ -16,7 +16,15 @@ export class BetterChatCard {
     this.rollMode = rollMode;
     this.roll = roll;
     this.itemsData = [];
+    this.itemsDataGM = [];
     this.numberOfDraws = 0;
+    this.atLeastOneRollIsHidden = false;
+    for (const result of this.betterResults) {
+      if (getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_HIDDEN_TABLE}`)) {
+        this.atLeastOneRollIsHidden = true;
+        break;
+      }
+    }
   }
 
   async findOrCreateItems() {
@@ -36,8 +44,13 @@ export class BetterChatCard {
         );
       }
 
+      if (getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_HIDDEN_TABLE}`)) {
+        customResultName = CONSTANTS.DEFAULT_HIDDEN_RESULT_TEXT;
+        customResultImg = CONSTANTS.DEFAULT_HIDDEN_RESULT_IMAGE;
+      }
+
       if (result.type === CONST.TABLE_RESULT_TYPES.TEXT) {
-        await this.addToItemData({
+        this.itemsData = await BRTUtils.addToItemData(this.itemsData, {
           id: result.text,
           text: result.text,
           img: result.img,
@@ -60,7 +73,7 @@ export class BetterChatCard {
           if (customResultImg && customResultImg !== itemEntity.img) {
             setProperty(itemEntity, `img`, customResultImg);
           }
-          await this.addToItemData(itemEntity, itemData);
+          this.itemsData = await BRTUtils.addToItemData(this.itemsData, itemEntity, itemData);
           continue;
         }
       }
@@ -73,7 +86,7 @@ export class BetterChatCard {
         if (customResultImg && customResultImg !== itemEntity.img) {
           setProperty(itemEntity, `img`, customResultImg);
         }
-        await this.addToItemData(itemEntity, itemData);
+        this.itemsData = await BRTUtils.addToItemData(this.itemsData, itemEntity, itemData);
         continue;
       }
 
@@ -88,49 +101,7 @@ export class BetterChatCard {
       if (customResultImg && customResultImg !== newItem.img) {
         setProperty(newItem, `img`, customResultImg);
       }
-      await this.addToItemData(newItem, itemData);
-    }
-  }
-
-  async addToItemData(itemEntity, itemData) {
-    const existingItem = this.itemsData.find((i) => i.item.id === itemEntity.id);
-    const quantity = getProperty(itemData, BRTCONFIG.QUANTITY_PROPERTY_PATH) || 1;
-    const weight = getProperty(itemData, BRTCONFIG.WEIGHT_PROPERTY_PATH) || 0;
-
-    if (existingItem) {
-      existingItem.quantity = +existingItem.quantity + +quantity;
-      existingItem.weight = +existingItem.weight + +weight;
-    } else {
-      // we will scale down the font size if an item name is too long
-      const fontSize = Math.max(60, 100 - Math.max(0, (itemEntity.name || itemEntity.text).length - 27) * 2);
-
-      let type = undefined;
-      if (itemEntity.isText) {
-        type = CONST.TABLE_RESULT_TYPES.TEXT;
-      } else if (itemEntity.pack) {
-        type = CONST.TABLE_RESULT_TYPES.COMPENDIUM;
-      } else {
-        type = CONST.TABLE_RESULT_TYPES.DOCUMENT;
-      }
-
-      const resultDoc = itemEntity; // await BRTBetterHelpers.retrieveDocumentFromResult(itemEntity);
-
-      this.itemsData.push({
-        documentName: itemEntity.documentName,
-        compendiumName: itemEntity.pack,
-        type: type,
-        item: {
-          id: itemEntity.id,
-          _id: itemEntity.id,
-          name: itemEntity.name,
-          img: itemEntity.img,
-          text: itemEntity.text,
-          uuid: resultDoc?.uuid ?? "",
-        },
-        quantity: quantity,
-        weight: weight,
-        fontSize: fontSize,
-      });
+      this.itemsData = await BRTUtils.addToItemData(this.itemsData, newItem, itemData);
     }
   }
 
