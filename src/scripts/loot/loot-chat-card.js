@@ -33,6 +33,8 @@ export class LootChatCard {
     for (const result of this.betterResults) {
       let customResultName = undefined;
       let customResultImg = undefined;
+      let customResultNameHidden = undefined;
+      let customResultImgHidden = undefined;
       if (getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`)) {
         customResultName = getProperty(
           result,
@@ -47,15 +49,21 @@ export class LootChatCard {
       }
 
       if (getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_HIDDEN_TABLE}`)) {
-        customResultName = CONSTANTS.DEFAULT_HIDDEN_RESULT_TEXT;
-        customResultImg = CONSTANTS.DEFAULT_HIDDEN_RESULT_IMAGE;
+        customResultNameHidden = CONSTANTS.DEFAULT_HIDDEN_RESULT_TEXT;
+        customResultImgHidden = CONSTANTS.DEFAULT_HIDDEN_RESULT_IMAGE;
       }
 
       if (result.type === CONST.TABLE_RESULT_TYPES.TEXT) {
         this.itemsData = await BRTUtils.addToItemData(this.itemsData, {
           id: result.text,
-          text: result.text,
-          img: result.img,
+          text: customResultNameHidden ?? result.text ?? result.name,
+          img: customResultImgHidden ?? result.icon ?? result.img,
+          isText: true,
+        });
+        this.itemsDataGM = await BRTUtils.addToItemData(this.itemsDataGM, {
+          id: result.text,
+          text: result.text ?? result.name,
+          img: result.icon ?? result.img,
           isText: true,
         });
         continue;
@@ -64,19 +72,50 @@ export class LootChatCard {
       this.numberOfDraws++;
       /** we pass though the data, since we might have some data manipulation that changes an existing item, in that case even if it was initially
        * existing or in a compendium we have to create a new one */
+
+      const itemData = await RollTableToActorHelpers.buildItemData(result);
+      const itemEntityUuid = getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`);
+      const itemEntity = await fromUuid(itemEntityUuid);
+      if (itemEntity) {
+        if (customResultName && customResultName !== itemEntity.name) {
+          setProperty(itemEntity, `name`, customResultName);
+        }
+        if (customResultImg && customResultImg !== itemEntity.img) {
+          setProperty(itemEntity, `img`, customResultImg);
+        }
+        this.itemsDataGM = await BRTUtils.addToItemData(this.itemsDataGM, itemEntity, itemData);
+        if (customResultNameHidden && customResultNameHidden !== itemEntity.name) {
+          setProperty(itemEntity, `name`, customResultNameHidden);
+        }
+        if (customResultImgHidden && customResultImgHidden !== itemEntity.img) {
+          setProperty(itemEntity, `img`, customResultImgHidden);
+        }
+        this.itemsData = await BRTUtils.addToItemData(this.itemsData, itemEntity, itemData);
+        continue;
+      }
+
+      /*
       const itemData = await RollTableToActorHelpers.buildItemData(result);
 
       if (result.collection) {
         const itemEntity = await BRTUtils.getItemFromCompendium(result);
 
-        if (itemEntity && itemEntity.name === itemData.name) {
+        const itemEntityOriginalName = getProperty(itemEntity, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_NAME}`);
+        if (itemEntity && itemEntity.name === itemEntityOriginalName) {
+        // if (itemEntity && itemEntity.name === itemData.name) {
           if (customResultName && customResultName !== itemEntity.name) {
             setProperty(itemEntity, `name`, customResultName);
           }
           if (customResultImg && customResultImg !== itemEntity.img) {
             setProperty(itemEntity, `img`, customResultImg);
           }
-
+          this.itemsDataGM = await BRTUtils.addToItemData(this.itemsDataGM, itemEntity, itemData);
+          if (customResultNameHidden && customResultNameHidden !== itemEntity.name) {
+            setProperty(itemEntity, `name`, customResultNameHidden);
+          }
+          if (customResultImgHidden && customResultImgHidden !== itemEntity.img) {
+            setProperty(itemEntity, `img`, customResultImgHidden);
+          }
           this.itemsData = await BRTUtils.addToItemData(this.itemsData, itemEntity, itemData);
           continue;
         }
@@ -90,9 +129,17 @@ export class LootChatCard {
         if (customResultImg && customResultImg !== itemEntity.img) {
           setProperty(itemEntity, `img`, customResultImg);
         }
+        this.itemsDataGM = await BRTUtils.addToItemData(this.itemsDataGM, itemEntity, itemData);
+        if (customResultNameHidden && customResultNameHidden !== itemEntity.name) {
+          setProperty(itemEntity, `name`, customResultNameHidden);
+        }
+        if (customResultImgHidden && customResultImgHidden !== itemEntity.img) {
+          setProperty(itemEntity, `img`, customResultImgHidden);
+        }
         this.itemsData = await BRTUtils.addToItemData(this.itemsData, itemEntity, itemData);
         continue;
       }
+      */
 
       const itemFolder = await this.getBRTFolder();
       itemData.folder = itemFolder.id;
@@ -129,7 +176,7 @@ export class LootChatCard {
   }
 
   async prepareCharCart(table) {
-    await this.findOrCreateItems();
+    // await this.findOrCreateItems();
 
     const htmlDescription = await TextEditor.enrichHTML(table.description, {
       async: true,
@@ -138,6 +185,23 @@ export class LootChatCard {
     });
 
     const rollHTML = table.displayRoll && this.roll ? await this.roll.render() : null;
+
+    let flavorString;
+    if (this.numberOfDraws > 1) {
+      flavorString = game.i18n.format(`${BRTCONFIG.NAMESPACE}.DrawResultPlural`, {
+        amount: this.numberOfDraws,
+        name: table.name,
+      });
+    } else if (this.numberOfDraws > 0) {
+      flavorString = game.i18n.format(`${BRTCONFIG.NAMESPACE}.DrawResultSingular`, {
+        amount: this.numberOfDraws,
+        name: table.name,
+      });
+    } else {
+      flavorString = game.i18n.format(`${BRTCONFIG.NAMESPACE}.DrawResultZero`, {
+        name: table.name,
+      });
+    }
 
     const chatCardData = {
       rollHTML: rollHTML,
@@ -158,6 +222,31 @@ export class LootChatCard {
 
     const cardHtml = await this.renderMessage(chatCardData);
 
+    const chatData = {
+      flavor: flavorString,
+      sound: "sounds/dice.wav",
+      user: game.user._id,
+      content: cardHtml,
+      flags: {
+        [`${CONSTANTS.MODULE_ID}`]: {
+          [`${CONSTANTS.FLAGS.LOOT}`]: chatCardData,
+        },
+      },
+    };
+    return chatData;
+  }
+
+  async prepareCharCartGM(table) {
+    // await this.findOrCreateItems();
+
+    const htmlDescription = await TextEditor.enrichHTML(table.description, {
+      async: true,
+      secrets: table.isOwner,
+      documents: true,
+    });
+
+    const rollHTML = table.displayRoll && this.roll ? await this.roll.render() : null;
+
     let flavorString;
     if (this.numberOfDraws > 1) {
       flavorString = game.i18n.format(`${BRTCONFIG.NAMESPACE}.DrawResultPlural`, {
@@ -175,6 +264,25 @@ export class LootChatCard {
       });
     }
 
+    const chatCardData = {
+      rollHTML: rollHTML,
+      tableData: table,
+      htmlDescription: htmlDescription,
+      itemsData: this.itemsDataGM,
+      currency: this.currencyData,
+      compendium: table.pack,
+      id: table.id,
+      users: game.users
+        .filter((user) => user.isGM && user.character)
+        .map((user) => ({
+          id: user.id,
+          name: user.character.name,
+          img: user.character.token?.img || user.avatar,
+        })),
+    };
+
+    const cardHtml = await this.renderMessage(chatCardData);
+
     const chatData = {
       flavor: flavorString,
       sound: "sounds/dice.wav",
@@ -190,8 +298,15 @@ export class LootChatCard {
   }
 
   async createChatCard(table) {
+    await this.findOrCreateItems();
     const chatData = await this.prepareCharCart(table);
     BRTUtils.addRollModeToChatData(chatData, this.rollMode);
     ChatMessage.create(chatData);
+
+    if (this.atLeastOneRollIsHidden) {
+      const chatDataGM = await this.prepareCharCartGM(table);
+      BRTUtils.addRollModeToChatData(chatDataGM, "gmroll");
+      ChatMessage.create(chatDataGM);
+    }
   }
 }
