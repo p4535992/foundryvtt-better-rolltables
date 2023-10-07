@@ -59,8 +59,8 @@ export class LootChatCard {
         ) {
           continue;
         }
-        customResultNameHidden = CONSTANTS.DEFAULT_HIDDEN_RESULT_TEXT;
-        customResultImgHidden = CONSTANTS.DEFAULT_HIDDEN_RESULT_IMAGE;
+        // customResultNameHidden = CONSTANTS.DEFAULT_HIDDEN_RESULT_TEXT;
+        // customResultImgHidden = CONSTANTS.DEFAULT_HIDDEN_RESULT_IMAGE;
         isResultHidden = true;
       }
 
