@@ -55,13 +55,17 @@ export class BetterChatCard {
       }
 
       if (result.type === CONST.TABLE_RESULT_TYPES.TEXT) {
-        this.itemsDataGM = await BRTUtils.addToItemData(this.itemsDataGM, {
-          id: result.text,
-          text: result.text ?? result.name,
-          img: result.icon ?? result.img,
-          isText: true,
-          isHidden: false,
-        });
+        this.itemsDataGM = await BRTUtils.addToItemData(
+          this.itemsDataGM,
+          {
+            id: result.text,
+            text: result.text ?? result.name,
+            img: result.icon ?? result.img,
+            isText: true,
+          },
+          {},
+          false
+        );
         if (
           !getProperty(
             result,
@@ -70,13 +74,17 @@ export class BetterChatCard {
         ) {
           continue;
         }
-        this.itemsData = await BRTUtils.addToItemData(this.itemsData, {
-          id: result.text,
-          text: customResultNameHidden ?? result.text ?? result.name,
-          img: isResultHidden ? customResultImgHidden : result.icon ?? result.img,
-          isText: true,
-          isHidden: isResultHidden,
-        });
+        this.itemsData = await BRTUtils.addToItemData(
+          this.itemsData,
+          {
+            id: result.text,
+            text: customResultNameHidden ?? result.text ?? result.name,
+            img: customResultImgHidden ?? result.icon ?? result.img,
+            isText: true,
+          },
+          {},
+          isResultHidden
+        );
         continue;
       }
 
@@ -87,13 +95,17 @@ export class BetterChatCard {
       const itemData = await RollTableToActorHelpers.buildItemData(result);
 
       if (!itemData) {
-        this.itemsDataGM = await BRTUtils.addToItemData(this.itemsDataGM, {
-          id: result.text,
-          text: result.text ?? result.name,
-          img: result.icon ?? result.img,
-          isText: true,
-          isHidden: false,
-        });
+        this.itemsDataGM = await BRTUtils.addToItemData(
+          this.itemsDataGM,
+          {
+            id: result.text,
+            text: result.text ?? result.name,
+            img: result.icon ?? result.img,
+            isText: true,
+          },
+          {},
+          false
+        );
         if (
           !getProperty(
             result,
@@ -102,13 +114,17 @@ export class BetterChatCard {
         ) {
           continue;
         }
-        this.itemsData = await BRTUtils.addToItemData(this.itemsData, {
-          id: result.text,
-          text: customResultNameHidden ?? result.text ?? result.name,
-          img: isResultHidden ? customResultImgHidden : result.icon ?? result.img,
-          isText: true,
-          isHidden: isResultHidden,
-        });
+        this.itemsData = await BRTUtils.addToItemData(
+          this.itemsData,
+          {
+            id: result.text,
+            text: customResultNameHidden ?? result.text ?? result.name,
+            img: customResultImgHidden ?? result.icon ?? result.img,
+            isText: true,
+          },
+          {},
+          isResultHidden
+        );
         continue;
       }
 
@@ -122,7 +138,7 @@ export class BetterChatCard {
           setProperty(itemEntity, `img`, customResultImg);
         }
 
-        this.itemsDataGM = await BRTUtils.addToItemData(this.itemsDataGM, itemEntity, itemData);
+        this.itemsDataGM = await BRTUtils.addToItemData(this.itemsDataGM, itemEntity, itemData, false);
 
         if (customResultNameHidden && customResultNameHidden !== itemEntity.name) {
           setProperty(itemEntity, `name`, customResultNameHidden);
@@ -146,7 +162,7 @@ export class BetterChatCard {
           );
         }
 
-        this.itemsData = await BRTUtils.addToItemData(this.itemsData, itemEntity, itemData);
+        this.itemsData = await BRTUtils.addToItemData(this.itemsData, itemEntity, itemData, isResultHidden);
 
         continue;
       }
@@ -163,14 +179,14 @@ export class BetterChatCard {
           if (customResultImg && customResultImg !== itemEntity.img) {
             setProperty(itemEntity, `img`, customResultImg);
           }
-          this.itemsDataGM = await BRTUtils.addToItemData(this.itemsDataGM, itemEntity, itemData);
+          this.itemsDataGM = await BRTUtils.addToItemData(this.itemsDataGM, itemEntity, itemData, false);
           if (customResultNameHidden && customResultNameHidden !== itemEntity.name) {
             setProperty(itemEntity, `name`, customResultNameHidden);
           }
           if (customResultImgHidden && customResultImgHidden !== itemEntity.img) {
             setProperty(itemEntity, `img`, customResultImgHidden);
           }
-          this.itemsData = await BRTUtils.addToItemData(this.itemsData, itemEntity, itemData);
+          this.itemsData = await BRTUtils.addToItemData(this.itemsData, itemEntity, itemData, isResultHidden);
           
           continue;
         }
@@ -184,14 +200,14 @@ export class BetterChatCard {
         if (customResultImg && customResultImg !== itemEntity.img) {
           setProperty(itemEntity, `img`, customResultImg);
         }
-        this.itemsDataGM = await BRTUtils.addToItemData(this.itemsDataGM, itemEntity, itemData);
+        this.itemsDataGM = await BRTUtils.addToItemData(this.itemsDataGM, itemEntity, itemData, false);
         if (customResultNameHidden && customResultNameHidden !== itemEntity.name) {
           setProperty(itemEntity, `name`, customResultNameHidden);
         }
         if (customResultImgHidden && customResultImgHidden !== itemEntity.img) {
           setProperty(itemEntity, `img`, customResultImgHidden);
         }
-        this.itemsData = await BRTUtils.addToItemData(this.itemsData, itemEntity, itemData);
+        this.itemsData = await BRTUtils.addToItemData(this.itemsData, itemEntity, itemData, isResultHidden);
         continue;
       }
       */
@@ -211,7 +227,32 @@ export class BetterChatCard {
       if (customResultImg && customResultImg !== newItem.img) {
         setProperty(newItem, `img`, customResultImg);
       }
-      this.itemsData = await BRTUtils.addToItemData(this.itemsData, newItem, itemData);
+
+      this.itemsDataGM = await BRTUtils.addToItemData(this.itemsDataGM, newItem, itemData, false);
+
+      if (customResultNameHidden && customResultNameHidden !== itemEntity.name) {
+        setProperty(itemEntity, `name`, customResultNameHidden);
+      }
+      if (customResultImgHidden && customResultImgHidden !== itemEntity.img) {
+        setProperty(itemEntity, `img`, customResultImgHidden);
+      }
+      if (isResultHidden) {
+        if (
+          !getProperty(
+            result,
+            `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_SHOW_HIDDEN_RESULT_ON_CHAT}`
+          )
+        ) {
+          continue;
+        }
+        setProperty(
+          itemEntity,
+          `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_HIDDEN_TABLE}`,
+          isResultHidden
+        );
+      }
+
+      this.itemsData = await BRTUtils.addToItemData(this.itemsData, newItem, itemData, isResultHidden);
     }
   }
 

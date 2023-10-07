@@ -10,10 +10,10 @@
         {{#each itemsData as |itemData|}}
             {{#switch itemData.type}}
                 {{#case 0}}
-                    {{#if itemData.isHidden}}
+                    {{#if itemData.item.isHidden}}
                         <li class="table-result flexrow" data-result-id="{{ itemData.item._id }}" data-result-uuid="">
-                            <img class="result-image" src="{{itemData.item.img}}">
-                            <div class="result-text">{{{itemData.item.text}}}</div>
+                            <img class="result-image" src="modules/better-rolltables/assets/artwork/unidentified-result.webp">
+                            <div class="result-text">{{localize "better-rolltables.label.tableResultTextHiddenOnChat"}}</div>
                         </li>
                     {{else}}
                         <li class="table-result flexrow" data-result-id="{{ itemData.item._id }}" data-result-uuid="">
@@ -23,14 +23,14 @@
                     {{/if}}
                 {{/case}}
                 {{#case 1}}
-                    {{#if itemData.isHidden}}
+                    {{#if itemData.item.isHidden}}
                         <li class="table-result flexrow" data-result-id="{{ itemData.item._id }}" data-result-uuid="">
-                            <img class="result-image" src="{{itemData.item.img}}">
+                            <img class="result-image" src="modules/better-rolltables/assets/artwork/unidentified-result.webp">
                             <div class="result-text" style="font-size: {{itemData.fontSize}}%;">
                                 <a class="content-link" draggable="false"
                                 data-id="{{itemData.item.id}}"
                                 data-tooltip="Better Item">
-                                    <i class="fas {{entity-icon itemData.documentName}}"></i> {{{itemData.item.name}}}
+                                    <i class="fas {{entity-icon itemData.documentName}}"></i> {{localize "better-rolltables.label.tableResultTextHiddenOnChat"}}
                                 </a>
                                 {{#ifgt itemData.quantity 1 }}<strong>&nbsp; &#xD7; {{itemData.quantity}}</strong>{{/ifgt}}
                             </div>
@@ -53,14 +53,14 @@
                     {{/if}}
                 {{/case}}
                 {{#case 2}}
-                    {{#if itemData.isHidden}}
+                    {{#if itemData.item.isHidden}}
                         <li class="table-result flexrow" data-result-id="{{ itemData.item._id }}" data-result-uuid="">
-                            <img class="result-image" src="{{itemData.item.img}}">
+                            <img class="result-image" src="modules/better-rolltables/assets/artwork/unidentified-result.webp">
                             <div class="result-text" style="font-size: {{itemData.fontSize}}%;">
                                 <a class="content-link" draggable="false"
                                 data-id="{{itemData.item.id}}"
                                 data-tooltip="Better Item">
-                                    <i class="fas {{entity-icon itemData.documentName}}"></i> {{{itemData.item.name}}}
+                                    <i class="fas {{entity-icon itemData.documentName}}"></i> {{localize "better-rolltables.label.tableResultTextHiddenOnChat"}}
                                 </a>
                                 {{#ifgt itemData.quantity 1 }}<strong>&nbsp; &#xD7; {{itemData.quantity}}</strong>{{/ifgt}}
                             </div>

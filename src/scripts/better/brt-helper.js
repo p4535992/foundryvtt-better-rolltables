@@ -97,15 +97,12 @@ export class BRTBetterHelpers {
 
   static async retrieveDocumentFromResult(result, throwError, onlyUuid = false) {
     let findDocument = null;
-    if (getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`)) {
+    let docUuid = getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`);
+    if (docUuid) {
       if (onlyUuid) {
-        findDocument = fromUuidSync(
-          getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`)
-        );
+        findDocument = fromUuidSync(docUuid);
       } else {
-        findDocument = await fromUuid(
-          getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`)
-        );
+        findDocument = await fromUuid(docUuid);
       }
     }
     if (!findDocument) {

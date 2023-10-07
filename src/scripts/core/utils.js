@@ -197,7 +197,7 @@ export class BRTUtils {
     return newOptions;
   }
 
-  static async addToItemData(itemsData, itemEntity, itemData) {
+  static async addToItemData(itemsData, itemEntity, itemData = {}, isHidden = false) {
     const existingItem = itemsData.find((i) => i.item.id === itemEntity.id);
     const quantity = getProperty(itemData, BRTCONFIG.QUANTITY_PROPERTY_PATH) || 1;
     const weight = getProperty(itemData, BRTCONFIG.WEIGHT_PROPERTY_PATH) || 0;
@@ -231,9 +231,7 @@ export class BRTUtils {
           img: itemEntity.img,
           text: itemEntity.text,
           uuid: resultDoc?.uuid ?? "",
-          isHidden:
-            getProperty(itemEntity, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_HIDDEN_TABLE}`) ??
-            false,
+          isHidden: isHidden,
         },
         quantity: quantity,
         weight: weight,
