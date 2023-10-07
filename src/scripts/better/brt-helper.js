@@ -97,68 +97,84 @@ export class BRTBetterHelpers {
 
   static async retrieveDocumentFromResult(result, throwError, onlyUuid = false) {
     let findDocument = null;
-    if (result.type === CONST.TABLE_RESULT_TYPES.COMPENDIUM) {
-      // Compendium.world.prodottifiniti.Item.cGvOfBMe8XQjL8ra
-      let compendium = game.packs.get(`${result.documentCollection}`);
-      if (!compendium) {
-        if (throwError) {
-          throw error(`Compendium ${result.documentCollection} was not found`);
-        } else {
-          warn(`Compendium ${result.documentCollection} was not found`);
-        }
-      }
+    if (getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`)) {
       if (onlyUuid) {
-        findDocument = compendium.contents.find((m) => m.id === `${result.documentId}`);
+        findDocument = fromUuidSync(
+          getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`)
+        );
       } else {
-        findDocument = (await compendium.getDocuments()).find((m) => m.id === `${result.documentId}`);
+        findDocument = await fromUuid(
+          getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`)
+        );
       }
-      // let findDocument = compendium.contents.find((m) => m.id === `${result.documentId}`);
-      if (!findDocument) {
-        if (throwError) {
-          throw error(`The "${result.documentId}" document was not found in Compendium ${result.documentCollection}`);
-        } else {
-          warn(`The "${result.documentId}" document was not found in Compendium ${result.documentCollection}`);
+    }
+    if (!findDocument) {
+      if (result.type === CONST.TABLE_RESULT_TYPES.COMPENDIUM) {
+        // Compendium.world.prodottifiniti.Item.cGvOfBMe8XQjL8ra
+        let compendium = game.packs.get(`${result.documentCollection}`);
+        if (!compendium) {
+          if (throwError) {
+            throw error(`Compendium ${result.documentCollection} was not found`);
+          } else {
+            warn(`Compendium ${result.documentCollection} was not found`);
+          }
         }
-      }
-    } else if (result.type === CONST.TABLE_RESULT_TYPES.DOCUMENT) {
-      let collection = game.collections.get(result.documentCollection);
-      if (!collection) {
-        if (throwError) {
-          throw error(`Collection ${result.documentCollection} was not found`);
-        } else {
-          warn(`Collection ${result.documentCollection} was not found`);
-        }
-      }
-      if (collection) {
         if (onlyUuid) {
-          findDocument = collection.contents.find((m) => m.id === `${result.documentId}`);
+          findDocument = compendium.contents.find((m) => m.id === `${result.documentId}`);
         } else {
-          findDocument = collection.contents.find((m) => m.id === `${result.documentId}`);
-          // findDocument = (await collection.getDocuments()).find((m) => m.id === `${result.documentId}`);
+          findDocument = (await compendium.getDocuments()).find((m) => m.id === `${result.documentId}`);
         }
         // let findDocument = compendium.contents.find((m) => m.id === `${result.documentId}`);
         if (!findDocument) {
           if (throwError) {
-            throw error(`The "${result.documentId}" document was not found in collection ${result.documentCollection}`);
+            throw error(`The "${result.documentId}" document was not found in Compendium ${result.documentCollection}`);
           } else {
-            warn(`The "${result.documentId}" document was not found in collection ${result.documentCollection}`);
+            warn(`The "${result.documentId}" document was not found in Compendium ${result.documentCollection}`);
           }
         }
-      } else {
-        findDocument = fromUuid(`${result.documentName}.${result.documentId}`); // Actor.KjoEEN077oSC4WG4
-        if (!findDocument) {
+      } else if (result.type === CONST.TABLE_RESULT_TYPES.DOCUMENT) {
+        let collection = game.collections.get(result.documentCollection);
+        if (!collection) {
           if (throwError) {
-            throw error(
-              `The "${result.documentId}" document was not found in collection ${result.documentName}.${result.documentId}`
-            );
+            throw error(`Collection ${result.documentCollection} was not found`);
           } else {
-            warn(
-              `The "${result.documentId}" document was not found in collection ${result.documentName}.${result.documentId}`
-            );
+            warn(`Collection ${result.documentCollection} was not found`);
+          }
+        }
+        if (collection) {
+          if (onlyUuid) {
+            findDocument = collection.contents.find((m) => m.id === `${result.documentId}`);
+          } else {
+            findDocument = collection.contents.find((m) => m.id === `${result.documentId}`);
+            // findDocument = (await collection.getDocuments()).find((m) => m.id === `${result.documentId}`);
+          }
+          // let findDocument = compendium.contents.find((m) => m.id === `${result.documentId}`);
+          if (!findDocument) {
+            if (throwError) {
+              throw error(
+                `The "${result.documentId}" document was not found in collection ${result.documentCollection}`
+              );
+            } else {
+              warn(`The "${result.documentId}" document was not found in collection ${result.documentCollection}`);
+            }
+          }
+        } else {
+          findDocument = fromUuid(`${result.documentName}.${result.documentId}`); // Actor.KjoEEN077oSC4WG4
+          if (!findDocument) {
+            if (throwError) {
+              throw error(
+                `The "${result.documentId}" document was not found in collection ${result.documentName}.${result.documentId}`
+              );
+            } else {
+              warn(
+                `The "${result.documentId}" document was not found in collection ${result.documentName}.${result.documentId}`
+              );
+            }
           }
         }
       }
-    } else {
+    }
+    if (!findDocument) {
       warn(
         `The uuid can be retrieved only from result type '${CONST.TABLE_RESULT_TYPES.COMPENDIUM}' or '${CONST.TABLE_RESULT_TYPES.DOCUMENT}'`
       );

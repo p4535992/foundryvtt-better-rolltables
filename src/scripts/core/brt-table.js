@@ -1,5 +1,5 @@
 import { CONSTANTS } from "../constants/constants.js";
-import { log } from "../lib.js";
+import { log, warn } from "../lib.js";
 import { BRTBetterHelpers } from "../better/brt-helper.js";
 import { BRTCONFIG } from "./config.js";
 import { BRTUtils } from "./utils.js";
@@ -237,14 +237,36 @@ export class BetterRollTable {
 
     // PATCH SET FLAG FOR HIDDEN RESULT
     const isTableHidden = getProperty(this.table, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HIDDEN_TABLE}`);
+    const isShowHiddenResultOnChat = getProperty(
+      this.table,
+      `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_SHOW_HIDDEN_RESULT_ON_CHAT}`
+    );
     results.map((r) => {
       if (
         isTableHidden ||
-        String(getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HIDDEN_TABLE}`)) === "true"
+        String(getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_HIDDEN_TABLE}`)) === "true"
       ) {
-        setProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HIDDEN_TABLE}`, true);
+        setProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_HIDDEN_TABLE}`, true);
       } else {
-        setProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HIDDEN_TABLE}`, false);
+        setProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_HIDDEN_TABLE}`, false);
+      }
+      if (
+        isShowHiddenResultOnChat ||
+        String(
+          getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_SHOW_HIDDEN_RESULT_ON_CHAT}`)
+        ) === "true"
+      ) {
+        setProperty(
+          r,
+          `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_SHOW_HIDDEN_RESULT_ON_CHAT}`,
+          true
+        );
+      } else {
+        setProperty(
+          r,
+          `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_SHOW_HIDDEN_RESULT_ON_CHAT}`,
+          false
+        );
       }
       return r;
     });
@@ -532,6 +554,12 @@ export class BetterRollTable {
       let rTmp = r;
       if (rTmp.type !== CONST.TABLE_RESULT_TYPES.TEXT) {
         let rDoc = await BRTBetterHelpers.retrieveDocumentFromResultOnlyUuid(r, false);
+        if (!rDoc || !rDoc.uuid) {
+          warn(`Cannot find document for result`, false, r);
+          if (!rDoc) {
+            rDoc = {};
+          }
+        }
         if (!getProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`) && rDoc.uuid) {
           setProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`, rDoc.uuid ?? "");
         }
@@ -675,6 +703,12 @@ export class BetterRollTable {
       if (rTmp.type !== CONST.TABLE_RESULT_TYPES.TEXT) {
         // Patch add uuid to every each result for better module compatibility
         let rDoc = await BRTBetterHelpers.retrieveDocumentFromResultOnlyUuid(r, false);
+        if (!rDoc || !rDoc.uuid) {
+          warn(`Cannot find document for result`, false, r);
+          if (!rDoc) {
+            rDoc = {};
+          }
+        }
         if (!getProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`) && rDoc.uuid) {
           setProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`, rDoc.uuid ?? "");
         }
@@ -757,6 +791,12 @@ export class BetterRollTable {
   //     let rTmp = r;
   //     if (rTmp.type !== CONST.TABLE_RESULT_TYPES.TEXT) {
   //       let rDoc = await BRTBetterHelpers.retrieveDocumentFromResultOnlyUuid(r, false);
+  //      if(!rDoc || !rDoc.uuid) {
+  //        warn(`Cannot find document for result`, false, r);
+  //        if(!rDoc) {
+  //          rDoc = {};
+  //        }
+  //      }
   //       if (!getProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`) && rDoc.uuid) {
   //         setProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`, rDoc.uuid ?? "");
   //       }

@@ -10,12 +10,15 @@ export const CONSTANTS = {
     // saved data keys (used e.g. in the rolltableEntity.data.flags)
     TABLE_TYPE_KEY: "table-type",
     GENERIC_AMOUNT_KEY: "loot-amount-key",
+    GENERIC_SHOW_HIDDEN_RESULT_ON_CHAT: "brt-show-hidden-result-on-chat",
+
     GENERIC_RESULT_UUID: "brt-result-uuid",
     GENERIC_RESULT_CUSTOM_NAME: "brt-result-custom-name",
     GENERIC_RESULT_ORIGINAL_NAME: "brt-result-original-name",
     GENERIC_RESULT_CUSTOM_ICON: "brt-result-custom-icon",
     GENERIC_RESULT_ORIGINAL_ICON: "brt-result-original-icon",
     GENERIC_RESULT_HIDDEN_TABLE: "brt-hidden-table",
+    GENERIC_RESULT_SHOW_HIDDEN_RESULT_ON_CHAT: "brt-show-hidden-result-on-chat",
 
     LOOT_CURRENCY_STRING_KEY: "table-currency-string",
     LOOT_AMOUNT_KEY: "loot-amount-key",

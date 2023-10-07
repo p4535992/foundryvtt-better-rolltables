@@ -231,6 +231,9 @@ export class BRTUtils {
           img: itemEntity.img,
           text: itemEntity.text,
           uuid: resultDoc?.uuid ?? "",
+          isHidden:
+            getProperty(itemEntity, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_HIDDEN_TABLE}`) ??
+            false,
         },
         quantity: quantity,
         weight: weight,

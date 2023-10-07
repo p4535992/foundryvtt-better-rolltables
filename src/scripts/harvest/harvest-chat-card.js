@@ -46,23 +46,35 @@ export class HarvestChatCard {
         );
       }
 
+      let isResultHidden = false;
       if (getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_HIDDEN_TABLE}`)) {
         customResultNameHidden = CONSTANTS.DEFAULT_HIDDEN_RESULT_TEXT;
         customResultImgHidden = CONSTANTS.DEFAULT_HIDDEN_RESULT_IMAGE;
+        isResultHidden = true;
       }
 
       if (result.type === CONST.TABLE_RESULT_TYPES.TEXT) {
-        this.itemsData = await BRTUtils.addToItemData(this.itemsData, {
-          id: result.text,
-          text: customResultNameHidden ?? result.text ?? result.name,
-          img: customResultImgHidden ?? result.icon ?? result.img,
-          isText: true,
-        });
         this.itemsDataGM = await BRTUtils.addToItemData(this.itemsDataGM, {
           id: result.text,
           text: result.text ?? result.name,
           img: result.icon ?? result.img,
           isText: true,
+          isHidden: false,
+        });
+        if (
+          !getProperty(
+            result,
+            `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_SHOW_HIDDEN_RESULT_ON_CHAT}`
+          )
+        ) {
+          continue;
+        }
+        this.itemsData = await BRTUtils.addToItemData(this.itemsData, {
+          id: result.text,
+          text: customResultNameHidden ?? result.text ?? result.name,
+          img: isResultHidden ? customResultImgHidden : result.icon ?? result.img,
+          isText: true,
+          isHidden: isResultHidden,
         });
         continue;
       }
@@ -80,14 +92,33 @@ export class HarvestChatCard {
         if (customResultImg && customResultImg !== itemEntity.img) {
           setProperty(itemEntity, `img`, customResultImg);
         }
+
         this.itemsDataGM = await BRTUtils.addToItemData(this.itemsDataGM, itemEntity, itemData);
+
         if (customResultNameHidden && customResultNameHidden !== itemEntity.name) {
           setProperty(itemEntity, `name`, customResultNameHidden);
         }
         if (customResultImgHidden && customResultImgHidden !== itemEntity.img) {
           setProperty(itemEntity, `img`, customResultImgHidden);
         }
+        if (isResultHidden) {
+          if (
+            !getProperty(
+              result,
+              `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_SHOW_HIDDEN_RESULT_ON_CHAT}`
+            )
+          ) {
+            continue;
+          }
+          setProperty(
+            itemEntity,
+            `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_HIDDEN_TABLE}`,
+            isResultHidden
+          );
+        }
+
         this.itemsData = await BRTUtils.addToItemData(this.itemsData, itemEntity, itemData);
+
         continue;
       }
 
