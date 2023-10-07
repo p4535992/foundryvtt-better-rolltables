@@ -5,7 +5,7 @@ import SETTINGS from "../../constants/settings";
 import { BRTBetterHelpers } from "../../better/brt-helper";
 import { BRTCONFIG } from "../../core/config";
 import { BRTUtils } from "../../core/utils";
-import { i18n, info, isRealNumber, warn } from "../../lib";
+import { error, i18n, info, isRealNumber, warn } from "../../lib";
 
 export class RollTableToActorHelpers {
   static async retrieveItemsDataFromRollTableResult(table, options = {}) {
@@ -509,40 +509,41 @@ export class RollTableToActorHelpers {
         `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`
       );
     }
+
     let itemData = {};
-    let existingItem = false;
-    /** Try first to load item from compendium */
-    if (result.collection) {
+    let existingItem = undefined;
+
+    let docUuid = getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`);
+    if (docUuid) {
+      existingItem = await fromUuid(docUuid);
+    }
+
+    // Try first to load item from compendium
+    if (!existingItem && result.collection) {
       existingItem = await BRTUtils.getItemFromCompendium(result);
-      itemData = duplicate(existingItem);
-
-      if (customResultName) {
-        itemData.name = customResultName;
-      }
-      if (customResultImg) {
-        itemData.img = customResultImg;
-      }
-
-      itemData.type = BRTCONFIG.ITEM_LOOT_TYPE;
     }
 
-    /** Try first to load item from item list */
+    // Try first to load item from item list
     if (!existingItem) {
-      /** if an item with this name exist we load that item data, otherwise we create a new one */
+      // if an item with this name exist we load that item data, otherwise we create a new one
       existingItem = game.items.getName(result.text);
-      if (existingItem) {
-        itemData = duplicate(existingItem);
-
-        if (customResultName) {
-          itemData.name = customResultName;
-        }
-        if (customResultImg) {
-          itemData.img = customResultImg;
-        }
-
-        itemData.type = BRTCONFIG.ITEM_LOOT_TYPE;
-      }
     }
+
+    if (!existingItem) {
+      error(`Cannot find document for result`, false, result);
+      return null;
+    }
+
+    itemData = duplicate(existingItem);
+
+    if (customResultName) {
+      itemData.name = customResultName;
+    }
+    if (customResultImg) {
+      itemData.img = customResultImg;
+    }
+
+    itemData.type = BRTCONFIG.ITEM_LOOT_TYPE;
 
     const itemConversions = {
       Actor: {

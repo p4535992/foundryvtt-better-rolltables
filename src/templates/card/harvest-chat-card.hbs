@@ -41,7 +41,14 @@
                     {{#if itemData.isHidden}}
                         <li class="table-result flexrow" data-result-id="{{ itemData.item._id }}" data-result-uuid="">
                             <img class="result-image" src="{{itemData.item.img}}">
-                            <div class="result-text">{{{itemData.item.text}}} {{#ifgt itemData.quantity 1 }}<strong>&nbsp; &#xD7; {{itemData.quantity}}</strong>{{/ifgt}}</div>
+                            <div class="result-text" style="font-size: {{itemData.fontSize}}%;">
+                                <a class="content-link" draggable="false"
+                                data-id="{{itemData.item.id}}"
+                                data-tooltip="Harvest Item">
+                                    <i class="fas {{entity-icon itemData.documentName}}"></i> {{{itemData.item.name}}}
+                                </a>
+                                {{#ifgt itemData.quantity 1 }}<strong>&nbsp; &#xD7; {{itemData.quantity}}</strong>{{/ifgt}}
+                            </div>
                         </li>
                     {{else}}
                         <li class="table-result flexrow" data-result-id="{{ itemData.item._id }}" data-result-uuid="{{itemData.item.uuid}}">
@@ -52,7 +59,7 @@
                                 data-document="{{itemData.documentName}}"
                                 data-id="{{itemData.item.id}}"
                                 data-uuid="{{itemData.item.uuid}}"
-                                data-tooltip="Loot Item">
+                                data-tooltip="Harvest Item">
                                     <i class="fas {{entity-icon itemData.documentName}}"></i> {{{itemData.item.name}}}
                                 </a>
                                 {{#ifgt itemData.quantity 1 }}<strong>&nbsp; &#xD7; {{itemData.quantity}}</strong>{{/ifgt}}
@@ -64,7 +71,14 @@
                     {{#if itemData.isHidden}}
                         <li class="table-result flexrow" data-result-id="{{ itemData.item._id }}" data-result-uuid="">
                             <img class="result-image" src="{{itemData.item.img}}">
-                            <div class="result-text">{{{itemData.item.text}}} {{#ifgt itemData.quantity 1 }}<strong>&nbsp; &#xD7; {{itemData.quantity}}</strong>{{/ifgt}}</div>
+                            <div class="result-text" style="font-size: {{itemData.fontSize}}%;">
+                                <a class="content-link" draggable="false"
+                                data-id="{{itemData.item.id}}"
+                                data-tooltip="Harvest Item">
+                                    <i class="fas {{entity-icon itemData.documentName}}"></i> {{{itemData.item.name}}}
+                                </a>
+                                {{#ifgt itemData.quantity 1 }}<strong>&nbsp; &#xD7; {{itemData.quantity}}</strong>{{/ifgt}}
+                            </div>
                         </li>
                     {{else}}
                         <li class="table-result flexrow" data-result-id="{{ itemData.item._id }}" data-result-uuid="{{itemData.item.uuid}}">
@@ -74,7 +88,7 @@
                                 data-pack="{{#if itemData.compendiumName}}{{itemData.compendiumName}}{{else}}{{itemData.item.pack}}{{/if}}"
                                 data-id="{{itemData.item.id}}"
                                 data-uuid="{{itemData.item.uuid}}"
-                                data-tooltip="Loot Item">
+                                data-tooltip="Harvest Item">
                                     <i class="fas {{entity-icon itemData.documentName}}"></i> {{{itemData.item.name}}}
                                 </a>
                                 {{#ifgt itemData.quantity 1 }}<strong>&nbsp; &#xD7; {{itemData.quantity}}</strong>{{/ifgt}}

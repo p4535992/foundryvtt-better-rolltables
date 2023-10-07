@@ -31,6 +31,7 @@ Implementing for example the Treasure Hoard" Tables from the Dungeon master manu
 - A table can specify multiple currencies (with roll formulas) to always be awarded
 - Adds an option to change the table roll to GM only.
 - Adds the option to automatically import rolled items in controlled actors
+- Red colored backgorund for document borken references on the document results table
 
 ## NOTES ABOUT UPDATE FROM 1.8.95 for FVTT 9 to 1.9.1 FVTT 10
 

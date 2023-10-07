@@ -3,6 +3,7 @@ import { CONSTANTS } from "../constants/constants.js";
 import { BRTUtils } from "../core/utils.js";
 import { BRTBetterHelpers } from "../better/brt-helper.js";
 import { RollTableToActorHelpers } from "../apps/rolltable-to-actor/rolltable-to-actor-helpers.js";
+import { warn } from "../lib.js";
 
 /**
  * create a chat card based on the content of the object LootData
@@ -90,10 +91,37 @@ export class LootChatCard {
       }
 
       this.numberOfDraws++;
+
       /** we pass though the data, since we might have some data manipulation that changes an existing item, in that case even if it was initially
        * existing or in a compendium we have to create a new one */
-
       const itemData = await RollTableToActorHelpers.buildItemData(result);
+
+      if (!itemData) {
+        this.itemsDataGM = await BRTUtils.addToItemData(this.itemsDataGM, {
+          id: result.text,
+          text: result.text ?? result.name,
+          img: result.icon ?? result.img,
+          isText: true,
+          isHidden: false,
+        });
+        if (
+          !getProperty(
+            result,
+            `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_SHOW_HIDDEN_RESULT_ON_CHAT}`
+          )
+        ) {
+          continue;
+        }
+        this.itemsData = await BRTUtils.addToItemData(this.itemsData, {
+          id: result.text,
+          text: customResultNameHidden ?? result.text ?? result.name,
+          img: isResultHidden ? customResultImgHidden : result.icon ?? result.img,
+          isText: true,
+          isHidden: isResultHidden,
+        });
+        continue;
+      }
+
       const itemEntityUuid = getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`);
       const itemEntity = await fromUuid(itemEntityUuid);
       if (itemEntity) {
@@ -181,7 +209,11 @@ export class LootChatCard {
       */
 
       const itemFolder = await this.getBRTFolder();
-      itemData.folder = itemFolder.id;
+      if (itemFolder) {
+        itemData.folder = itemFolder.id;
+      } else {
+        warn(`No folder tables found with name 'Better RollTable | Loot Items'`);
+      }
 
       setProperty(itemData, "permission.default", CONST.DOCUMENT_PERMISSION_LEVELS.OBSERVER);
       const newItem = await Item.create(itemData);
@@ -201,7 +233,7 @@ export class LootChatCard {
 
   async getBRTFolder() {
     if (!this.historyFolder) {
-      let historyFolder = game.folders.getName("Better RollTable Items");
+      let historyFolder = game.folders.getName("Better RollTable | Loot Items");
       if (!historyFolder) {
         historyFolder = await Folder.create({
           name: "Better RollTable | Loot Items",
