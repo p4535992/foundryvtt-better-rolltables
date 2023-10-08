@@ -1,3 +1,9 @@
+### 2.0.17 
+
+- Big update a bunch of bug fixing and better management for inner hidden table result
+- Bug fix: https://github.com/p4535992/foundryvtt-better-rolltables/issues/3
+- New feature add 'Distinct Result' and 'Distinct Result keep Rolling' feature to the sheet
+
 ### 2.0.14-15-16
 
 - Many bug fixing
