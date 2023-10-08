@@ -19,7 +19,6 @@ Roll a table as a Better table in chat
 | Param                    | Type                    | Default | Description                                            |
 |--------------------------|-------------------------|---------|--------------------------------------------------------|
 | tableEntity              | `RollTable`             |         | tableEntity rolltable to generate content from         |
-                                        |
 
 **Example**:
 
