@@ -194,7 +194,7 @@ export class BRTUtils {
     if (String(getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${BRTCONFIG.HIDDEN_TABLE}`)) === "true") {
       rollMode = "gmroll";
     }
-    newOptions.rollMode;
+    newOptions.rollMode = rollMode;
 
     let distinct =
       options?.distinct ||

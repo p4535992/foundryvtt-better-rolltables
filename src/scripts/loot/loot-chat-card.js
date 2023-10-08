@@ -3,7 +3,7 @@ import { CONSTANTS } from "../constants/constants.js";
 import { BRTUtils } from "../core/utils.js";
 import { BRTBetterHelpers } from "../better/brt-helper.js";
 import { RollTableToActorHelpers } from "../apps/rolltable-to-actor/rolltable-to-actor-helpers.js";
-import { warn } from "../lib.js";
+import { i18n, warn } from "../lib.js";
 
 /**
  * create a chat card based on the content of the object LootData
@@ -319,6 +319,7 @@ export class LootChatCard {
       rollHTML: rollHTML,
       tableData: table,
       htmlDescription: htmlDescription,
+      // gmTitleLabel: i18n(`${CONSTANTS.MODULE_ID}.label.tableTextGmTitleLabel`),
       itemsData: this.itemsData,
       currency: this.currencyData,
       compendium: table.pack,
@@ -380,6 +381,7 @@ export class LootChatCard {
       rollHTML: rollHTML,
       tableData: table,
       htmlDescription: htmlDescription,
+      gmTitleLabel: i18n(`${CONSTANTS.MODULE_ID}.label.tableTextGmTitleLabel`),
       itemsData: this.itemsDataGM,
       currency: this.currencyData,
       compendium: table.pack,
@@ -411,11 +413,12 @@ export class LootChatCard {
 
   async createChatCard(table) {
     await this.findOrCreateItems();
-    const chatData = await this.prepareCharCart(table);
-    BRTUtils.addRollModeToChatData(chatData, this.rollMode);
-    ChatMessage.create(chatData);
-
-    if (this.atLeastOneRollIsHidden) {
+    if (this.rollMode !== "gmroll") {
+      const chatData = await this.prepareCharCart(table);
+      BRTUtils.addRollModeToChatData(chatData, this.rollMode);
+      ChatMessage.create(chatData);
+    }
+    if (this.atLeastOneRollIsHidden || this.rollMode === "gmroll") {
       const chatDataGM = await this.prepareCharCartGM(table);
       BRTUtils.addRollModeToChatData(chatDataGM, "gmroll");
       ChatMessage.create(chatDataGM);
