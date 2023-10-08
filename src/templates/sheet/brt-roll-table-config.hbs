@@ -30,9 +30,9 @@
             {{/ifEquals}}
             {{#ifEquals @root.tableType "harvest"}}
             <div class="form-group">
-                <label>{{localize 'better-rolltables.LootActorName'}}</label>
+                <label>{{localize 'better-rolltables.HarvestActorName'}}</label>
                 <input type="text"
-                    placeholder="{{localize 'better-rolltables.LootActorNamePlaceholder'}}" name="flags.better-rolltables.loot-actor-name"
+                    placeholder="{{localize 'better-rolltables.HarvestActorNamePlaceholder'}}" name="flags.better-rolltables.loot-actor-name"
                     value="{{data.flags.better-rolltables.loot-actor-name}}" />
             </div>
             {{/ifEquals}}
@@ -55,6 +55,18 @@
                 <input type="checkbox"
                     name="flags.better-rolltables.brt-show-hidden-result-on-chat"
                     {{checked data.flags.better-rolltables.brt-show-hidden-result-on-chat}} />
+            </div>
+            <div class="form-group">
+                <label>{{localize "better-rolltables.label.tableTextDistinctResult"}}</label>
+                <input type="checkbox"
+                    name="flags.better-rolltables.brt-distinct-result"
+                    {{checked data.flags.better-rolltables.brt-distinct-result}} />
+            </div>
+            <div class="form-group">
+                <label>{{localize "better-rolltables.label.tableTextDistinctResultKeepRolling"}}</label>
+                <input type="checkbox"
+                    name="flags.better-rolltables.brt-distinct-result-keep-rolling"
+                    {{checked data.flags.better-rolltables.brt-distinct-result-keep-rolling}} />
             </div>
             
             <!-- TODO

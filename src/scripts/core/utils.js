@@ -178,7 +178,9 @@ export class BRTUtils {
       undefined;
 
     newOptions.isTokenActor = options?.isTokenActor;
-    newOptions.stackSame = options?.stackSame ? options.stackSame : true;
+
+    let stackSame = options?.stackSame ? options.stackSame : true;
+    newOptions.stackSame = String(stackSame) === "true" ? true : false;
 
     let customRole = options?.customRole ? options.customRole : undefined;
     if (!customRole) {
@@ -186,13 +188,29 @@ export class BRTUtils {
     }
     newOptions.customRoll = customRole;
 
-    newOptions.itemLimit = options?.itemLimit ? Number(options.itemLimit) : 0;
+    newOptions.itemLimit = options?.itemLimit && isRealNumber(options.itemLimit) ? Number(options.itemLimit) : 0;
 
     let rollMode = options?.rollMode ?? null;
     if (String(getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${BRTCONFIG.HIDDEN_TABLE}`)) === "true") {
       rollMode = "gmroll";
     }
     newOptions.rollMode;
+
+    let distinct =
+      options?.distinct ||
+      getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_DISTINCT_RESULT}`) ||
+      undefined;
+    newOptions.distinct = String(distinct) === "true" ? true : false;
+
+    let distinctKeepRolling =
+      options?.distinctKeepRolling ||
+      getProperty(
+        tableEntity,
+        `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_DISTINCT_RESULT_KEEP_ROLLING}`
+      ) ||
+      undefined;
+
+    newOptions.distinctKeepRolling = String(distinctKeepRolling) === "true" ? true : false;
 
     return newOptions;
   }

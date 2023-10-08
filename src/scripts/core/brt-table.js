@@ -1,5 +1,5 @@
 import { CONSTANTS } from "../constants/constants.js";
-import { log, warn } from "../lib.js";
+import { error, log, warn } from "../lib.js";
 import { BRTBetterHelpers } from "../better/brt-helper.js";
 import { BRTCONFIG } from "./config.js";
 import { BRTUtils } from "./utils.js";
@@ -29,6 +29,7 @@ export class BetterRollTable {
       options
     );
     this.mainRoll = undefined;
+    this.blackListForDistinct = [];
   }
 
   async initialize() {
@@ -381,9 +382,24 @@ export class BetterRollTable {
     let iter = 0;
     while (!results.length) {
       if (iter >= 10000) {
-        ui.notifications.error(
-          `Failed to draw an available entry from Table ${this.table.name}, maximum iteration reached`
+        // START PATCH DISTINCT VALUES
+        const isTableDistinct = getProperty(
+          this.table,
+          `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_DISTINCT_RESULT}`
         );
+        const isTableDistinctKeepRolling = getProperty(
+          this.table,
+          `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_DISTINCT_RESULT_KEEP_ROLLING}`
+        );
+        if (isTableDistinct && !isTableDistinctKeepRolling) {
+          // Failed to draw an available entry from Table ${this.table.name}, maximum iteration reached, but is ok because is under the 'distinct' behavior
+        } else {
+          error(`Failed to draw an available entry from Table ${this.table.name}, maximum iteration reached`, true);
+        }
+        // END PATCH
+        // ui.notifications.error(
+        //   `Failed to draw an available entry from Table ${this.table.name}, maximum iteration reached`
+        // );
         break;
       }
       roll = await roll.reroll({ async: true });
@@ -462,6 +478,36 @@ export class BetterRollTable {
         });
       }
     }
+
+    // START PATCH DISTINCT VALUES
+    const isTableDistinct = getProperty(
+      this.table,
+      `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_DISTINCT_RESULT}`
+    );
+    const isTableDistinctKeepRolling = getProperty(
+      this.table,
+      `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_DISTINCT_RESULT_KEEP_ROLLING}`
+    );
+    const available = this.table.results.filter((r) => !r.drawn);
+
+    if (isTableDistinct) {
+      resultsUpdate = resultsUpdate.filter((r) => {
+        const blackId = this.table.uuid + "|" + r.id;
+        if (this.blackListForDistinct.includes(blackId)) {
+          if (this.blackListForDistinct.length >= available.length) {
+            if (isTableDistinctKeepRolling) {
+              return true;
+            }
+          }
+          return false;
+        } else {
+          this.blackListForDistinct.push(blackId);
+          return true;
+        }
+      });
+    }
+    // END PATCH
+
     return resultsUpdate;
   }
 

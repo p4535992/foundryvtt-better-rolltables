@@ -42,6 +42,8 @@ const API = {
    * @param {string|number} [options.rollsAmount]  The rolls amount value
    * @param {string|number} [options.dc]  The dc value
    * @param {string} [options.skill]  The skill denomination
+   * @param {boolean} [options.distinct] if checked the same result is not selected more than once indifferently from the number of 'Amount Roll'
+   * @param {boolean} [options.distinctKeepRolling] if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior
    * @returns {Promise<TableResult[]>}
    */
   async betterTableRoll(tableEntity, options = {}) {
@@ -123,6 +125,8 @@ const API = {
    * @param {string|number} [options.rollsAmount]  The rolls amount value
    * @param {string|number} [options.dc]  The dc value
    * @param {string} [options.skill]  The skill denomination
+   * @param {boolean} [options.distinct] if checked the same result is not selected more than once indifferently from the number of 'Amount Roll'
+   * @param {boolean} [options.distinctKeepRolling] if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior
    * @returns {Promise<void>}
    */
   async addLootToSelectedToken(tableEntity, token = null, options = {}) {
@@ -137,6 +141,8 @@ const API = {
    * @param {string|number} [options.rollsAmount]  The rolls amount value
    * @param {string|number} [options.dc]  The dc value
    * @param {string} [options.skill]  The skill denomination
+   * @param {boolean} [options.distinct] if checked the same result is not selected more than once indifferently from the number of 'Amount Roll'
+   * @param {boolean} [options.distinctKeepRolling] if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior
    * @returns {Promise<void>}
    */
   async generateLoot(tableEntity, options = {}) {
@@ -151,6 +157,8 @@ const API = {
    * @param {string|number} [options.rollsAmount]  The rolls amount value
    * @param {string|number} [options.dc]  The dc valuee
    * @param {string} [options.skill]  The skill denomination
+   * @param {boolean} [options.distinct] if checked the same result is not selected more than once indifferently from the number of 'Amount Roll'
+   * @param {boolean} [options.distinctKeepRolling] if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior
    * @returns {Promise<void>}
    */
   async generateLootOnSelectedToken(tableEntity, options = {}) {
@@ -165,6 +173,8 @@ const API = {
    * @param {string|number} [options.rollsAmount]  The rolls amount value
    * @param {string|number} [options.dc]  The dc value
    * @param {string} [options.skill]  The skill denomination
+   * @param {boolean} [options.distinct] if checked the same result is not selected more than once indifferently from the number of 'Amount Roll'
+   * @param {boolean} [options.distinctKeepRolling] if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior
    * @returns {Promise<void>}
    */
   async generateChatLoot(tableEntity, options = {}) {
@@ -183,6 +193,8 @@ const API = {
    * @param {string|number} [options.rollsAmount]  The rolls amount value
    * @param {string|number} [options.dc]  The dc value
    * @param {string} [options.skill]  The skill denomination
+   * @param {boolean} [options.distinct] if checked the same result is not selected more than once indifferently from the number of 'Amount Roll'
+   * @param {boolean} [options.distinctKeepRolling] if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior
    * @returns {Promise<void>}
    */
   async generateHarvest(tableEntity, options = {}) {
@@ -197,6 +209,8 @@ const API = {
    * @param {string|number} [options.rollsAmount]  The rolls amount value
    * @param {string|number} [options.dc]  The dc value
    * @param {string} [options.skill]  The skill denomination
+   * @param {boolean} [options.distinct] if checked the same result is not selected more than once indifferently from the number of 'Amount Roll'
+   * @param {boolean} [options.distinctKeepRolling] if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior
    * @returns {Promise<void>}
    */
   async generateHarvestOnSelectedToken(tableEntity, options = {}) {
@@ -211,6 +225,8 @@ const API = {
    * @param {string|number} [options.rollsAmount]  The rolls amount value
    * @param {string|number} [options.dc]  The dc value
    * @param {string} [options.skill]  The skill denomination
+   * @param {boolean} [options.distinct] if checked the same result is not selected more than once indifferently from the number of 'Amount Roll'
+   * @param {boolean} [options.distinctKeepRolling] if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior
    * @returns {Promise<void>}
    */
   async generateChatHarvest(tableEntity, options = {}) {

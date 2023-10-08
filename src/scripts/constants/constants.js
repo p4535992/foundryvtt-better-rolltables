@@ -11,6 +11,8 @@ export const CONSTANTS = {
     TABLE_TYPE_KEY: "table-type",
     GENERIC_AMOUNT_KEY: "loot-amount-key",
     GENERIC_SHOW_HIDDEN_RESULT_ON_CHAT: "brt-show-hidden-result-on-chat",
+    GENERIC_DISTINCT_RESULT: "brt-distinct-result",
+    GENERIC_DISTINCT_RESULT_KEEP_ROLLING: "brt-distinct-result-keep-rolling",
 
     GENERIC_RESULT_UUID: "brt-result-uuid",
     GENERIC_RESULT_CUSTOM_NAME: "brt-result-custom-name",

@@ -48,6 +48,9 @@ Roll a table as a Better table in chat with options
 | [options.rollsAmount]    | `string or number`      |         | The rolls amount value  |
 | [options.dc]             | `string or number`      |         | The dc value (only for Harvest type rolltable) |
 | [options.skill]          | `string`                |         | The skill denomination (only for Harvest type rolltable) |
+| [options.distinct]          | `boolean`                |         | if checked the same result is not selected more than once indifferently from the number of 'Amount Roll' |
+| [options.distinctKeepRolling]          | `boolean`                |         | if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior |
+
 
 **Example**:
 
@@ -191,6 +194,8 @@ Generate a loot
 | [options.rollsAmount]    | `string or number`      |         | The rolls amount value  |
 | [options.dc]             | `string or number`      |         | The dc value (only for Harvest type rolltable) |
 | [options.skill]          | `string`                |         | The skill denomination (only for Harvest type rolltable) |
+| [options.distinct]          | `boolean`                |         | if checked the same result is not selected more than once indifferently from the number of 'Amount Roll' |
+| [options.distinctKeepRolling]          | `boolean`                |         | if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior |
 
 **Example**:
 
@@ -219,6 +224,8 @@ Generate a chat loot
 | [options.rollsAmount]    | `string or number`      |         | The rolls amount value  |
 | [options.dc]             | `string or number`      |         | The dc value (only for Harvest type rolltable) |
 | [options.skill]          | `string`                |         | The skill denomination (only for Harvest type rolltable) |
+| [options.distinct]          | `boolean`                |         | if checked the same result is not selected more than once indifferently from the number of 'Amount Roll' |
+| [options.distinctKeepRolling]          | `boolean`                |         | if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior |
 
 **Example**:
 
@@ -247,6 +254,8 @@ Add loot to selcted token ( or the one passed as a argument)
 | [options.rollsAmount]    | `string or number`      |         | The rolls amount value  |
 | [options.dc]             | `string or number`      |         | The dc value (only for Harvest type rolltable) |
 | [options.skill]          | `string`                |         | The skill denomination (only for Harvest type rolltable) |
+| [options.distinct]          | `boolean`                |         | if checked the same result is not selected more than once indifferently from the number of 'Amount Roll' |
+| [options.distinctKeepRolling]          | `boolean`                |         | if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior |
 
 **Example**:
 

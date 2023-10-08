@@ -174,8 +174,10 @@
       }
     },
     "label": {
-      "tableTextHiddenTable": "Hidden Table",
-      "tableTextHiddenShowResultOnChat": "If the table is hidden drawn table results will be show on the chat card",
+      "tableTextDistinctResult": "Distinct result: if checked the same result is not selected more than once indifferently from the number of 'Amount Roll'",
+      "tableTextDistinctResultKeepRolling": "Distinct result but Keep Rolling: if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior",
+      "tableTextHiddenTable": "Hidden Table: if checked the result drawn from this table are visible only to gms on the chat",
+      "tableTextHiddenShowResultOnChat": "If the table is hidden drawn table results will be show on the chat card as unknown items to players",
       "tableResultTextHiddenOnChat": "???",
       "importSuccess": "Imported {0} in {1}",
       "NormalizeRanges": "Normalize ranges according to result weight.<br><br>Result ranges are set to appropriate values based on weight.<br><br>Also updates the roll table formula.",
@@ -189,8 +191,8 @@
       "betterRolltableRollTooltip": "Roll the table with BRT",
       "quantityFormula": "Qt.",
       "editResult": "Edit Result",
-      "dcHint": "DC (minimum value of the DC if present and > 0)",
-      "skillHint": "Skill (the skill string used for filter the results)",
+      "dcHint": "DC: minimum value of the DC if present and > 0",
+      "skillHint": "Skill: the skill string used for filter the results",
       "dc": "DC",
       "skill": "Skill",
       "source": "Source reference",
