@@ -196,8 +196,7 @@ export class BetterRollTable {
    * Draw multiple results from a RollTable, constructing a final synthetic Roll as a dice pool of inner rolls.
    * @param {number} number               The number of results to draw
    * @param {object} [options={}]         Optional arguments which customize the draw
-   * @param {Roll} [options.roll]                   An optional pre-configured Roll instance which defines the dice
-   *                                                roll to use
+   * @param {Roll} [options.roll]                   An optional pre-configured Roll instance which defines the dice roll to use
    * @param {boolean} [options.recursive=true]      Allow drawing recursively from inner RollTable results
    * @param {boolean} [options.displayChat=true]    Automatically display the drawn results in chat? Default is true
    * @param {string} [options.rollMode]             Customize the roll mode used to display the drawn results

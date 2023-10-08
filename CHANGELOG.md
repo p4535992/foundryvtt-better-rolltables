@@ -1,3 +1,7 @@
+### 2.0.18 
+
+- Some little fix 
+
 ### 2.0.17 
 
 - Big update a bunch of bug fixing and better management for inner hidden table result

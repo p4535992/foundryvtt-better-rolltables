@@ -119,12 +119,13 @@ export class BRTBetterHelpers {
             throw error(`Compendium ${result.documentCollection} was not found`);
           } else {
             warn(`Compendium ${result.documentCollection} was not found`);
+            return null;
           }
         }
         if (onlyUuid) {
-          findDocument = compendium.contents.find((m) => m.id === `${result.documentId}`);
+          findDocument = compendium?.contents.find((m) => m.id === `${result.documentId}`);
         } else {
-          findDocument = (await compendium.getDocuments()).find((m) => m.id === `${result.documentId}`);
+          findDocument = (await compendium?.getDocuments()).find((m) => m.id === `${result.documentId}`);
         }
         // let findDocument = compendium.contents.find((m) => m.id === `${result.documentId}`);
         if (!findDocument) {
@@ -132,6 +133,7 @@ export class BRTBetterHelpers {
             throw error(`The "${result.documentId}" document was not found in Compendium ${result.documentCollection}`);
           } else {
             warn(`The "${result.documentId}" document was not found in Compendium ${result.documentCollection}`);
+            return null;
           }
         }
       } else if (result.type === CONST.TABLE_RESULT_TYPES.DOCUMENT) {
@@ -141,6 +143,7 @@ export class BRTBetterHelpers {
             throw error(`Collection ${result.documentCollection} was not found`);
           } else {
             warn(`Collection ${result.documentCollection} was not found`);
+            return null;
           }
         }
         if (collection) {
@@ -158,6 +161,7 @@ export class BRTBetterHelpers {
               );
             } else {
               warn(`The "${result.documentId}" document was not found in collection ${result.documentCollection}`);
+              return null;
             }
           }
         } else {
@@ -171,6 +175,7 @@ export class BRTBetterHelpers {
               warn(
                 `The "${result.documentId}" document was not found in collection ${result.documentName}.${result.documentId}`
               );
+              return null;
             }
           }
         }
