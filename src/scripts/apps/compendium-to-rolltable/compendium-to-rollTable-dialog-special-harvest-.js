@@ -189,19 +189,23 @@ export class CompendiumToRollTableSpecialHarvestDialog {
         values?.length > 0
           ? getProperty(values[0], `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_SKILL_VALUE_KEY}`)
           : "";
+      let amount = values.length <= 0 ? values.length + 1 : values.length;
       //options.renderSheet = options.renderSheet ?? true;
       const document = await RollTable.create(
         {
           name: "Better Harvester | " + key + " RollTable",
           description: `Rolltable created from the '${compendiumName}' compendium filter for the system source value '${key}'.`,
           results: values,
-          formula: `1d${values.length}`,
+          formula: `1d${amount}`,
           flags: {
             [`${CONSTANTS.MODULE_ID}`]: {
               [`${CONSTANTS.FLAGS.TABLE_TYPE_KEY}`]: CONSTANTS.TABLE_TYPE_HARVEST,
               [`${CONSTANTS.FLAGS.HARVEST_DC_VALUE_KEY}`]: String(firstDcValue) ?? "0",
               [`${CONSTANTS.FLAGS.HARVEST_SKILL_VALUE_KEY}`]: firstSkillDenom ?? "",
               [`${CONSTANTS.FLAGS.HARVEST_SOURCE_VALUE_KEY}`]: key ?? "",
+              [`${CONSTANTS.FLAGS.GENERIC_DISTINCT_RESULT}`]: true,
+              [`${CONSTANTS.FLAGS.GENERIC_DISTINCT_RESULT_KEEP_ROLLING}`]: false,
+              [`${CONSTANTS.FLAGS.GENERIC_AMOUNT_KEY}`]: amount ?? 1,
             },
           },
           img: "icons/svg/pawprint.svg",

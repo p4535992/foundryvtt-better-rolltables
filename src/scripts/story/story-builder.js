@@ -1,6 +1,6 @@
 import { StoryBoolCondition } from "./story-bool-condition.js";
 import { BRTUtils } from "../core/utils.js";
-import { warn } from "../lib.js";
+import { error, warn } from "../lib.js";
 import { CONSTANTS } from "../constants/constants.js";
 
 export class StoryBuilder {
@@ -196,7 +196,8 @@ export class StoryBuilder {
         const rollFormula = rollMatch[1];
         try {
           valueResult = new Roll(rollFormula).roll({ async: false }).total || 0;
-        } catch (error) {
+        } catch (e) {
+          error(e.message, false, e);
           valueResult = 0;
         }
       } else {

@@ -1,5 +1,5 @@
 import { CONSTANTS } from "../constants/constants.js";
-import { error, warn } from "../lib.js";
+import { debug, error, warn } from "../lib.js";
 import { BRTCONFIG } from "../core/config.js";
 
 export class BRTBetterHelpers {
@@ -14,7 +14,7 @@ export class BRTBetterHelpers {
     try {
       JSON.parse(event.dataTransfer.getData("text/plain"));
     } catch (err) {
-      console.log("no entity dropped");
+      error(`no entity dropped`, false, err);
       return;
     }
 
@@ -56,17 +56,22 @@ export class BRTBetterHelpers {
 
   static async tryRoll(rollFormula) {
     try {
-      // return (await new Roll(rollFormula).roll({ async: true })).total || 1;
-      const qtFormula = rollFormula; //r.flags[CONSTANTS.MODULE_ID]?.qtFormula?.trim();
+      const qtFormula = String(rollFormula);
       if (qtFormula == null || qtFormula === "" || qtFormula === "1") {
         return 1;
       } else {
-        // const qtRoll = Roll.create(qtFormula);
-        // const qt = (await qtRoll.evaluate({ async: true })).total;
-        const qt = (await new Roll(rollFormula).roll({ async: true })).total || 1;
-        return qt;
+        try {
+          const qt = (await new Roll(qtFormula).roll({ async: true })).total || 1;
+          return qt;
+        } catch (e) {
+          debug(e.message, false, e);
+          const qtRoll = Roll.create(qtFormula);
+          const qt = (await qtRoll.evaluate({ async: true })).total || 1;
+          return qt;
+        }
       }
-    } catch (error) {
+    } catch (e) {
+      error(e.message, false, e);
       return 1;
     }
   }

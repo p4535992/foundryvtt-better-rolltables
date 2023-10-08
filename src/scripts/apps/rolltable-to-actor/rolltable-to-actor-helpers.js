@@ -601,7 +601,8 @@ export class RollTableToActorHelpers {
       let rolledValue;
       try {
         rolledValue = new Roll(cmd.arg).roll({ async: false }).total;
-      } catch (error) {
+      } catch (e) {
+        error(e.message, false, e);
         continue;
       }
       setProperty(itemData, `system.${cmd.command.toLowerCase()}`, rolledValue);
