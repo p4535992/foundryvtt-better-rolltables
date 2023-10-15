@@ -2,6 +2,7 @@
 
 - TODO add socket integration
 - TODO add check for rollatbale not undefined on API methods
+- TODO add a force rendtion for the uuid reference on the table results to avoid to have all the rows colored red qhen change betwenn the olde standard sheete and the new ones
 
 
 ### 2.0.19 
