@@ -1,3 +1,13 @@
+### TODO 2.0.20
+
+- TODO add socket integration
+- TODO add check for rollatbale not undefined on API methods
+
+
+### 2.0.19 
+
+- Bug fix on prepareCardData method on better-tables.js line 312
+
 ### 2.0.18 
 
 - Some little fix 

@@ -309,22 +309,20 @@ export class BetterTables {
     const br = new BetterResults(results);
     const betterResults = await br.buildResults(tableEntity);
 
-    if (this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_BETTER) {
+    if (tableEntity.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_BETTER) {
       const betterChatCard = new BetterChatCard(betterResults, rollMode, roll);
       return betterChatCard.prepareCharCart(tableEntity);
-    } else if (
-      this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_LOOT
-    ) {
+    } else if (tableEntity.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_LOOT) {
       const currencyData = br.getCurrencyData();
       const lootChatCard = new LootChatCard(betterResults, currencyData, rollMode, roll);
       return lootChatCard.prepareCharCart(tableEntity);
     } else if (
-      this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_STORY
+      tableEntity.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_STORY
     ) {
       const storyChatCard = new StoryChatCard(betterResults, rollMode, roll);
       return storyChatCard.prepareCharCart(tableEntity);
     } else if (
-      this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_HARVEST
+      tableEntity.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_HARVEST
     ) {
       const harvestChatCard = new HarvestChatCard(betterResults, rollMode, roll);
       return harvestChatCard.prepareCharCart(tableEntity);

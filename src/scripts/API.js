@@ -7,6 +7,12 @@ import { BetterTables } from "./better-tables.js";
 import { CONSTANTS } from "./constants/constants.js";
 import { RollTableToActorHelpers } from "./apps/rolltable-to-actor/rolltable-to-actor-helpers.js";
 import { BRTHarvestHelpers } from "./harvest/harvest-helpers.js";
+import { BetterChatCard } from "./better/brt-chat-card.js";
+import { BetterResults } from "./core/brt-table-results.js";
+import { LootChatCard } from "./loot/loot-chat-card.js";
+import { HarvestChatCard } from "./harvest/harvest-chat-card.js";
+import { StoryChatCard } from "./story/story-chat-card.js";
+import { betterRolltablesSocket } from "./socket.js";
 
 /**
  * Create a new API class and export it as default
@@ -48,6 +54,16 @@ const API = {
    */
   async betterTableRoll(tableEntity, options = {}) {
     return await this.betterTables.betterTableRoll(tableEntity, options);
+    // TODO
+    // if(game.user.isGM) {
+    //   return await this.betterTables.betterTableRoll(tableEntity, options);
+    // } else {
+    //   return await betterRolltablesSocket.executeAsGM(
+    // 		"invokeBetterTableRollArr",
+    // 		tableEntity.uuid,
+    // 		options
+    // 	);
+    // }
   },
 
   async updateSpellCache(pack = null) {
@@ -356,6 +372,88 @@ const API = {
       options
     );
     return itemsDataToReturn ?? [];
+  },
+
+  // ===============================
+  // SOCKET UTILITY
+  // ================================
+
+  /**
+   *
+   * @param {RollTable} tableEntity
+   * @param {Object} options
+   * @param {('blindroll'|'gmroll'|'selfroll')} [options.rollMode] The roll mode
+   * @param {string|number} [options.rollsAmount]  The rolls amount value
+   * @param {string|number} [options.dc]  The dc value
+   * @param {string} [options.skill]  The skill denomination
+   * @param {boolean} [options.distinct] if checked the same result is not selected more than once indifferently from the number of 'Amount Roll'
+   * @param {boolean} [options.distinctKeepRolling] if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior
+   * @returns {Promise<TableResult[]>}
+   */
+  async invokeBetterTableRollArr(...inAttributes) {
+    if (!Array.isArray(inAttributes)) {
+      throw error("invokeCreateCharCardAsArr | inAttributes must be of type array");
+    }
+    const [tableReferenceUuid, options] = inAttributes;
+    const tableEntity = await fromUuid(tableReferenceUuid);
+    return await this.betterTables.betterTableRoll(tableEntity, options);
+  },
+
+  async invokeBetterChatCardCreateArr(...inAttributes) {
+    if (!Array.isArray(inAttributes)) {
+      throw error("invokeCreateCharCardAsArr | inAttributes must be of type array");
+    }
+    const [tableReferenceUuid, results, rollMode, roll] = inAttributes;
+    const tableEntity = await fromUuid(tableReferenceUuid);
+
+    const br = new BetterResults(results);
+    const betterResults = await br.buildResults(tableEntity);
+
+    const betterChatCard = new BetterChatCard(betterResults, rollMode, roll);
+    await betterChatCard.createChatCard(tableEntity);
+  },
+
+  async invokeLootChatCardCreateArr(...inAttributes) {
+    if (!Array.isArray(inAttributes)) {
+      throw error("invokeCreateCharCardAsArr | inAttributes must be of type array");
+    }
+    const [tableReferenceUuid, results, rollMode, roll] = inAttributes;
+    const tableEntity = await fromUuid(tableReferenceUuid);
+
+    const br = new BetterResults(results);
+    const betterResults = await br.buildResults(tableEntity);
+
+    const currencyData = br.getCurrencyData();
+    const lootChatCard = new LootChatCard(betterResults, currencyData, rollMode, roll);
+    await lootChatCard.createChatCard(tableEntity);
+  },
+
+  async invokeHarvestChatCardCreateArr(...inAttributes) {
+    if (!Array.isArray(inAttributes)) {
+      throw error("invokeCreateCharCardAsArr | inAttributes must be of type array");
+    }
+    const [tableReferenceUuid, results, rollMode, roll] = inAttributes;
+    const tableEntity = await fromUuid(tableReferenceUuid);
+
+    const br = new BetterResults(results);
+    const betterResults = await br.buildResults(tableEntity);
+
+    const harvestChatCard = new HarvestChatCard(betterResults, rollMode, roll);
+    await harvestChatCard.createChatCard(tableEntity);
+  },
+
+  async invokeStoryChatCardCreateArr(...inAttributes) {
+    if (!Array.isArray(inAttributes)) {
+      throw error("invokeCreateCharCardAsArr | inAttributes must be of type array");
+    }
+    const [tableReferenceUuid, results, rollMode, roll] = inAttributes;
+    const tableEntity = await fromUuid(tableReferenceUuid);
+
+    const br = new BetterResults(results);
+    const betterResults = await br.buildResults(tableEntity);
+
+    const storyChatCard = new StoryChatCard(betterResults, rollMode, roll);
+    await storyChatCard.createChatCard(tableEntity);
   },
 };
 

@@ -2,7 +2,7 @@
   "id": "better-rolltables",
   "title": "Better Roll Tables",
   "description": "Adding functionality to roll tables, especially to roll treasure and magic items",
-  "version": "2.0.18",
+  "version": "2.0.19",
   "authors": [
     {
       "name": "Ultrakorne",
@@ -43,6 +43,8 @@
       "email": ""
     }
   ],
+  "type": "module",
+  "socket": true,
   "scripts": [],
   "esmodules": ["module.js"],
   "styles": ["styles/brt.css"],
@@ -129,8 +131,8 @@
     "maximum": 11
   },
   "url": "https://github.com/p4535992/foundryvtt-better-rolltables",
-  "manifest": "https://github.com/p4535992/foundryvtt-better-rolltables/releases/download/2.0.18/module.json",
-  "download": "https://github.com/p4535992/foundryvtt-better-rolltables/releases/download/2.0.18/module.zip",
+  "manifest": "https://github.com/p4535992/foundryvtt-better-rolltables/releases/download/2.0.19/module.json",
+  "download": "https://github.com/p4535992/foundryvtt-better-rolltables/releases/download/2.0.19/module.zip",
   "readme": "https://github.com/p4535992/foundryvtt-better-rolltables/blob/master/README.md",
   "changelog": "https://github.com/p4535992/foundryvtt-better-rolltables/blob/master/CHANGELOG.md",
   "bugs": "https://github.com/p4535992/foundryvtt-better-rolltables/issues",
@@ -138,7 +140,14 @@
   "manifestPlusVersion": "1.2.0",
   "relationships": {
     "systems": [],
-    "requires": [],
+    "requires": [
+      {
+        "id": "socketlib",
+        "type": "module",
+        "manifest": "https://raw.githubusercontent.com/manuelVo/foundryvtt-socketlib/develop/module.json",
+        "compatibility": {}
+      }
+    ],
     "conflicts": []
   }
 }

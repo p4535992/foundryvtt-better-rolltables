@@ -10,6 +10,7 @@ import SETTINGS from "../constants/settings.js";
 import { BetterRollTableLootConfig } from "../loot/loot-rolltable-config.js";
 import { BetterRollTableStoryConfig } from "../story/story-rolltable-config.js";
 import { BetterRollTableHarvestConfig } from "../harvest/harvest-rolltable-config.js";
+import { registerSocket } from "../socket.js";
 
 /**
  * @module BetterRollTables.BetterRolltableHooks

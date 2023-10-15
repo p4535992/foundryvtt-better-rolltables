@@ -1,5 +1,6 @@
 import { CONSTANTS } from "./scripts/constants/constants.js";
 import { BetterRolltableHooks } from "./scripts/hooks/init.js";
+import { registerSocket } from "./scripts/socket.js";
 
 //   BetterRolltableHooks.init();
 
@@ -53,6 +54,10 @@ Hooks.once("ready", async () => {
 
 Hooks.once("devModeReady", ({ registerPackageDebugFlag }) => {
   registerPackageDebugFlag(CONSTANTS.MODULE_ID);
+});
+
+Hooks.once("socketlib.ready", () => {
+  registerSocket();
 });
 
 /**
