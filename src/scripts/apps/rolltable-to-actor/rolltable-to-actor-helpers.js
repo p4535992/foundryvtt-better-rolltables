@@ -62,12 +62,14 @@ export class RollTableToActorHelpers {
 
   /**
    * Add rolltable results to actor
+   * @param {Token} token
    * @param {TableResult[]} results
    * @param {boolean} stackSame
+   * @param {boolean} isTokenActor - is the token already the token actor?
    * @param {number} customLimit
    * @return {void} array of item data
    */
-  static async addResultsToControlledTokens(results, stackSame = true, customLimit = 0) {
+  static async addResultsToControlledTokens(token, results, stackSame = true, isTokenActor = false, customLimit = 0) {
     // Grab the items
     let itemsData = await RollTableToActorHelpers.resultsToItemsData(results);
     if (itemsData.length === 0) {
@@ -76,8 +78,10 @@ export class RollTableToActorHelpers {
     itemsData = RollTableToActorHelpers.preStackItems(itemsData);
 
     // Grab the actors
-    const controlledActors = canvas.tokens.controlled.map((t) => t.actor).filter((a) => a.isOwner);
+    const tokenstack = token ? (token.constructor === Array ? token : [token]) : canvas.tokens.controlled;
+    const controlledActors = tokenstack.map((t) => t.actor).filter((a) => a.isOwner);
     if (controlledActors.length === 0) {
+      warn(`No actors founded on the token passed`, true);
       return;
     }
     // Add the items
@@ -413,7 +417,13 @@ export class RollTableToActorHelpers {
     //   const newItem = await RollTableToActorHelpers._createItem(item, targetActor, stackSame, customLimit);
     //   items.push(newItem);
     // }
-    const items = await RollTableToActorHelpers.addResultsToControlledTokens(results, stackSame);
+    const items = await RollTableToActorHelpers.addResultsToControlledTokens(
+      token,
+      results,
+      stackSame,
+      isTokenActor,
+      customLimit
+    );
     return items;
   }
 

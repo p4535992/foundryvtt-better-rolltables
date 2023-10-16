@@ -4,7 +4,7 @@ import { BRTBetterHelpers } from "../better/brt-helper";
 import { BetterResults } from "../core/brt-table-results";
 import { BRTCONFIG } from "../core/config";
 import { HarvestChatCard } from "./harvest-chat-card";
-import { isRealNumber } from "../lib";
+import { error, info, isRealNumber } from "../lib";
 import { BRTUtils } from "../core/utils";
 import { BetterRollTable } from "../core/brt-table";
 import SETTINGS from "../constants/settings";
@@ -21,12 +21,12 @@ export class BRTHarvestHelpers {
   static async addHarvestToSelectedToken(tableEntity, token = null, options = {}) {
     let tokenstack = [];
     if (null == token && canvas.tokens.controlled.length === 0) {
-      return ui.notifications.error("Please select a token first");
+      return error("Please select a token first");
     } else {
-      tokenstack = token ? (token.length >= 0 ? token : [token]) : canvas.tokens.controlled;
+      tokenstack = token ? (token.constructor === Array ? token : [token]) : canvas.tokens.controlled;
     }
 
-    ui.notifications.info(CONSTANTS.MODULE_ID + " | API | Harvest generation started.");
+    info("Harvest generation started.");
 
     const brtTable = new BetterRollTable(tableEntity, options);
     await brtTable.initialize();
@@ -36,15 +36,17 @@ export class BRTHarvestHelpers {
     const itemLimit = brtTable.options?.itemLimit;
 
     for (const token of tokenstack) {
+      info(`Harvest generation started on token '${token.name}'`, true);
       const resultsBrt = await brtTable.betterRoll();
 
       const results = resultsBrt?.results;
       const br = new BetterResults(results);
       const betterResults = await br.buildResults(tableEntity);
       await RollTableToActorHelpers.addItemsToTokenOld(token, betterResults, stackSame, isTokenActor, itemLimit);
+      info(`Harvest generation started on token '${token.name}'`, true);
     }
 
-    return ui.notifications.info(CONSTANTS.MODULE_ID + " | API | Harvest generation complete.");
+    return info("Harvest generation complete.");
   }
 
   /**
