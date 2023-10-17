@@ -1,7 +1,3 @@
-@import "./rich-edit.scss";
-@import "./rolltable-sheet.scss";
-// @import "./sortable.scss";
-
 .vtt {
   --better-rolltables-icon-size: 32px;
   --better-rolltables-modesto: "Modesto Condensed", "Palatino Linotype", serif;
@@ -61,6 +57,11 @@
   --better-rolltables-checkbox-checked: rgba(0, 255, 0, 0.3);
 }
 
+@import "./rich-edit.scss";
+@import "./rolltable-sheet.scss";
+// @import "./sortable.scss";
+
+/*
 .app.roll-table-config {
   .window-content {
     form {
@@ -197,6 +198,7 @@
     }
   }
 }
+*/
 
 .better-rolltables-story-text-selectable {
   * {

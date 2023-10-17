@@ -189,4 +189,63 @@ export class BRTBetterHelpers {
     }
     return findDocument;
   }
+
+  static async updateTableResult(resultToUpdate) {
+    let result = resultToUpdate.toObject(false);
+    result.isText = result.type === CONST.TABLE_RESULT_TYPES.TEXT;
+    result.isDocument = result.type === CONST.TABLE_RESULT_TYPES.DOCUMENT;
+    result.isCompendium = result.type === CONST.TABLE_RESULT_TYPES.COMPENDIUM;
+    result.img = result.img || CONFIG.RollTable.resultIcon;
+    result.text = TextEditor.decodeHTML(result.text);
+    const resultDoc = await BRTBetterHelpers.retrieveDocumentFromResultOnlyUuid(result, false);
+    result.uuid = resultDoc?.uuid ?? "";
+    // grab the formula
+    // result.qtFormula = getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.}`;
+    if (result.isDocument || result.isCompendium) {
+      const currentUuid = getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`);
+      const currentOriginalName = getProperty(
+        result,
+        `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_NAME}`
+      );
+      const currentCustomName = getProperty(
+        result,
+        `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`
+      );
+      const currentOriginalIcon = getProperty(
+        result,
+        `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_ICON}`
+      );
+      const currentCustomIcon = getProperty(
+        result,
+        `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`
+      );
+
+      if (result.uuid && (!currentUuid || currentUuid !== result.uuid)) {
+        await result.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.GENERIC_RESULT_UUID, result.uuid);
+      }
+      if (
+        result.text &&
+        currentOriginalName !== result.text &&
+        currentCustomName &&
+        currentCustomName !== result.text
+      ) {
+        await result.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_NAME, result.text);
+      }
+      if (!currentCustomName) {
+        await result.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME, result.text);
+      }
+
+      if (
+        result.icon &&
+        currentOriginalIcon !== result.icon &&
+        currentCustomIcon &&
+        currentCustomIcon !== result.icon
+      ) {
+        await result.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_ICON, result.icon);
+      }
+      if (!currentCustomIcon) {
+        await result.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON, result.icon);
+      }
+    }
+  }
 }

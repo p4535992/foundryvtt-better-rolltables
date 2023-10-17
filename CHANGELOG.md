@@ -1,22 +1,27 @@
-### TODO 2.0.21
+### TODO 2.0.22
 
 - TODO add socket integration
-- TODO add check for rollatbale not undefined on API methods
-- TODO add a force rendtion for the uuid reference on the table results to avoid to have all the rows colored red qhen change betwenn the olde standard sheete and the new ones
+
+### 2.0.21
+
+- add check for rollatbale not undefined on API methods
+- remove old css for avoid to override standard css
+- add a force rendtion for the uuid reference on the table results to avoid to have all the rows colored red qhen change betwenn the olde standard sheete and the new ones
+
 
 ### 2.0.20
 
 - Bug fix API addLootToSelectedToken
 
-### 2.0.19 
+### 2.0.19
 
 - Bug fix on prepareCardData method on better-tables.js line 312
 
-### 2.0.18 
+### 2.0.18
 
-- Some little fix 
+- Some little fix
 
-### 2.0.17 
+### 2.0.17
 
 - Big update a bunch of bug fixing and better management for inner hidden table result
 - Bug fix: https://github.com/p4535992/foundryvtt-better-rolltables/issues/3
@@ -29,7 +34,7 @@
 ### 2.0.13
 
 - Many bug fix and big clean up of the code
-- 
+-
 ### 2.0.9-10-11-12
 
 - Bug fix https://github.com/p4535992/foundryvtt-better-rolltables/issues/2

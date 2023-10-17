@@ -10,6 +10,7 @@ import { HarvestChatCard } from "./harvest/harvest-chat-card.js";
 import { StoryChatCard } from "./story/story-chat-card.js";
 import { BetterChatCard } from "./better/brt-chat-card.js";
 import { BetterRollTable } from "./core/brt-table.js";
+import { BRTBetterHelpers } from "./better/brt-helper.js";
 
 export class BetterTables {
   constructor() {
@@ -592,6 +593,12 @@ export class BetterTables {
       if (!rollTableConfig.object.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY)) {
         await rollTableConfig.object.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY, null);
       }
+      await Promise.all(
+        rollTableConfig.object.results.map(async (result) => {
+          result = await BRTBetterHelpers.updateTableResult(result);
+          return result;
+        })
+      );
     }
   }
 }

@@ -13,6 +13,7 @@ import { LootChatCard } from "./loot/loot-chat-card.js";
 import { HarvestChatCard } from "./harvest/harvest-chat-card.js";
 import { StoryChatCard } from "./story/story-chat-card.js";
 import { betterRolltablesSocket } from "./socket.js";
+import { warn } from "./lib.js";
 
 /**
  * Create a new API class and export it as default
@@ -37,6 +38,10 @@ const API = {
    * @returns {Promise<{flavor: *, sound: string, user: *, content: *}>}
    */
   async roll(tableEntity, options = {}) {
+    if (!tableEntity) {
+      warn(`roll | No reference to a rollTable is been passed`, true);
+      return;
+    }
     return await this.betterTables.roll(tableEntity, options);
   },
 
@@ -53,6 +58,10 @@ const API = {
    * @returns {Promise<TableResult[]>}
    */
   async betterTableRoll(tableEntity, options = {}) {
+    if (!tableEntity) {
+      warn(`betterTableRoll | No reference to a rollTable is been passed`, true);
+      return;
+    }
     return await this.betterTables.betterTableRoll(tableEntity, options);
     // TODO
     // if(game.user.isGM) {
@@ -76,6 +85,10 @@ const API = {
    * @returns {Promise<{flavor: string; sound: string; user: object; content: object;} | undefined}
    */
   async rollCompendiumAsRolltable(compendium = null, hideChatMessage) {
+    if (!compendium) {
+      warn(`rollCompendiumAsRolltable | No reference to a compendium is been passed`, true);
+      return;
+    }
     return await RollFromCompendiumAsRollTableHelpers.rollCompendiumAsRollTable(compendium, hideChatMessage);
   },
 
@@ -99,6 +112,10 @@ const API = {
     tableName = compendiumName + " RollTable",
     { weightPredicate = null } = {}
   ) {
+    if (!compendiumName) {
+      warn(`createRolltableFromCompendium | No reference to a compendiumName is been passed`, true);
+      return;
+    }
     return await CompendiumToRollTableHelpers.compendiumToRollTable(
       compendiumName,
       tableName ?? compendiumName + " RollTable",
@@ -120,6 +137,10 @@ const API = {
     tableName = compendiumName + " RollTable",
     { weightPredicate = null } = {}
   ) {
+    if (!compendiumName) {
+      warn(`createTableFromCompendium | No reference to a compendiumName is been passed`, true);
+      return;
+    }
     return await CompendiumToRollTableHelpers.compendiumToRollTable(
       compendiumName,
       tableName ?? compendiumName + " RollTable",
@@ -146,6 +167,10 @@ const API = {
    * @returns {Promise<void>}
    */
   async addLootToSelectedToken(tableEntity, token = null, options = {}) {
+    if (!tableEntity) {
+      warn(`addLootToSelectedToken | No reference to a RollTable is been passed`, true);
+      return;
+    }
     return await BRTLootHelpers.addLootToSelectedToken(tableEntity, token, options);
   },
 
@@ -162,6 +187,10 @@ const API = {
    * @returns {Promise<void>}
    */
   async generateLoot(tableEntity, options = {}) {
+    if (!tableEntity) {
+      warn(`generateLoot | No reference to a RollTable is been passed`, true);
+      return;
+    }
     return await BRTLootHelpers.generateLoot(tableEntity, options);
   },
 
@@ -178,6 +207,10 @@ const API = {
    * @returns {Promise<void>}
    */
   async generateLootOnSelectedToken(tableEntity, options = {}) {
+    if (!tableEntity) {
+      warn(`generateLootOnSelectedToken | No reference to a RollTable is been passed`, true);
+      return;
+    }
     return await BRTLootHelpers.addLootToSelectedToken(tableEntity, null, options);
   },
 
@@ -194,6 +227,10 @@ const API = {
    * @returns {Promise<void>}
    */
   async generateChatLoot(tableEntity, options = {}) {
+    if (!tableEntity) {
+      warn(`generateChatLoot | No reference to a RollTable is been passed`, true);
+      return;
+    }
     return await BRTLootHelpers.generateChatLoot(tableEntity, options);
   },
 
@@ -214,6 +251,10 @@ const API = {
    * @returns {Promise<void>}
    */
   async generateHarvest(tableEntity, options = {}) {
+    if (!tableEntity) {
+      warn(`generateHarvest | No reference to a RollTable is been passed`, true);
+      return;
+    }
     return await BRTHarvestHelpers.generateHarvest(tableEntity, options);
   },
 
@@ -230,6 +271,10 @@ const API = {
    * @returns {Promise<void>}
    */
   async generateHarvestOnSelectedToken(tableEntity, options = {}) {
+    if (!tableEntity) {
+      warn(`generateHarvestOnSelectedToken | No reference to a RollTable is been passed`, true);
+      return;
+    }
     return await BRTHarvestHelpers.addHarvestToSelectedToken(tableEntity, null, options);
   },
 
@@ -246,6 +291,10 @@ const API = {
    * @returns {Promise<void>}
    */
   async generateChatHarvest(tableEntity, options = {}) {
+    if (!tableEntity) {
+      warn(`generateChatHarvest | No reference to a RollTable is been passed`, true);
+      return;
+    }
     return await BRTHarvestHelpers.generateChatHarvest(tableEntity, options);
   },
 
@@ -259,6 +308,10 @@ const API = {
    * @returns {Promise<{ string, string }>}
    */
   async getStoryResults(tableEntity) {
+    if (!tableEntity) {
+      warn(`getStoryResults | No reference to a RollTable is been passed`, true);
+      return;
+    }
     return await BRTStoryHelpers.getStoryResults(tableEntity);
   },
 
@@ -268,6 +321,10 @@ const API = {
    * @returns {Promise<void>}
    */
   async generateChatStory(tableEntity) {
+    if (!tableEntity) {
+      warn(`generateChatStory | No reference to a RollTable is been passed`, true);
+      return;
+    }
     return await BRTStoryHelpers.generateChatStory(tableEntity);
   },
 
@@ -276,6 +333,10 @@ const API = {
   /* ======================================================== */
 
   async compendiumToRollTableWithDialog(compendiumName = null, { weightPredicate = null } = {}) {
+    if (!compendiumName) {
+      warn(`compendiumToRollTableWithDialog | No reference to a compendiumName is been passed`, true);
+      return;
+    }
     return await CompendiumToRollTableHelpers.compendiumToRollTableWithDialog(compendiumName, { weightPredicate });
   },
 
@@ -305,7 +366,10 @@ const API = {
     const compendiumName = inAttributes.compendiumName;
     const tableName = inAttributes.tableName ?? compendiumName + " RollTable";
     const weightPredicate = inAttributes.weightPredicate;
-
+    if (!compendiumName) {
+      warn(`createRollTableFromCompendium | No reference to a compendiumName is been passed`, true);
+      return;
+    }
     return await CompendiumToRollTableHelpers.compendiumToRollTable(compendiumName, tableName, { weightPredicate });
   },
 
@@ -324,6 +388,10 @@ const API = {
     }
     const compendium = inAttributes.compendium;
     const hideChatMessage = inAttributes.hideChatMessage;
+    if (!compendium) {
+      warn(`rollCompendiumAsRollTable | No reference to a compendium is been passed`, true);
+      return;
+    }
     const obj = await RollFromCompendiumAsRollTableHelpers.rollCompendiumAsRollTable(compendium, hideChatMessage);
     return obj;
   },
