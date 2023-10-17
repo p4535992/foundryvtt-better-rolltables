@@ -88,7 +88,7 @@ export class BetterRollTable {
     //   results: results.map((result) => {
     //     const r = result.toObject(false);
     //     r.text = result.getChatText();
-    //     r.icon = result.icon;
+    //     r.icon = result.icon ?? result.img;
     //     return r;
     //   }),
     //   rollHTML: this.table.displayRoll && roll ? await roll.render() : null,
@@ -101,7 +101,7 @@ export class BetterRollTable {
     let betterResults = results.map((result) => {
       const r = result.toObject(false);
       r.text = result.getChatText();
-      r.icon = result.icon;
+      r.icon = result.icon ?? result.img;
       return r;
     });
     if (this.table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_BETTER) {
@@ -127,7 +127,7 @@ export class BetterRollTable {
         results: results.map((result) => {
           const r = result.toObject(false);
           r.text = result.getChatText();
-          r.icon = result.icon;
+          r.icon = result.icon ?? result.img;
           return r;
         }),
         rollHTML: this.table.displayRoll && roll ? await roll.render() : null,

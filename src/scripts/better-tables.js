@@ -4,7 +4,7 @@ import { BRTUtils } from "./core/utils.js";
 import { BRTCONFIG } from "./core/config.js";
 import API from "./API.js";
 import { CONSTANTS } from "./constants/constants.js";
-import { debug, i18n } from "./lib.js";
+import { debug, i18n, info, isEmptyObject, warn } from "./lib.js";
 import SETTINGS from "./constants/settings.js";
 import { HarvestChatCard } from "./harvest/harvest-chat-card.js";
 import { StoryChatCard } from "./story/story-chat-card.js";
@@ -586,13 +586,40 @@ export class BetterTables {
 
   static async checkRenderDefaultRollTableConfig(rollTableConfig, html, rollTable) {
     if (rollTableConfig.object.sheet.template !== "templates/sheets/roll-table-config.html") {
-      // await Promise.all(
-      //   rollTableConfig.object.results.map(async (result) => {
-      //     result = await BRTBetterHelpers.updateTableResult(result);
-      //     return result;
-      //   })
-      // );
-      return;
+      if (rollTableConfig.isEditable) {
+        let atLeastOneIsUpdated = false;
+        // TODO make more faster ???
+        const resultsToUpdate = await Promise.all(
+          rollTableConfig.object.results.map(async (result) => {
+            const obj = await BRTBetterHelpers.updateTableResult(result);
+            if (
+              obj?.result &&
+              obj.isUpdate &&
+              !isEmptyObject(getProperty(obj.result, `flags.${CONSTANTS.MODULE_ID}`))
+            ) {
+              let resultToUpdate = result.toObject(false);
+              if (!resultToUpdate.flags) {
+                resultToUpdate.flags = {};
+              }
+              if (!resultToUpdate.flags[CONSTANTS.MODULE_ID]) {
+                resultToUpdate.flags[CONSTANTS.MODULE_ID] = {};
+              }
+              mergeObject(
+                resultToUpdate.flags[CONSTANTS.MODULE_ID],
+                getProperty(obj.result, `flags.${CONSTANTS.MODULE_ID}`)
+              );
+              atLeastOneIsUpdated = true;
+              return resultToUpdate;
+            }
+          })
+        );
+        if (atLeastOneIsUpdated) {
+          info(`Update the rolltable`, false, rollTableConfig.object);
+          // await rollTableConfig.object.updateEmbeddedDocuments("TableResult", resultsToUpdate);
+          // This little trick seem to refresh the config
+          await rollTableConfig.getData();
+        }
+      }
     } else {
       debug(`Set table type to null for default sheet rolltable config`);
       // If the flas is not null

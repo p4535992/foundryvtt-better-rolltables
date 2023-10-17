@@ -7,6 +7,7 @@
 - add check for rolltable not undefined on API methods
 - remove old css for avoid to override standard css
 - add a force rendition for the uuid reference on the table results to avoid to have all the rows colored red qhen change betwenn the old standard sheet and the new ones
+- try to bug fix: https://github.com/p4535992/foundryvtt-better-rolltables/issues/7
 
 
 ### 2.0.20

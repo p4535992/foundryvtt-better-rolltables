@@ -203,11 +203,11 @@
                 {{#if result.isText}}
                 <tr class="table-result flexrow {{#if result.drawn}}drawn{{/if}}" data-result-id="{{result._id}}">
                 {{else if result.isDocument}}
-                <tr class="table-result flexrow {{#if result.drawn}}drawn{{/if}}" data-result-id="{{result._id}}" data-result-uuid="{{result.uuid}}">
-                    <!-- TODO {{#unless result.uuid}} style="background: lightcoral;"{{/unless}}> -->
+                <tr class="table-result flexrow {{#if result.drawn}}drawn{{/if}}" data-result-id="{{result._id}}" data-result-uuid="{{result.uuid}}"
+                    {{#unless result.uuid}} style="background: lightcoral;"{{/unless}}>
                 {{else if result.isCompendium}}
-                <tr class="table-result flexrow {{#if result.drawn}}drawn{{/if}}" data-result-id="{{result._id}}" data-result-uuid="{{result.uuid}}">
-                    <!-- TODO {{#unless result.uuid}} style="background: lightcoral;"{{/unless}}> -->
+                <tr class="table-result flexrow {{#if result.drawn}}drawn{{/if}}" data-result-id="{{result._id}}" data-result-uuid="{{result.uuid}}"
+                    {{#unless result.uuid}} style="background: lightcoral;"{{/unless}}>
                 {{/if}}
 
                 <input type="hidden" name="results.{{i}}._id" value="{{result._id}}"/>
