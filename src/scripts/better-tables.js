@@ -586,6 +586,12 @@ export class BetterTables {
 
   static async checkRenderDefaultRollTableConfig(rollTableConfig, html, rollTable) {
     if (rollTableConfig.object.sheet.template !== "templates/sheets/roll-table-config.html") {
+      // await Promise.all(
+      //   rollTableConfig.object.results.map(async (result) => {
+      //     result = await BRTBetterHelpers.updateTableResult(result);
+      //     return result;
+      //   })
+      // );
       return;
     } else {
       debug(`Set table type to null for default sheet rolltable config`);
@@ -593,12 +599,6 @@ export class BetterTables {
       if (!rollTableConfig.object.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY)) {
         await rollTableConfig.object.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY, null);
       }
-      await Promise.all(
-        rollTableConfig.object.results.map(async (result) => {
-          result = await BRTBetterHelpers.updateTableResult(result);
-          return result;
-        })
-      );
     }
   }
 }

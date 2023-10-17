@@ -4,9 +4,9 @@
 
 ### 2.0.21
 
-- add check for rollatbale not undefined on API methods
+- add check for rolltable not undefined on API methods
 - remove old css for avoid to override standard css
-- add a force rendtion for the uuid reference on the table results to avoid to have all the rows colored red qhen change betwenn the olde standard sheete and the new ones
+- add a force rendition for the uuid reference on the table results to avoid to have all the rows colored red qhen change betwenn the old standard sheet and the new ones
 
 
 ### 2.0.20
