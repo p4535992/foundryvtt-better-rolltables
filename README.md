@@ -56,13 +56,6 @@ A special ty to the original authors [Ultrakorne#6240](https://discordapp.com/us
 * [FAQs](https://github.com/p4535992/foundryvtt-better-rolltables/blob/master/wiki/FAQ.md)
 * [Macro guide](https://github.com/p4535992/foundryvtt-better-rolltables/blob/master/wiki/API-for-macros-and-modules#how-to-roll-tables-from-macros.md)
 
-# 3rd party integration
-
- | Module | Integration description |
- | ------ | ----------------------- |
- | [LootSheet NPC module](https://github.com/jopeek/fvtt-loot-sheet-npc-5e) | Suggest to use. If installed, _BetterRolltables_ will automatically use it. |
- | [Autocomplete inline properties](https://github.com/ghost-fvtt/FVTT-Autocomplete-Inline-Properties) | If installed offers autocompletion on tags. |
-
 ## Api
 
 All informations about the api can be found here [API](./wiki/api/api.md)
