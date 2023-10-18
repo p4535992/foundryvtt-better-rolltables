@@ -460,69 +460,102 @@ const API = {
    */
   async invokeBetterTableRollArr(...inAttributes) {
     if (!Array.isArray(inAttributes)) {
-      throw error("invokeCreateCharCardAsArr | inAttributes must be of type array");
+      throw error("invokeBetterTableRollArr | inAttributes must be of type array");
     }
     const [tableReferenceUuid, options] = inAttributes;
     const tableEntity = await fromUuid(tableReferenceUuid);
     return await this.betterTables.betterTableRoll(tableEntity, options);
   },
 
-  async invokeBetterChatCardCreateArr(...inAttributes) {
+  async invokeGenericChatCardCreateArr(...inAttributes) {
     if (!Array.isArray(inAttributes)) {
-      throw error("invokeCreateCharCardAsArr | inAttributes must be of type array");
+      throw error("invokeGenericTableRollArr | inAttributes must be of type array");
     }
+
     const [tableReferenceUuid, results, rollMode, roll] = inAttributes;
     const tableEntity = await fromUuid(tableReferenceUuid);
 
     const br = new BetterResults(results);
     const betterResults = await br.buildResults(tableEntity);
 
-    const betterChatCard = new BetterChatCard(betterResults, rollMode, roll);
-    await betterChatCard.createChatCard(tableEntity);
-  },
-
-  async invokeLootChatCardCreateArr(...inAttributes) {
-    if (!Array.isArray(inAttributes)) {
-      throw error("invokeCreateCharCardAsArr | inAttributes must be of type array");
+    if (tableEntity.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_BETTER) {
+      const betterChatCard = new BetterChatCard(betterResults, rollMode, roll);
+      await betterChatCard.createChatCard(tableEntity);
+    } else if (tableEntity.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_LOOT) {
+      const currencyData = br.getCurrencyData();
+      const lootChatCard = new LootChatCard(betterResults, currencyData, rollMode, roll);
+      await lootChatCard.createChatCard(tableEntity);
+    } else if (
+      tableEntity.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_STORY
+    ) {
+      const storyChatCard = new StoryChatCard(betterResults, rollMode, roll);
+      await storyChatCard.createChatCard(tableEntity);
+    } else if (
+      tableEntity.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_HARVEST
+    ) {
+      const harvestChatCard = new HarvestChatCard(betterResults, rollMode, roll);
+      await harvestChatCard.createChatCard(tableEntity);
+    } else {
+      await brtTable.createChatCard(results, rollMode, roll);
     }
-    const [tableReferenceUuid, results, rollMode, roll] = inAttributes;
-    const tableEntity = await fromUuid(tableReferenceUuid);
-
-    const br = new BetterResults(results);
-    const betterResults = await br.buildResults(tableEntity);
-
-    const currencyData = br.getCurrencyData();
-    const lootChatCard = new LootChatCard(betterResults, currencyData, rollMode, roll);
-    await lootChatCard.createChatCard(tableEntity);
   },
 
-  async invokeHarvestChatCardCreateArr(...inAttributes) {
-    if (!Array.isArray(inAttributes)) {
-      throw error("invokeCreateCharCardAsArr | inAttributes must be of type array");
-    }
-    const [tableReferenceUuid, results, rollMode, roll] = inAttributes;
-    const tableEntity = await fromUuid(tableReferenceUuid);
+  // async invokeBetterChatCardCreateArr(...inAttributes) {
+  //   if (!Array.isArray(inAttributes)) {
+  //     throw error("invokeBetterChatCardCreateArr | inAttributes must be of type array");
+  //   }
+  //   const [tableReferenceUuid, results, rollMode, roll] = inAttributes;
+  //   const tableEntity = await fromUuid(tableReferenceUuid);
 
-    const br = new BetterResults(results);
-    const betterResults = await br.buildResults(tableEntity);
+  //   const br = new BetterResults(results);
+  //   const betterResults = await br.buildResults(tableEntity);
 
-    const harvestChatCard = new HarvestChatCard(betterResults, rollMode, roll);
-    await harvestChatCard.createChatCard(tableEntity);
-  },
+  //   const betterChatCard = new BetterChatCard(betterResults, rollMode, roll);
+  //   await betterChatCard.createChatCard(tableEntity);
+  // },
 
-  async invokeStoryChatCardCreateArr(...inAttributes) {
-    if (!Array.isArray(inAttributes)) {
-      throw error("invokeCreateCharCardAsArr | inAttributes must be of type array");
-    }
-    const [tableReferenceUuid, results, rollMode, roll] = inAttributes;
-    const tableEntity = await fromUuid(tableReferenceUuid);
+  // async invokeLootChatCardCreateArr(...inAttributes) {
+  //   if (!Array.isArray(inAttributes)) {
+  //     throw error("invokeLootChatCardCreateArr | inAttributes must be of type array");
+  //   }
+  //   const [tableReferenceUuid, results, rollMode, roll] = inAttributes;
+  //   const tableEntity = await fromUuid(tableReferenceUuid);
 
-    const br = new BetterResults(results);
-    const betterResults = await br.buildResults(tableEntity);
+  //   const br = new BetterResults(results);
+  //   const betterResults = await br.buildResults(tableEntity);
 
-    const storyChatCard = new StoryChatCard(betterResults, rollMode, roll);
-    await storyChatCard.createChatCard(tableEntity);
-  },
+  //   const currencyData = br.getCurrencyData();
+  //   const lootChatCard = new LootChatCard(betterResults, currencyData, rollMode, roll);
+  //   await lootChatCard.createChatCard(tableEntity);
+  // },
+
+  // async invokeHarvestChatCardCreateArr(...inAttributes) {
+  //   if (!Array.isArray(inAttributes)) {
+  //     throw error("invokeHarvestChatCardCreateArr | inAttributes must be of type array");
+  //   }
+  //   const [tableReferenceUuid, results, rollMode, roll] = inAttributes;
+  //   const tableEntity = await fromUuid(tableReferenceUuid);
+
+  //   const br = new BetterResults(results);
+  //   const betterResults = await br.buildResults(tableEntity);
+
+  //   const harvestChatCard = new HarvestChatCard(betterResults, rollMode, roll);
+  //   await harvestChatCard.createChatCard(tableEntity);
+  // },
+
+  // async invokeStoryChatCardCreateArr(...inAttributes) {
+  //   if (!Array.isArray(inAttributes)) {
+  //     throw error("invokeStoryChatCardCreateArr | inAttributes must be of type array");
+  //   }
+  //   const [tableReferenceUuid, results, rollMode, roll] = inAttributes;
+  //   const tableEntity = await fromUuid(tableReferenceUuid);
+
+  //   const br = new BetterResults(results);
+  //   const betterResults = await br.buildResults(tableEntity);
+
+  //   const storyChatCard = new StoryChatCard(betterResults, rollMode, roll);
+  //   await storyChatCard.createChatCard(tableEntity);
+  // },
 };
 
 export default API;

@@ -2,6 +2,10 @@
 
 - TODO add socket integration
 
+### 2.0.23
+
+- Try to fix again: https://github.com/p4535992/foundryvtt-better-rolltables/issues/3
+
 ### 2.0.22
 
 - Bug fix: https://github.com/p4535992/foundryvtt-better-rolltables/issues/9

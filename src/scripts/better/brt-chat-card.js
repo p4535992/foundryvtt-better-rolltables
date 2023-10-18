@@ -4,6 +4,7 @@ import { BRTUtils } from "../core/utils.js";
 import { BRTBetterHelpers } from "./brt-helper.js";
 import { RollTableToActorHelpers } from "../apps/rolltable-to-actor/rolltable-to-actor-helpers.js";
 import { i18n, warn } from "../lib.js";
+import { betterRolltablesSocket } from "../socket.js";
 
 /**
  * create a chat card based on the content of the object LootData
@@ -67,10 +68,11 @@ export class BetterChatCard {
           false
         );
         if (
-          getProperty(
+          !getProperty(
             result,
             `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_SHOW_HIDDEN_RESULT_ON_CHAT}`
-          )
+          ) &&
+          getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_HIDDEN_TABLE}`)
         ) {
           continue;
         }
@@ -107,10 +109,11 @@ export class BetterChatCard {
           false
         );
         if (
-          getProperty(
+          !getProperty(
             result,
             `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_SHOW_HIDDEN_RESULT_ON_CHAT}`
-          )
+          ) &&
+          getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_HIDDEN_TABLE}`)
         ) {
           continue;
         }
@@ -398,16 +401,33 @@ export class BetterChatCard {
   }
 
   async createChatCard(table) {
-    await this.findOrCreateItems();
-    if (this.rollMode !== "gmroll") {
+    if (!game.user.isGM) {
+      if (this.atLeastOneRollIsHidden || this.rollMode === "gmroll") {
+        await betterRolltablesSocket.executeAsGM(
+          "invokeGenericChatCardCreateArr",
+          table.uuid,
+          this.betterResults,
+          this.rollMode,
+          this.roll
+        );
+      } else {
+        await this.findOrCreateItems();
+        const chatData = await this.prepareCharCart(table);
+        BRTUtils.addRollModeToChatData(chatData, this.rollMode);
+        ChatMessage.create(chatData);
+      }
+    } else {
+      // IF IS GM
+      await this.findOrCreateItems();
       const chatData = await this.prepareCharCart(table);
       BRTUtils.addRollModeToChatData(chatData, this.rollMode);
       ChatMessage.create(chatData);
-    }
-    if (this.atLeastOneRollIsHidden || this.rollMode === "gmroll") {
-      const chatDataGM = await this.prepareCharCartGM(table);
-      BRTUtils.addRollModeToChatData(chatDataGM, "gmroll");
-      ChatMessage.create(chatDataGM);
+
+      if (this.atLeastOneRollIsHidden) {
+        const chatDataGM = await this.prepareCharCartGM(table);
+        BRTUtils.addRollModeToChatData(chatDataGM, "gmroll");
+        ChatMessage.create(chatDataGM);
+      }
     }
   }
 }

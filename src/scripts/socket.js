@@ -14,16 +14,19 @@ export function registerSocket() {
   /**
    * Automated EvocationsVariant sockets
    */
-  betterRolltablesSocket.register("invokeBetterChatCardCreateArr", (...args) =>
-    API.invokeBetterChatCardCreateArr(...args)
+  betterRolltablesSocket.register("invokeGenericChatCardCreateArr", (...args) =>
+    API.invokeGenericChatCardCreateArr(...args)
   );
-  betterRolltablesSocket.register("invokeLootChatCardCreateArr", (...args) => API.invokeLootChatCardCreateArr(...args));
-  betterRolltablesSocket.register("invokeStoryChatCardCreateArr", (...args) =>
-    API.invokeStoryChatCardCreateArr(...args)
-  );
-  betterRolltablesSocket.register("invokeHarvestChatCardCreateArr", (...args) =>
-    API.invokeHarvestChatCardCreateArr(...args)
-  );
+  // betterRolltablesSocket.register("invokeBetterChatCardCreateArr", (...args) =>
+  //   API.invokeBetterChatCardCreateArr(...args)
+  // );
+  // betterRolltablesSocket.register("invokeLootChatCardCreateArr", (...args) => API.invokeLootChatCardCreateArr(...args));
+  // betterRolltablesSocket.register("invokeStoryChatCardCreateArr", (...args) =>
+  //   API.invokeStoryChatCardCreateArr(...args)
+  // );
+  // betterRolltablesSocket.register("invokeHarvestChatCardCreateArr", (...args) =>
+  //   API.invokeHarvestChatCardCreateArr(...args)
+  // );
   betterRolltablesSocket.register("invokeBetterTableRollArr", (...args) => API.invokeBetterTableRollArr(...args));
 
   // Basic
