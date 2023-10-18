@@ -586,9 +586,9 @@ export class BetterTables {
 
   static async checkRenderDefaultRollTableConfig(rollTableConfig, html, rollTable) {
     if (rollTableConfig.object.sheet.template !== "templates/sheets/roll-table-config.html") {
+      /*
       if (rollTableConfig.isEditable) {
         let atLeastOneIsUpdated = false;
-        // TODO make more faster ???
         const resultsToUpdate = await Promise.all(
           rollTableConfig.object.results.map(async (result) => {
             const obj = await BRTBetterHelpers.updateTableResult(result);
@@ -614,12 +614,19 @@ export class BetterTables {
           })
         );
         if (atLeastOneIsUpdated) {
-          info(`Update the rolltable`, false, rollTableConfig.object);
-          // await rollTableConfig.object.updateEmbeddedDocuments("TableResult", resultsToUpdate);
+          //info(`Try to Update the rolltable`, false, rollTableConfig.object);
           // This little trick seem to refresh the config
-          await rollTableConfig.getData();
+          if(isEmptyObject(API.cacheBrtRender)){
+            API.cacheBrtRender = {};
+          }
+          if(!API.cacheBrtRender[rollTableConfig.object.id]) {
+            info(`Update the rolltable`, false, rollTableConfig.object);
+            await rollTableConfig.object.updateEmbeddedDocuments("TableResult", resultsToUpdate);
+            API.cacheBrtRender[rollTableConfig.object.id] = true;
+          }
         }
       }
+      */
     } else {
       debug(`Set table type to null for default sheet rolltable config`);
       // If the flas is not null

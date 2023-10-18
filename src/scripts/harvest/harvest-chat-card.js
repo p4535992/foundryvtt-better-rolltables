@@ -67,7 +67,7 @@ export class HarvestChatCard {
           false
         );
         if (
-          !getProperty(
+          getProperty(
             result,
             `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_SHOW_HIDDEN_RESULT_ON_CHAT}`
           )
@@ -107,7 +107,7 @@ export class HarvestChatCard {
           false
         );
         if (
-          !getProperty(
+          getProperty(
             result,
             `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_SHOW_HIDDEN_RESULT_ON_CHAT}`
           )

@@ -386,7 +386,7 @@ export class BetterRollTableBetterConfig extends RollTableConfig {
    */
   async _animateRoll(results) {
     // Get the list of results and their indices
-    const tableResults = this.element[0].querySelector(".table-results"); // MOD ".table-results" instead ".table-results > tbody"
+    const tableResults = this.element[0].querySelector(".table-results > tbody"); // MOD ".table-results" instead ".table-results > tbody"
     const drawnIds = new Set(results.map((r) => r.id));
     const drawnItems = Array.from(tableResults.children).filter((item) => drawnIds.has(item.dataset.resultId));
 

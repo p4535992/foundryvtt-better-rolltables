@@ -1,6 +1,10 @@
-### TODO 2.0.22
+### TODO 2.0.23
 
 - TODO add socket integration
+
+### 2.0.22
+
+- Bug fix: https://github.com/p4535992/foundryvtt-better-rolltables/issues/9
 
 ### 2.0.21
 
