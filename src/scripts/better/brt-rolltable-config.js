@@ -75,6 +75,7 @@ export class BetterRollTableBetterConfig extends RollTableConfig {
     if (this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) !== CONSTANTS.TABLE_TYPE_BETTER) {
       await this.document.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY, CONSTANTS.TABLE_TYPE_BETTER);
     }
+    brtData.usePercentage = this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.GENERIC_USE_PERCENTAGE);
     brtData.tableType = CONSTANTS.TABLE_TYPE_BETTER;
     brtData.textType =
       i18n(`${CONSTANTS.MODULE_ID}.${"TypePrefixLabel"}`) + " " + i18n(`${CONSTANTS.MODULE_ID}.${"TypeLabel"}`) + "";

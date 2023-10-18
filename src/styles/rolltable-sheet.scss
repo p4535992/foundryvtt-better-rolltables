@@ -52,19 +52,19 @@
         border: 1px solid #7a7971;
         text-overflow: ellipsis;
         font-size: 0.9em;
-        height: calc(100% - 0.7em);
+        // height: calc(100% - 0.7em);
       }
       input[type="number"] {
         border: 1px solid #7a7971;
         text-overflow: ellipsis;
         font-size: 0.9em;
-        height: calc(100% - 0.7em);
+        // height: calc(100% - 0.7em);
       }
       select {
         border: 1px solid #7a7971;
         text-overflow: ellipsis;
         font-size: 0.9em;
-        height: calc(100% - 0.7em);
+        // height: calc(100% - 0.7em);
       }
       textarea {
         font-family: var(--better-rolltables-signika);
@@ -241,7 +241,8 @@
             }
             .result-better-rolltables-formula,
             .result-brt-dc-value,
-            .result-brt-skill-value {
+            .result-brt-skill-value,
+            .result-brt-use-percentage-value {
               width: 14%;
               margin-left: 3px;
               &::placeholder {
@@ -266,10 +267,14 @@
               margin-left: 3px;
             }
           }
+          > .result-brt-quantity-formula,
           > .result-brt-dc-value,
-          > .result-brt-skill-value,
-          > .result-brt-quantity-formula {
+          > .result-brt-skill-value {
             flex: 0 0 50px;
+            text-align: center;
+          }
+          > .result-brt-use-percentage-value {
+            flex: 0 0 92px;
             text-align: center;
           }
           > .result-brt-details-text {

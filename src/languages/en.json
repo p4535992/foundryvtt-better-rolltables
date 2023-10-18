@@ -177,6 +177,7 @@
       "tableTextGmTitleLabel": "<b>THIS IS THE CHAT CARD ONLY FOR GM</b>",
       "tableTextDistinctResult": "Distinct result: if checked the same result is not selected more than once indifferently from the number of 'Amount Roll'",
       "tableTextDistinctResultKeepRolling": "Distinct result but Keep Rolling: if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior",
+      "tableTextUsePercentage": "Use percentage instead the range behavior. If enabled it will hide (not delete) the range column",
       "tableTextHiddenTable": "Hidden Table: if checked the result drawn from this table are visible only to gms on the chat",
       "tableTextHiddenShowResultOnChat": "If the table is hidden drawn table results will be show on the chat card as unknown items to players",
       "tableResultTextHiddenOnChat": "???",
@@ -197,7 +198,8 @@
       "dc": "DC",
       "skill": "Skill",
       "source": "Source reference",
-      "sourcePlaceholder": "some string"
+      "sourcePlaceholder": "some string",
+      "usePercentage": "Min - Max %"
     }
   }
 }

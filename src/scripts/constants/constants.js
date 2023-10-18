@@ -13,6 +13,7 @@ export const CONSTANTS = {
     GENERIC_SHOW_HIDDEN_RESULT_ON_CHAT: "brt-show-hidden-result-on-chat",
     GENERIC_DISTINCT_RESULT: "brt-distinct-result",
     GENERIC_DISTINCT_RESULT_KEEP_ROLLING: "brt-distinct-result-keep-rolling",
+    GENERIC_USE_PERCENTAGE: "brt-use-percentage",
 
     GENERIC_RESULT_UUID: "brt-result-uuid",
     GENERIC_RESULT_CUSTOM_NAME: "brt-result-custom-name",
@@ -21,6 +22,8 @@ export const CONSTANTS = {
     GENERIC_RESULT_ORIGINAL_ICON: "brt-result-original-icon",
     GENERIC_RESULT_HIDDEN_TABLE: "brt-hidden-table",
     GENERIC_RESULT_SHOW_HIDDEN_RESULT_ON_CHAT: "brt-show-hidden-result-on-chat",
+    GENERIC_RESULT_PERCENTAGE_LOW_VALUE: "brt-percentage-low-value",
+    GENERIC_RESULT_PERCENTAGE_HIGH_VALUE: "brt-percentage-high-value",
 
     LOOT_CURRENCY_STRING_KEY: "table-currency-string",
     LOOT_AMOUNT_KEY: "loot-amount-key",

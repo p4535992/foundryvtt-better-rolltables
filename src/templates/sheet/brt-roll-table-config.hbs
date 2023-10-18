@@ -68,7 +68,12 @@
                     name="flags.better-rolltables.brt-distinct-result-keep-rolling"
                     {{checked data.flags.better-rolltables.brt-distinct-result-keep-rolling}} />
             </div>
-            
+            <div class="form-group">
+                <label>{{localize "better-rolltables.label.tableTextUsePercentage"}}</label>
+                <input type="checkbox"
+                    name="flags.better-rolltables.brt-use-percentage"
+                    {{checked data.flags.better-rolltables.brt-use-percentage}} />
+            </div>            
             <!-- TODO
             <div class="form-group">
                 <a class='normalize-dcs-asc' data-tooltip='{{localize 'better-rolltables.label.OrderByDCAsc'}}' data-tooltip-direction='UP'>
@@ -179,9 +184,17 @@
                         <label>{{ localize "TABLE.ResultWeight" }}</label>
                     </th>
 
-                    <th class="result-range">
-                        <label>{{ localize "TABLE.ResultRange" }}</label>
-                    </th>
+
+                    {{#if data.flags.better-rolltables.brt-use-percentage}}
+                        <th class="result-brt-use-percentage-value">
+                            <label>{{ localize "better-rolltables.label.usePercentage" }}</label>
+                        </th>
+                    {{else}}
+                        <th class="result-range">
+                            <label>{{ localize "TABLE.ResultRange" }}</label>
+                        </th>
+                    {{/if}}
+
                     {{#if owner}}
                     <th class="result-controls result-brt-controls-header">
                         <a class="normalize-results" title="{{ localize "TABLE.Normalize" }}">
@@ -299,7 +312,7 @@
 
                 {{#ifEquals @root.tableType "harvest"}}
                 <td class="result-brt-dc-value">
-                    <input class="result-brt-dc-value" type="text" name="results.{{i}}.flags.better-rolltables.brt-dc-value" value="{{result.flags.better-rolltables.brt-dc-value}}" placeholder="1" />
+                    <input class="result-brt-dc-value" type="text" name="results.{{i}}.flags.better-rolltables.brt-dc-value" value="{{result.flags.better-rolltables.brt-dc-value}}" placeholder="1" data-dtype="Number"/>
                 </td>
                 <td class="result-brt-skill-value">
                     <input class="result-brt-skill-value" type="text" name="results.{{i}}.flags.better-rolltables.brt-skill-value" value="{{result.flags.better-rolltables.brt-skill-value}}" placeholder="arc" />
@@ -310,11 +323,21 @@
                     <input type="text" name="results.{{i}}.weight" value="{{result.weight}}" placeholder="1" data-dtype="Number"/>
                 </td>
 
-                <td class="result-range">
-                    <input type="text" name="results.{{i}}.rangeL" value="{{result.range.[0]}}" placeholder="L" data-dtype="Number"/>
-                    <span> - </span>
-                    <input type="text" name="results.{{i}}.rangeH" value="{{result.range.[1]}}" placeholder="H" data-dtype="Number"/>
-                </td>
+                {{#if @root.usePercentage}}
+                    <td class="result-range">
+                        <input type="number" min="0" max="100" step="0.1" name="results.{{i}}.flags.better-rolltables.brt-percentage-low-value" value="{{result.flags.better-rolltables.brt-percentage-low-value}}" placeholder="0" data-dtype="Number"/>
+                        <input type="hidden" name="results.{{i}}.rangeL" value="{{result.range.[0]}}" placeholder="L" data-dtype="Number"/>
+                        <span> - </span>
+                        <input type="number" min="0" max="100" step="0.1" name="results.{{i}}.flags.better-rolltables.brt-percentage-high-value" value="{{result.flags.better-rolltables.brt-percentage-high-value}}" placeholder="100" data-dtype="Number"/>
+                        <input type="hidden" name="results.{{i}}.rangeH" value="{{result.range.[1]}}" placeholder="H" data-dtype="Number"/>
+                    </td>
+                {{else}}
+                    <td class="result-range">
+                        <input type="text" name="results.{{i}}.rangeL" value="{{result.range.[0]}}" placeholder="L" data-dtype="Number"/>
+                        <span> - </span>
+                        <input type="text" name="results.{{i}}.rangeH" value="{{result.range.[1]}}" placeholder="H" data-dtype="Number"/>
+                    </td>
+                {{/if}}
 
                 {{#if ../owner}}
                 <td class="result-controls">
