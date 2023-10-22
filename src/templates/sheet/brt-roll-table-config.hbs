@@ -191,7 +191,7 @@
 
                     {{#if data.flags.better-rolltables.brt-use-percentage}}
                         <th class="result-brt-use-percentage-value">
-                            <label>{{ localize "better-rolltables.label.usePercentage" }}</label>
+                            <label>{{ localize "better-rolltables.label.usePercentageOnlyMax" }}</label>
                         </th>
                     {{else}}
                         <th class="result-range">
@@ -386,9 +386,11 @@
         <button id="BRT-gen-harvest-token" class="generate" type="button" data-tooltip='{{localize 'better-rolltables.Buttons.GenerateHarvestTokenTooltip'}}' data-tooltip-direction='UP'><i class="fa-solid fa-user-group"></i>{{localize "better-rolltables.Buttons.GenerateHarvestToken"}}</button>
         {{/ifEquals}}
         {{#if owner}}
+        <!--
         <button class="refresh" type="button" data-tooltip='{{localize 'better-rolltables.label.betterRolltableRefreshTooltip'}}' data-tooltip-direction='UP'>
             <i class="fa-solid fa-refresh"></i> {{ localize "better-rolltables.label.betterRolltableRefresh" }}
         </button>
+        -->
         <button class="submit" type="submit"><i class="fas fa-save"></i> {{ localize "TABLE.Update" }}</button>
         <button class="reset" type="button"><i class="fas fa-undo"></i> {{ localize "TABLE.Reset" }}</button>
         {{/if}}
