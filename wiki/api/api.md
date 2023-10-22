@@ -43,13 +43,14 @@ Roll a table as a Better table in chat with options
 |--------------------------|-------------------------|---------|--------------------------------------------------------|
 | tableEntity              | `RollTable`             |         | tableEntity rolltable to generate content from         |
 | options                  | `object`                |         | OPTIONAL: Options to pass to the function                        |
-| [options.rollMode]       | `string`                |         | Type of rollMode for the chat card: 'blindroll'|'gmroll'|'selfroll' |
-| [options.rollsAmount]    | `string or number`      |         | The rolls amount value  |
-| [options.dc]             | `string or number`      |         | The dc value (only for Harvest type rolltable) |
-| [options.skill]          | `string`                |         | The skill denomination (only for Harvest type rolltable) |
-| [options.distinct]          | `boolean`                |         | if checked the same result is not selected more than once indifferently from the number of 'Amount Roll' |
-| [options.distinctKeepRolling]          | `boolean`                |         | if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior |
-
+| [options.displayChat]    | `boolean`               |  true   | Whether to automatically display the results in chat
+| [options.rollMode]       | `string`                |  null   | Type of rollMode for the chat card: 'blindroll'|'gmroll'|'selfroll' |
+| [options.rollsAmount]    | `string or number`      |   1     | The rolls amount value  |
+| [options.dc]             | `string or number`      |  null   | The dc value (only for Harvest type rolltable) |
+| [options.skill]          | `string`                |  null   | The skill denomination (only for Harvest type rolltable) |
+| [options.distinct]       | `boolean`               |  false  | if checked the same result is not selected more than once indifferently from the number of 'Amount Roll' |
+| [options.distinctKeepRolling]  | `boolean`         |  false  | if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior |
+| [options.usePercentage]    | `boolean`             |  false   | Use the % mechanism instead of the default formula+range behavior |
 
 **Example**:
 
@@ -189,12 +190,14 @@ Generate a loot
 |--------------------------|-------------------------|---------|--------------------------------------------------------|
 | tableEntity              | `RollTable`             |         | tableEntity rolltable to generate content from         |
 | options                  | `object`                |         | OPTIONAL: Options to pass to the function                        |
-| [options.rollMode]       | `string`                |         | Type of rollMode for the chat card: 'blindroll'|'gmroll'|'selfroll' |
-| [options.rollsAmount]    | `string or number`      |         | The rolls amount value  |
-| [options.dc]             | `string or number`      |         | The dc value (only for Harvest type rolltable) |
-| [options.skill]          | `string`                |         | The skill denomination (only for Harvest type rolltable) |
-| [options.distinct]          | `boolean`                |         | if checked the same result is not selected more than once indifferently from the number of 'Amount Roll' |
-| [options.distinctKeepRolling]          | `boolean`                |         | if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior |
+| [options.displayChat]    | `boolean`               |  true   | Whether to automatically display the results in chat
+| [options.rollMode]       | `string`                |  null   | Type of rollMode for the chat card: 'blindroll'|'gmroll'|'selfroll' |
+| [options.rollsAmount]    | `string or number`      |   1     | The rolls amount value  |
+| [options.dc]             | `string or number`      |  null   | The dc value (only for Harvest type rolltable) |
+| [options.skill]          | `string`                |  null   | The skill denomination (only for Harvest type rolltable) |
+| [options.distinct]       | `boolean`               |  false  | if checked the same result is not selected more than once indifferently from the number of 'Amount Roll' |
+| [options.distinctKeepRolling]  | `boolean`         |  false  | if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior |
+| [options.usePercentage]    | `boolean`             |  false   | Use the % mechanism instead of the default formula+range behavior |
 
 **Example**:
 
@@ -219,12 +222,14 @@ Generate a chat loot
 |--------------------------|-------------------------|---------|--------------------------------------------------------|
 | tableEntity              | `RollTable`             |         | tableEntity rolltable to generate content from         |
 | options                  | `object`                |         | OPTIONAL: Options to pass to the function                        |
-| [options.rollMode]       | `string`                |         | Type of rollMode for the chat card: 'blindroll'|'gmroll'|'selfroll' |
-| [options.rollsAmount]    | `string or number`      |         | The rolls amount value  |
-| [options.dc]             | `string or number`      |         | The dc value (only for Harvest type rolltable) |
-| [options.skill]          | `string`                |         | The skill denomination (only for Harvest type rolltable) |
-| [options.distinct]          | `boolean`                |         | if checked the same result is not selected more than once indifferently from the number of 'Amount Roll' |
-| [options.distinctKeepRolling]          | `boolean`                |         | if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior |
+| [options.displayChat]    | `boolean`               |  true   | Whether to automatically display the results in chat
+| [options.rollMode]       | `string`                |  null   | Type of rollMode for the chat card: 'blindroll'|'gmroll'|'selfroll' |
+| [options.rollsAmount]    | `string or number`      |   1     | The rolls amount value  |
+| [options.dc]             | `string or number`      |  null   | The dc value (only for Harvest type rolltable) |
+| [options.skill]          | `string`                |  null   | The skill denomination (only for Harvest type rolltable) |
+| [options.distinct]       | `boolean`               |  false  | if checked the same result is not selected more than once indifferently from the number of 'Amount Roll' |
+| [options.distinctKeepRolling]  | `boolean`         |  false  | if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior |
+| [options.usePercentage]    | `boolean`             |  false   | Use the % mechanism instead of the default formula+range behavior |
 
 **Example**:
 
@@ -249,12 +254,14 @@ Add loot to selcted token ( or the one passed as a argument)
 | tableEntity              | `RollTable`             |         | tableEntity rolltable to generate content from         |
 | token                    | `TokenDocument`         |         | OPTIONAL: is either a token or an array of tokens (like `canvas.tokens.controlled`).  |
 | options                  | `object`                |         | OPTIONAL: Options to pass to the function              |
-| [options.rollMode]       | `string`                |         | Type of rollMode for the chat card: 'blindroll'|'gmroll'|'selfroll' |
-| [options.rollsAmount]    | `string or number`      |         | The rolls amount value  |
-| [options.dc]             | `string or number`      |         | The dc value (only for Harvest type rolltable) |
-| [options.skill]          | `string`                |         | The skill denomination (only for Harvest type rolltable) |
-| [options.distinct]          | `boolean`                |         | if checked the same result is not selected more than once indifferently from the number of 'Amount Roll' |
-| [options.distinctKeepRolling]          | `boolean`                |         | if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior |
+| [options.displayChat]    | `boolean`               |  true   | Whether to automatically display the results in chat
+| [options.rollMode]       | `string`                |  null   | Type of rollMode for the chat card: 'blindroll'|'gmroll'|'selfroll' |
+| [options.rollsAmount]    | `string or number`      |   1     | The rolls amount value  |
+| [options.dc]             | `string or number`      |  null   | The dc value (only for Harvest type rolltable) |
+| [options.skill]          | `string`                |  null   | The skill denomination (only for Harvest type rolltable) |
+| [options.distinct]       | `boolean`               |  false  | if checked the same result is not selected more than once indifferently from the number of 'Amount Roll' |
+| [options.distinctKeepRolling]  | `boolean`         |  false  | if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior |
+| [options.usePercentage]    | `boolean`             |  false   | Use the % mechanism instead of the default formula+range behavior |
 
 **Example**:
 

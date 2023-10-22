@@ -128,6 +128,14 @@ export function isRealNumber(inNumber) {
   return !isNaN(inNumber) && typeof inNumber === "number" && isFinite(inNumber);
 }
 
+export function isRealBoolean(inBoolean) {
+  return String(inBoolean) === "true" || String(inBoolean) === "false";
+}
+
+export function isRealBooleanOrElseNull(inBoolean) {
+  return isRealBoolean(inBoolean) ? inBoolean : null;
+}
+
 export function getSubstring(string, char1, char2) {
   return string.slice(string.indexOf(char1) + 1, string.lastIndexOf(char2));
 }

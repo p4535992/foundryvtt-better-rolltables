@@ -49,12 +49,14 @@ const API = {
    *
    * @param {RollTable} tableEntity
    * @param {Object} options
-   * @param {('blindroll'|'gmroll'|'selfroll')} [options.rollMode] The roll mode
-   * @param {string|number} [options.rollsAmount]  The rolls amount value
-   * @param {string|number} [options.dc]  The dc value
-   * @param {string} [options.skill]  The skill denomination
-   * @param {boolean} [options.distinct] if checked the same result is not selected more than once indifferently from the number of 'Amount Roll'
-   * @param {boolean} [options.distinctKeepRolling] if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior
+   * @param {boolean} [options.displayChat=true] Whether to automatically display the results in chat
+   * @param {('blindroll'|'gmroll'|'selfroll')} [options.rollMode=null] The chat roll mode to use when displaying the result
+   * @param {string|number} [options.rollsAmount=1]  The rolls amount value
+   * @param {string|number} [options.dc=null]  The dc value
+   * @param {string} [options.skill=null]  The skill denomination
+   * @param {boolean} [options.distinct=false] if checked the same result is not selected more than once indifferently from the number of 'Amount Roll'
+   * @param {boolean} [options.distinctKeepRolling=false] if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior
+   * @param {boolean} [options.usePercentage=false] Use the % mechanism instead of the default formula+range behavior
    * @returns {Promise<TableResult[]>}
    */
   async betterTableRoll(tableEntity, options = {}) {
@@ -158,12 +160,14 @@ const API = {
    * @param {RollTable} tableEntity
    * @param {TokenDocument} token
    * @param {Object} options
-   * @param {('blindroll'|'gmroll'|'selfroll')} [options.rollMode] The roll mode
-   * @param {string|number} [options.rollsAmount]  The rolls amount value
-   * @param {string|number} [options.dc]  The dc value
-   * @param {string} [options.skill]  The skill denomination
-   * @param {boolean} [options.distinct] if checked the same result is not selected more than once indifferently from the number of 'Amount Roll'
-   * @param {boolean} [options.distinctKeepRolling] if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior
+   * @param {boolean} [options.displayChat=true] Whether to automatically display the results in chat
+   * @param {('blindroll'|'gmroll'|'selfroll')} [options.rollMode=null] The chat roll mode to use when displaying the result
+   * @param {string|number} [options.rollsAmount=1]  The rolls amount value
+   * @param {string|number} [options.dc=null]  The dc value
+   * @param {string} [options.skill=null]  The skill denomination
+   * @param {boolean} [options.distinct=false] if checked the same result is not selected more than once indifferently from the number of 'Amount Roll'
+   * @param {boolean} [options.distinctKeepRolling=false] if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior
+   * @param {boolean} [options.usePercentage=false] Use the % mechanism instead of the default formula+range behavior
    * @returns {Promise<void>}
    */
   async addLootToSelectedToken(tableEntity, token = null, options = {}) {
@@ -178,12 +182,14 @@ const API = {
    *
    * @param {RollTable} tableEntity
    * @param {Object} options
-   * @param {('blindroll'|'gmroll'|'selfroll')} [options.rollMode] The roll mode
-   * @param {string|number} [options.rollsAmount]  The rolls amount value
-   * @param {string|number} [options.dc]  The dc value
-   * @param {string} [options.skill]  The skill denomination
-   * @param {boolean} [options.distinct] if checked the same result is not selected more than once indifferently from the number of 'Amount Roll'
-   * @param {boolean} [options.distinctKeepRolling] if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior
+   * @param {boolean} [options.displayChat=true] Whether to automatically display the results in chat
+   * @param {('blindroll'|'gmroll'|'selfroll')} [options.rollMode=null] The chat roll mode to use when displaying the result
+   * @param {string|number} [options.rollsAmount=1]  The rolls amount value
+   * @param {string|number} [options.dc=null]  The dc value
+   * @param {string} [options.skill=null]  The skill denomination
+   * @param {boolean} [options.distinct=false] if checked the same result is not selected more than once indifferently from the number of 'Amount Roll'
+   * @param {boolean} [options.distinctKeepRolling=false] if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior
+   * @param {boolean} [options.usePercentage=false] Use the % mechanism instead of the default formula+range behavior
    * @returns {Promise<void>}
    */
   async generateLoot(tableEntity, options = {}) {
@@ -198,12 +204,14 @@ const API = {
    *
    * @param {RollTable} tableEntity
    * @param {Object} options
-   * @param {('blindroll'|'gmroll'|'selfroll')} [options.rollMode] The roll mode
-   * @param {string|number} [options.rollsAmount]  The rolls amount value
-   * @param {string|number} [options.dc]  The dc valuee
-   * @param {string} [options.skill]  The skill denomination
-   * @param {boolean} [options.distinct] if checked the same result is not selected more than once indifferently from the number of 'Amount Roll'
-   * @param {boolean} [options.distinctKeepRolling] if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior
+   * @param {boolean} [options.displayChat=true] Whether to automatically display the results in chat
+   * @param {('blindroll'|'gmroll'|'selfroll')} [options.rollMode=null] The chat roll mode to use when displaying the result
+   * @param {string|number} [options.rollsAmount=1]  The rolls amount value
+   * @param {string|number} [options.dc=null]  The dc value
+   * @param {string} [options.skill=null]  The skill denomination
+   * @param {boolean} [options.distinct=false] if checked the same result is not selected more than once indifferently from the number of 'Amount Roll'
+   * @param {boolean} [options.distinctKeepRolling=false] if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior
+   * @param {boolean} [options.usePercentage=false] Use the % mechanism instead of the default formula+range behavior
    * @returns {Promise<void>}
    */
   async generateLootOnSelectedToken(tableEntity, options = {}) {
@@ -218,12 +226,14 @@ const API = {
    *
    * @param {RollTable} tableEntity
    * @param {Object} options
-   * @param {('blindroll'|'gmroll'|'selfroll')} [options.rollMode] The roll mode
-   * @param {string|number} [options.rollsAmount]  The rolls amount value
-   * @param {string|number} [options.dc]  The dc value
-   * @param {string} [options.skill]  The skill denomination
-   * @param {boolean} [options.distinct] if checked the same result is not selected more than once indifferently from the number of 'Amount Roll'
-   * @param {boolean} [options.distinctKeepRolling] if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior
+   * @param {boolean} [options.displayChat=true] Whether to automatically display the results in chat
+   * @param {('blindroll'|'gmroll'|'selfroll')} [options.rollMode=null] The chat roll mode to use when displaying the result
+   * @param {string|number} [options.rollsAmount=1]  The rolls amount value
+   * @param {string|number} [options.dc=null]  The dc value
+   * @param {string} [options.skill=null]  The skill denomination
+   * @param {boolean} [options.distinct=false] if checked the same result is not selected more than once indifferently from the number of 'Amount Roll'
+   * @param {boolean} [options.distinctKeepRolling=false] if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior
+   * @param {boolean} [options.usePercentage=false] Use the % mechanism instead of the default formula+range behavior
    * @returns {Promise<void>}
    */
   async generateChatLoot(tableEntity, options = {}) {
@@ -242,12 +252,14 @@ const API = {
    *
    * @param {RollTable} tableEntity
    * @param {Object} options
-   * @param {('blindroll'|'gmroll'|'selfroll')} [options.rollMode] The roll mode
-   * @param {string|number} [options.rollsAmount]  The rolls amount value
-   * @param {string|number} [options.dc]  The dc value
-   * @param {string} [options.skill]  The skill denomination
-   * @param {boolean} [options.distinct] if checked the same result is not selected more than once indifferently from the number of 'Amount Roll'
-   * @param {boolean} [options.distinctKeepRolling] if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior
+   * @param {boolean} [options.displayChat=true] Whether to automatically display the results in chat
+   * @param {('blindroll'|'gmroll'|'selfroll')} [options.rollMode=null] The chat roll mode to use when displaying the result
+   * @param {string|number} [options.rollsAmount=1]  The rolls amount value
+   * @param {string|number} [options.dc=null]  The dc value
+   * @param {string} [options.skill=null]  The skill denomination
+   * @param {boolean} [options.distinct=false] if checked the same result is not selected more than once indifferently from the number of 'Amount Roll'
+   * @param {boolean} [options.distinctKeepRolling=false] if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior
+   * @param {boolean} [options.usePercentage=false] Use the % mechanism instead of the default formula+range behavior
    * @returns {Promise<void>}
    */
   async generateHarvest(tableEntity, options = {}) {
@@ -262,12 +274,14 @@ const API = {
    *
    * @param {RollTable} tableEntity
    * @param {Object} options
-   * @param {('blindroll'|'gmroll'|'selfroll')} [options.rollMode] The roll mode
-   * @param {string|number} [options.rollsAmount]  The rolls amount value
-   * @param {string|number} [options.dc]  The dc value
-   * @param {string} [options.skill]  The skill denomination
-   * @param {boolean} [options.distinct] if checked the same result is not selected more than once indifferently from the number of 'Amount Roll'
-   * @param {boolean} [options.distinctKeepRolling] if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior
+   * @param {boolean} [options.displayChat=true] Whether to automatically display the results in chat
+   * @param {('blindroll'|'gmroll'|'selfroll')} [options.rollMode=null] The chat roll mode to use when displaying the result
+   * @param {string|number} [options.rollsAmount=1]  The rolls amount value
+   * @param {string|number} [options.dc=null]  The dc value
+   * @param {string} [options.skill=null]  The skill denomination
+   * @param {boolean} [options.distinct=false] if checked the same result is not selected more than once indifferently from the number of 'Amount Roll'
+   * @param {boolean} [options.distinctKeepRolling=false] if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior
+   * @param {boolean} [options.usePercentage=false] Use the % mechanism instead of the default formula+range behavior
    * @returns {Promise<void>}
    */
   async generateHarvestOnSelectedToken(tableEntity, options = {}) {
@@ -282,12 +296,14 @@ const API = {
    *
    * @param {RollTable} tableEntity
    * @param {Object} options
-   * @param {('blindroll'|'gmroll'|'selfroll')} [options.rollMode] The roll mode
-   * @param {string|number} [options.rollsAmount]  The rolls amount value
-   * @param {string|number} [options.dc]  The dc value
-   * @param {string} [options.skill]  The skill denomination
-   * @param {boolean} [options.distinct] if checked the same result is not selected more than once indifferently from the number of 'Amount Roll'
-   * @param {boolean} [options.distinctKeepRolling] if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior
+   * @param {boolean} [options.displayChat=true] Whether to automatically display the results in chat
+   * @param {('blindroll'|'gmroll'|'selfroll')} [options.rollMode=null] The chat roll mode to use when displaying the result
+   * @param {string|number} [options.rollsAmount=1]  The rolls amount value
+   * @param {string|number} [options.dc=null]  The dc value
+   * @param {string} [options.skill=null]  The skill denomination
+   * @param {boolean} [options.distinct=false] if checked the same result is not selected more than once indifferently from the number of 'Amount Roll'
+   * @param {boolean} [options.distinctKeepRolling=false] if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior
+   * @param {boolean} [options.usePercentage=false] Use the % mechanism instead of the default formula+range behavior
    * @returns {Promise<void>}
    */
   async generateChatHarvest(tableEntity, options = {}) {
@@ -450,12 +466,14 @@ const API = {
    *
    * @param {RollTable} tableEntity
    * @param {Object} options
-   * @param {('blindroll'|'gmroll'|'selfroll')} [options.rollMode] The roll mode
-   * @param {string|number} [options.rollsAmount]  The rolls amount value
-   * @param {string|number} [options.dc]  The dc value
-   * @param {string} [options.skill]  The skill denomination
-   * @param {boolean} [options.distinct] if checked the same result is not selected more than once indifferently from the number of 'Amount Roll'
-   * @param {boolean} [options.distinctKeepRolling] if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior
+   * @param {boolean} [options.displayChat=true] Whether to automatically display the results in chat
+   * @param {('blindroll'|'gmroll'|'selfroll')} [options.rollMode=null] The chat roll mode to use when displaying the result
+   * @param {string|number} [options.rollsAmount=1]  The rolls amount value
+   * @param {string|number} [options.dc=null]  The dc value
+   * @param {string} [options.skill=null]  The skill denomination
+   * @param {boolean} [options.distinct=false] if checked the same result is not selected more than once indifferently from the number of 'Amount Roll'
+   * @param {boolean} [options.distinctKeepRolling=false] if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior
+   * @param {boolean} [options.usePercentage=false] Use the % mechanism instead of the default formula+range behavior
    * @returns {Promise<TableResult[]>}
    */
   async invokeBetterTableRollArr(...inAttributes) {

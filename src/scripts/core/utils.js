@@ -1,6 +1,7 @@
+import { NULL } from "sass";
 import { BRTBetterHelpers } from "../better/brt-helper";
 import { CONSTANTS } from "../constants/constants";
-import { isRealNumber } from "../lib";
+import { isRealBoolean, isRealBooleanOrElseNull, isRealNumber } from "../lib";
 import { BRTCONFIG } from "./config";
 
 export class BRTUtils {
@@ -129,6 +130,7 @@ export class BRTUtils {
    *
    * @param {RollTable} tableEntity
    * @param {Object} options
+   * @param {boolean} [options.displayChat=true] Whether to automatically display the results in chat
    * @param {number} options.rollsAmount
    * @param {number} options.dc
    * @param {string} options.skill
@@ -181,8 +183,11 @@ export class BRTUtils {
 
     newOptions.isTokenActor = options?.isTokenActor;
 
-    let stackSame = options?.stackSame ? options.stackSame : true;
-    newOptions.stackSame = String(stackSame) === "true" ? true : false;
+    newOptions.stackSame = isRealBoolean(options?.stackSame)
+      ? String(options?.stackSame) === "true"
+        ? true
+        : false
+      : true;
 
     let customRole = options?.customRole ? options.customRole : undefined;
     if (!customRole) {
@@ -193,26 +198,56 @@ export class BRTUtils {
     newOptions.itemLimit = options?.itemLimit && isRealNumber(options.itemLimit) ? Number(options.itemLimit) : 0;
 
     let rollMode = options?.rollMode ?? null;
-    if (String(getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${BRTCONFIG.HIDDEN_TABLE}`)) === "true") {
+    if (String(getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HIDDEN_TABLE}`)) === "true") {
       rollMode = "gmroll";
     }
     newOptions.rollMode = rollMode;
 
-    let distinct =
-      options?.distinct ||
-      getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_DISTINCT_RESULT}`) ||
-      undefined;
-    newOptions.distinct = String(distinct) === "true" ? true : false;
+    let distinct = isRealBooleanOrElseNull(options?.distinct);
+    if (distinct === null) {
+      distinct = isRealBooleanOrElseNull(
+        getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_DISTINCT_RESULT}`)
+      );
+    }
+    if (distinct === null) {
+      distinct = undefined;
+    }
 
-    let distinctKeepRolling =
-      options?.distinctKeepRolling ||
-      getProperty(
-        tableEntity,
-        `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_DISTINCT_RESULT_KEEP_ROLLING}`
-      ) ||
-      undefined;
+    newOptions.distinct = isRealBoolean(distinct) ? (String(distinct) === "true" ? true : false) : false;
 
-    newOptions.distinctKeepRolling = String(distinctKeepRolling) === "true" ? true : false;
+    let distinctKeepRolling = isRealBooleanOrElseNull(options?.distinctKeepRolling);
+    if (distinctKeepRolling === null) {
+      distinctKeepRolling = isRealBooleanOrElseNull(
+        getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_DISTINCT_RESULT_KEEP_ROLLING}`)
+      );
+    }
+    if (distinctKeepRolling === null) {
+      distinctKeepRolling = undefined;
+    }
+
+    newOptions.distinctKeepRolling = isRealBoolean(distinctKeepRolling)
+      ? String(distinctKeepRolling) === "true"
+        ? true
+        : false
+      : false;
+
+    newOptions.displayChat = isRealBoolean(options?.displayChat)
+      ? String(options?.displayChat) === "true"
+        ? true
+        : false
+      : true;
+
+    let usePercentage = isRealBooleanOrElseNull(options?.usePercentage);
+    if (usePercentage === null) {
+      usePercentage = isRealBooleanOrElseNull(
+        getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_DISTINCT_RESULT_KEEP_ROLLING}`)
+      );
+    }
+    if (usePercentage === null) {
+      usePercentage = undefined;
+    }
+
+    newOptions.usePercentage = isRealBoolean(usePercentage) ? (String(usePercentage) === "true" ? true : false) : false;
 
     return newOptions;
   }
