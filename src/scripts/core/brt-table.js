@@ -1,5 +1,5 @@
 import { CONSTANTS } from "../constants/constants.js";
-import { error, log, warn } from "../lib.js";
+import { error, isRealNumber, log, warn } from "../lib.js";
 import { BRTBetterHelpers } from "../better/brt-helper.js";
 import { BRTCONFIG } from "./config.js";
 import { BRTUtils } from "./utils.js";
@@ -186,7 +186,7 @@ export class BetterRollTable {
         messageOptions: { rollMode },
       });
     }
-    console.log(draw.results);
+    log(`Draw results:`, false, draw.results);
     return draw;
   }
 
@@ -360,50 +360,115 @@ export class BetterRollTable {
       return { roll, results };
     }
 
-    // Ensure that results are available within the minimum/maximum range
-    const minRoll = (await roll.reroll({ minimize: true, async: true })).total;
-    const maxRoll = (await roll.reroll({ maximize: true, async: true })).total;
-    const availableRange = available.reduce(
-      (range, result) => {
-        const r = result.range;
-        if (!range[0] || r[0] < range[0]) range[0] = r[0];
-        if (!range[1] || r[1] > range[1]) range[1] = r[1];
-        return range;
-      },
-      [null, null]
-    );
-    if (availableRange[0] > maxRoll || availableRange[1] < minRoll) {
-      ui.notifications.warn("No results can possibly be drawn from this table and formula.");
-      return { roll, results };
-    }
+    if (this.options.usePercentage) {
+      roll = Roll.create(`1d1000`);
+      // Ensure that results are available within the minimum/maximum range
+      const minRoll = 10;
+      const maxRoll = 1000;
+      const availableRange = available.reduce(
+        (range, result) => {
+          const percentageValueLFlag =
+            getProperty(
+              result,
+              `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_PERCENTAGE_LOW_VALUE}`
+            ) ?? null;
+          let percentageValueL = isRealNumber(percentageValueLFlag) ? percentageValueLFlag : 0;
+          percentageValueL = percentageValueL * 10;
 
-    // Continue rolling until one or more results are recovered
-    let iter = 0;
-    while (!results.length) {
-      if (iter >= 10000) {
-        // START PATCH DISTINCT VALUES
-        const isTableDistinct = getProperty(
-          this.table,
-          `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_DISTINCT_RESULT}`
-        );
-        const isTableDistinctKeepRolling = getProperty(
-          this.table,
-          `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_DISTINCT_RESULT_KEEP_ROLLING}`
-        );
-        if (isTableDistinct && !isTableDistinctKeepRolling) {
-          // Failed to draw an available entry from Table ${this.table.name}, maximum iteration reached, but is ok because is under the 'distinct' behavior
-        } else {
-          error(`Failed to draw an available entry from Table ${this.table.name}, maximum iteration reached`, true);
-        }
-        // END PATCH
-        // ui.notifications.error(
-        //   `Failed to draw an available entry from Table ${this.table.name}, maximum iteration reached`
-        // );
-        break;
+          const percentageValueHFlag =
+            getProperty(
+              result,
+              `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_PERCENTAGE_HIGH_VALUE}`
+            ) ?? null;
+          let percentageValueH = isRealNumber(percentageValueHFlag) ? percentageValueHFlag : 100;
+          percentageValueH = percentageValueH * 10;
+
+          const r = [percentageValueL, percentageValueHFlag];
+          if (!range[0] || r[0] < range[0]) range[0] = r[0];
+          if (!range[1] || r[1] > range[1]) range[1] = r[1];
+          return range;
+        },
+        [null, null]
+      );
+      if (availableRange[0] > maxRoll || availableRange[1] < minRoll) {
+        warn("No results can possibly be drawn from this table and formula.", true);
+        return { roll, results };
       }
-      roll = await roll.reroll({ async: true });
-      results = this.getResultsForRoll(roll.total);
-      iter++;
+
+      // Continue rolling until one or more results are recovered
+      let iter = 0;
+      while (!results.length) {
+        if (iter >= 10000) {
+          // START PATCH DISTINCT VALUES
+          const isTableDistinct = getProperty(
+            this.table,
+            `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_DISTINCT_RESULT}`
+          );
+          const isTableDistinctKeepRolling = getProperty(
+            this.table,
+            `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_DISTINCT_RESULT_KEEP_ROLLING}`
+          );
+          if (isTableDistinct && !isTableDistinctKeepRolling) {
+            // Failed to draw an available entry from Table ${this.table.name}, maximum iteration reached, but is ok because is under the 'distinct' behavior
+          } else {
+            error(`Failed to draw an available entry from Table ${this.table.name}, maximum iteration reached`, true);
+          }
+          // END PATCH
+          // ui.notifications.error(
+          //   `Failed to draw an available entry from Table ${this.table.name}, maximum iteration reached`
+          // );
+          break;
+        }
+        roll = await roll.reroll({ async: true });
+        results = this.getResultsForRoll(roll.total);
+        iter++;
+      }
+    } else {
+      // Ensure that results are available within the minimum/maximum range
+      const minRoll = (await roll.reroll({ minimize: true, async: true })).total;
+      const maxRoll = (await roll.reroll({ maximize: true, async: true })).total;
+      const availableRange = available.reduce(
+        (range, result) => {
+          const r = result.range;
+          if (!range[0] || r[0] < range[0]) range[0] = r[0];
+          if (!range[1] || r[1] > range[1]) range[1] = r[1];
+          return range;
+        },
+        [null, null]
+      );
+      if (availableRange[0] > maxRoll || availableRange[1] < minRoll) {
+        warn("No results can possibly be drawn from this table and formula.", true);
+        return { roll, results };
+      }
+
+      // Continue rolling until one or more results are recovered
+      let iter = 0;
+      while (!results.length) {
+        if (iter >= 10000) {
+          // START PATCH DISTINCT VALUES
+          const isTableDistinct = getProperty(
+            this.table,
+            `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_DISTINCT_RESULT}`
+          );
+          const isTableDistinctKeepRolling = getProperty(
+            this.table,
+            `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_DISTINCT_RESULT_KEEP_ROLLING}`
+          );
+          if (isTableDistinct && !isTableDistinctKeepRolling) {
+            // Failed to draw an available entry from Table ${this.table.name}, maximum iteration reached, but is ok because is under the 'distinct' behavior
+          } else {
+            error(`Failed to draw an available entry from Table ${this.table.name}, maximum iteration reached`, true);
+          }
+          // END PATCH
+          // ui.notifications.error(
+          //   `Failed to draw an available entry from Table ${this.table.name}, maximum iteration reached`
+          // );
+          break;
+        }
+        roll = await roll.reroll({ async: true });
+        results = this.getResultsForRoll(roll.total);
+        iter++;
+      }
     }
 
     // Draw results recursively from any inner Roll Tables
@@ -461,7 +526,33 @@ export class BetterRollTable {
     // return this.table.results.filter((r) => !r.drawn && Number.between(value, ...r.range));
     let dc = this.options.dc || undefined;
     let skill = this.options.skill || undefined;
-    let resultsUpdate = this.table.results.filter((r) => !r.drawn && Number.between(value, ...r.range));
+
+    //  let resultsUpdate = this.table.results.filter((r) => !r.drawn && Number.between(value, ...r.range));
+    // START PATCH USE PERCENTAGE
+    let resultsUpdate = [];
+    const isUsePercentage = getProperty(
+      this.table,
+      `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_USE_PERCENTAGE}`
+    );
+    if (isUsePercentage) {
+      resultsUpdate = this.table.results.filter((r) => {
+        const percentageValueLFlag =
+          getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_PERCENTAGE_LOW_VALUE}`) ?? null;
+        let percentageValueL = isRealNumber(percentageValueLFlag) ? percentageValueLFlag : 0;
+        percentageValueL = percentageValueL * 10;
+
+        const percentageValueHFlag =
+          getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_PERCENTAGE_HIGH_VALUE}`) ??
+          null;
+        let percentageValueH = isRealNumber(percentageValueHFlag) ? percentageValueHFlag : 100;
+        percentageValueH = percentageValueH * 10;
+        return !r.drawn && Number.between(value, percentageValueL, percentageValueH, true);
+      });
+    } else {
+      resultsUpdate = this.table.results.filter((r) => {
+        return !r.drawn && Number.between(value, ...r.range);
+      });
+    }
 
     if (this.table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_HARVEST) {
       // Filter by dc
@@ -487,6 +578,7 @@ export class BetterRollTable {
       this.table,
       `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_DISTINCT_RESULT_KEEP_ROLLING}`
     );
+
     const available = this.table.results.filter((r) => !r.drawn);
 
     if (isTableDistinct) {
@@ -591,8 +683,14 @@ export class BetterRollTable {
       : this.options?.customRoll ?? this.options?.rollsAmount;
 
     this.mainRoll = undefined;
-
-    let resultsBrt = await this.rollManyOnTable(amount);
+    // TODO add this setting to the API ???
+    const firstResults = await innerBrtTable.rollManyOnTable(entryAmount, {
+      roll: null,
+      recursive: true,
+      displayChat: this.options.displayChat,
+      _depth: 0,
+    });
+    let resultsBrt = await this.rollManyOnTable(amount, firstResults);
     // Patch add uuid to every each result for better module compatibility
     let resultsTmp = [];
     for (const r of resultsBrt?.results ?? []) {
@@ -637,7 +735,7 @@ export class BetterRollTable {
    * @param {object} [options={}]         Optional arguments which customize the draw
    * @param {Roll} [options.roll]                   An optional pre-configured Roll instance which defines the dice roll to use
    * @param {boolean} [options.recursive=true]      Allow drawing recursively from inner RollTable results
-   * @param {boolean} [options.displayChat=false]    Automatically display the drawn results in chat? Default is true
+   * @param {boolean} [options.displayChat=false]    Automatically display the drawn results in chat? Default is false for brt (is true on standard)
    * @param {number} [options._depth]  The rolls amount value
    *
    * @returns {Promise<RollTableDraw>}  The Roll and results drawn by that Roll
