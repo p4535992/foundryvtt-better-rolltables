@@ -189,6 +189,8 @@
         "ButtonHint": "Rich Edit",
         "ToggleSimple": "Simple Editor"
       },
+      "betterRolltableRefresh": "Refresh",
+      "betterRolltableRefreshTooltip": "Refresh the table results, use this if you see all the results with red background.",
       "betterRolltableRoll": "Roll+",
       "betterRolltableRollTooltip": "Roll the table with BRT",
       "quantityFormula": "Qt.",
@@ -199,7 +201,8 @@
       "skill": "Skill",
       "source": "Source reference",
       "sourcePlaceholder": "some string",
-      "usePercentage": "Min - Max %"
+      "usePercentageMinAndMax": "Min - Max %",
+      "usePercentageOnlyMax": "Percentage (%)"
     }
   }
 }

@@ -104,6 +104,9 @@ export class BetterRollTableStoryConfig extends RollTableConfig {
 
     const html = jq[0];
 
+    // Save the sheet on refresh of the table
+    html.find("button.refresh").click(this._onRefreshTable.bind(this));
+
     // Re-normalize Table Entries
     html.querySelector(".normalize-weights").addEventListener("click", this._onNormalizeWeights.bind(this));
 
@@ -628,6 +631,17 @@ export class BetterRollTableStoryConfig extends RollTableConfig {
     } else {
       event.target.disabled = false;
     }
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Refresh the Table to it's original composition with all options unlocked
+   * @param {Event} event
+   * @private
+   */
+  _onRefreshTable(event, { updateData = null, preventClose = false, preventRender = false }) {
+    return this._onSubmit.bind(event, { updateData, preventClose, preventRender });
   }
 
   /* -------------------------------------------- */
