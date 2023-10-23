@@ -6,8 +6,6 @@
 
 The api is reachable from the variable `game.modules.get('better-rolltables').api` or from the socket libary `socketLib` on the variable `game.modules.get('better-rolltables').socket` if present and active.
 
-# OLD API
-
 ### Roll a table
 
 `game.modules.get("better-rolltables").api.roll(tableEntity)` ⇒ `Promise<{flavor: *, sound: string, user: *, content: *}>`
@@ -56,7 +54,7 @@ Roll a table as a Better table in chat with options
 
 ```js
 const tableEntity  = game.tables.getName("Loot Table");
-game.modules.get('better-rolltables').api.betterTableRoll(tableEntity, options: { rollMode: 'blindroll'});
+game.modules.get('better-rolltables').api.betterTableRoll(tableEntity, { rollMode: 'blindroll'});
 
 
 let tableHarvester = game.tables.get("KyItttMdWxH4hGNf");
