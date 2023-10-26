@@ -13,7 +13,8 @@ import { LootChatCard } from "./loot/loot-chat-card.js";
 import { HarvestChatCard } from "./harvest/harvest-chat-card.js";
 import { StoryChatCard } from "./story/story-chat-card.js";
 import { betterRolltablesSocket } from "./socket.js";
-import { warn } from "./lib.js";
+import { isRealBoolean, warn } from "./lib.js";
+import { BetterRollTable } from "./core/brt-table.js";
 
 /**
  * Create a new API class and export it as default
@@ -37,12 +38,41 @@ const API = {
    * @param {RollTable} tableEntity rolltable to generate content from
    * @returns {Promise<{flavor: *, sound: string, user: *, content: *}>}
    */
+  async rollOld(tableEntity, options = {}) {
+    if (!tableEntity) {
+      warn(`roll | No reference to a rollTable is been passed`, true);
+      return;
+    }
+
+    return await this.betterTables.roll(tableEntity, options);
+  },
+
+  /**
+   *
+   * @param {RollTable} tableEntity rolltable to generate content from
+   * @returns {Promise<{flavor: *, sound: string, user: *, content: *}>}
+   */
   async roll(tableEntity, options = {}) {
     if (!tableEntity) {
       warn(`roll | No reference to a rollTable is been passed`, true);
       return;
     }
-    return await this.betterTables.roll(tableEntity, options);
+
+    const brtTable = new BetterRollTable(tableEntity, options);
+    await brtTable.initialize();
+    const resultBrt = await brtTable.betterRoll();
+
+    const results = resultBrt?.results;
+
+    let rollMode = options?.rollMode || brtTable.rollMode || null;
+    let roll = options?.roll || brtTable.mainRoll || null;
+
+    const br = new BetterResults(results);
+    const betterResults = await br.buildResults(tableEntity);
+
+    const data = {};
+    setProperty(data, `itemsData`, betterResults);
+    return data;
   },
 
   /**
@@ -517,63 +547,6 @@ const API = {
       await brtTable.createChatCard(results, rollMode, roll);
     }
   },
-
-  // async invokeBetterChatCardCreateArr(...inAttributes) {
-  //   if (!Array.isArray(inAttributes)) {
-  //     throw error("invokeBetterChatCardCreateArr | inAttributes must be of type array");
-  //   }
-  //   const [tableReferenceUuid, results, rollMode, roll] = inAttributes;
-  //   const tableEntity = await fromUuid(tableReferenceUuid);
-
-  //   const br = new BetterResults(results);
-  //   const betterResults = await br.buildResults(tableEntity);
-
-  //   const betterChatCard = new BetterChatCard(betterResults, rollMode, roll);
-  //   await betterChatCard.createChatCard(tableEntity);
-  // },
-
-  // async invokeLootChatCardCreateArr(...inAttributes) {
-  //   if (!Array.isArray(inAttributes)) {
-  //     throw error("invokeLootChatCardCreateArr | inAttributes must be of type array");
-  //   }
-  //   const [tableReferenceUuid, results, rollMode, roll] = inAttributes;
-  //   const tableEntity = await fromUuid(tableReferenceUuid);
-
-  //   const br = new BetterResults(results);
-  //   const betterResults = await br.buildResults(tableEntity);
-
-  //   const currencyData = br.getCurrencyData();
-  //   const lootChatCard = new LootChatCard(betterResults, currencyData, rollMode, roll);
-  //   await lootChatCard.createChatCard(tableEntity);
-  // },
-
-  // async invokeHarvestChatCardCreateArr(...inAttributes) {
-  //   if (!Array.isArray(inAttributes)) {
-  //     throw error("invokeHarvestChatCardCreateArr | inAttributes must be of type array");
-  //   }
-  //   const [tableReferenceUuid, results, rollMode, roll] = inAttributes;
-  //   const tableEntity = await fromUuid(tableReferenceUuid);
-
-  //   const br = new BetterResults(results);
-  //   const betterResults = await br.buildResults(tableEntity);
-
-  //   const harvestChatCard = new HarvestChatCard(betterResults, rollMode, roll);
-  //   await harvestChatCard.createChatCard(tableEntity);
-  // },
-
-  // async invokeStoryChatCardCreateArr(...inAttributes) {
-  //   if (!Array.isArray(inAttributes)) {
-  //     throw error("invokeStoryChatCardCreateArr | inAttributes must be of type array");
-  //   }
-  //   const [tableReferenceUuid, results, rollMode, roll] = inAttributes;
-  //   const tableEntity = await fromUuid(tableReferenceUuid);
-
-  //   const br = new BetterResults(results);
-  //   const betterResults = await br.buildResults(tableEntity);
-
-  //   const storyChatCard = new StoryChatCard(betterResults, rollMode, roll);
-  //   await storyChatCard.createChatCard(tableEntity);
-  // },
 };
 
 export default API;

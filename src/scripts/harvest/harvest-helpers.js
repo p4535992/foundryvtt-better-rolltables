@@ -73,6 +73,12 @@ export class BRTHarvestHelpers {
     await RollTableToActorHelpers.addItemsToActorOld(actor, betterResults, stackSame, itemLimit);
 
     if (game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.ALWAYS_SHOW_GENERATED_HARVEST_AS_MESSAGE)) {
+      if (isRealBoolean(options.displayChat)) {
+        if (!options.displayChat) {
+          return;
+        }
+      }
+
       const harvestChatCard = new HarvestChatCard(betterResults, rollMode, roll);
       await harvestChatCard.createChatCard(tableEntity);
     }

@@ -6,9 +6,9 @@
 
 The api is reachable from the variable `game.modules.get('better-rolltables').api` or from the socket libary `socketLib` on the variable `game.modules.get('better-rolltables').socket` if present and active.
 
-### Roll a table
+### Roll a table (OLD METHOD)
 
-`game.modules.get("better-rolltables").api.roll(tableEntity)` ⇒ `Promise<{flavor: *, sound: string, user: *, content: *}>`
+`game.modules.get("better-rolltables").api.rollOld(tableEntity)` ⇒ `Promise<{flavor: *, sound: string, user: *, content: *}>`
 
 Roll a table as a Better table in chat
 
@@ -22,9 +22,47 @@ Roll a table as a Better table in chat
 
 ```js
 const tableEntity  = game.tables.getName("Loot Table");
-game.modules.get('better-rolltables').api.roll(tableEntity)
+game.modules.get('better-rolltables').api.rollOld(tableEntity)
 
 ```
+
+### Roll a table with options (Just for Item Piles Retrocompatibility https://github.com/fantasycalendar/FoundryVTT-ItemPiles/blob/f4aa02d179c8fee8ba74322db6f4989b23949ff8/src/helpers/pile-utilities.js#L1602)
+
+`game.modules.get("better-rolltables").api.roll(tableEntity,options)` ⇒ `Promise<object<{itemsData: TableResult[]}>>`
+
+Roll a table as a Better table with options and get
+
+**Returns**: `Promise<object<{itemsData: TableResult[]}>>` - Details of the chatcard message created
+
+| Param                    | Type                    | Default | Description                                            |
+|--------------------------|-------------------------|---------|--------------------------------------------------------|
+| tableEntity              | `RollTable`             |         | tableEntity rolltable to generate content from         |
+| options                  | `object`                |         | OPTIONAL: Options to pass to the function                        |
+| [options.displayChat]    | `boolean`               |  true   | Whether to automatically display the results in chat
+| [options.rollMode]       | `string`                |  null   | Type of rollMode for the chat card: 'blindroll'|'gmroll'|'selfroll' |
+| [options.rollsAmount]    | `string or number`      |   1     | The rolls amount value  |
+| [options.dc]             | `string or number`      |  null   | The dc value (only for Harvest type rolltable) |
+| [options.skill]          | `string`                |  null   | The skill denomination (only for Harvest type rolltable) |
+| [options.distinct]       | `boolean`               |  false  | if checked the same result is not selected more than once indifferently from the number of 'Amount Roll' |
+| [options.distinctKeepRolling]  | `boolean`         |  false  | if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior |
+| [options.usePercentage]    | `boolean`             |  false   | Use the % mechanism instead of the default formula+range behavior |
+
+**Example**:
+
+```js
+const tableEntity  = game.tables.getName("Loot Table");
+game.modules.get('better-rolltables').api.roll(tableEntity, { rollMode: 'blindroll'});
+
+
+let tableHarvester = game.tables.get("KyItttMdWxH4hGNf");
+game.modules.get("better-rolltables").api.roll(tableHarvester, {
+   rollMode: "gmroll",
+   dc: 10,
+   skill: "med"
+});
+```
+
+---
 
 ---
 

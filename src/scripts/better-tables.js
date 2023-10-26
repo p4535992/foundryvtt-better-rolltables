@@ -4,7 +4,7 @@ import { BRTUtils } from "./core/utils.js";
 import { BRTCONFIG } from "./core/config.js";
 import API from "./API.js";
 import { CONSTANTS } from "./constants/constants.js";
-import { debug, i18n, info, isEmptyObject, warn } from "./lib.js";
+import { debug, i18n, info, isEmptyObject, isRealBoolean, isRealBooleanOrElseNull, warn } from "./lib.js";
 import SETTINGS from "./constants/settings.js";
 import { HarvestChatCard } from "./harvest/harvest-chat-card.js";
 import { StoryChatCard } from "./story/story-chat-card.js";
@@ -85,6 +85,12 @@ export class BetterTables {
     let rollMode = brtTable.rollMode;
     let roll = brtTable.mainRoll;
 
+    if (isRealBoolean(options.displayChat)) {
+      if (!options.displayChat) {
+        return;
+      }
+    }
+
     if (game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.USE_CONDENSED_BETTERROLL)) {
       const br = new BetterResults(results);
       const betterResults = await br.buildResults(tableEntity);
@@ -121,9 +127,17 @@ export class BetterTables {
    * @param {RollTable} tableEntity rolltable to generate content from
    * @returns {Promise<{flavor: *, sound: string, user: *, content: *}>}
    */
-  async roll(tableEntity, options = {}) {
+  async rollOld(tableEntity, options = {}) {
     const data = await BetterTables.prepareCardData(tableEntity, options);
     return getProperty(data, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.LOOT}`); //data.flags?.betterTables?.loot;
+  }
+
+  /**
+   * @param {RollTable} tableEntity rolltable to generate content from
+   * @returns {Promise<TableResult[]>}
+   */
+  async roll(tableEntity, options = {}) {
+    return await API.roll(tableEntity, options);
   }
 
   /**
@@ -295,7 +309,7 @@ export class BetterTables {
   /**
    * Create card content from rolltable
    * @param {RollTable} tableEntity rolltable to generate content from
-   * @returns {Promise<{flavor: *, sound: string, user: *, content: *}>}
+   * @returns {TableResult[]}
    */
   static async prepareCardData(tableEntity, options = {}) {
     const brtTable = new BetterRollTable(tableEntity, options);
@@ -310,24 +324,32 @@ export class BetterTables {
     const br = new BetterResults(results);
     const betterResults = await br.buildResults(tableEntity);
 
+    if (isRealBoolean(options.displayChat)) {
+      if (!options.displayChat) {
+        return betterResults;
+      }
+    }
+
     if (tableEntity.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_BETTER) {
       const betterChatCard = new BetterChatCard(betterResults, rollMode, roll);
-      return betterChatCard.prepareCharCart(tableEntity);
+      await betterChatCard.prepareCharCart(tableEntity);
     } else if (tableEntity.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_LOOT) {
       const currencyData = br.getCurrencyData();
       const lootChatCard = new LootChatCard(betterResults, currencyData, rollMode, roll);
-      return lootChatCard.prepareCharCart(tableEntity);
+      await lootChatCard.prepareCharCart(tableEntity);
     } else if (
       tableEntity.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_STORY
     ) {
       const storyChatCard = new StoryChatCard(betterResults, rollMode, roll);
-      return storyChatCard.prepareCharCart(tableEntity);
+      await storyChatCard.prepareCharCart(tableEntity);
     } else if (
       tableEntity.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_HARVEST
     ) {
       const harvestChatCard = new HarvestChatCard(betterResults, rollMode, roll);
-      return harvestChatCard.prepareCharCart(tableEntity);
+      await harvestChatCard.prepareCharCart(tableEntity);
     }
+
+    return betterResults;
   }
 
   static async _toggleCurrenciesShareSection(message, html) {

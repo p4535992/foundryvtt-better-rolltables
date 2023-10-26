@@ -78,6 +78,12 @@ export class BRTLootHelpers {
     await RollTableToActorHelpers.addItemsToActorOld(actor, betterResults, stackSame, itemLimit);
 
     if (game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.ALWAYS_SHOW_GENERATED_LOOT_AS_MESSAGE)) {
+      if (isRealBoolean(options.displayChat)) {
+        if (!options.displayChat) {
+          return;
+        }
+      }
+
       const lootChatCard = new LootChatCard(betterResults, currencyData, rollMode, roll);
       await lootChatCard.createChatCard(tableEntity);
     }

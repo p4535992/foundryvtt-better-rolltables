@@ -46,7 +46,7 @@ export class BetterResults {
         let textString = t;
         const commands = [];
         let table;
-        const betterResult = {};
+        const betterResult = mergeObject({}, result.toObject(false));
         let matches;
 
         while ((matches = regex.exec(t)) !== null) {
@@ -126,7 +126,7 @@ export class BetterResults {
         }
       }
     } else {
-      const betterResult = {};
+      const betterResult = mergeObject({}, result.toObject(false));
       betterResult.img = result.thumbnail || result.img || CONFIG.RollTable.resultIcon;
       betterResult.collection = result.documentCollection;
       betterResult.text = result.text;

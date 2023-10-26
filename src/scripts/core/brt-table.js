@@ -104,6 +104,7 @@ export class BetterRollTable {
       r.icon = result.icon ?? result.img;
       return r;
     });
+
     if (this.table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_BETTER) {
       const betterChatCard = new BetterChatCard(betterResults, this.rollMode, roll);
       await betterChatCard.createChatCard(this.table);

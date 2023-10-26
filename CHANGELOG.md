@@ -1,17 +1,14 @@
-### TODO 2.0.23
-
-- TODO add socket integration
-
-### 2.0.24
+### 2.0.24 [BREAKING CHANGES]
 
 - Some bug fix on the updateOptions function
 - NEW Feature: Add the options displayChat
 - NEW Feature: https://github.com/p4535992/foundryvtt-better-rolltables/issues/8
 - Convert the input for Quantity and DC to number on the sheet
+- Downgradeold method for roll , the one used from itemPiles here https://github.com/fantasycalendar/FoundryVTT-ItemPiles/blob/f4aa02d179c8fee8ba74322db6f4989b23949ff8/src/helpers/pile-utilities.js#L1602
 
 ### 2.0.23
 
-- Try to fix again: https://github.com/p4535992/foundryvtt-better-rolltables/issues/3
+- Try to fix again: https://github.com/p4535992/foundryvtt-better-rolltables/issues/3 with socket trick
 
 ### 2.0.22
 
