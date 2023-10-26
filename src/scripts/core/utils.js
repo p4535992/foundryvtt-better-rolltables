@@ -170,8 +170,18 @@ export class BRTUtils {
     if (dc) {
       if (isRealNumber(dc)) {
         // DO NOTHING
+      } else if (String(dc) === "0") {
+        dc = 0;
       } else {
-        dc = await BRTBetterHelpers.tryRoll(dc);
+        let dcI = null;
+        try {
+          dcI = Number(dc);
+        } catch (e) {}
+        if (dcI && isRealNumber(dcI)) {
+          dc = dcI;
+        } else {
+          dc = await BRTBetterHelpers.tryRoll(dc);
+        }
       }
     }
     newOptions.dc = dc;
@@ -181,7 +191,11 @@ export class BRTUtils {
       getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_SKILL_VALUE_KEY}`) ||
       undefined;
 
-    newOptions.isTokenActor = options?.isTokenActor;
+    newOptions.isTokenActor = isRealBoolean(options?.isTokenActor)
+      ? String(options?.isTokenActor) === "true"
+        ? true
+        : false
+      : false;
 
     newOptions.stackSame = isRealBoolean(options?.stackSame)
       ? String(options?.stackSame) === "true"
@@ -240,7 +254,7 @@ export class BRTUtils {
     let usePercentage = isRealBooleanOrElseNull(options?.usePercentage);
     if (usePercentage === null) {
       usePercentage = isRealBooleanOrElseNull(
-        getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_DISTINCT_RESULT_KEEP_ROLLING}`)
+        getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_USE_PERCENTAGE}`)
       );
     }
     if (usePercentage === null) {

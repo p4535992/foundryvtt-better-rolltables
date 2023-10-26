@@ -2,6 +2,13 @@
 
 - TODO add socket integration
 
+### 2.0.24
+
+- Some bug fix on the updateOptions function
+- NEW Feature: Add the options displayChat
+- NEW Feature: https://github.com/p4535992/foundryvtt-better-rolltables/issues/8
+- Convert the input for Quantity and DC to number on the sheet
+
 ### 2.0.23
 
 - Try to fix again: https://github.com/p4535992/foundryvtt-better-rolltables/issues/3

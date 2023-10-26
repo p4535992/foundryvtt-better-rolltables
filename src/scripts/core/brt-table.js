@@ -372,18 +372,18 @@ export class BetterRollTable {
               result,
               `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_PERCENTAGE_LOW_VALUE}`
             ) ?? null;
-          let percentageValueL = isRealNumber(percentageValueLFlag) ? percentageValueLFlag : 0;
-          percentageValueL = percentageValueL * 10;
+          let percentageValueLTmp = isRealNumber(percentageValueLFlag) ? percentageValueLFlag : 0;
+          percentageValueLTmp = percentageValueLTmp * 10;
 
           const percentageValueHFlag =
             getProperty(
               result,
               `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_PERCENTAGE_HIGH_VALUE}`
             ) ?? null;
-          let percentageValueH = isRealNumber(percentageValueHFlag) ? percentageValueHFlag : 100;
-          percentageValueH = percentageValueH * 10;
+          let percentageValueHTmp = isRealNumber(percentageValueHFlag) ? percentageValueHFlag : 100;
+          percentageValueHTmp = percentageValueHTmp * 10;
 
-          const r = [percentageValueL, percentageValueHFlag];
+          const r = [percentageValueLTmp, percentageValueHTmp];
           if (!range[0] || r[0] < range[0]) range[0] = r[0];
           if (!range[1] || r[1] > range[1]) range[1] = r[1];
           return range;
@@ -420,7 +420,10 @@ export class BetterRollTable {
           break;
         }
         roll = await roll.reroll({ async: true });
-        results = this.getResultsForRoll(roll.total);
+        const resultsTmp = this.getResultsForRoll(roll.total);
+        if (resultsTmp?.length > 0) {
+          results = [resultsTmp[0]];
+        }
         iter++;
       }
     } else {
@@ -530,11 +533,7 @@ export class BetterRollTable {
     //  let resultsUpdate = this.table.results.filter((r) => !r.drawn && Number.between(value, ...r.range));
     // START PATCH USE PERCENTAGE
     let resultsUpdate = [];
-    const isUsePercentage = getProperty(
-      this.table,
-      `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_USE_PERCENTAGE}`
-    );
-    if (isUsePercentage) {
+    if (this.options.usePercentage) {
       resultsUpdate = this.table.results.filter((r) => {
         const percentageValueLFlag =
           getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_PERCENTAGE_LOW_VALUE}`) ?? null;
@@ -684,12 +683,12 @@ export class BetterRollTable {
 
     this.mainRoll = undefined;
     // TODO add this setting to the API ???
-    const firstResults = await innerBrtTable.rollManyOnTable(entryAmount, {
+    const firstResults = {
       roll: null,
       recursive: true,
       displayChat: this.options.displayChat,
       _depth: 0,
-    });
+    };
     let resultsBrt = await this.rollManyOnTable(amount, firstResults);
     // Patch add uuid to every each result for better module compatibility
     let resultsTmp = [];
@@ -731,7 +730,6 @@ export class BetterRollTable {
   /**
    * Draw multiple results from a RollTable, constructing a final synthetic Roll as a dice pool of inner rolls.
    * @param {amount} amount               The number of results to draw
-   * @param {RollTable} table             The rollTable object
    * @param {object} [options={}]         Optional arguments which customize the draw
    * @param {Roll} [options.roll]                   An optional pre-configured Roll instance which defines the dice roll to use
    * @param {boolean} [options.recursive=true]      Allow drawing recursively from inner RollTable results
