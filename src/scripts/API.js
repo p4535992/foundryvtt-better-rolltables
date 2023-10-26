@@ -34,7 +34,7 @@ const API = {
   },
 
   /**
-   *
+   * @deprecated remains for retro compatibility for anyone used this ?
    * @param {RollTable} tableEntity rolltable to generate content from
    * @returns {Promise<{flavor: *, sound: string, user: *, content: *}>}
    */
@@ -48,7 +48,7 @@ const API = {
   },
 
   /**
-   *
+   * @deprecated remains for retro compatibility with Item Piles
    * @param {RollTable} tableEntity rolltable to generate content from
    * @returns {Promise<{flavor: *, sound: string, user: *, content: *}>}
    */

@@ -405,34 +405,13 @@ export class BetterRollTable {
         return { roll, results };
       }
 
-      // Continue rolling until one or more results are recovered
-      // let iter = 0;
-      // while (!results.length) {
-      //   if (iter >= 10000) {
-      //     // START PATCH DISTINCT VALUES
-      //     const isTableDistinct = getProperty(
-      //       this.table,
-      //       `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_DISTINCT_RESULT}`
-      //     );
-      //     const isTableDistinctKeepRolling = getProperty(
-      //       this.table,
-      //       `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_DISTINCT_RESULT_KEEP_ROLLING}`
-      //     );
-      //     if (isTableDistinct && !isTableDistinctKeepRolling) {
-      //       // Failed to draw an available entry from Table ${this.table.name}, maximum iteration reached, but is ok because is under the 'distinct' behavior
-      //     } else {
-      //       error(`Failed to draw an available entry from Table ${this.table.name}, maximum iteration reached`, true);
-      //     }
-      //     // END PATCH
-      //     // ui.notifications.error(
-      //     //   `Failed to draw an available entry from Table ${this.table.name}, maximum iteration reached`
-      //     // );
-      //    break;
-      //  }
       roll = await roll.reroll({ async: true });
-      results = this.getResultsForRoll(roll.total);
-      //   iter++;
-      // }
+      // results = this.getResultsForRoll(roll.total);
+      let resultsTmp = this.getResultsForRoll(roll.total);
+      if (resultsTmp?.length > 0) {
+        let resultTmp = resultsTmp[Math.floor(Math.random() * resultsTmp.length)];
+        results = [resultTmp];
+      }
     } else {
       // Reference the provided roll formula
       roll = roll instanceof Roll ? roll : Roll.create(this.table.formula);
@@ -798,20 +777,24 @@ export class BetterRollTable {
         return;
       }
 
-      // let brtTable = new BetterRollTable(this.table, options);
-      // await brtTable.initialize();
-      // const draw = await brtTable.drawMany(amount, {
-      //   roll: roll,
-      //   recursive: recursive,
-      //   displayChat: false,
-      //   rollMode: "gmroll",
-      // });
-      const draw = await this.drawMany(amount, {
-        roll: roll,
-        recursive: recursive,
-        displayChat: false,
-        rollMode: "gmroll",
-      });
+      // TODO understand why there is this behaviour with the percentage feature
+      let draw = {};
+      if (this.options.usePercentage) {
+        draw = await this.drawMany(1, {
+          roll: roll,
+          recursive: recursive,
+          displayChat: false,
+          rollMode: "gmroll",
+        });
+      } else {
+        draw = await this.drawMany(amount, {
+          roll: roll,
+          recursive: recursive,
+          displayChat: false,
+          rollMode: "gmroll",
+        });
+      }
+
       if (!this.mainRoll) {
         this.mainRoll = draw.roll;
       }
@@ -850,7 +833,15 @@ export class BetterRollTable {
           drawnResults = drawnResults.concat(Array(entryAmount).fill(entry));
         }
       }
-      amount -= resultToDraw;
+      if (this.options.usePercentage) {
+        if (draw.results?.length > 0) {
+          amount -= draw.results?.length;
+        } else {
+          amount -= 1;
+        }
+      } else {
+        amount -= resultToDraw ?? 1;
+      }
     }
 
     let resultsTmp = [];

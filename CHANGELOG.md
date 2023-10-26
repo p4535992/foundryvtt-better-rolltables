@@ -1,3 +1,6 @@
+TODO 
+- Add confirm dialog on reset button
+
 ### 2.0.24 [BREAKING CHANGES]
 
 - Some bug fix on the updateOptions function
