@@ -350,18 +350,27 @@ export class BetterRollTable {
     }
 
     // Reference the provided roll formula
-    roll = roll instanceof Roll ? roll : Roll.create(this.table.formula);
+    // roll = roll instanceof Roll ? roll : Roll.create(this.table.formula);
     let results = [];
 
-    // Ensure that at least one non-drawn result remains
-    const available = this.table.results.filter((r) => !r.drawn);
-    if (!available.length) {
-      ui.notifications.warn(game.i18n.localize("TABLE.NoAvailableResults"));
-      return { roll, results };
-    }
+    // // Ensure that at least one non-drawn result remains
+    // const available = this.table.results.filter((r) => !r.drawn);
+    // if (!available.length) {
+    //   ui.notifications.warn(game.i18n.localize("TABLE.NoAvailableResults"));
+    //   return { roll, results };
+    // }
 
     if (this.options.usePercentage) {
+      // Reference the provided roll formula
       roll = Roll.create(`1d1000`);
+
+      // Ensure that at least one non-drawn result remains
+      const available = this.table.results.filter((r) => !r.drawn);
+      if (!available.length) {
+        ui.notifications.warn(game.i18n.localize("TABLE.NoAvailableResults"));
+        return { roll, results };
+      }
+
       // Ensure that results are available within the minimum/maximum range
       const minRoll = 10;
       const maxRoll = 1000;
@@ -396,37 +405,43 @@ export class BetterRollTable {
       }
 
       // Continue rolling until one or more results are recovered
-      let iter = 0;
-      while (!results.length) {
-        if (iter >= 10000) {
-          // START PATCH DISTINCT VALUES
-          const isTableDistinct = getProperty(
-            this.table,
-            `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_DISTINCT_RESULT}`
-          );
-          const isTableDistinctKeepRolling = getProperty(
-            this.table,
-            `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_DISTINCT_RESULT_KEEP_ROLLING}`
-          );
-          if (isTableDistinct && !isTableDistinctKeepRolling) {
-            // Failed to draw an available entry from Table ${this.table.name}, maximum iteration reached, but is ok because is under the 'distinct' behavior
-          } else {
-            error(`Failed to draw an available entry from Table ${this.table.name}, maximum iteration reached`, true);
-          }
-          // END PATCH
-          // ui.notifications.error(
-          //   `Failed to draw an available entry from Table ${this.table.name}, maximum iteration reached`
-          // );
-          break;
-        }
-        roll = await roll.reroll({ async: true });
-        const resultsTmp = this.getResultsForRoll(roll.total);
-        if (resultsTmp?.length > 0) {
-          results = [resultsTmp[0]];
-        }
-        iter++;
-      }
+      // let iter = 0;
+      // while (!results.length) {
+      //   if (iter >= 10000) {
+      //     // START PATCH DISTINCT VALUES
+      //     const isTableDistinct = getProperty(
+      //       this.table,
+      //       `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_DISTINCT_RESULT}`
+      //     );
+      //     const isTableDistinctKeepRolling = getProperty(
+      //       this.table,
+      //       `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_DISTINCT_RESULT_KEEP_ROLLING}`
+      //     );
+      //     if (isTableDistinct && !isTableDistinctKeepRolling) {
+      //       // Failed to draw an available entry from Table ${this.table.name}, maximum iteration reached, but is ok because is under the 'distinct' behavior
+      //     } else {
+      //       error(`Failed to draw an available entry from Table ${this.table.name}, maximum iteration reached`, true);
+      //     }
+      //     // END PATCH
+      //     // ui.notifications.error(
+      //     //   `Failed to draw an available entry from Table ${this.table.name}, maximum iteration reached`
+      //     // );
+      //    break;
+      //  }
+      roll = await roll.reroll({ async: true });
+      results = this.getResultsForRoll(roll.total);
+      //   iter++;
+      // }
     } else {
+      // Reference the provided roll formula
+      roll = roll instanceof Roll ? roll : Roll.create(this.table.formula);
+
+      // Ensure that at least one non-drawn result remains
+      const available = this.table.results.filter((r) => !r.drawn);
+      if (!available.length) {
+        ui.notifications.warn(game.i18n.localize("TABLE.NoAvailableResults"));
+        return { roll, results };
+      }
       // Ensure that results are available within the minimum/maximum range
       const minRoll = (await roll.reroll({ minimize: true, async: true })).total;
       const maxRoll = (await roll.reroll({ maximize: true, async: true })).total;
@@ -537,15 +552,15 @@ export class BetterRollTable {
       resultsUpdate = this.table.results.filter((r) => {
         const percentageValueLFlag =
           getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_PERCENTAGE_LOW_VALUE}`) ?? null;
-        let percentageValueL = isRealNumber(percentageValueLFlag) ? percentageValueLFlag : 0;
-        percentageValueL = percentageValueL * 10;
+        let percentageValueLTmp = isRealNumber(percentageValueLFlag) ? percentageValueLFlag : 0;
+        percentageValueLTmp = percentageValueLTmp * 10;
 
         const percentageValueHFlag =
           getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_PERCENTAGE_HIGH_VALUE}`) ??
           null;
-        let percentageValueH = isRealNumber(percentageValueHFlag) ? percentageValueHFlag : 100;
-        percentageValueH = percentageValueH * 10;
-        return !r.drawn && Number.between(value, percentageValueL, percentageValueH, true);
+        let percentageValueHTmp = isRealNumber(percentageValueHFlag) ? percentageValueHFlag : 100;
+        percentageValueHTmp = percentageValueHTmp * 10;
+        return !r.drawn && Number.between(value, percentageValueLTmp, percentageValueHTmp, true);
       });
     } else {
       resultsUpdate = this.table.results.filter((r) => {

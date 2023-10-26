@@ -66,9 +66,17 @@ class BetterRolltableHooks {
       Hooks.on("renderActorSheet", BetterTables.handleChatMessageButtons);
     }
 
-    Handlebars.registerHelper("ifequals", function (arg1, arg2, options) {
-      return arg1 == arg2 ? options.fn(this) : options.inverse(this);
-    });
+    // Handlebars.registerHelper("brt-ifequals", function (arg1, arg2, options) {
+    //   return arg1 == arg2 ? options.fn(this) : options.inverse(this);
+    // });
+
+    // https://stackoverflow.com/questions/47681668/handlebars-if-else-if-else-with-string-equality-function
+    // Handlebars.registerHelper("brt-eq", function () {
+    //   const args = Array.prototype.slice.call(arguments, 0, -1);
+    //   return args.every(function (expression) {
+    //       return args[0] === expression;
+    //   });
+    // });
 
     /** Register Handlebar helpers **/
     /** checks if the first argument is equal to any of the subsequent arguments */
@@ -82,22 +90,22 @@ class BetterRolltableHooks {
       return options.inverse(this);
     });
 
-    Handlebars.registerHelper("ifEquals", function (arg1, arg2, options) {
-      return arg1 == arg2 ? options.fn(this) : options.inverse(this);
-    });
+    // Handlebars.registerHelper("brt-ifEquals", function (arg1, arg2, options) {
+    //   return arg1 == arg2 ? options.fn(this) : options.inverse(this);
+    // });
 
     /** checks if the first argument is greater than the second argument */
     Handlebars.registerHelper("ifgt", function (a, b, options) {
       return a > b ? options.fn(this) : options.inverse(this);
     });
 
-    Handlebars.registerHelper("ifeq", function (a, b, options) {
-      return a == b ? options.fn(this) : options.inverse(this);
-    });
+    // Handlebars.registerHelper("brt-ifeq", function (a, b, options) {
+    //   return a == b ? options.fn(this) : options.inverse(this);
+    // });
 
-    Handlebars.registerHelper("uneq", function (a, b, options) {
-      return a != b ? options.fn(this) : options.inverse(this);
-    });
+    // Handlebars.registerHelper("brt-uneq", function (a, b, options) {
+    //   return a != b ? options.fn(this) : options.inverse(this);
+    // });
 
     /** return fas icon based on document name */
     Handlebars.registerHelper("entity-icon", function (documentName) {
@@ -118,13 +126,13 @@ class BetterRolltableHooks {
       return options.fn(this);
     });
 
-    Handlebars.registerHelper("isEmpty", function (value, options) {
-      return value === undefined ||
-        (value instanceof Object && Object.keys(value).length === 0) ||
-        (value instanceof Array && value.length === 0)
-        ? options.fn(this)
-        : options.inverse(this);
-    });
+    // Handlebars.registerHelper("isEmpty", function (value, options) {
+    //   return value === undefined ||
+    //     (value instanceof Object && Object.keys(value).length === 0) ||
+    //     (value instanceof Array && value.length === 0)
+    //     ? options.fn(this)
+    //     : options.inverse(this);
+    // });
 
     Handlebars.registerHelper("unlessEmpty", function (value, options) {
       return value !== undefined &&

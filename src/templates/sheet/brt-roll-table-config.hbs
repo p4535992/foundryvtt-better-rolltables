@@ -13,29 +13,99 @@
             <input type="hidden"
                 name="flags.better-rolltables.table-type"
                     value="{{data.flags.better-rolltables.table-type}}"/>
-            {{#ifEquals @root.tableType "loot"}}
-            <div class="form-group">
-                <label>{{localize 'better-rolltables.CurrencyLoot'}}</label>
-                <input type="text"
-                    placeholder="{{localize 'better-rolltables.CurrencyLootPlaceholder'}}"
-                    name="flags.better-rolltables.table-currency-string"
-                    value="{{data.flags.better-rolltables.table-currency-string}}" />
-            </div>
-            <div class="form-group">
-                <label>{{localize 'better-rolltables.LootActorName'}}</label>
-                <input type="text"
-                    placeholder="{{localize 'better-rolltables.LootActorNamePlaceholder'}}" name="flags.better-rolltables.loot-actor-name"
-                    value="{{data.flags.better-rolltables.loot-actor-name}}" />
-            </div>
-            {{/ifEquals}}
-            {{#ifEquals @root.tableType "harvest"}}
-            <div class="form-group">
-                <label>{{localize 'better-rolltables.HarvestActorName'}}</label>
-                <input type="text"
-                    placeholder="{{localize 'better-rolltables.HarvestActorNamePlaceholder'}}" name="flags.better-rolltables.loot-actor-name"
-                    value="{{data.flags.better-rolltables.loot-actor-name}}" />
-            </div>
-            {{/ifEquals}}
+
+            {{#if (eq @root.tableType "loot")}}
+                <div class="form-group">
+                    <label>{{localize 'better-rolltables.CurrencyLoot'}}</label>
+                    <input type="text"
+                        placeholder="{{localize 'better-rolltables.CurrencyLootPlaceholder'}}"
+                        name="flags.better-rolltables.table-currency-string"
+                        value="{{data.flags.better-rolltables.table-currency-string}}" />
+                </div>
+                <div class="form-group">
+                    <label>{{localize 'better-rolltables.LootActorName'}}</label>
+                    <input type="text"
+                        placeholder="{{localize 'better-rolltables.LootActorNamePlaceholder'}}" name="flags.better-rolltables.loot-actor-name"
+                        value="{{data.flags.better-rolltables.loot-actor-name}}" />
+                </div>
+
+                <input type="hidden"
+                    placeholder="{{localize 'better-rolltables.label.sourcePlaceholder'}}"
+                    name="flags.better-rolltables.brt-source-value"
+                    value="{{data.flags.better-rolltables.brt-source-value}}" />
+
+                <input type="hidden"
+                    placeholder="0"
+                    name="flags.better-rolltables.brt-dc-value"
+                    value="{{data.flags.better-rolltables.brt-dc-value}}" />
+
+                <input type="hidden"
+                    placeholder=""
+                    name="flags.better-rolltables.brt-skill-value"
+                    value="{{data.flags.better-rolltables.brt-skill-value}}" />
+
+            {{else if (eq @root.tableType "harvest")}}
+
+                <input type="hidden"
+                        placeholder="{{localize 'better-rolltables.CurrencyLootPlaceholder'}}"
+                        name="flags.better-rolltables.table-currency-string"
+                        value="{{data.flags.better-rolltables.table-currency-string}}" />
+
+                <div class="form-group">
+                    <label>{{localize 'better-rolltables.HarvestActorName'}}</label>
+                    <input type="text"
+                        placeholder="{{localize 'better-rolltables.HarvestActorNamePlaceholder'}}" name="flags.better-rolltables.loot-actor-name"
+                        value="{{data.flags.better-rolltables.loot-actor-name}}" />
+                </div>
+
+                <div class="form-group">
+                    <label for="flags.better-rolltables.brt-source-value">{{ localize 'better-rolltables.label.source' }}</label>
+                    <input type="text"
+                        placeholder="{{localize 'better-rolltables.label.sourcePlaceholder'}}"
+                        name="flags.better-rolltables.brt-source-value"
+                        value="{{data.flags.better-rolltables.brt-source-value}}" />
+                </div>
+
+                <div class="form-group">
+                    <label for="flags.better-rolltables.brt-dc-value">{{ localize 'better-rolltables.label.dcHint' }}</label>
+                    <input type="text"
+                        placeholder="0"
+                        name="flags.better-rolltables.brt-dc-value"
+                        value="{{data.flags.better-rolltables.brt-dc-value}}" />
+                </div>
+
+                <div class="form-group">
+                    <label for="flags.better-rolltables.brt-skill-value">{{ localize 'better-rolltables.label.skillHint' }}</label>
+                    <input type="text"
+                        placeholder=""
+                        name="flags.better-rolltables.brt-skill-value"
+                        value="{{data.flags.better-rolltables.brt-skill-value}}" />
+                </div>
+            {{else}}
+                <input type="hidden"
+                        placeholder="{{localize 'better-rolltables.CurrencyLootPlaceholder'}}"
+                        name="flags.better-rolltables.table-currency-string"
+                        value="{{data.flags.better-rolltables.table-currency-string}}" />
+
+                <input type="hidden"
+                        placeholder="{{localize 'better-rolltables.LootActorNamePlaceholder'}}" name="flags.better-rolltables.loot-actor-name"
+                        value="{{data.flags.better-rolltables.loot-actor-name}}" />>
+
+                <input type="hidden"
+                    placeholder="{{localize 'better-rolltables.label.sourcePlaceholder'}}"
+                    name="flags.better-rolltables.brt-source-value"
+                    value="{{data.flags.better-rolltables.brt-source-value}}" />
+
+                <input type="hidden"
+                    placeholder="0"
+                    name="flags.better-rolltables.brt-dc-value"
+                    value="{{data.flags.better-rolltables.brt-dc-value}}" />
+
+                <input type="hidden"
+                    placeholder=""
+                    name="flags.better-rolltables.brt-skill-value"
+                    value="{{data.flags.better-rolltables.brt-skill-value}}" />
+            {{/if}}
             <div class="form-group">
                 <label for="flags.better-rolltables.loot-amount-key">{{localize 'better-rolltables.LootRollAmount'}}</label>
                 <input type="text"
@@ -90,29 +160,6 @@
                 </a>
             </div>
             -->
-            {{#ifEquals @root.tableType "harvest"}}
-            <div class="form-group">
-                <label for="flags.better-rolltables.brt-source-value">{{ localize 'better-rolltables.label.source' }}</label>
-                <input type="text"
-                    placeholder="{{localize 'better-rolltables.label.sourcePlaceholder'}}"
-                    name="flags.better-rolltables.brt-source-value"
-                    value="{{data.flags.better-rolltables.brt-source-value}}" />
-            </div>
-            <div class="form-group">
-                <label for="flags.better-rolltables.brt-dc-value">{{ localize 'better-rolltables.label.dcHint' }}</label>
-                <input type="text"
-                    placeholder="0"
-                    name="flags.better-rolltables.brt-dc-value"
-                    value="{{data.flags.better-rolltables.brt-dc-value}}" />
-            </div>
-            <div class="form-group">
-                <label for="flags.better-rolltables.brt-skill-value">{{ localize 'better-rolltables.label.skillHint' }}</label>
-                <input type="text"
-                    placeholder=""
-                    name="flags.better-rolltables.brt-skill-value"
-                    value="{{data.flags.better-rolltables.brt-skill-value}}" />
-            </div>
-            {{/ifEquals}}
         </main>
 
     </fieldset>
@@ -134,7 +181,7 @@
 	</div>
     -->
     {{#if @root.usePercentage}}
-        <!-- do nothing -->
+        <input type="hidden" name="formula" value="{{data.formula}}" placeholder="{{localize 'Roll Formula'}}"/>
     {{else}}
         <div class="form-group">
             <label>{{ localize "TABLE.Formula" }}</label>
@@ -175,21 +222,21 @@
                         <label>{{ localize "better-rolltables.label.quantityFormula" }}</label>
                     </th>
 
-                    {{#ifEquals @root.tableType "harvest"}}
+                    {{#if (eq @root.tableType "harvest")}}
                     <th class="result-brt-dc-value">
                         <label>{{ localize "better-rolltables.label.dc" }}</label>
                     </th>
                     <th class="result-brt-skill-value">
                         <label>{{ localize "better-rolltables.label.skill" }}</label>
                     </th>
-                    {{/ifEquals}}
+                    {{/if}}
 
                     <th class="result-weight">
                         <label>{{ localize "TABLE.ResultWeight" }}</label>
                     </th>
 
 
-                    {{#if data.flags.better-rolltables.brt-use-percentage}}
+                    {{#if @root.usePercentage}}
                         <th class="result-brt-use-percentage-value">
                             <label>{{ localize "better-rolltables.label.usePercentageOnlyMax" }}</label>
                         </th>
@@ -261,34 +308,34 @@
 					<input type="hidden" name="results.{{i}}.documentId" value="{{result.documentId}}"/>
 
                     {{#if result.isText}}
-                    <input type="text" name="results.{{i}}.text" value="{{result.text}}" placeholder="{{localize 'TABLE.ResultDescription'}}"/>
+                        <input type="text" name="results.{{i}}.text" value="{{result.text}}" placeholder="{{localize 'TABLE.ResultDescription'}}"/>
 
                     {{else if result.isDocument}}
-                    <select name="results.{{i}}.documentCollection">
-                        {{#select result.documentCollection}}
-                        {{#each ../documentTypes}}
-                        <option value="{{this}}">{{this}}</option>
-                        {{/each}}
-                        {{/select}}
-                    </select>
-                    <input class="result-target" name="results.{{i}}.text" type="hidden" value="{{result.text}}"/>
-                    <input class="result-brt-custom-name" type="text" 
-                        name="results.{{i}}.flags.better-rolltables.brt-result-custom-name" 
-                        value="{{result.flags.better-rolltables.brt-result-custom-name}}"
+                        <select name="results.{{i}}.documentCollection">
+                            {{#select result.documentCollection}}
+                            {{#each ../documentTypes}}
+                            <option value="{{this}}">{{this}}</option>
+                            {{/each}}
+                            {{/select}}
+                        </select>
+                        <input class="result-target" name="results.{{i}}.text" type="hidden" value="{{result.text}}"/>
+                        <input class="result-brt-custom-name" type="text" 
+                            name="results.{{i}}.flags.better-rolltables.brt-result-custom-name" 
+                            value="{{result.flags.better-rolltables.brt-result-custom-name}}"
                     
                     {{else if result.isCompendium}}
-                    <select name="results.{{i}}.documentCollection">
-                        {{#select result.documentCollection}}
-                        {{#each ../compendiumPacks}}
-                        <option value="{{this}}">{{this}}</option>
-                        {{/each}}
-                        {{/select}}
-                    </select>
-                    <input class="result-target" name="results.{{i}}.text" type="hidden" value="{{result.text}}"/>
-                    <input class="result-brt-custom-name" type="text" 
-                        type="text" 
-                        name="results.{{i}}.flags.better-rolltables.brt-result-custom-name" 
-                        value="{{result.flags.better-rolltables.brt-result-custom-name}}"
+                        <select name="results.{{i}}.documentCollection">
+                            {{#select result.documentCollection}}
+                            {{#each ../compendiumPacks}}
+                            <option value="{{this}}">{{this}}</option>
+                            {{/each}}
+                            {{/select}}
+                        </select>
+                        <input class="result-target" name="results.{{i}}.text" type="hidden" value="{{result.text}}"/>
+                        <input class="result-brt-custom-name" type="text" 
+                            type="text" 
+                            name="results.{{i}}.flags.better-rolltables.brt-result-custom-name" 
+                            value="{{result.flags.better-rolltables.brt-result-custom-name}}"
                     {{/if}}
 				</td>
 
@@ -301,27 +348,34 @@
                         />
 					{{else if result.isDocument}}
                         <input class="result-better-rolltables-formula" placeholder="{{localize better-rolltables.Formula}}"
-                            type="text"
+                            type="number"
                             name="results.{{i}}.flags.better-rolltables.brt-result-formula.formula"
                             value="{{result.flags.better-rolltables.brt-result-formula.formula}}"
+                            placeholder="1"
+                            data-dtype="Number"
                             />
 					{{else if result.isCompendium}}
                         <input class="result-better-rolltables-formula" placeholder="{{localize better-rolltables.Formula}}"
-                            type="text"
+                            type="number"
                             name="results.{{i}}.flags.better-rolltables.brt-result-formula.formula"
                             value="{{result.flags.better-rolltables.brt-result-formula.formula}}"
+                            placeholder="1"
+                            data-dtype="Number"
                             />
 					{{/if}}
                 </td>
 
-                {{#ifEquals @root.tableType "harvest"}}
-                <td class="result-brt-dc-value">
-                    <input class="result-brt-dc-value" type="text" name="results.{{i}}.flags.better-rolltables.brt-dc-value" value="{{result.flags.better-rolltables.brt-dc-value}}" placeholder="1" data-dtype="Number"/>
-                </td>
-                <td class="result-brt-skill-value">
-                    <input class="result-brt-skill-value" type="text" name="results.{{i}}.flags.better-rolltables.brt-skill-value" value="{{result.flags.better-rolltables.brt-skill-value}}" placeholder="arc" />
-                </td>
-                {{/ifEquals}}
+                {{#if (eq @root.tableType "harvest")}}
+                    <td class="result-brt-dc-value">
+                        <input class="result-brt-dc-value" type="number" name="results.{{i}}.flags.better-rolltables.brt-dc-value" value="{{result.flags.better-rolltables.brt-dc-value}}" placeholder="1" data-dtype="Number"/>
+                    </td>
+                    <td class="result-brt-skill-value">
+                        <input class="result-brt-skill-value" type="text" name="results.{{i}}.flags.better-rolltables.brt-skill-value" value="{{result.flags.better-rolltables.brt-skill-value}}" placeholder="arc" />
+                    </td>
+                {{else}}
+                    <input class="result-brt-dc-value" type="hidden" name="results.{{i}}.flags.better-rolltables.brt-dc-value" value="{{result.flags.better-rolltables.brt-dc-value}}" placeholder="1" data-dtype="Number"/>
+                    <input class="result-brt-skill-value" type="hidden" name="results.{{i}}.flags.better-rolltables.brt-skill-value" value="{{result.flags.better-rolltables.brt-skill-value}}" placeholder="arc" />
+                {{/if}}
 
                 <td class="result-weight">
                     <input type="text" name="results.{{i}}.weight" value="{{result.weight}}" placeholder="1" data-dtype="Number"/>
@@ -330,10 +384,6 @@
                 {{#if @root.usePercentage}}
                     <td class="result-range">
                         <input type="hidden" name="results.{{i}}.rangeL" value="{{result.range.[0]}}" placeholder="L" data-dtype="Number"/>
-                        <!-- TODO
-                        <input type="text" min="0" max="100" step="0.1" name="results.{{i}}.flags.better-rolltables.brt-percentage-low-value" value="{{result.flags.better-rolltables.brt-percentage-low-value}}" placeholder="0" data-dtype="Number"/> %
-                        <span> - </span>
-                        -->
                         <input type="number" min="0" max="100" step="0.1" name="results.{{i}}.flags.better-rolltables.brt-percentage-high-value" value="{{result.flags.better-rolltables.brt-percentage-high-value}}" placeholder="100" data-dtype="Number"/>  %
                         <input type="hidden" name="results.{{i}}.rangeH" value="{{result.range.[1]}}" placeholder="H" data-dtype="Number"/>
                     </td>
@@ -341,6 +391,7 @@
                     <td class="result-range">
                         <input type="text" name="results.{{i}}.rangeL" value="{{result.range.[0]}}" placeholder="L" data-dtype="Number"/>
                         <span> - </span>
+                        <input type="hidden" min="0" max="100" step="0.1" name="results.{{i}}.flags.better-rolltables.brt-percentage-high-value" value="{{result.flags.better-rolltables.brt-percentage-high-value}}" placeholder="100" data-dtype="Number"/>
                         <input type="text" name="results.{{i}}.rangeH" value="{{result.range.[1]}}" placeholder="H" data-dtype="Number"/>
                     </td>
                 {{/if}}
@@ -377,14 +428,14 @@
 
     <!-- Roll Table Footer -->
     <footer class="sheet-footer flexrow">
-        {{#ifEquals @root.tableType "loot"}}
+        {{#if (eq @root.tableType "loot")}}
         <button id="BRT-gen-loot" class="generate" type="button" data-tooltip='{{localize 'better-rolltables.Buttons.GenerateLootTooltip'}}' data-tooltip-direction='UP'><i class="fas fa-coins"></i>{{localize "better-rolltables.Buttons.GenerateLoot"}}</button>
         <button id="BRT-gen-loot-token" class="generate" type="button" data-tooltip='{{localize 'better-rolltables.Buttons.GenerateLootTokenTooltip'}}' data-tooltip-direction='UP'><i class="fa-solid fa-user-group"></i>{{localize "better-rolltables.Buttons.GenerateLootToken"}}</button>
-        {{/ifEquals}}
-        {{#ifEquals @root.tableType "harvest"}}
+        {{/if}}
+        {{#if (eq @root.tableType "harvest")}}
         <button id="BRT-gen-harvest" class="generate" type="button" data-tooltip='{{localize 'better-rolltables.Buttons.GenerateHarvestTooltip'}}' data-tooltip-direction='UP'><i class="fas fa-coins"></i>{{localize "better-rolltables.Buttons.GenerateHarvest"}}</button>
         <button id="BRT-gen-harvest-token" class="generate" type="button" data-tooltip='{{localize 'better-rolltables.Buttons.GenerateHarvestTokenTooltip'}}' data-tooltip-direction='UP'><i class="fa-solid fa-user-group"></i>{{localize "better-rolltables.Buttons.GenerateHarvestToken"}}</button>
-        {{/ifEquals}}
+        {{/if}}
         {{#if owner}}
         <!--
         <button class="refresh" type="button" data-tooltip='{{localize 'better-rolltables.label.betterRolltableRefreshTooltip'}}' data-tooltip-direction='UP'>
@@ -395,25 +446,25 @@
         <button class="reset" type="button"><i class="fas fa-undo"></i> {{ localize "TABLE.Reset" }}</button>
         {{/if}}
         <button class="roll" type="button"><i class="fas fa-dice-d20"></i> {{ localize "TABLE.Roll" }}</button>
-        {{#ifEquals @root.tableType "better"}}
+        {{#if (eq @root.tableType "better")}}
         <button class="better-rolltables-roll-better" type="button" data-tooltip='{{localize 'better-rolltables.label.betterRolltableRollTooltip'}}' data-tooltip-direction='UP'>
             <i class="fa-solid fa-dice"></i> {{ localize "better-rolltables.label.betterRolltableRoll" }}
         </button>
-        {{/ifEquals}}
-        {{#ifEquals @root.tableType "loot"}}
+        {{/if}}
+        {{#if (eq @root.tableType "loot")}}
         <button class="better-rolltables-roll-loot" type="button" data-tooltip='{{localize 'better-rolltables.label.betterRolltableRollTooltip'}}' data-tooltip-direction='UP'>
             <i class="fas fa-gem"></i>{{localize "better-rolltables.label.betterRolltableRoll"}}
         </button>
-        {{/ifEquals}}
-        {{#ifEquals @root.tableType "story"}}
+        {{/if}}
+        {{#if (eq @root.tableType "story")}}
         <button class="better-rolltables-roll-story" type="button" data-tooltip='{{localize 'better-rolltables.label.betterRolltableRollTooltip'}}' data-tooltip-direction='UP'>
             <i class="fas fa-book"></i>{{localize "better-rolltables.label.betterRolltableRoll"}}
         </button>
-        {{/ifEquals}}
-        {{#ifEquals @root.tableType "harvest"}}
+        {{/if}}
+        {{#if (eq @root.tableType "harvest")}}
         <button class="better-rolltables-roll-harvest" type="button" data-tooltip='{{localize 'better-rolltables.label.betterRolltableRollTooltip'}}' data-tooltip-direction='UP'>
             <i class="fa-solid fa-wheat-awn-circle-exclamation"></i>{{localize "better-rolltables.label.betterRolltableRoll"}}
         </button>
-        {{/ifEquals}}
+        {{/if}}
     </footer>
 </form>
