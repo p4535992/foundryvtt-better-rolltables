@@ -5,7 +5,7 @@
     form {
       display: grid;
       grid-template-areas: "SheetHeader" "BRTHeader" "SheetResults" "SheetFooter";
-      background: var(--better-rolltables-background);
+      // background: var(--better-rolltables-background);
       padding: 0.5em;
       grid-template-rows: min-content min-content auto var(--better-rolltables-icon-size);
       overflow-y: scroll;
@@ -24,7 +24,7 @@
             margin-bottom: -1em;
           }
           main {
-            background: var(--better-rolltables-background);
+            // background: var(--better-rolltables-background);
             border-radius: 0.5em;
             box-shadow: 0 0 0.5em var(--better-rolltables-exhaustion-lvl2);
             margin: 1em;
@@ -37,7 +37,7 @@
       }
       footer.sheet-footer {
         grid-area: SheetFooter;
-        background: var(--better-rolltables-background);
+        // background: var(--better-rolltables-background);
       }
       > header {
         margin-bottom: 0.5em;

@@ -1,5 +1,8 @@
 TODO 
 - Add confirm dialog on reset button ???
+### 2.0.25
+
+- Little fix on html template e removed the css background color for not override the one chosen from the system
 
 ### 2.0.24 [BREAKING CHANGES]
 
