@@ -231,16 +231,16 @@
                     </th>
                     {{/if}}
 
-                    <th class="result-weight" data-tooltip="{{localize 'better-rolltables.label.resultWeightHeaderHint'}}" data-tooltip-direction="UP">
-                        <label>{{ localize "TABLE.ResultWeight" }}</label>
-                    </th>
-
-
                     {{#if @root.usePercentage}}
                         <th class="result-brt-use-percentage-value" data-tooltip="{{localize 'better-rolltables.label.resultUsePercentageHeaderHint'}}" data-tooltip-direction="UP">
                             <label>{{ localize "better-rolltables.label.usePercentageOnlyMax" }}</label>
                         </th>
                     {{else}}
+
+                        <th class="result-weight" data-tooltip="{{localize 'better-rolltables.label.resultWeightHeaderHint'}}" data-tooltip-direction="UP">
+                            <label>{{ localize "TABLE.ResultWeight" }}</label>
+                        </th>
+
                         <th class="result-range" data-tooltip="{{localize 'better-rolltables.label.resultRangeHeaderHint'}}" data-tooltip-direction="UP">
                             <label>{{ localize "TABLE.ResultRange" }}</label>
                         </th>
@@ -381,17 +381,18 @@
                     <input class="result-brt-skill-value" type="hidden" name="results.{{i}}.flags.better-rolltables.brt-skill-value" value="{{result.flags.better-rolltables.brt-skill-value}}" placeholder="arc" />
                 {{/if}}
 
-                <td class="result-weight">
-                    <input type="text" name="results.{{i}}.weight" value="{{result.weight}}" placeholder="1" data-dtype="Number"/>
-                </td>
-
                 {{#if @root.usePercentage}}
+                    <input type="hidden" name="results.{{i}}.weight" value="{{result.weight}}" placeholder="1" data-dtype="Number"/>
                     <td class="result-range">
                         <input type="hidden" name="results.{{i}}.rangeL" value="{{result.range.[0]}}" placeholder="L" data-dtype="Number"/>
                         <input {{#brt-isEmpty result.flags.better-rolltables.brt-percentage-high-value}} style="background: lightcoral;"{{/brt-isEmpty}} type="number" min="0" max="100" step="0.1" name="results.{{i}}.flags.better-rolltables.brt-percentage-high-value" value="{{result.flags.better-rolltables.brt-percentage-high-value}}" placeholder="100" data-dtype="Number"/>  %
                         <input type="hidden" name="results.{{i}}.rangeH" value="{{result.range.[1]}}" placeholder="H" data-dtype="Number"/>
                     </td>
                 {{else}}
+                    <td class="result-weight">
+                        <input type="text" name="results.{{i}}.weight" value="{{result.weight}}" placeholder="1" data-dtype="Number"/>
+                    </td>
+
                     <td class="result-range">
                         <input type="text" name="results.{{i}}.rangeL" value="{{result.range.[0]}}" placeholder="L" data-dtype="Number"/>
                         <span> - </span>

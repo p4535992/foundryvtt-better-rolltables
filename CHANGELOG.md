@@ -1,5 +1,5 @@
 TODO 
-- Add confirm dialog on reset button
+- Add confirm dialog on reset button ???
 
 ### 2.0.24 [BREAKING CHANGES]
 
