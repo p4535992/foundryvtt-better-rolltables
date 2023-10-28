@@ -6,7 +6,7 @@
     <div class="table-description">{{{htmlDescription}}}</div>
     {{/if}}
     <!-- TODO {{{ rollHTML }}} -->
-    {{#unlessEmpty currency}}
+    {{#brt-unlessEmpty currency}}
         <div class="table-description" style="font-size: 15px; text-align: center; font-weight:bold;">{{localize 'better-rolltables.Buttons.Currency.label'}} {{format-currencies currency}}
             {{#if shared}}<span class="better-rolltables-currency-shared">{{ localize 'better-rolltables.Buttons.Currency.Shared' }}</span>{{/if}}
         </div>
@@ -20,7 +20,7 @@
             {{/each}}
             <button class="better-rolltables-share-currencies-button">{{localize 'better-rolltables.Buttons.Currency.Share' }}</button>
         </section>
-    {{/unlessEmpty}}
+    {{/brt-unlessEmpty}}
     <ol class="table-results">
         {{#each itemsData as |itemData|}}
             {{#switch itemData.type}}

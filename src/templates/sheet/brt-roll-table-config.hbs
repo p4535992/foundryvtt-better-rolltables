@@ -210,45 +210,45 @@
                         </a>
                     </th>
 
-                    <th class="result-type">
+                    <th class="result-type" data-tooltip="{{localize 'better-rolltables.label.resultTypeHeaderHint'}}" data-tooltip-direction="UP">
                         <label>{{ localize "TABLE.ResultType" }}</label>
                     </th>
 
-                    <th class="result-details">
+                    <th class="result-details" data-tooltip="{{localize 'better-rolltables.label.resultDetailsHeaderHint'}}" data-tooltip-direction="UP">
                         <label>{{ localize "TABLE.ResultDetails" }}</label>
                     </th>
 
-                    <th class="result-brt-quantity-formula">
+                    <th class="result-brt-quantity-formula" data-tooltip="{{localize 'better-rolltables.label.resultQuantityHeaderHint'}}" data-tooltip-direction="UP">
                         <label>{{ localize "better-rolltables.label.quantityFormula" }}</label>
                     </th>
 
                     {{#if (eq @root.tableType "harvest")}}
-                    <th class="result-brt-dc-value">
+                    <th class="result-brt-dc-value" data-tooltip="{{localize 'better-rolltables.label.resultDcHeaderHint'}}" data-tooltip-direction="UP">
                         <label>{{ localize "better-rolltables.label.dc" }}</label>
                     </th>
-                    <th class="result-brt-skill-value">
+                    <th class="result-brt-skill-value" data-tooltip="{{localize 'better-rolltables.label.resultSkillHeaderHint'}}" data-tooltip-direction="UP">
                         <label>{{ localize "better-rolltables.label.skill" }}</label>
                     </th>
                     {{/if}}
 
-                    <th class="result-weight">
+                    <th class="result-weight" data-tooltip="{{localize 'better-rolltables.label.resultWeightHeaderHint'}}" data-tooltip-direction="UP">
                         <label>{{ localize "TABLE.ResultWeight" }}</label>
                     </th>
 
 
                     {{#if @root.usePercentage}}
-                        <th class="result-brt-use-percentage-value">
+                        <th class="result-brt-use-percentage-value" data-tooltip="{{localize 'better-rolltables.label.resultUsePercentageHeaderHint'}}" data-tooltip-direction="UP">
                             <label>{{ localize "better-rolltables.label.usePercentageOnlyMax" }}</label>
                         </th>
                     {{else}}
-                        <th class="result-range">
+                        <th class="result-range" data-tooltip="{{localize 'better-rolltables.label.resultRangeHeaderHint'}}" data-tooltip-direction="UP">
                             <label>{{ localize "TABLE.ResultRange" }}</label>
                         </th>
                     {{/if}}
 
                     {{#if owner}}
                     <th class="result-controls result-brt-controls-header">
-                        <a class="normalize-results" title="{{ localize "TABLE.Normalize" }}">
+                        <a class="normalize-results" title="{{ localize "TABLE.Normalize" }}" data-tooltip="{{localize 'better-rolltables.label.Normalize'}}" data-tooltip-direction="UP">
                             <i class="fas fa-balance-scale fa-fw"></i>
                         </a>
                         <a class='normalize-weights' data-tooltip='{{localize 'better-rolltables.label.NormalizeWeights'}}' data-tooltip-direction='UP'>
@@ -268,10 +268,10 @@
                 <tr class="table-result flexrow {{#if result.drawn}}drawn{{/if}}" data-result-id="{{result._id}}">
                 {{else if result.isDocument}}
                 <tr class="table-result flexrow {{#if result.drawn}}drawn{{/if}}" data-result-id="{{result._id}}" data-result-uuid="{{result.uuid}}"
-                    {{#unless result.uuid}} style="background: lightcoral;"{{/unless}}>
+                    {{#brt-isEmpty result.uuid}} style="background: lightcoral;"{{/brt-isEmpty}}>
                 {{else if result.isCompendium}}
                 <tr class="table-result flexrow {{#if result.drawn}}drawn{{/if}}" data-result-id="{{result._id}}" data-result-uuid="{{result.uuid}}"
-                    {{#unless result.uuid}} style="background: lightcoral;"{{/unless}}>
+                    {{#brt-isEmpty result.uuid}} style="background: lightcoral;"{{/brt-isEmpty}}>
                 {{/if}}
 
                 <input type="hidden" name="results.{{i}}._id" value="{{result._id}}"/>
@@ -341,22 +341,26 @@
 
                 <td class="result-brt-quantity-formula">
 					{{#if result.isText}}
-                        <input class="result-better-rolltables-formula" placeholder="{{localize better-rolltables.Formula}}"
+                        <input class="result-better-rolltables-formula"
                             type="hidden"
                             name="results.{{i}}.flags.better-rolltables.brt-result-formula.formula"
                             value="{{result.flags.better-rolltables.brt-result-formula.formula}}"
+                            placeholder="1"
+                            data-dtype="Number"
                         />
 					{{else if result.isDocument}}
-                        <input class="result-better-rolltables-formula" placeholder="{{localize better-rolltables.Formula}}"
-                            type="number"
+                        <input {{#brt-isEmpty result.flags.better-rolltables.brt-result-formula.formula}} style="background: lightcoral;"{{/brt-isEmpty}} 
+                            class="result-better-rolltables-formula"
+                            type="number" min="1"
                             name="results.{{i}}.flags.better-rolltables.brt-result-formula.formula"
                             value="{{result.flags.better-rolltables.brt-result-formula.formula}}"
                             placeholder="1"
                             data-dtype="Number"
                             />
 					{{else if result.isCompendium}}
-                        <input class="result-better-rolltables-formula" placeholder="{{localize better-rolltables.Formula}}"
-                            type="number"
+                        <input {{#brt-isEmpty result.flags.better-rolltables.brt-result-formula.formula}} style="background: lightcoral;"{{/brt-isEmpty}} 
+                            class="result-better-rolltables-formula"
+                            type="number" min="1"
                             name="results.{{i}}.flags.better-rolltables.brt-result-formula.formula"
                             value="{{result.flags.better-rolltables.brt-result-formula.formula}}"
                             placeholder="1"
@@ -367,13 +371,13 @@
 
                 {{#if (eq @root.tableType "harvest")}}
                     <td class="result-brt-dc-value">
-                        <input class="result-brt-dc-value" type="number" name="results.{{i}}.flags.better-rolltables.brt-dc-value" value="{{result.flags.better-rolltables.brt-dc-value}}" placeholder="1" data-dtype="Number"/>
+                        <input {{#brt-isEmpty result.flags.better-rolltables.brt-dc-value}} style="background: lightcoral;"{{/brt-isEmpty}} class="result-brt-dc-value" type="number" min="0" name="results.{{i}}.flags.better-rolltables.brt-dc-value" value="{{result.flags.better-rolltables.brt-dc-value}}" placeholder="0" data-dtype="Number"/>
                     </td>
                     <td class="result-brt-skill-value">
-                        <input class="result-brt-skill-value" type="text" name="results.{{i}}.flags.better-rolltables.brt-skill-value" value="{{result.flags.better-rolltables.brt-skill-value}}" placeholder="arc" />
+                        <input {{#brt-isEmpty result.flags.better-rolltables.brt-skill-value}} style="background: lightcoral;"{{/brt-isEmpty}} class="result-brt-skill-value" type="text" name="results.{{i}}.flags.better-rolltables.brt-skill-value" value="{{result.flags.better-rolltables.brt-skill-value}}" placeholder="arc" />
                     </td>
                 {{else}}
-                    <input class="result-brt-dc-value" type="hidden" name="results.{{i}}.flags.better-rolltables.brt-dc-value" value="{{result.flags.better-rolltables.brt-dc-value}}" placeholder="1" data-dtype="Number"/>
+                    <input class="result-brt-dc-value" type="hidden" name="results.{{i}}.flags.better-rolltables.brt-dc-value" value="{{result.flags.better-rolltables.brt-dc-value}}" placeholder="0" data-dtype="Number"/>
                     <input class="result-brt-skill-value" type="hidden" name="results.{{i}}.flags.better-rolltables.brt-skill-value" value="{{result.flags.better-rolltables.brt-skill-value}}" placeholder="arc" />
                 {{/if}}
 
@@ -384,7 +388,7 @@
                 {{#if @root.usePercentage}}
                     <td class="result-range">
                         <input type="hidden" name="results.{{i}}.rangeL" value="{{result.range.[0]}}" placeholder="L" data-dtype="Number"/>
-                        <input type="number" min="0" max="100" step="0.1" name="results.{{i}}.flags.better-rolltables.brt-percentage-high-value" value="{{result.flags.better-rolltables.brt-percentage-high-value}}" placeholder="100" data-dtype="Number"/>  %
+                        <input {{#brt-isEmpty result.flags.better-rolltables.brt-percentage-high-value}} style="background: lightcoral;"{{/brt-isEmpty}} type="number" min="0" max="100" step="0.1" name="results.{{i}}.flags.better-rolltables.brt-percentage-high-value" value="{{result.flags.better-rolltables.brt-percentage-high-value}}" placeholder="100" data-dtype="Number"/>  %
                         <input type="hidden" name="results.{{i}}.rangeH" value="{{result.range.[1]}}" placeholder="H" data-dtype="Number"/>
                     </td>
                 {{else}}
@@ -442,28 +446,28 @@
             <i class="fa-solid fa-refresh"></i> {{ localize "better-rolltables.label.betterRolltableRefresh" }}
         </button>
         -->
-        <button class="submit" type="submit"><i class="fas fa-save"></i> {{ localize "TABLE.Update" }}</button>
-        <button class="reset" type="button"><i class="fas fa-undo"></i> {{ localize "TABLE.Reset" }}</button>
+        <button class="submit" type="submit" data-tooltip='{{localize 'better-rolltables.label.betterRolltableUpdateTooltip'}}' data-tooltip-direction='UP'><i class="fas fa-save"></i> {{ localize "TABLE.Update" }}</button>
+        <button class="reset" type="button" data-tooltip='{{localize 'better-rolltables.label.betterRolltableResetTooltip'}}' data-tooltip-direction='UP'><i class="fas fa-undo"></i> {{ localize "TABLE.Reset" }}</button>
         {{/if}}
         <button class="roll" type="button"><i class="fas fa-dice-d20"></i> {{ localize "TABLE.Roll" }}</button>
         {{#if (eq @root.tableType "better")}}
-        <button class="better-rolltables-roll-better" type="button" data-tooltip='{{localize 'better-rolltables.label.betterRolltableRollTooltip'}}' data-tooltip-direction='UP'>
-            <i class="fa-solid fa-dice"></i> {{ localize "better-rolltables.label.betterRolltableRoll" }}
+        <button class="better-rolltables-roll-better" type="button" data-tooltip='{{localize 'better-rolltables.label.betterRolltableRollPlusTooltip'}}' data-tooltip-direction='UP'>
+            <i class="fa-solid fa-dice"></i> {{ localize "better-rolltables.label.betterRolltableRollPlus" }}
         </button>
         {{/if}}
         {{#if (eq @root.tableType "loot")}}
-        <button class="better-rolltables-roll-loot" type="button" data-tooltip='{{localize 'better-rolltables.label.betterRolltableRollTooltip'}}' data-tooltip-direction='UP'>
-            <i class="fas fa-gem"></i>{{localize "better-rolltables.label.betterRolltableRoll"}}
+        <button class="better-rolltables-roll-loot" type="button" data-tooltip='{{localize 'better-rolltables.label.betterRolltableRollPlusTooltip'}}' data-tooltip-direction='UP'>
+            <i class="fas fa-gem"></i>{{localize "better-rolltables.label.betterRolltableRollPlus"}}
         </button>
         {{/if}}
         {{#if (eq @root.tableType "story")}}
-        <button class="better-rolltables-roll-story" type="button" data-tooltip='{{localize 'better-rolltables.label.betterRolltableRollTooltip'}}' data-tooltip-direction='UP'>
-            <i class="fas fa-book"></i>{{localize "better-rolltables.label.betterRolltableRoll"}}
+        <button class="better-rolltables-roll-story" type="button" data-tooltip='{{localize 'better-rolltables.label.betterRolltableRollPlusTooltip'}}' data-tooltip-direction='UP'>
+            <i class="fas fa-book"></i>{{localize "better-rolltables.label.betterRolltableRollPlus"}}
         </button>
         {{/if}}
         {{#if (eq @root.tableType "harvest")}}
-        <button class="better-rolltables-roll-harvest" type="button" data-tooltip='{{localize 'better-rolltables.label.betterRolltableRollTooltip'}}' data-tooltip-direction='UP'>
-            <i class="fa-solid fa-wheat-awn-circle-exclamation"></i>{{localize "better-rolltables.label.betterRolltableRoll"}}
+        <button class="better-rolltables-roll-harvest" type="button" data-tooltip='{{localize 'better-rolltables.label.betterRolltableRollPlusTooltip'}}' data-tooltip-direction='UP'>
+            <i class="fa-solid fa-wheat-awn-circle-exclamation"></i>{{localize "better-rolltables.label.betterRolltableRollPlus"}}
         </button>
         {{/if}}
     </footer>

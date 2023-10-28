@@ -89,7 +89,7 @@ export class BetterRT {
     } else if (selectedTableType === BRTCONFIG.TABLE_TYPE_BETTER) {
       // newRollButton.getElementsByTagName("i")[0].className = "fas fa-dice";
       newRollButton.innerHTML =
-        '<i class ="fas fa-dice-d20"></i> ' + i18n(`${CONSTANTS.MODULE_ID}.label.betterRolltableRoll`);
+        '<i class ="fas fa-dice-d20"></i> ' + i18n(`${CONSTANTS.MODULE_ID}.label.betterRolltablePlusRoll`);
       newRollButton.onclick = async function () {
         await API.betterTableRoll(tableEntity);
       };

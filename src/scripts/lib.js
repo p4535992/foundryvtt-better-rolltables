@@ -118,10 +118,16 @@ export function isEmptyObject(obj) {
   if (isRealNumber(obj)) {
     return false;
   }
-  const result =
-    obj && // null and undefined check
-    Object.keys(obj).length === 0; // || Object.getPrototypeOf(obj) === Object.prototype);
-  return result;
+  if (obj instanceof Object && Object.keys(obj).length === 0) {
+    return true;
+  }
+  if (obj instanceof Array && obj.length === 0) {
+    return true;
+  }
+  if (obj && Object.keys(obj).length === 0) {
+    return true;
+  }
+  return false;
 }
 
 export function isRealNumber(inNumber) {

@@ -11,6 +11,7 @@ import { BetterRollTableLootConfig } from "../loot/loot-rolltable-config.js";
 import { BetterRollTableStoryConfig } from "../story/story-rolltable-config.js";
 import { BetterRollTableHarvestConfig } from "../harvest/harvest-rolltable-config.js";
 import { registerSocket } from "../socket.js";
+import { isEmptyObject } from "../lib.js";
 
 /**
  * @module BetterRollTables.BetterRolltableHooks
@@ -126,16 +127,19 @@ class BetterRolltableHooks {
       return options.fn(this);
     });
 
-    // Handlebars.registerHelper("isEmpty", function (value, options) {
-    //   return value === undefined ||
-    //     (value instanceof Object && Object.keys(value).length === 0) ||
-    //     (value instanceof Array && value.length === 0)
-    //     ? options.fn(this)
-    //     : options.inverse(this);
-    // });
+    Handlebars.registerHelper("brt-isEmpty", function (value, options) {
+      // return value === undefined ||
+      //   value === null ||
+      //   (value instanceof Object && Object.keys(value).length === 0) ||
+      //   (value instanceof Array && value.length === 0)
+      //   ? options.fn(this)
+      //   : options.inverse(this);
+      return isEmptyObject(value) || value === "" ? options.fn(this) : options.inverse(this);
+    });
 
-    Handlebars.registerHelper("unlessEmpty", function (value, options) {
+    Handlebars.registerHelper("brt-unlessEmpty", function (value, options) {
       return value !== undefined &&
+        value !== null &&
         ((value instanceof Object && Object.keys(value).length > 0) || (value instanceof Array && value.length > 0))
         ? options.fn(this)
         : options.inverse(this);

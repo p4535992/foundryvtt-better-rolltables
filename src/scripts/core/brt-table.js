@@ -401,7 +401,7 @@ export class BetterRollTable {
         [null, null]
       );
       if (availableRange[0] > maxRoll || availableRange[1] < minRoll) {
-        warn("No results can possibly be drawn from this table and formula.", true);
+        // warn("No results can possibly be drawn from this table and formula.", true);
         return { roll, results };
       }
 
