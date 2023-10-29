@@ -1,5 +1,10 @@
 TODO 
 - Add confirm dialog on reset button ???
+
+### 2.0.26
+- Some clean up
+- Removed the Spell Caching Feature for good, every system will manage this stuff
+
 ### 2.0.25
 
 - Little fix on html template e removed the css background color for not override the one chosen from the system

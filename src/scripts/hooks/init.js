@@ -1,17 +1,16 @@
-import { BetterRT } from "../better-table-view.js";
+import { BRTCONFIG } from "../core/config.js";
+import API from "../API.js";
+import { CONSTANTS } from "../constants/constants.js";
 import { BetterTables } from "../better-tables.js";
 import { BRTUtils } from "../core/utils.js";
 import { setApi } from "../../module.js";
-import API from "../API.js";
 import { registerSettings } from "../settings.js";
-import { CONSTANTS } from "../constants/constants.js";
 import { BetterRollTableBetterConfig } from "../better/brt-rolltable-config.js";
 import SETTINGS from "../constants/settings.js";
 import { BetterRollTableLootConfig } from "../loot/loot-rolltable-config.js";
 import { BetterRollTableStoryConfig } from "../story/story-rolltable-config.js";
 import { BetterRollTableHarvestConfig } from "../harvest/harvest-rolltable-config.js";
-import { registerSocket } from "../socket.js";
-import { isEmptyObject } from "../lib.js";
+import { i18n, i18nFormat, isEmptyObject } from "../lib.js";
 
 /**
  * @module BetterRollTables.BetterRolltableHooks
@@ -152,7 +151,7 @@ class BetterRolltableHooks {
       }
     });
 
-    await API.updateSpellCache();
+    // await API.updateSpellCache();
   }
 
   static foundryInit() {

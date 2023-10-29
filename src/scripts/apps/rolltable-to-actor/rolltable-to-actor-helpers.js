@@ -595,7 +595,7 @@ export class RollTableToActorHelpers {
     if (!itemData) {
       return;
     }
-    itemData = await RollTableToActorHelpers.preItemCreationDataManipulation(itemData);
+    // itemData = await RollTableToActorHelpers.preItemCreationDataManipulation(itemData);
     return itemData;
   }
 
@@ -622,59 +622,59 @@ export class RollTableToActorHelpers {
 
   /** MANIPULATOR */
 
-  /**
-   *
-   * @param {number} level
-   *
-   * @returns {Item}
-   */
-  static async _getRandomSpell(level) {
-    const spells = API.betterTables
-        .getSpellCache()
-        .filter((spell) => getProperty(spell, BRTCONFIG.SPELL_LEVEL_PATH) === level),
-      spell = spells[Math.floor(Math.random() * spells.length)];
-    return BRTUtils.findInCompendiumById(spell.collection, spell._id);
-  }
+  // /**
+  //  *
+  //  * @param {number} level
+  //  *
+  //  * @returns {Item}
+  //  */
+  // static async _getRandomSpell(level) {
+  //   const spells = API.betterTables
+  //       .getSpellCache()
+  //       .filter((spell) => getProperty(spell, BRTCONFIG.SPELL_LEVEL_PATH) === level),
+  //     spell = spells[Math.floor(Math.random() * spells.length)];
+  //   return BRTUtils.findInCompendiumById(spell.collection, spell._id);
+  // }
 
-  /**
-   *
-   * @param {*} itemData
-   *
-   * @returns
-   */
-  static async preItemCreationDataManipulation(itemData) {
-    const match = BRTCONFIG.SCROLL_REGEX.exec(itemData.name);
+  // /**
+  //  *
+  //  * @param {*} itemData
+  //  *
+  //  * @returns
+  //  */
+  // static async preItemCreationDataManipulation(itemData) {
+  //   const match = BRTCONFIG.SCROLL_REGEX.exec(itemData.name);
 
-    itemData = duplicate(itemData);
+  //   itemData = duplicate(itemData);
 
-    if (!match) {
-      return itemData;
-    }
+  //   if (!match) {
+  //     return itemData;
+  //   }
 
-    // If it is a scroll then open the compendium
-    const level = match[1].toLowerCase() === "cantrip" ? 0 : parseInt(match[1]);
-    const itemEntity = await RollTableToActorHelpers._getRandomSpell(level);
+  //   // If it is a scroll then open the compendium
+  //   const level = match[1].toLowerCase() === "cantrip" ? 0 : parseInt(match[1]);
+  //   const itemEntity = await RollTableToActorHelpers._getRandomSpell(level);
 
-    if (!itemEntity) {
-      ui.notifications.warn(
-        CONSTANTS.MODULE_ID + ` | No spell of level ${level} found in compendium  ${itemEntity.collection} `
-      );
-      return itemData;
-    }
+  //   if (!itemEntity) {
+  //     ui.notifications.warn(
+  //       CONSTANTS.MODULE_ID + ` | No spell of level ${level} found in compendium  ${itemEntity.collection} `
+  //     );
+  //     return itemData;
+  //   }
 
-    const itemLink = `@Compendium[${itemEntity.pack}.${itemEntity._id}]`;
-    // make the name shorter by removing some text
-    itemData.name = itemData.name.replace(/^(Spell\s)/, "");
-    itemData.name = itemData.name.replace(/(Cantrip\sLevel)/, "Cantrip");
-    itemData.name += ` (${itemEntity.name})`;
-    itemData.system.description.value =
-      "<blockquote>" +
-      itemLink +
-      "<br />" +
-      itemEntity.system.description.value +
-      "<hr />" +
-      itemData.system.description.value +
-      "</blockquote>";
-    return itemData;
-  }
+  //   const itemLink = `@Compendium[${itemEntity.pack}.${itemEntity._id}]`;
+  //   // make the name shorter by removing some text
+  //   itemData.name = itemData.name.replace(/^(Spell\s)/, "");
+  //   itemData.name = itemData.name.replace(/(Cantrip\sLevel)/, "Cantrip");
+  //   itemData.name += ` (${itemEntity.name})`;
+  //   itemData.system.description.value =
+  //     "<blockquote>" +
+  //     itemLink +
+  //     "<br />" +
+  //     itemEntity.system.description.value +
+  //     "<hr />" +
+  //     itemData.system.description.value +
+  //     "</blockquote>";
+  //   return itemData;
+  // }
 }

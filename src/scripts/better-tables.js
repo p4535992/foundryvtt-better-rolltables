@@ -5,25 +5,23 @@ import { BRTCONFIG } from "./core/config.js";
 import API from "./API.js";
 import { CONSTANTS } from "./constants/constants.js";
 import { debug, i18n, info, isEmptyObject, isRealBoolean, isRealBooleanOrElseNull, warn } from "./lib.js";
-import SETTINGS from "./constants/settings.js";
 import { HarvestChatCard } from "./harvest/harvest-chat-card.js";
 import { StoryChatCard } from "./story/story-chat-card.js";
 import { BetterChatCard } from "./better/brt-chat-card.js";
 import { BetterRollTable } from "./core/brt-table.js";
-import { BRTBetterHelpers } from "./better/brt-helper.js";
 
 export class BetterTables {
   constructor() {
-    this._spellCache = undefined;
+    // this._spellCache = undefined;
   }
 
-  /**
-   * Get spells in cache for
-   * @returns {*}
-   */
-  getSpellCache() {
-    return this._spellCache;
-  }
+  // /**
+  //  * Get spells in cache for
+  //  * @returns {*}
+  //  */
+  // getSpellCache() {
+  //   return this._spellCache;
+  // }
 
   /**
    *
@@ -155,28 +153,28 @@ export class BetterTables {
     return await API.createTableFromCompendium(tableName, compendiumName, { weightPredicate });
   }
 
-  /**
-   * Update spell cache used for random spell scroll generation
-   *
-   * @returns {Promise<void>}
-   */
-  async updateSpellCache(pack) {
-    if (game.user.isGM) {
-      const defaultPack = game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.SPELL_COMPENDIUM_KEY),
-        spellCompendium = game.packs.get(defaultPack);
+  // /**
+  //  * Update spell cache used for random spell scroll generation
+  //  *
+  //  * @returns {Promise<void>}
+  //  */
+  // async updateSpellCache(pack) {
+  //   if (game.user.isGM) {
+  //     const defaultPack = game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.SPELL_COMPENDIUM_KEY),
+  //       spellCompendium = game.packs.get(defaultPack);
 
-      if ((!pack && spellCompendium) || pack === defaultPack) {
-        const spellCompendiumIndex = await spellCompendium.getIndex({
-          fields: [SETTINGS.SPELL_LEVEL_PATH, "img"],
-        });
-        this._spellCache = spellCompendiumIndex
-          .filter((entry) => entry.type === "spell")
-          .map((i) => mergeObject(i, { collection: spellCompendium.collection }));
-      } else {
-        ui.notifications.error(CONSTANTS.MODULE_ID + `| Spell cache could not be initialized/updated.`);
-      }
-    }
-  }
+  //     if ((!pack && spellCompendium) || pack === defaultPack) {
+  //       const spellCompendiumIndex = await spellCompendium.getIndex({
+  //         fields: [SETTINGS.SPELL_LEVEL_PATH, "img"],
+  //       });
+  //       this._spellCache = spellCompendiumIndex
+  //         .filter((entry) => entry.type === "spell")
+  //         .map((i) => mergeObject(i, { collection: spellCompendium.collection }));
+  //     } else {
+  //       ui.notifications.error(CONSTANTS.MODULE_ID + `| Spell cache could not be initialized/updated.`);
+  //     }
+  //   }
+  // }
 
   createLink(item) {
     if (!item) {

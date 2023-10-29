@@ -107,9 +107,9 @@ const API = {
     // }
   },
 
-  async updateSpellCache(pack = null) {
-    return await this.betterTables.updateSpellCache(pack);
-  },
+  // async updateSpellCache(pack = null) {
+  //   return await this.betterTables.updateSpellCache(pack);
+  // },
 
   /**
    *
