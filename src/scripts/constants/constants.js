@@ -24,6 +24,7 @@ export const CONSTANTS = {
     GENERIC_RESULT_SHOW_HIDDEN_RESULT_ON_CHAT: "brt-show-hidden-result-on-chat",
     GENERIC_RESULT_PERCENTAGE_LOW_VALUE: "brt-percentage-low-value",
     GENERIC_RESULT_PERCENTAGE_HIGH_VALUE: "brt-percentage-high-value",
+    GENERIC_RESULT_JOURNAL_PAGE_UUID: "brt-result-journal-page-uuid",
 
     LOOT_CURRENCY_STRING_KEY: "table-currency-string",
     LOOT_AMOUNT_KEY: "loot-amount-key",

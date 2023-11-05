@@ -293,6 +293,29 @@ export class BRTBetterHelpers {
         // }
         isUpdate = true;
       }
+      if (result.documentCollection === "JournalEntry") {
+        if (result.uuid) {
+          result.isJournal = true;
+          const journalEntry = await fromUuid(result.uuid);
+          if (journalEntry?.pages.size > 0) {
+            const sortedArray = journalEntry.pages.contents.sort((a, b) => a.sort - b.sort);
+            const journalPages = [];
+            journalPages.push({
+              uuid: "",
+              name: "",
+            });
+            for (const page of sortedArray) {
+              journalPages.push({
+                uuid: page.uuid,
+                name: page.name,
+              });
+            }
+            result.journalPages = journalPages;
+          } else {
+            result.journalPages = [];
+          }
+        }
+      }
     }
     return {
       result: result,

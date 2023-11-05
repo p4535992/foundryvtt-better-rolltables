@@ -287,18 +287,19 @@ export class BRTUtils {
         type = CONST.TABLE_RESULT_TYPES.DOCUMENT;
       }
 
-      const resultDoc = itemEntity; // await BRTBetterHelpers.retrieveDocumentFromResult(itemEntity);
+      // let resultDoc = await BRTBetterHelpers.retrieveDocumentFromResult(itemEntity);
+      let resultDoc = itemEntity;
 
       itemsData.push({
-        documentName: itemEntity.documentName,
-        compendiumName: itemEntity.pack,
+        documentName: resultDoc.documentName,
+        compendiumName: resultDoc.pack,
         type: type,
         item: {
-          id: itemEntity.id,
-          _id: itemEntity.id,
-          name: itemEntity.name,
-          img: itemEntity.img,
-          text: itemEntity.text,
+          id: resultDoc.id,
+          _id: resultDoc.id,
+          name: resultDoc.name,
+          img: resultDoc.img ?? result.src ?? `icons/svg/d20-highlight.svg`,
+          text: resultDoc.text ?? resultDoc.name ?? "",
           uuid: resultDoc?.uuid ?? "",
           isHidden: isHidden,
         },

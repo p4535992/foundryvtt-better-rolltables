@@ -88,7 +88,7 @@ export class BetterRollTable {
     //   results: results.map((result) => {
     //     const r = result.toObject(false);
     //     r.text = result.getChatText();
-    //     r.icon = result.icon ?? result.img;
+    //     r.icon = result.icon ?? result.img ?? result.src ?? `icons/svg/d20-highlight.svg`;
     //     return r;
     //   }),
     //   rollHTML: this.table.displayRoll && roll ? await roll.render() : null,
@@ -101,7 +101,7 @@ export class BetterRollTable {
     let betterResults = results.map((result) => {
       const r = result.toObject(false);
       r.text = result.getChatText();
-      r.icon = result.icon ?? result.img;
+      r.icon = result.icon ?? result.img ?? result.src ?? `icons/svg/d20-highlight.svg`;
       return r;
     });
 
@@ -128,7 +128,7 @@ export class BetterRollTable {
         results: results.map((result) => {
           const r = result.toObject(false);
           r.text = result.getChatText();
-          r.icon = result.icon ?? result.img;
+          r.icon = result.icon ?? result.img ?? result.src ?? `icons/svg/d20-highlight.svg`;
           return r;
         }),
         rollHTML: this.table.displayRoll && roll ? await roll.render() : null,

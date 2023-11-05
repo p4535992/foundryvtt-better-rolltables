@@ -319,9 +319,26 @@
                             {{/select}}
                         </select>
                         <input class="result-target" name="results.{{i}}.text" type="hidden" value="{{result.text}}"/>
-                        <input class="result-brt-custom-name" type="text" 
-                            name="results.{{i}}.flags.better-rolltables.brt-result-custom-name" 
-                            value="{{result.flags.better-rolltables.brt-result-custom-name}}" />
+
+                        {{#if result.isJournal}}
+                            <input style="width:29%" class="result-brt-custom-name" type="text" 
+                                name="results.{{i}}.flags.better-rolltables.brt-result-custom-name" 
+                                value="{{result.flags.better-rolltables.brt-result-custom-name}}" />
+                            <select class="result-details-journal-page-id" style="width:29%" name="results.{{i}}.flags.better-rolltables.brt-result-journal-page-uuid">
+                                {{#select result.flags.better-rolltables.brt-result-journal-page-uuid}}
+                                {{#each result.journalPages}}
+                                <option value="{{this.uuid}}">{{this.name}}</option>
+                                {{/each}}
+                                {{/select}}
+                            </select>
+                        {{else}}
+                            <input class="result-brt-custom-name" type="hidden" 
+                                name="results.{{i}}.flags.better-rolltables.brt-result-journal-page-uuid" 
+                                value="" />
+                            <input class="result-brt-custom-name" type="text" 
+                                name="results.{{i}}.flags.better-rolltables.brt-result-custom-name" 
+                                value="{{result.flags.better-rolltables.brt-result-custom-name}}" />
+                        {{/if}}
                     
                     {{else if result.isCompendium}}
                         <select name="results.{{i}}.documentCollection">

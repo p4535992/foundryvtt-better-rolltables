@@ -108,7 +108,8 @@ export class BetterResults {
         } else if (textString) {
           // if no table definition is found, the textString is the item name
           console.log(`results text ${textString.trim()} and commands ${commands}`);
-          betterResult.img = result.thumbnail || result.img || CONFIG.RollTable.resultIcon;
+          betterResult.img =
+            result.thumbnail ?? result.img ?? CONFIG.RollTable.resultIcon ?? result.src ?? `icons/svg/d20-black.svg`;
           betterResult.text = textString.trim();
           // if there is command, then it's not a pure text but a generated item
           if (!commands || commands.length === 0) {
@@ -127,7 +128,7 @@ export class BetterResults {
       }
     } else {
       const betterResult = mergeObject({}, result.toObject(false));
-      betterResult.img = result.thumbnail || result.img || CONFIG.RollTable.resultIcon;
+      betterResult.img = result.thumbnail || result.img || CONFIG.RollTable.resultIcon || `icons/svg/d20-black.svg`;
       betterResult.collection = result.documentCollection;
       betterResult.text = result.text;
 

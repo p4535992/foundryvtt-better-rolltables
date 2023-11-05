@@ -60,7 +60,7 @@ export class HarvestChatCard {
           {
             id: result.text,
             text: result.text ?? result.name,
-            img: result.icon ?? result.img,
+            img: result.icon ?? result.img ?? result.src ?? `icons/svg/d20-highlight.svg`,
             isText: true,
           },
           {},
@@ -80,7 +80,7 @@ export class HarvestChatCard {
           {
             id: result.text,
             text: customResultNameHidden ?? result.text ?? result.name,
-            img: customResultImgHidden ?? result.icon ?? result.img,
+            img: customResultImgHidden ?? result.icon ?? result.img ?? result.src ?? `icons/svg/d20-highlight.svg`,
             isText: true,
           },
           {},
@@ -101,7 +101,7 @@ export class HarvestChatCard {
           {
             id: result.text,
             text: result.text ?? result.name,
-            img: result.icon ?? result.img,
+            img: result.icon ?? result.img ?? result.src ?? `icons/svg/d20-highlight.svg`,
             isText: true,
           },
           {},
@@ -121,7 +121,7 @@ export class HarvestChatCard {
           {
             id: result.text,
             text: customResultNameHidden ?? result.text ?? result.name,
-            img: customResultImgHidden ?? result.icon ?? result.img,
+            img: customResultImgHidden ?? result.icon ?? result.img ?? result.src ?? `icons/svg/d20-highlight.svg`,
             isText: true,
           },
           {},
@@ -131,7 +131,7 @@ export class HarvestChatCard {
       }
 
       const itemEntityUuid = getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`);
-      const itemEntity = await fromUuid(itemEntityUuid);
+      let itemEntity = await fromUuid(itemEntityUuid);
       if (itemEntity) {
         if (customResultName && customResultName !== itemEntity.name) {
           setProperty(itemEntity, `name`, customResultName);
@@ -140,6 +140,14 @@ export class HarvestChatCard {
           setProperty(itemEntity, `img`, customResultImg);
         }
 
+        let isJournal = itemEntity instanceof JournalEntry;
+        let docJournalPageUuid = getProperty(
+          result,
+          `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_JOURNAL_PAGE_UUID}`
+        );
+        if (isJournal && docJournalPageUuid) {
+          itemEntity = await fromUuid(docJournalPageUuid);
+        }
         this.itemsDataGM = await BRTUtils.addToItemData(this.itemsDataGM, itemEntity, itemData, false);
 
         if (customResultNameHidden && customResultNameHidden !== itemEntity.name) {
@@ -169,52 +177,6 @@ export class HarvestChatCard {
         continue;
       }
 
-      /*
-      const itemData = await RollTableToActorHelpers.buildItemData(result);
-      if (result.collection) {
-        const itemEntity = await BRTUtils.getItemFromCompendium(result);
-
-        const itemEntityOriginalName = getProperty(itemEntity, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_NAME}`);
-        if (itemEntity && itemEntity.name === itemEntityOriginalName) {
-        // if (itemEntity && itemEntity.name === itemData.name) {
-          if (customResultName && customResultName !== itemEntity.name) {
-            setProperty(itemEntity, `name`, customResultName);
-          }
-          if (customResultImg && customResultImg !== itemEntity.img) {
-            setProperty(itemEntity, `img`, customResultImg);
-          }
-          this.itemsDataGM = await BRTUtils.addToItemData(this.itemsDataGM, itemEntity, itemData, false);
-          if (customResultNameHidden && customResultNameHidden !== itemEntity.name) {
-            setProperty(itemEntity, `name`, customResultNameHidden);
-          }
-          if (customResultImgHidden && customResultImgHidden !== itemEntity.img) {
-            setProperty(itemEntity, `img`, customResultImgHidden);
-          }
-          this.itemsData = await BRTUtils.addToItemData(this.itemsData, itemEntity, itemData, isResultHidden);
-          continue;
-        }
-      }
-
-      const itemEntity = game.items.getName(itemData.name);
-      if (itemEntity) {
-        if (customResultName && customResultName !== itemEntity.name) {
-          setProperty(itemEntity, `name`, customResultName);
-        }
-        if (customResultImg && customResultImg !== itemEntity.img) {
-          setProperty(itemEntity, `img`, customResultImg);
-        }
-        this.itemsDataGM = await BRTUtils.addToItemData(this.itemsDataGM, itemEntity, itemData, false);
-        if (customResultNameHidden && customResultNameHidden !== itemEntity.name) {
-          setProperty(itemEntity, `name`, customResultNameHidden);
-        }
-        if (customResultImgHidden && customResultImgHidden !== itemEntity.img) {
-          setProperty(itemEntity, `img`, customResultImgHidden);
-        }
-        this.itemsData = await BRTUtils.addToItemData(this.itemsData, itemEntity, itemData, isResultHidden);
-        continue;
-      }
-      */
-
       const itemFolder = await this.getBRTFolder();
       if (itemFolder) {
         itemData.folder = itemFolder.id;
@@ -223,7 +185,7 @@ export class HarvestChatCard {
       }
 
       setProperty(itemData, "permission.default", CONST.DOCUMENT_PERMISSION_LEVELS.OBSERVER);
-      const newItem = await Item.create(itemData);
+      let newItem = await Item.create(itemData);
       if (customResultName && customResultName !== newItem.name) {
         setProperty(newItem, `name`, customResultName);
       }
@@ -231,6 +193,14 @@ export class HarvestChatCard {
         setProperty(newItem, `img`, customResultImg);
       }
 
+      let isJournal = newItem instanceof JournalEntry;
+      let docJournalPageUuid = getProperty(
+        result,
+        `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_JOURNAL_PAGE_UUID}`
+      );
+      if (isJournal && docJournalPageUuid) {
+        newItem = await fromUuid(docJournalPageUuid);
+      }
       this.itemsDataGM = await BRTUtils.addToItemData(this.itemsDataGM, newItem, itemData, false);
 
       if (customResultNameHidden && customResultNameHidden !== itemEntity.name) {

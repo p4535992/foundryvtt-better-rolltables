@@ -3,7 +3,7 @@ import { CONSTANTS } from "../constants/constants";
 import { BRTBetterHelpers } from "../better/brt-helper";
 import { RichResultEdit } from "../core/brt-result-editor";
 import { BetterRollTableBetterConfig } from "../better/brt-rolltable-config";
-import { i18n } from "../lib";
+import { i18n, warn } from "../lib";
 
 /**
  * The Application responsible for displaying and editing a single RollTable document.
@@ -121,6 +121,11 @@ export class BetterRollTableLootConfig extends RollTableConfig {
     html
       .querySelectorAll("a.rich-edit-result")
       .forEach((el) => el.addEventListener("click", this._openRichEditor.bind(this)));
+
+    // Modify Page Id
+    var selectPages = html.querySelector(".result-details .result-details-journal-page-id");
+    selectPages?.addEventListener("change", this._onChangeResultJournalPageId.bind(this));
+
     // TODO
     // html.querySelector(".toggle-editor").addEventListener("click", (ev) => this._toggleSimpleEditor(ev, html));
 
@@ -606,8 +611,20 @@ export class BetterRollTableLootConfig extends RollTableConfig {
     const tableResult = event.currentTarget.closest(".table-result");
     const result = this.document.results.get(tableResult.dataset.resultId);
     let findDocument = await BRTBetterHelpers.retrieveDocumentFromResult(result, true);
+
+    let isJournal = findDocument instanceof JournalEntry;
+    let docJournalPageUuid = getProperty(
+      result,
+      `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_JOURNAL_PAGE_UUID}`
+    );
+    if (isJournal && docJournalPageUuid) {
+      findDocument = await fromUuid(docJournalPageUuid);
+    }
+
     if (findDocument) {
       findDocument.sheet.render(true);
+    } else {
+      warn(`No document is been found to edit`, true);
     }
   }
 
@@ -695,14 +712,31 @@ export class BetterRollTableLootConfig extends RollTableConfig {
 
   /* -------------------------------------------- */
 
-  // /**
-  //  * Refresh the Table to it's original
-  //  * @param {Event} event
-  //  * @private
-  //  */
-  // _onRefreshTable(event) {
-  //   return this._onSubmit.bind(event, { updateData: null, preventClose: true, preventRender: false });
-  // }
+  /**
+   * Submit the entire form when a table result type is changed, in case there are other active changes
+   * @param {Event} event
+   * @private
+   */
+  async _onChangeResultJournalPageId(event) {
+    event.preventDefault();
+    const select = event.target;
+    const value = select.value;
+    const resultKey = select.name;
+    const tableResult = event.currentTarget.closest(".table-result");
+    const result = this.document.results.get(tableResult.dataset.resultId);
+
+    setProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_JOURNAL_PAGE_UUID}`, value);
+    // Save any pending changes
+    await this._onSubmit(event);
+
+    await result.update({
+      flags: {
+        [`${CONSTANTS.MODULE_ID}`]: {
+          [`${CONSTANTS.FLAGS.GENERIC_RESULT_JOURNAL_PAGE_UUID}`]: value ?? "",
+        },
+      },
+    });
+  }
 
   /* -------------------------------------------- */
 }
