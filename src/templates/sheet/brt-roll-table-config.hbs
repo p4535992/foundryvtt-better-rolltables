@@ -321,10 +321,10 @@
                         <input class="result-target" name="results.{{i}}.text" type="hidden" value="{{result.text}}"/>
 
                         {{#if result.isJournal}}
-                            <input style="width:29%" class="result-brt-custom-name" type="text" 
+                            <input style="width:28%" class="result-brt-custom-name" type="text" 
                                 name="results.{{i}}.flags.better-rolltables.brt-result-custom-name" 
                                 value="{{result.flags.better-rolltables.brt-result-custom-name}}" />
-                            <select class="result-details-journal-page-id" style="width:29%" name="results.{{i}}.flags.better-rolltables.brt-result-journal-page-uuid">
+                            <select class="result-details-journal-page-id" style="width:28%" name="results.{{i}}.flags.better-rolltables.brt-result-journal-page-uuid">
                                 {{#select result.flags.better-rolltables.brt-result-journal-page-uuid}}
                                 {{#each result.journalPages}}
                                 <option value="{{this.uuid}}">{{this.name}}</option>

@@ -123,7 +123,7 @@ export class BetterRollTableLootConfig extends RollTableConfig {
       .forEach((el) => el.addEventListener("click", this._openRichEditor.bind(this)));
 
     // Modify Page Id
-    var selectPages = html.querySelector(".result-details .result-details-journal-page-id");
+    let selectPages = html.querySelector(".result-details .result-details-journal-page-id");
     selectPages?.addEventListener("change", this._onChangeResultJournalPageId.bind(this));
 
     // TODO
