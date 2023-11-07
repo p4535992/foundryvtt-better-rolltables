@@ -298,7 +298,7 @@ export class BRTUtils {
           id: resultDoc.id,
           _id: resultDoc.id,
           name: resultDoc.name,
-          img: resultDoc.img ?? result.src ?? `icons/svg/d20-highlight.svg`,
+          img: resultDoc.img ?? resultDoc.src ?? `icons/svg/d20-highlight.svg`,
           text: resultDoc.text ?? resultDoc.name ?? "",
           uuid: resultDoc?.uuid ?? "",
           isHidden: isHidden,

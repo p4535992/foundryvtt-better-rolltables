@@ -1,6 +1,10 @@
 TODO 
 - Add confirm dialog on reset button ???
 
+### 2.0.27-28
+
+- Add Feature: https://github.com/p4535992/foundryvtt-better-rolltables/issues/12
+
 ### 2.0.26
 - Some clean up
 - Removed the Spell Caching Feature for good, every system will manage this stuff

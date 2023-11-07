@@ -229,7 +229,38 @@ export class BetterRollTableLootConfig extends RollTableConfig {
       }
       return this.reorderIndex(event, json.result, el.dataset.resultId);
     } else {
-      return super._onDrop(event);
+      if (json.type === "JournalEntryPage") {
+        const journalPage = await fromUuid(json.uuid);
+
+        const data = await fromUuid(journalPage.parent.uuid);
+        data.type = data.documentName;
+        const allowed = Hooks.call("dropRollTableSheetData", this.document, this, data);
+        if (allowed === false) return;
+
+        // Get the dropped document
+        if (!CONST.DOCUMENT_TYPES.includes(data.type)) return;
+        //const cls = getDocumentClass(data.type);
+        //const document = await cls.fromDropData(data);
+        const document = data;
+        if (!document || document.isEmbedded) return;
+
+        // Delegate to the onCreate handler
+        const isCompendium = !!document.compendium;
+        return await this._onCreateResult(event, {
+          type: isCompendium ? CONST.TABLE_RESULT_TYPES.COMPENDIUM : CONST.TABLE_RESULT_TYPES.DOCUMENT,
+          documentCollection: isCompendium ? document.pack : document.documentName,
+          text: document.name,
+          documentId: document.id,
+          img: document.img || null,
+          flags: {
+            [`${CONSTANTS.MODULE_ID}`]: {
+              [`${CONSTANTS.FLAGS.GENERIC_RESULT_JOURNAL_PAGE_UUID}`]: json.uuid,
+            },
+          },
+        });
+      } else {
+        return super._onDrop(event);
+      }
     }
   }
 
