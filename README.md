@@ -35,7 +35,7 @@ Implementing for example the Treasure Hoard" Tables from the Dungeon master manu
 
 ## Integration with the module [Better Harvesting and Looting](https://github.com/OhhLoz/Harvester)
 
-In the BRT Harvest Rolltable sheet, the "Source Reference" field is the one used by the XXX module to connect the monster to the rolltable ! So "Source Reference" === "Name of The Monster" , and REMEMBER YOU MUST PUT THE NEW ROLLTABLE IN THE BRT COMPENDIUM "better-rolltables.brt-harvest-harvester" or in the Rolltable directory of the world itself (for now).
+In the BRT Harvest Rolltable sheet, the "Source Reference" field is the one used by the  [Better Harvesting and Looting](https://github.com/OhhLoz/Harvester) module to connect the monster to the rolltable ! So **"Source Reference" === "Name of The Monster"** , and REMEMBER YOU MUST PUT THE NEW ROLLTABLE IN THE BRT COMPENDIUM "better-rolltables.brt-harvest-harvester" or in the Rolltable directory of the world itself (for now).
 
 ## NOTE: This module is under maintenance, I have no plans to update or add features. However, I will try to fix any bugs as possible. Any contribution is welcome.
 
