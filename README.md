@@ -33,11 +33,9 @@ Implementing for example the Treasure Hoard" Tables from the Dungeon master manu
 - Adds the option to automatically import rolled items in controlled actors
 - Red colored background for broken references to a document on the specific row of the results table
 
-## NOTES ABOUT UPDATE FROM 1.8.95 for FVTT 9 to 1.9.1 FVTT 10
+## Integration with the module [Better Harvesting and Looting](https://github.com/OhhLoz/Harvester)
 
-The module was updated for the 10 by [elizeuangelo](https://github.com/elizeuangelo) on commission and then perfected by [sasquach45932](https://github.com/sasquach45932) with some updates and bug fixing . Finally [p4535992](https://github.com/p4535992) applied some code best practices (module id as prefix of i18n and css rules, etc.) and taking over maintenance of the module.
-
-A special ty to the original authors [Ultrakorne#6240](https://discordapp.com/users/Ultrakorne#6240), [JackPrince#0494](https://discordapp.com/users/JackPrince#0494) and [DanielBöttner](https://github.com/DanielBoettner).
+In the BRT Harvest Rolltable sheet, the "Source Reference" field is the one used by the XXX module to connect the monster to the rolltable ! So "Source Reference" === "Name of The Monster" , and REMEMBER YOU MUST PUT THE NEW ROLLTABLE IN THE BRT COMPENDIUM "better-rolltables.brt-harvest-harvester" or in the Rolltable directory of the world itself (for now).
 
 ## NOTE: This module is under maintenance, I have no plans to update or add features. However, I will try to fix any bugs as possible. Any contribution is welcome.
 
@@ -118,6 +116,10 @@ Any issues, bugs, or feature requests are always welcome to be reported directly
 This package is under an [MIT license](LICENSE) and the [Foundry Virtual Tabletop Limited License Agreement for module development](https://foundryvtt.com/article/license/).
 
 ## Credit
+
+The module was updated for the 10 by [elizeuangelo](https://github.com/elizeuangelo) on commission and then perfected by [sasquach45932](https://github.com/sasquach45932) with some updates and bug fixing . Finally [p4535992](https://github.com/p4535992) applied some code best practices (module id as prefix of i18n and css rules, etc.) and taking over maintenance of the module.
+
+A special ty to the original authors [Ultrakorne#6240](https://discordapp.com/users/Ultrakorne#6240), [JackPrince#0494](https://discordapp.com/users/JackPrince#0494) and [DanielBöttner](https://github.com/DanielBoettner).
 
 - [code-boxxKoboldworks](https://gitlab.com/koboldworks) and the module [Enhanced RollTable Sheet](https://gitlab.com/koboldworks/agnostic/rolltable-sheet)
 - [code-boxx](https://github.com/code-boxx) and the module [sortable](https://gist.github.com/code-boxx/45ebe489b99583dc170564113b1ad24e)
