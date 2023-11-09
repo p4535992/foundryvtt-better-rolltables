@@ -32,6 +32,7 @@ Implementing for example the Treasure Hoard" Tables from the Dungeon master manu
 - Adds an option to change the table roll to GM only.
 - Adds the option to automatically import rolled items in controlled actors
 - Red colored background for broken references to a document on the specific row of the results table
+- Use percentages instead of the mechanism with the range and weight to retrieve objects from a rolltable. Values range from 1 to 100 with a step of 0.1, so values such as 27.1 or 0.5 are accepted.
 
 ## Integration with the module [Better Harvesting and Looting](https://github.com/OhhLoz/Harvester)
 
