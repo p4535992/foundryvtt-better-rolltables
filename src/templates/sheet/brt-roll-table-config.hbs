@@ -363,25 +363,25 @@
                             name="results.{{i}}.flags.better-rolltables.brt-result-formula.formula"
                             value="{{result.flags.better-rolltables.brt-result-formula.formula}}"
                             placeholder="1"
-                            data-dtype="Number"
+                            data-dtype="String"
                         />
 					{{else if result.isDocument}}
                         <input {{#brt-isEmpty result.flags.better-rolltables.brt-result-formula.formula}} style="background: lightcoral;"{{/brt-isEmpty}} 
                             class="result-better-rolltables-formula"
-                            type="number" min="1"
+                            type="text"
                             name="results.{{i}}.flags.better-rolltables.brt-result-formula.formula"
                             value="{{result.flags.better-rolltables.brt-result-formula.formula}}"
                             placeholder="1"
-                            data-dtype="Number"
+                            data-dtype="String"
                             />
 					{{else if result.isCompendium}}
                         <input {{#brt-isEmpty result.flags.better-rolltables.brt-result-formula.formula}} style="background: lightcoral;"{{/brt-isEmpty}} 
                             class="result-better-rolltables-formula"
-                            type="number" min="1"
+                            type="text"
                             name="results.{{i}}.flags.better-rolltables.brt-result-formula.formula"
                             value="{{result.flags.better-rolltables.brt-result-formula.formula}}"
                             placeholder="1"
-                            data-dtype="Number"
+                            data-dtype="String"
                             />
 					{{/if}}
                 </td>
