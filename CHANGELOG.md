@@ -1,6 +1,10 @@
 TODO 
 - Add confirm dialog on reset button ???
 
+### 2.0.29 
+
+- allow (again) quantity formula to accept text (like 1d10) ty to @Pantus
+
 ### 2.0.27-28
 
 - Add Feature: https://github.com/p4535992/foundryvtt-better-rolltables/issues/12
