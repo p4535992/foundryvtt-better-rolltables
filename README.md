@@ -40,7 +40,7 @@ In the BRT Harvest Rolltable sheet, the "Source Reference" field is the one used
 
 ## NOTE: This module is under maintenance, I have no plans to update or add features. However, I will try to fix any bugs as possible. Any contribution is welcome.
 
-### Intro video
+### Intro video (very old now everything is manage from specific sheet)
 
 [![Overview video](https://img.youtube.com/vi/TRg4y0joOKA/0.jpg)](https://www.youtube.com/watch?v=TRg4y0joOKA)
 
