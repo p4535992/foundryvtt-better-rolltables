@@ -19,6 +19,10 @@
 *better-rolltables* is Module for FoundryVTT to improve and add functionality to Rollable tables
 Implementing for example the Treasure Hoard" Tables from the Dungeon master manual becomes possible!
 
+For every BRT Rolltable there is a specific sheet for manage the many use cases, so make sure to check if you see these before open any issues.
+
+![](wiki/img/brt_screen.png)
+
 ## Features
 
 - Weight normalization: Generates appropriate weight value to results based on range, as opposed to doing the inverse with base sheet.
