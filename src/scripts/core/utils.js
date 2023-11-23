@@ -2,12 +2,12 @@ import { NULL } from "sass";
 import { BRTBetterHelpers } from "../better/brt-helper";
 import { CONSTANTS } from "../constants/constants";
 import { isRealBoolean, isRealBooleanOrElseNull, isRealNumber } from "../lib";
-import { BRTCONFIG } from "./config";
+import SETTINGS from "../constants/settings";
 
 export class BRTUtils {
   static addRollModeToChatData(chatData, rollMode) {
     rollMode = rollMode ?? game.settings.get("core", "rollMode");
-    if (String(getProperty(chatData, `flags.${CONSTANTS.MODULE_ID}.${BRTCONFIG.HIDDEN_TABLE}`)) === "true") {
+    if (String(getProperty(chatData, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HIDDEN_TABLE}`)) === "true") {
       rollMode = "gmroll";
     }
 
@@ -268,8 +268,8 @@ export class BRTUtils {
 
   static async addToItemData(itemsData, itemEntity, itemData = {}, isHidden = false) {
     const existingItem = itemsData.find((i) => i.item.id === itemEntity.id);
-    const quantity = getProperty(itemData, BRTCONFIG.QUANTITY_PROPERTY_PATH) || 1;
-    const weight = getProperty(itemData, BRTCONFIG.WEIGHT_PROPERTY_PATH) || 0;
+    const quantity = getProperty(itemData, SETTINGS.QUANTITY_PROPERTY_PATH) || 1;
+    const weight = getProperty(itemData, SETTINGS.WEIGHT_PROPERTY_PATH) || 0;
 
     if (existingItem) {
       existingItem.quantity = +existingItem.quantity + +quantity;

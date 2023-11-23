@@ -1,6 +1,5 @@
 import { CONSTANTS } from "../../constants/constants";
 import { BRTBetterHelpers } from "../../better/brt-helper";
-import { BRTCONFIG } from "../../core/config";
 import { debug, getSubstring, log } from "../../lib";
 import { CompendiumToRollTableDialog } from "./compendium-to-rollTable-dialog";
 
@@ -16,9 +15,9 @@ export class CompendiumToRollTableSpecialHarvestDialog {
 
     let msg = compendium.metadata.label;
 
-    ui.notifications.info(game.i18n.format(`${BRTCONFIG.NAMESPACE}.api.msg.startRolltableGeneration`, msg));
+    ui.notifications.info(game.i18n.format(`${CONSTANTS.MODULE_ID}.api.msg.startRolltableGeneration`, msg));
     const document = this.fromCompendium(compendium);
-    ui.notifications.info(game.i18n.format(`${BRTCONFIG.NAMESPACE}.api.msg.rolltableGenerationFinished`, msg));
+    ui.notifications.info(game.i18n.format(`${CONSTANTS.MODULE_ID}.api.msg.rolltableGenerationFinished`, msg));
     return document;
   }
 

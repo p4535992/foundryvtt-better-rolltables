@@ -1,4 +1,3 @@
-import { BRTCONFIG } from "./config.js";
 import { CONSTANTS } from "../constants/constants.js";
 import { BRTBetterHelpers } from "../better/brt-helper.js";
 import { BRTUtils } from "./utils.js";
@@ -13,7 +12,7 @@ export class BetterResults {
   }
 
   async buildResults(table) {
-    const currencyString = table.getFlag(CONSTANTS.MODULE_ID, BRTCONFIG.LOOT_CURRENCY_STRING_KEY);
+    const currencyString = table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.LOOT_CURRENCY_STRING_KEY);
     this.currencyData = await this._generateCurrency(currencyString);
 
     for (let i = 0; i < this.tableResults?.length; i++) {
@@ -200,7 +199,7 @@ export class BetterResults {
       for (const currency of currenciesPieces) {
         const match = /(.*)\[(.*?)\]/g.exec(currency); // capturing 2 groups, the formula and then the currency symbol in brakets []
         if (!match || match.length < 3) {
-          let msg = game.i18n.format(`${BRTCONFIG.NAMESPACE}.Strings.Warnings.CurrencyFormat`, {
+          let msg = game.i18n.format(`${CONSTANTS.MODULE_ID}.Strings.Warnings.CurrencyFormat`, {
             currencyString: currency,
           });
           ui.notifications.warn(CONSTANTS.MODULE_ID + " | " + msg);

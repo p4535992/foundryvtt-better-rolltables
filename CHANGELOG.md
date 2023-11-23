@@ -1,6 +1,9 @@
 TODO 
 - Add confirm dialog on reset button ???
+### 2.0.30 
 
+- Clean up the code remove old and deprecated config class in favor of the constants class
+- 
 ### 2.0.29 
 
 - allow (again) quantity formula to accept text (like 1d10) ty to @Pantus

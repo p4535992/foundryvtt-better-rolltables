@@ -1,5 +1,4 @@
 import { CONSTANTS } from "../../constants/constants";
-import { BRTCONFIG } from "../../core/config";
 import { warn } from "../../lib";
 import { CompendiumToRollTableDialog } from "./compendium-to-rollTable-dialog";
 import { CompendiumToRollTableSpecialHarvestDialog } from "./compendium-to-rollTable-dialog-special-harvest-";
@@ -57,7 +56,7 @@ export class CompendiumToRollTableHelpers {
     let api_msg = CONSTANTS.MODULE_ID + ".api | ";
 
     if (compendium === undefined) {
-      api.msg += game.i18n.format(`${BRTCONFIG.NAMESPACE}.api.msg.compendiumNotFound`, msg);
+      api.msg += game.i18n.format(`${CONSTANTS.MODULE_ID}.api.msg.compendiumNotFound`, msg);
       ui.notifications.warn(CONSTANTS.MODULE_ID + " | " + api_msg);
       return;
     }
@@ -66,11 +65,11 @@ export class CompendiumToRollTableHelpers {
     msg.compendiumSize = (await compendium.getIndex()).size;
 
     if (!msg.compendiumSize) {
-      ui.notifications.warn(api.msg + game.i18n.format(`${BRTCONFIG.NAMESPACE}.api.msg.compendiumEmpty`, msg));
+      ui.notifications.warn(api.msg + game.i18n.format(`${CONSTANTS.MODULE_ID}.api.msg.compendiumEmpty`, msg));
       return;
     }
 
-    ui.notifications.info(api_msg + game.i18n.format(`${BRTCONFIG.NAMESPACE}.api.msg.startRolltableGeneration`, msg));
+    ui.notifications.info(api_msg + game.i18n.format(`${CONSTANTS.MODULE_ID}.api.msg.startRolltableGeneration`, msg));
 
     const document = compendium
       .getDocuments()
@@ -93,7 +92,7 @@ export class CompendiumToRollTableHelpers {
       .then((rolltable) => {
         rolltable.normalize();
         ui.notifications.info(
-          api_msg + game.i18n.format(`${BRTCONFIG.NAMESPACE}.api.msg.rolltableGenerationFinished`, msg)
+          api_msg + game.i18n.format(`${CONSTANTS.MODULE_ID}.api.msg.rolltableGenerationFinished`, msg)
         );
         return rolltable;
       });

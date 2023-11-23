@@ -1,7 +1,6 @@
 import { LootChatCard } from "./loot/loot-chat-card.js";
 import { BetterResults } from "./core/brt-table-results.js";
 import { BRTUtils } from "./core/utils.js";
-import { BRTCONFIG } from "./core/config.js";
 import API from "./API.js";
 import { CONSTANTS } from "./constants/constants.js";
 import { debug, i18n, info, isEmptyObject, isRealBoolean, isRealBooleanOrElseNull, warn } from "./lib.js";
@@ -89,7 +88,7 @@ export class BetterTables {
       }
     }
 
-    if (game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.USE_CONDENSED_BETTERROLL)) {
+    if (game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.USE_CONDENSED_BETTERROLL)) {
       const br = new BetterResults(results);
       const betterResults = await br.buildResults(tableEntity);
 
@@ -160,7 +159,7 @@ export class BetterTables {
   //  */
   // async updateSpellCache(pack) {
   //   if (game.user.isGM) {
-  //     const defaultPack = game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.SPELL_COMPENDIUM_KEY),
+  //     const defaultPack = game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SPELL_COMPENDIUM_KEY),
   //       spellCompendium = game.packs.get(defaultPack);
 
   //     if ((!pack && spellCompendium) || pack === defaultPack) {
@@ -206,7 +205,7 @@ export class BetterTables {
   static async enhanceCompendiumContextMenu(html, options) {
     if (game.user.isGM) {
       options.push({
-        name: i18n(`${BRTCONFIG.NAMESPACE}.api.msg.generateRolltableFromCompendium`),
+        name: i18n(`${CONSTANTS.MODULE_ID}.api.msg.generateRolltableFromCompendium`),
         icon: '<i class="fas fa-th-list"></i>',
         callback: (li) => {
           API.createRolltableFromCompendium(li.data("pack"));
@@ -214,16 +213,16 @@ export class BetterTables {
       });
 
       options.push({
-        name: i18n(`${BRTCONFIG.NAMESPACE}.api.msg.generateRolltableFromCompendiumWithFilters`),
+        name: i18n(`${CONSTANTS.MODULE_ID}.api.msg.generateRolltableFromCompendiumWithFilters`),
         icon: '<i class="fa-solid fa-arrows-split-up-and-left"></i>',
         callback: (li) => {
           API.compendiumToRollTableWithDialog(li.data("pack"));
         },
       });
 
-      if (game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.ADD_ROLL_IN_COMPENDIUM_CONTEXTMENU)) {
+      if (game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.ADD_ROLL_IN_COMPENDIUM_CONTEXTMENU)) {
         options.push({
-          name: i18n(`${BRTCONFIG.NAMESPACE}.api.msg.rollCompendiumAsRolltable`),
+          name: i18n(`${CONSTANTS.MODULE_ID}.api.msg.rollCompendiumAsRolltable`),
           icon: '<i class="fa-solid fa-dice"></i>',
           callback: (li) => {
             API.rollCompendiumAsRolltable(li.data("pack"));
@@ -239,7 +238,7 @@ export class BetterTables {
    * @param {Array} options
    */
   static async enhanceRolltableContextMenu(html, options) {
-    if (game.user.isGM && game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.ADD_ROLL_IN_ROLLTABLE_CONTEXTMENU)) {
+    if (game.user.isGM && game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.ADD_ROLL_IN_ROLLTABLE_CONTEXTMENU)) {
       options.unshift({
         name: "Roll table (BRT)",
         icon: '<i class="fa-solid fa-dice"></i>',
@@ -351,8 +350,8 @@ export class BetterTables {
   }
 
   static async _toggleCurrenciesShareSection(message, html) {
-    const section = html[0].querySelector(`section.${BRTCONFIG.NAMESPACE}-share-currencies`);
-    section.classList.toggle(`${BRTCONFIG.NAMESPACE}-hidden`);
+    const section = html[0].querySelector(`section.${CONSTANTS.MODULE_ID}-share-currencies`);
+    section.classList.toggle(`${CONSTANTS.MODULE_ID}-hidden`);
     // await BetterTables.updateChatMessage(message, html, {"force":true});
   }
 
@@ -363,11 +362,11 @@ export class BetterTables {
     if (!id && !pack) {
       return;
     }
-    if (game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.SHOW_REROLL_BUTTONS)) {
+    if (game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SHOW_REROLL_BUTTONS)) {
       // reroll button
       const rerollButton = $(
         `<a class="better-rolltables-roll-table-reroll-button" title="${game.i18n.localize(
-          `${BRTCONFIG.NAMESPACE}.DrawReroll`
+          `${CONSTANTS.MODULE_ID}.DrawReroll`
         )}">`
       ).append("<i class='fas fa-dice-d20'></i>");
       rerollButton.click(async () => {
@@ -394,25 +393,25 @@ export class BetterTables {
 
     if (
       game.system.id === "dnd5e" &&
-      game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.SHOW_CURRENCY_SHARE_BUTTON) &&
+      game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SHOW_CURRENCY_SHARE_BUTTON) &&
       getProperty(message, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.LOOT_CURRENCY}`) && // message.flags?.betterTables?.loot.currency &&
       Object.keys(getProperty(message, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.LOOT_CURRENCY}`)).length > 0 // message.flags.betterTables.loot.currency)
     ) {
       // Currency share button
       const currencyShareButton = $(
         `<a class="better-rolltables-roll-table-share-currencies" title="${game.i18n.localize(
-          `${BRTCONFIG.NAMESPACE}.Buttons.Currency.Share`
+          `${CONSTANTS.MODULE_ID}.Buttons.Currency.Share`
         )}">`
       ).append("<i class='fas fa-coins'></i>");
       currencyShareButton.click(async () => BetterTables._toggleCurrenciesShareSection(message, html));
       $(html).find(".message-delete").before(currencyShareButton);
-      const shareButton = html[0].querySelector(`button.${BRTCONFIG.NAMESPACE}-share-currencies-button`);
+      const shareButton = html[0].querySelector(`button.${CONSTANTS.MODULE_ID}-share-currencies-button`);
       shareButton.addEventListener("click", async (event) => {
         await BetterTables._shareCurrenciesToPlayers(message, html);
       });
     }
 
-    if (game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.SHOW_OPEN_BUTTONS)) {
+    if (game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SHOW_OPEN_BUTTONS)) {
       // Open link
       let document;
       if (pack && id) {
@@ -423,7 +422,7 @@ export class BetterTables {
       if (document) {
         const openLink = $(
           `<a class="better-rolltables-roll-table-open-table" title="${game.i18n.localize(
-            `${BRTCONFIG.NAMESPACE}.OpenRolltable`
+            `${CONSTANTS.MODULE_ID}.OpenRolltable`
           )}">`
         ).append("<i class='fas fa-th-list'></i>");
         if (id) openLink.data("id", id);
@@ -444,7 +443,7 @@ export class BetterTables {
   static async _shareCurrenciesToPlayers(message, html) {
     await BetterTables._toggleCurrenciesShareSection(message, html);
     const usersId = Array.from(
-      html[0].querySelector(`section.${BRTCONFIG.NAMESPACE}-share-currencies`)?.querySelectorAll("input:checked")
+      html[0].querySelector(`section.${CONSTANTS.MODULE_ID}-share-currencies`)?.querySelectorAll("input:checked")
     ).map((x) => x.dataset.userId);
     if (!usersId) return undefined;
 
@@ -472,7 +471,7 @@ export class BetterTables {
   }
 
   static async _addRollButtonsToEntityLink(html) {
-    if (game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.ROLL_TABLE_FROM_JOURNAL)) {
+    if (game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.ROLL_TABLE_FROM_JOURNAL)) {
       // handling rolltables imported in campaign
       $(html)
         .find("a.content-link[data-entity='RollTable']")
@@ -482,7 +481,7 @@ export class BetterTables {
 
           const rollNode = $(
             `<a class="better-rolltables-roll-table-roll-link" title="${game.i18n.localize(
-              `${BRTCONFIG.NAMESPACE}.DrawReroll`
+              `${CONSTANTS.MODULE_ID}.DrawReroll`
             )}"><i class="fas fa-dice-d20"></i></a>`
           ).click(async () => {
             await API.generateChatLoot(rolltable);
@@ -504,7 +503,7 @@ export class BetterTables {
 
           const rollNode = $(
             `<a class="better-rolltables-roll-table-roll-link" title="${game.i18n.localize(
-              `${BRTCONFIG.NAMESPACE}.DrawReroll`
+              `${CONSTANTS.MODULE_ID}.DrawReroll`
             )}"><i class="fas fa-dice-d20"></i></a>`
           ).click(async () => {
             await API.generateChatLoot(document);
@@ -536,10 +535,10 @@ export class BetterTables {
    */
   static async updateChatMessage(message, content, options = {}) {
     if (game.user.isGM) {
-      if (!options.force && game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.SHOW_WARNING_BEFORE_REROLL)) {
+      if (!options.force && game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SHOW_WARNING_BEFORE_REROLL)) {
         Dialog.confirm({
-          title: game.i18n.localize(`${BRTCONFIG.NAMESPACE}.Settings.RerollWarning.Title`),
-          content: game.i18n.localize(`${BRTCONFIG.NAMESPACE}.Settings.RerollWarning.Description`),
+          title: game.i18n.localize(`${CONSTANTS.MODULE_ID}.Settings.RerollWarning.Title`),
+          content: game.i18n.localize(`${CONSTANTS.MODULE_ID}.Settings.RerollWarning.Description`),
           yes: () => BetterTables.updateChatMessage(message, content, { force: true }),
           defaultYes: false,
         });
@@ -562,7 +561,7 @@ export class BetterTables {
   }
 
   static async handleRolltableLink(sheet, html) {
-    if (game.user.isGM && game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.ROLL_TABLE_FROM_JOURNAL)) {
+    if (game.user.isGM && game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.ROLL_TABLE_FROM_JOURNAL)) {
       // handling rolltables imported in campaign
       $(html)
         .find("a.content-link[data-uuid^='RollTable']")
@@ -572,7 +571,7 @@ export class BetterTables {
 
           const rollNode = $(
             `<a class="better-rolltables-roll-table-roll-link" title="${game.i18n.localize(
-              `${BRTCONFIG.NAMESPACE}.DrawReroll`
+              `${CONSTANTS.MODULE_ID}.DrawReroll`
             )}"><i class="fas fa-dice-d20"></i></a>`
           ).click(async () => {
             await API.generateChatLoot(rolltable);
@@ -594,7 +593,7 @@ export class BetterTables {
 
           const rollNode = $(
             `<a class="better-rolltables-roll-table-roll-link" title="${game.i18n.localize(
-              `${BRTCONFIG.NAMESPACE}.DrawReroll`
+              `${CONSTANTS.MODULE_ID}.DrawReroll`
             )}"><i class="fas fa-dice-d20"></i></a>`
           ).click(async () => {
             await API.generateChatLoot(document);

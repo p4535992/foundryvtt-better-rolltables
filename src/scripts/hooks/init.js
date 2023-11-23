@@ -1,4 +1,3 @@
-import { BRTCONFIG } from "../core/config.js";
 import API from "../API.js";
 import { CONSTANTS } from "../constants/constants.js";
 import { BetterTables } from "../better-tables.js";

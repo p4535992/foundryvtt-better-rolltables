@@ -1,4 +1,3 @@
-import { BRTCONFIG } from "./core/config.js";
 import API from "./API.js";
 import { CONSTANTS } from "./constants/constants.js";
 import { i18n, i18nFormat } from "./lib.js";
@@ -24,7 +23,7 @@ export class BetterRT {
     const tableClassName = rollTable.cssClass,
       tableEntity = rollTableConfig.object,
       selectedTableType =
-        tableEntity.getFlag(CONSTANTS.MODULE_ID, BRTCONFIG.TABLE_TYPE_KEY) || BRTCONFIG.TABLE_TYPE_NONE,
+        tableEntity.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) || CONSTANTS.TABLE_TYPE_NONE,
       app = document.querySelector(`[data-appid="${rollTableConfig.appId}"]`),
       tableViewClass = app.getElementsByClassName(tableClassName)[0],
       headerElement = document.createElement("header"),
@@ -55,10 +54,10 @@ export class BetterRT {
     _enableTogglers();
 
     /** If we use default table, we stop here */
-    if (selectedTableType === BRTCONFIG.TABLE_TYPE_NONE) return;
+    if (selectedTableType === CONSTANTS.TABLE_TYPE_NONE) return;
 
     /** for every result, add an input field before the text to add a formula */
-    if (selectedTableType === BRTCONFIG.TABLE_TYPE_BETTER || selectedTableType === BRTCONFIG.TABLE_TYPE_LOOT) {
+    if (selectedTableType === CONSTANTS.TABLE_TYPE_BETTER || selectedTableType === CONSTANTS.TABLE_TYPE_LOOT) {
       BetterRT.ShowFormulaField(tableViewClass, tableEntity, rollTable.editable);
     }
 
@@ -68,7 +67,7 @@ export class BetterRT {
       newRollButton = BetterRT.replaceRollButton(footer);
 
     /** change footer with new click event on rolls */
-    if (selectedTableType === BRTCONFIG.TABLE_TYPE_LOOT) {
+    if (selectedTableType === CONSTANTS.TABLE_TYPE_LOOT) {
       newRollButton.getElementsByTagName("i")[0].className = "fas fa-gem";
       newRollButton.onclick = async function () {
         await API.generateChatLoot(tableEntity);
@@ -81,12 +80,12 @@ export class BetterRT {
       const inputElements = html[0].getElementsByTagName("input");
       const displayRollElement = inputElements.namedItem("displayRoll").parentElement;
       displayRollElement.remove();
-    } else if (selectedTableType === BRTCONFIG.TABLE_TYPE_STORY) {
+    } else if (selectedTableType === CONSTANTS.TABLE_TYPE_STORY) {
       newRollButton.getElementsByTagName("i")[0].className = "fas fa-book";
       newRollButton.onclick = async function () {
         await API.generateChatStory(tableEntity);
       };
-    } else if (selectedTableType === BRTCONFIG.TABLE_TYPE_BETTER) {
+    } else if (selectedTableType === CONSTANTS.TABLE_TYPE_BETTER) {
       // newRollButton.getElementsByTagName("i")[0].className = "fas fa-dice";
       newRollButton.innerHTML =
         '<i class ="fas fa-dice-d20"></i> ' + i18n(`${CONSTANTS.MODULE_ID}.label.betterRolltablePlusRoll`);
@@ -99,19 +98,19 @@ export class BetterRT {
       headerElement.querySelectorAll(".toggler").forEach(async (e) => {
         e.addEventListener("click", async (e) => {
           const toggleIconElement = e.currentTarget.querySelector(".toggleicon");
-          e.currentTarget.nextElementSibling.classList.toggle(`${BRTCONFIG.NAMESPACE}-hidden`);
+          e.currentTarget.nextElementSibling.classList.toggle(`${CONSTANTS.MODULE_ID}-hidden`);
           ["fa-expand-alt", "fa-compress-alt"].map((c) => toggleIconElement.classList.toggle(c));
         });
       });
     }
 
     // Hidden Table checkbox
-    const isHidden = tableEntity.getFlag(CONSTANTS.MODULE_ID, BRTCONFIG.HIDDEN_TABLE);
+    const isHidden = tableEntity.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.HIDDEN_TABLE);
     const lastBox = html.find(".results");
     const checkboxHTML = `
     <div class="form-group">
         <label>${i18nFormat(`${CONSTANTS.MODULE_ID}.label.tableTextHiddenTable`)}</label>
-        <input type="checkbox" name="flags.${CONSTANTS.MODULE_ID}.${BRTCONFIG.HIDDEN_TABLE}" ${
+        <input type="checkbox" name="flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HIDDEN_TABLE}" ${
       isHidden ? "checked" : ""
     }>
     </div>
@@ -137,15 +136,15 @@ export class BetterRT {
             /** tableText is for each row the text of the table */
             const formulaInput = document.createElement("input");
 
-            formulaInput.classList.add(`result-${BRTCONFIG.NAMESPACE}-formula`);
-            formulaInput.placeholder = i18n(`${BRTCONFIG.NAMESPACE}.Formula`);
+            formulaInput.classList.add(`result-${CONSTANTS.MODULE_ID}-formula`);
+            formulaInput.placeholder = i18n(`${CONSTANTS.MODULE_ID}.Formula`);
             formulaInput.type = "text";
             formulaInput.disabled = !editable;
             /** based on the name of the elements the value will be added in the preUpdateRollTable and override the table.data */
-            formulaInput.name = `results.${index}.flags.${CONSTANTS.MODULE_ID}.${BRTCONFIG.RESULTS_FORMULA_KEY_FORMULA}`;
+            formulaInput.name = `results.${index}.flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RESULTS_FORMULA_KEY_FORMULA}`;
             if (tableText.classList.contains("result-target")) {
               formulaInput.value =
-                getProperty(tableResult, `flags.${CONSTANTS.MODULE_ID}.${BRTCONFIG.RESULTS_FORMULA_KEY_FORMULA}`) || "";
+                getProperty(tableResult, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RESULTS_FORMULA_KEY_FORMULA}`) || "";
               tableText.classList.add("result-target-short");
             } else {
               /** text type result, we disable the formula field for text */
@@ -263,7 +262,7 @@ export class BetterRT {
     generateLootBtn.setAttribute("type", "button");
 
     generateLootBtn.innerHTML = `<i id="BRT-gen-loot" class="fas fa-coins"></i> ${i18n(
-      `${BRTCONFIG.NAMESPACE}.Buttons.GenerateLoot`
+      `${CONSTANTS.MODULE_ID}.Buttons.GenerateLoot`
     )}`;
     generateLootBtn.onclick = async () => {
       await API.generateLoot(tableEntity);
@@ -275,6 +274,6 @@ export class BetterRT {
   static async onOptionTypeChanged(value, tableEntity) {
     // console.log("onOptionTypeChanged");
     // console.log(tableEntity);
-    await tableEntity.setFlag(CONSTANTS.MODULE_ID, BRTCONFIG.TABLE_TYPE_KEY, value);
+    await tableEntity.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY, value);
   }
 }

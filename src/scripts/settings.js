@@ -1,6 +1,5 @@
 import { CONSTANTS } from "./constants/constants";
 import SETTINGS from "./constants/settings";
-import { BRTCONFIG } from "./core/config";
 import { BetterRolltableSettingsConfig } from "./core/settingsConfig";
 import { i18n } from "./lib";
 import { SYSTEMS } from "./systems";
@@ -16,18 +15,18 @@ export const GROUP_TAGS = "Tags";
 //  * Register the game settings during InitHook required by contextmenues
 //  */
 // function _registerSettingsDuringInit() {
-//   game.settings.register(CONSTANTS.MODULE_ID, BRTCONFIG.ADD_ROLL_IN_COMPENDIUM_CONTEXTMENU, {
-//     name: i18n(`${BRTCONFIG.NAMESPACE}.Settings.AddRollInCompediumContextMenu.Title`),
-//     hint: i18n(`${BRTCONFIG.NAMESPACE}.Settings.AddRollInCompediumContextMenu.Description`),
+//   game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.ADD_ROLL_IN_COMPENDIUM_CONTEXTMENU, {
+//     name: i18n(`${CONSTANTS.MODULE_ID}.Settings.AddRollInCompediumContextMenu.Title`),
+//     hint: i18n(`${CONSTANTS.MODULE_ID}.Settings.AddRollInCompediumContextMenu.Description`),
 //     scope: WORLD,
 //     group: GROUP_UI,
 //     config: false,
 //     default: false,
 //     type: Boolean,
 //   });
-//   game.settings.register(CONSTANTS.MODULE_ID, BRTCONFIG.ADD_ROLL_IN_ROLLTABLE_CONTEXTMENU, {
-//     name: i18n(`${BRTCONFIG.NAMESPACE}.Settings.AddRollInRolltableContextMenu.Title`),
-//     hint: i18n(`${BRTCONFIG.NAMESPACE}.Settings.AddRollInRolltableContextMenu.Description`),
+//   game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.ADD_ROLL_IN_ROLLTABLE_CONTEXTMENU, {
+//     name: i18n(`${CONSTANTS.MODULE_ID}.Settings.AddRollInRolltableContextMenu.Title`),
+//     hint: i18n(`${CONSTANTS.MODULE_ID}.Settings.AddRollInRolltableContextMenu.Description`),
 //     scope: WORLD,
 //     group: GROUP_UI,
 //     config: false,
@@ -44,16 +43,16 @@ export function registerSettings() {
   let defaultSpellCompendium = SYSTEMS.DATA.DEFAULT_SPELL_COMPENDIUM;
   let defaultActorNpcType = SYSTEMS.DATA.DEFAULT_ACTOR_NPC_TYPE;
   let defaultLootSheet = SYSTEMS.DATA.DEFAULT_LOOT_SHEET;
-  BRTCONFIG.QUANTITY_PROPERTY_PATH = SYSTEMS.DATA.QUANTITY_PROPERTY_PATH;
-  BRTCONFIG.WEIGHT_PROPERTY_PATH = SYSTEMS.DATA.WEIGHT_PROPERTY_PATH;
-  BRTCONFIG.PRICE_PROPERTY_PATH = SYSTEMS.DATA.PRICE_PROPERTY_PATH;
-  BRTCONFIG.SPELL_LEVEL_PATH = SYSTEMS.DATA.SPELL_LEVEL_PATH;
-  BRTCONFIG.ITEM_LOOT_TYPE = SYSTEMS.DATA.ITEM_LOOT_TYPE;
-  BRTCONFIG.SCROLL_REGEX = SYSTEMS.DATA.SCROLL_REGEX;
+  CONSTANTS.QUANTITY_PROPERTY_PATH = SYSTEMS.DATA.QUANTITY_PROPERTY_PATH;
+  CONSTANTS.WEIGHT_PROPERTY_PATH = SYSTEMS.DATA.WEIGHT_PROPERTY_PATH;
+  CONSTANTS.PRICE_PROPERTY_PATH = SYSTEMS.DATA.PRICE_PROPERTY_PATH;
+  CONSTANTS.SPELL_LEVEL_PATH = SYSTEMS.DATA.SPELL_LEVEL_PATH;
+  CONSTANTS.ITEM_LOOT_TYPE = SYSTEMS.DATA.ITEM_LOOT_TYPE;
+  CONSTANTS.SCROLL_REGEX = SYSTEMS.DATA.SCROLL_REGEX;
 
   game.settings.registerMenu(CONSTANTS.MODULE_ID, "helpersOptions", {
     name: i18n("User Interface Integration"),
-    label: i18n(`${BRTCONFIG.NAMESPACE}.Settings.Module.AdvancedSettings.Title`),
+    label: i18n(`${CONSTANTS.MODULE_ID}.Settings.Module.AdvancedSettings.Title`),
     icon: "fas fa-user-cog",
     type: BetterRolltableSettingsConfig,
     restricted: true,
@@ -61,18 +60,18 @@ export function registerSettings() {
 
   //   _registerSettingsDuringInit()
 
-  game.settings.register(CONSTANTS.MODULE_ID, BRTCONFIG.ADD_ROLL_IN_COMPENDIUM_CONTEXTMENU, {
-    name: i18n(`${BRTCONFIG.NAMESPACE}.Settings.AddRollInCompediumContextMenu.Title`),
-    hint: i18n(`${BRTCONFIG.NAMESPACE}.Settings.AddRollInCompediumContextMenu.Description`),
+  game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.ADD_ROLL_IN_COMPENDIUM_CONTEXTMENU, {
+    name: i18n(`${CONSTANTS.MODULE_ID}.Settings.AddRollInCompediumContextMenu.Title`),
+    hint: i18n(`${CONSTANTS.MODULE_ID}.Settings.AddRollInCompediumContextMenu.Description`),
     scope: WORLD,
     group: GROUP_UI,
     config: false,
     default: false,
     type: Boolean,
   });
-  game.settings.register(CONSTANTS.MODULE_ID, BRTCONFIG.ADD_ROLL_IN_ROLLTABLE_CONTEXTMENU, {
-    name: i18n(`${BRTCONFIG.NAMESPACE}.Settings.AddRollInRolltableContextMenu.Title`),
-    hint: i18n(`${BRTCONFIG.NAMESPACE}.Settings.AddRollInRolltableContextMenu.Description`),
+  game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.ADD_ROLL_IN_ROLLTABLE_CONTEXTMENU, {
+    name: i18n(`${CONSTANTS.MODULE_ID}.Settings.AddRollInRolltableContextMenu.Title`),
+    hint: i18n(`${CONSTANTS.MODULE_ID}.Settings.AddRollInRolltableContextMenu.Description`),
     scope: WORLD,
     group: GROUP_UI,
     config: false,
@@ -83,9 +82,9 @@ export function registerSettings() {
   // /**
   //  * Base Settings Sheet
   //  */
-  // game.settings.register(CONSTANTS.MODULE_ID, BRTCONFIG.LOOT_SHEET_TO_USE_KEY, {
-  //   name: i18n(`${BRTCONFIG.NAMESPACE}.Settings.LootSheet.Title`),
-  //   hint: i18n(`${BRTCONFIG.NAMESPACE}.Settings.LootSheet.Description`),
+  // game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.LOOT_SHEET_TO_USE_KEY, {
+  //   name: i18n(`${CONSTANTS.MODULE_ID}.Settings.LootSheet.Title`),
+  //   hint: i18n(`${CONSTANTS.MODULE_ID}.Settings.LootSheet.Description`),
   //   scope: WORLD,
   //   group: GROUP_DEFAULT,
   //   config: false,
@@ -95,9 +94,9 @@ export function registerSettings() {
   //   // choices: Object.values(CONFIG.Actor.sheetClasses.npc).map((s) => ({id: s.id, label: s.label}))
   // });
 
-  game.settings.register(CONSTANTS.MODULE_ID, BRTCONFIG.SPELL_COMPENDIUM_KEY, {
-    name: i18n(`${BRTCONFIG.NAMESPACE}.Settings.SpellCompendium.Title`),
-    hint: i18n(`${BRTCONFIG.NAMESPACE}.Settings.SpellCompendium.Description`),
+  game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.SPELL_COMPENDIUM_KEY, {
+    name: i18n(`${CONSTANTS.MODULE_ID}.Settings.SpellCompendium.Title`),
+    hint: i18n(`${CONSTANTS.MODULE_ID}.Settings.SpellCompendium.Description`),
     scope: WORLD,
     group: GROUP_DEFAULT,
     config: false,
@@ -109,9 +108,9 @@ export function registerSettings() {
    * User Interface Integration
    */
 
-  game.settings.register(CONSTANTS.MODULE_ID, BRTCONFIG.USE_CONDENSED_BETTERROLL, {
-    name: i18n(`${BRTCONFIG.NAMESPACE}.Settings.UseCondensedBetterRoll.Title`),
-    hint: i18n(`${BRTCONFIG.NAMESPACE}.Settings.UseCondensedBetterRoll.Description`),
+  game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.USE_CONDENSED_BETTERROLL, {
+    name: i18n(`${CONSTANTS.MODULE_ID}.Settings.UseCondensedBetterRoll.Title`),
+    hint: i18n(`${CONSTANTS.MODULE_ID}.Settings.UseCondensedBetterRoll.Description`),
     scope: WORLD,
     group: GROUP_UI,
     config: false,
@@ -119,9 +118,9 @@ export function registerSettings() {
     type: Boolean,
   });
 
-  game.settings.register(CONSTANTS.MODULE_ID, BRTCONFIG.SHOW_REROLL_BUTTONS, {
-    name: i18n(`${BRTCONFIG.NAMESPACE}.Buttons.Reroll.Title`),
-    hint: i18n(`${BRTCONFIG.NAMESPACE}.Buttons.Reroll.Description`),
+  game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.SHOW_REROLL_BUTTONS, {
+    name: i18n(`${CONSTANTS.MODULE_ID}.Buttons.Reroll.Title`),
+    hint: i18n(`${CONSTANTS.MODULE_ID}.Buttons.Reroll.Description`),
     scope: WORLD,
     group: GROUP_UI,
     config: false,
@@ -129,9 +128,9 @@ export function registerSettings() {
     type: Boolean,
   });
 
-  game.settings.register(CONSTANTS.MODULE_ID, BRTCONFIG.SHOW_WARNING_BEFORE_REROLL, {
-    name: i18n(`${BRTCONFIG.NAMESPACE}.Settings.ShowWarningBeforeReroll.Title`),
-    hint: i18n(`${BRTCONFIG.NAMESPACE}.Settings.ShowWarningBeforeReroll.Description`),
+  game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.SHOW_WARNING_BEFORE_REROLL, {
+    name: i18n(`${CONSTANTS.MODULE_ID}.Settings.ShowWarningBeforeReroll.Title`),
+    hint: i18n(`${CONSTANTS.MODULE_ID}.Settings.ShowWarningBeforeReroll.Description`),
     scope: WORLD,
     group: GROUP_UI,
     config: false,
@@ -139,9 +138,9 @@ export function registerSettings() {
     type: Boolean,
   });
 
-  game.settings.register(CONSTANTS.MODULE_ID, BRTCONFIG.SHOW_OPEN_BUTTONS, {
-    name: i18n(`${BRTCONFIG.NAMESPACE}.Buttons.Open.Title`),
-    hint: i18n(`${BRTCONFIG.NAMESPACE}.Buttons.Open.Description`),
+  game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.SHOW_OPEN_BUTTONS, {
+    name: i18n(`${CONSTANTS.MODULE_ID}.Buttons.Open.Title`),
+    hint: i18n(`${CONSTANTS.MODULE_ID}.Buttons.Open.Description`),
     scope: WORLD,
     group: GROUP_UI,
     config: false,
@@ -149,9 +148,9 @@ export function registerSettings() {
     type: Boolean,
   });
 
-  game.settings.register(CONSTANTS.MODULE_ID, BRTCONFIG.ROLL_TABLE_FROM_JOURNAL, {
-    name: i18n(`${BRTCONFIG.NAMESPACE}.Settings.RollTableFromJournal.Title`),
-    hint: i18n(`${BRTCONFIG.NAMESPACE}.Settings.RollTableFromJournal.Description`),
+  game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.ROLL_TABLE_FROM_JOURNAL, {
+    name: i18n(`${CONSTANTS.MODULE_ID}.Settings.RollTableFromJournal.Title`),
+    hint: i18n(`${CONSTANTS.MODULE_ID}.Settings.RollTableFromJournal.Description`),
     scope: WORLD,
     group: GROUP_UI,
     config: false,
@@ -161,9 +160,9 @@ export function registerSettings() {
 
   //   _registerTagsSettings();
 
-  game.settings.register(CONSTANTS.MODULE_ID, BRTCONFIG.TAGS.USE, {
-    name: i18n(`${BRTCONFIG.NAMESPACE}.Settings.Tags.Use.Title`),
-    hint: i18n(`${BRTCONFIG.NAMESPACE}.Settings.Tags.Use.Description`),
+  game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.TAGS.USE, {
+    name: i18n(`${CONSTANTS.MODULE_ID}.Settings.Tags.Use.Title`),
+    hint: i18n(`${CONSTANTS.MODULE_ID}.Settings.Tags.Use.Description`),
     scope: WORLD,
     group: GROUP_TAGS,
     config: false,
@@ -171,9 +170,9 @@ export function registerSettings() {
     type: Boolean,
   });
 
-  game.settings.register(CONSTANTS.MODULE_ID, BRTCONFIG.TAGS.DEFAULTS, {
-    name: i18n(`${BRTCONFIG.NAMESPACE}.Settings.Tags.Defaults.Title`),
-    hint: i18n(`${BRTCONFIG.NAMESPACE}.Settings.Tags.Defaults.Description`),
+  game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.TAGS.DEFAULTS, {
+    name: i18n(`${CONSTANTS.MODULE_ID}.Settings.Tags.Defaults.Title`),
+    hint: i18n(`${CONSTANTS.MODULE_ID}.Settings.Tags.Defaults.Description`),
     scope: WORLD,
     group: GROUP_TAGS,
     config: false,
@@ -184,9 +183,9 @@ export function registerSettings() {
   /**
    * Loot / Merchant specific
    */
-  game.settings.register(CONSTANTS.MODULE_ID, BRTCONFIG.SHOW_CURRENCY_SHARE_BUTTON, {
-    name: i18n(`${BRTCONFIG.NAMESPACE}.Settings.ShareCurrencyButton.Title`),
-    hint: i18n(`${BRTCONFIG.NAMESPACE}.Settings.ShareCurrencyButton.Description`),
+  game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.SHOW_CURRENCY_SHARE_BUTTON, {
+    name: i18n(`${CONSTANTS.MODULE_ID}.Settings.ShareCurrencyButton.Title`),
+    hint: i18n(`${CONSTANTS.MODULE_ID}.Settings.ShareCurrencyButton.Description`),
     scope: WORLD,
     group: GROUP_LOOT,
     config: false,
@@ -194,9 +193,9 @@ export function registerSettings() {
     type: Boolean,
   });
 
-  game.settings.register(CONSTANTS.MODULE_ID, BRTCONFIG.ALWAYS_SHOW_GENERATED_LOOT_AS_MESSAGE, {
-    name: i18n(`${BRTCONFIG.NAMESPACE}.Settings.AlwaysShowGeneratedLootAsMessage.Title`),
-    hint: i18n(`${BRTCONFIG.NAMESPACE}.Settings.AlwaysShowGeneratedLootAsMessage.Description`),
+  game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.ALWAYS_SHOW_GENERATED_LOOT_AS_MESSAGE, {
+    name: i18n(`${CONSTANTS.MODULE_ID}.Settings.AlwaysShowGeneratedLootAsMessage.Title`),
+    hint: i18n(`${CONSTANTS.MODULE_ID}.Settings.AlwaysShowGeneratedLootAsMessage.Description`),
     scope: WORLD,
     group: GROUP_LOOT,
     config: false,
@@ -207,9 +206,9 @@ export function registerSettings() {
   /**
    * Harvest specific
    */
-  game.settings.register(CONSTANTS.MODULE_ID, BRTCONFIG.ALWAYS_SHOW_GENERATED_HARVEST_AS_MESSAGE, {
-    name: i18n(`${BRTCONFIG.NAMESPACE}.Settings.AlwaysShowGeneratedHarvestAsMessage.Title`),
-    hint: i18n(`${BRTCONFIG.NAMESPACE}.Settings.AlwaysShowGeneratedHarvestAsMessage.Description`),
+  game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.ALWAYS_SHOW_GENERATED_HARVEST_AS_MESSAGE, {
+    name: i18n(`${CONSTANTS.MODULE_ID}.Settings.AlwaysShowGeneratedHarvestAsMessage.Title`),
+    hint: i18n(`${CONSTANTS.MODULE_ID}.Settings.AlwaysShowGeneratedHarvestAsMessage.Description`),
     scope: WORLD,
     group: GROUP_HARVEST,
     config: false,
@@ -246,9 +245,9 @@ export function registerSettings() {
 //  *
 //  */
 // function _registerTagsSettings() {
-//   game.settings.register(CONSTANTS.MODULE_ID, BRTCONFIG.TAGS.USE, {
-//     name: i18n(`${BRTCONFIG.NAMESPACE}.Settings.Tags.Use.Title`),
-//     hint: i18n(`${BRTCONFIG.NAMESPACE}.Settings.Tags.Use.Description`),
+//   game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.TAGS.USE, {
+//     name: i18n(`${CONSTANTS.MODULE_ID}.Settings.Tags.Use.Title`),
+//     hint: i18n(`${CONSTANTS.MODULE_ID}.Settings.Tags.Use.Description`),
 //     scope: WORLD,
 //     group: GROUP_TAGS,
 //     config: false,
@@ -256,9 +255,9 @@ export function registerSettings() {
 //     type: Boolean,
 //   });
 
-//   game.settings.register(CONSTANTS.MODULE_ID, BRTCONFIG.TAGS.DEFAULTS, {
-//     name: i18n(`${BRTCONFIG.NAMESPACE}.Settings.Tags.Defaults.Title`),
-//     hint: i18n(`${BRTCONFIG.NAMESPACE}.Settings.Tags.Defaults.Description`),
+//   game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.TAGS.DEFAULTS, {
+//     name: i18n(`${CONSTANTS.MODULE_ID}.Settings.Tags.Defaults.Title`),
+//     hint: i18n(`${CONSTANTS.MODULE_ID}.Settings.Tags.Defaults.Description`),
 //     scope: WORLD,
 //     group: GROUP_TAGS,
 //     config: false,

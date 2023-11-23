@@ -1,4 +1,3 @@
-import { BRTCONFIG } from "../core/config.js";
 import { CONSTANTS } from "../constants/constants.js";
 import { RollTableToActorHelpers } from "../apps/rolltable-to-actor/rolltable-to-actor-helpers.js";
 import { BRTUtils } from "../core/utils.js";
@@ -14,7 +13,7 @@ export class HarvestCreator {
   }
 
   async createActor(table, overrideName = undefined) {
-    const actorName = overrideName || table.getFlag(CONSTANTS.MODULE_ID, BRTCONFIG.HARVEST_ACTOR_NAME_KEY);
+    const actorName = overrideName || table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.HARVEST_ACTOR_NAME_KEY);
     this.actor = game.actors.getName(actorName);
     if (!this.actor) {
       this.actor = await Actor.create({

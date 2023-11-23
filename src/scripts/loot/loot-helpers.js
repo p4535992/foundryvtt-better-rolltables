@@ -2,7 +2,6 @@ import { RollTableToActorHelpers } from "../apps/rolltable-to-actor/rolltable-to
 import { CONSTANTS } from "../constants/constants";
 import { BRTBetterHelpers } from "../better/brt-helper";
 import { BetterResults } from "../core/brt-table-results";
-import { BRTCONFIG } from "../core/config";
 import { LootChatCard } from "./loot-chat-card";
 import { BRTUtils } from "../core/utils";
 import { BetterRollTable } from "../core/brt-table";
@@ -77,7 +76,7 @@ export class BRTLootHelpers {
     await BRTLootHelpers.addCurrenciesToActor(actor, currencyData);
     await RollTableToActorHelpers.addItemsToActorOld(actor, betterResults, stackSame, itemLimit);
 
-    if (game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.ALWAYS_SHOW_GENERATED_LOOT_AS_MESSAGE)) {
+    if (game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.ALWAYS_SHOW_GENERATED_LOOT_AS_MESSAGE)) {
       if (isRealBoolean(options.displayChat)) {
         if (!options.displayChat) {
           return;
@@ -152,7 +151,7 @@ export class BRTLootHelpers {
   }
 
   static async createActor(table, overrideName = undefined) {
-    const actorName = overrideName || table.getFlag(CONSTANTS.MODULE_ID, BRTCONFIG.LOOT_ACTOR_NAME_KEY);
+    const actorName = overrideName || table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.LOOT_ACTOR_NAME_KEY);
     let actor = game.actors.getName(actorName);
     if (!actor) {
       actor = await Actor.create({
@@ -164,7 +163,7 @@ export class BRTLootHelpers {
       });
     }
 
-    // const lootSheet = game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.LOOT_SHEET_TO_USE_KEY);
+    // const lootSheet = game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.LOOT_SHEET_TO_USE_KEY);
     // if (lootSheet in CONFIG.Actor.sheetClasses.npc) {
     //   await actor.setFlag("core", "sheetClass", lootSheet);
     // }

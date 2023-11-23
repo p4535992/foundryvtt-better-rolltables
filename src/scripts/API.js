@@ -1,4 +1,3 @@
-import { BRTCONFIG } from "./core/config.js";
 import { CompendiumToRollTableHelpers } from "./apps/compendium-to-rolltable/compendium-to-rollTable-helpers.js";
 import { RollFromCompendiumAsRollTableHelpers } from "./apps/roll-from-compendium-as-rolltable/roll-from-compendium-as-rolltable-helpers.js";
 import { BRTLootHelpers } from "./loot/loot-helpers.js";
@@ -30,7 +29,7 @@ const API = {
    *
    */
   getTags() {
-    return game.settings.get(CONSTANTS.MODULE_ID, BRTCONFIG.TAGS.USE);
+    return game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.TAGS.USE);
   },
 
   /**

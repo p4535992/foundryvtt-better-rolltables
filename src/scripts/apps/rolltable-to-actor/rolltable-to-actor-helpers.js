@@ -3,7 +3,6 @@ import { BetterTables } from "../../better-tables";
 import { CONSTANTS } from "../../constants/constants";
 import SETTINGS from "../../constants/settings";
 import { BRTBetterHelpers } from "../../better/brt-helper";
-import { BRTCONFIG } from "../../core/config";
 import { BRTUtils } from "../../core/utils";
 import { error, i18n, info, isRealNumber, warn } from "../../lib";
 
@@ -437,10 +436,10 @@ export class RollTableToActorHelpers {
    */
   static async _createItem(result, actor, stackSame = true, customLimit = 0) {
     const newItemData = await RollTableToActorHelpers.buildItemData(result);
-    const itemPrice = getProperty(newItemData, BRTCONFIG.PRICE_PROPERTY_PATH) || 0;
+    const itemPrice = getProperty(newItemData, SETTINGS.PRICE_PROPERTY_PATH) || 0;
     const embeddedItems = [...actor.getEmbeddedCollection("Item").values()];
     const originalItem = embeddedItems.find(
-      (i) => i.name === newItemData.name && itemPrice === getProperty(i, BRTCONFIG.PRICE_PROPERTY_PATH)
+      (i) => i.name === newItemData.name && itemPrice === getProperty(i, SETTINGS.PRICE_PROPERTY_PATH)
     );
 
     /** if the item is already owned by the actor (same name and same PRICE) */
@@ -553,7 +552,7 @@ export class RollTableToActorHelpers {
       itemData.img = customResultImg;
     }
 
-    itemData.type = BRTCONFIG.ITEM_LOOT_TYPE;
+    itemData.type = CONSTANTS.ITEM_LOOT_TYPE;
 
     const itemConversions = {
       Actor: {
@@ -574,7 +573,7 @@ export class RollTableToActorHelpers {
 
     if (createNewItem) {
       const name = convert ? convert?.text : result.text;
-      const type = BRTCONFIG.ITEM_LOOT_TYPE;
+      const type = CONSTANTS.ITEM_LOOT_TYPE;
       const img = convert ? convert?.img : result.img;
       const price = convert ? convert?.price : result.price || 0;
 
@@ -631,7 +630,7 @@ export class RollTableToActorHelpers {
   // static async _getRandomSpell(level) {
   //   const spells = API.betterTables
   //       .getSpellCache()
-  //       .filter((spell) => getProperty(spell, BRTCONFIG.SPELL_LEVEL_PATH) === level),
+  //       .filter((spell) => getProperty(spell, CONSTANTS.SPELL_LEVEL_PATH) === level),
   //     spell = spells[Math.floor(Math.random() * spells.length)];
   //   return BRTUtils.findInCompendiumById(spell.collection, spell._id);
   // }
@@ -643,7 +642,7 @@ export class RollTableToActorHelpers {
   //  * @returns
   //  */
   // static async preItemCreationDataManipulation(itemData) {
-  //   const match = BRTCONFIG.SCROLL_REGEX.exec(itemData.name);
+  //   const match = CONSTANTS.SCROLL_REGEX.exec(itemData.name);
 
   //   itemData = duplicate(itemData);
 

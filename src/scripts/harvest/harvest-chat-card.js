@@ -1,4 +1,3 @@
-import { BRTCONFIG } from "../core/config.js";
 import { CONSTANTS } from "../constants/constants.js";
 import { BRTUtils } from "../core/utils.js";
 import { BRTBetterHelpers } from "../better/brt-helper.js";
@@ -261,17 +260,17 @@ export class HarvestChatCard {
 
     let flavorString;
     if (this.numberOfDraws > 1) {
-      flavorString = game.i18n.format(`${BRTCONFIG.NAMESPACE}.DrawResultPlural`, {
+      flavorString = game.i18n.format(`${CONSTANTS.MODULE_ID}.DrawResultPlural`, {
         amount: this.numberOfDraws,
         name: table.name,
       });
     } else if (this.numberOfDraws > 0) {
-      flavorString = game.i18n.format(`${BRTCONFIG.NAMESPACE}.DrawResultSingular`, {
+      flavorString = game.i18n.format(`${CONSTANTS.MODULE_ID}.DrawResultSingular`, {
         amount: this.numberOfDraws,
         name: table.name,
       });
     } else {
-      flavorString = game.i18n.format(`${BRTCONFIG.NAMESPACE}.DrawResultZero`, {
+      flavorString = game.i18n.format(`${CONSTANTS.MODULE_ID}.DrawResultZero`, {
         name: table.name,
       });
     }
@@ -322,17 +321,17 @@ export class HarvestChatCard {
 
     let flavorString;
     if (this.numberOfDraws > 1) {
-      flavorString = game.i18n.format(`${BRTCONFIG.NAMESPACE}.DrawResultPlural`, {
+      flavorString = game.i18n.format(`${CONSTANTS.MODULE_ID}.DrawResultPlural`, {
         amount: this.numberOfDraws,
         name: table.name,
       });
     } else if (this.numberOfDraws > 0) {
-      flavorString = game.i18n.format(`${BRTCONFIG.NAMESPACE}.DrawResultSingular`, {
+      flavorString = game.i18n.format(`${CONSTANTS.MODULE_ID}.DrawResultSingular`, {
         amount: this.numberOfDraws,
         name: table.name,
       });
     } else {
-      flavorString = game.i18n.format(`${BRTCONFIG.NAMESPACE}.DrawResultZero`, {
+      flavorString = game.i18n.format(`${CONSTANTS.MODULE_ID}.DrawResultZero`, {
         name: table.name,
       });
     }

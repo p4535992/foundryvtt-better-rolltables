@@ -1,4 +1,3 @@
-import { BRTCONFIG } from "../../core/config";
 import { debug } from "../../lib";
 
 /**
@@ -224,7 +223,7 @@ export class CompendiumToRollTableDialog extends Dialog {
 
               let msg = compendium.metadata.label;
 
-              ui.notifications.info(game.i18n.format(`${BRTCONFIG.NAMESPACE}.api.msg.startRolltableGeneration`, msg));
+              ui.notifications.info(game.i18n.format(`${CONSTANTS.MODULE_ID}.api.msg.startRolltableGeneration`, msg));
               const document = await this.fromCompendium(
                 customFilters,
                 nameFilters,
@@ -236,7 +235,7 @@ export class CompendiumToRollTableDialog extends Dialog {
                 compendium
               );
               ui.notifications.info(
-                game.i18n.format(`${BRTCONFIG.NAMESPACE}.api.msg.rolltableGenerationFinished`, msg)
+                game.i18n.format(`${CONSTANTS.MODULE_ID}.api.msg.rolltableGenerationFinished`, msg)
               );
               return document;
             },

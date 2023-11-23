@@ -1,7 +1,6 @@
 import { CONSTANTS } from "../constants/constants.js";
 import { error, isRealNumber, log, warn } from "../lib.js";
 import { BRTBetterHelpers } from "../better/brt-helper.js";
-import { BRTCONFIG } from "./config.js";
 import { BRTUtils } from "./utils.js";
 import { LootChatCard } from "../loot/loot-chat-card.js";
 import { StoryChatCard } from "../story/story-chat-card.js";
@@ -160,7 +159,8 @@ export class BetterRollTable {
     for (let i = 0; i < draw.results.length; i++) {
       const r = draw.results[i];
 
-      let formulaAmount = getProperty(r, `flags.${BRTCONFIG.NAMESPACE}.${BRTCONFIG.RESULTS_FORMULA_KEY_FORMULA}`) || "";
+      let formulaAmount =
+        getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RESULTS_FORMULA_KEY_FORMULA}`) || "";
 
       if (r.type === CONST.TABLE_RESULT_TYPES.TEXT) {
         formulaAmount = "";
@@ -474,7 +474,7 @@ export class BetterRollTable {
       let inner = [];
       for (let result of results) {
         let formulaAmount =
-          getProperty(result, `flags.${BRTCONFIG.NAMESPACE}.${BRTCONFIG.RESULTS_FORMULA_KEY_FORMULA}`) || "";
+          getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RESULTS_FORMULA_KEY_FORMULA}`) || "";
 
         if (result.type === CONST.TABLE_RESULT_TYPES.TEXT) {
           formulaAmount = "";
@@ -744,7 +744,7 @@ export class BetterRollTable {
     const maxRecursions = 5;
     // Prevent infinite recursion
     if (_depth > maxRecursions) {
-      let msg = game.i18n.format(`${BRTCONFIG.NAMESPACE}.Strings.Warnings.MaxRecursion`, {
+      let msg = game.i18n.format(`${CONSTANTS.MODULE_ID}.Strings.Warnings.MaxRecursion`, {
         maxRecursions: maxRecursions,
         tableId: this.table.id,
       });
@@ -770,7 +770,7 @@ export class BetterRollTable {
       }
 
       if (!this.table.formula) {
-        let msg = game.i18n.format(`${BRTCONFIG.NAMESPACE}.RollTable.NoFormula`, {
+        let msg = game.i18n.format(`${CONSTANTS.MODULE_ID}.RollTable.NoFormula`, {
           name: this.table.name,
         });
         ui.notifications.error(CONSTANTS.MODULE_ID + " | " + msg);
@@ -801,7 +801,7 @@ export class BetterRollTable {
 
       for (const entry of draw.results) {
         let formulaAmount =
-          getProperty(entry, `flags.${BRTCONFIG.NAMESPACE}.${BRTCONFIG.RESULTS_FORMULA_KEY_FORMULA}`) || "";
+          getProperty(entry, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RESULTS_FORMULA_KEY_FORMULA}`) || "";
 
         if (entry.type === CONST.TABLE_RESULT_TYPES.TEXT) {
           formulaAmount = "";

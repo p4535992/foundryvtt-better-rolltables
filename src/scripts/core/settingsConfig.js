@@ -1,7 +1,6 @@
 import { CONSTANTS } from "../constants/constants.js";
 import { i18n } from "../lib.js";
 import { GROUP_DEFAULT, GROUP_LOOT, GROUP_TAGS, GROUP_UI } from "../settings.js";
-import { BRTCONFIG } from "./config.js";
 
 /**
  * A game settings configuration application
@@ -30,7 +29,7 @@ export class BetterRolltableSettingsConfig extends FormApplication {
   /** @override */
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
-      title: i18n(`${BRTCONFIG.NAMESPACE}.Settings.Module.AdvancedSettings.Title`),
+      title: i18n(`${CONSTANTS.MODULE_ID}.Settings.Module.AdvancedSettings.Title`),
       id: "betterrolltables-settings",
       template: `${CONSTANTS.PATH}/templates/config/settings.hbs`,
       width: 650,
@@ -145,32 +144,32 @@ export class BetterRolltableSettingsConfig extends FormApplication {
       tabs: [
         {
           name: GROUP_DEFAULT,
-          description: i18n(`${BRTCONFIG.NAMESPACE}.Settings.Module.AdvancedSettings.Menu.Base.Description`),
-          i18nName: i18n(`${BRTCONFIG.NAMESPACE}.Settings.Module.AdvancedSettings.Menu.Base.Title`),
+          description: i18n(`${CONSTANTS.MODULE_ID}.Settings.Module.AdvancedSettings.Menu.Base.Description`),
+          i18nName: i18n(`${CONSTANTS.MODULE_ID}.Settings.Module.AdvancedSettings.Menu.Base.Title`),
           class: "fas fa-table",
           menus: [],
           settings: [],
         },
         {
           name: GROUP_UI,
-          description: i18n(`${BRTCONFIG.NAMESPACE}.Settings.Module.AdvancedSettings.Menu.UI.Description`),
-          i18nName: i18n(`${BRTCONFIG.NAMESPACE}.Settings.Module.AdvancedSettings.Menu.UI.Title`),
+          description: i18n(`${CONSTANTS.MODULE_ID}.Settings.Module.AdvancedSettings.Menu.UI.Description`),
+          i18nName: i18n(`${CONSTANTS.MODULE_ID}.Settings.Module.AdvancedSettings.Menu.UI.Title`),
           class: "fas fa-cog",
           menus: [],
           settings: [],
         },
         {
           name: GROUP_LOOT,
-          description: i18n(`${BRTCONFIG.NAMESPACE}.Settings.Module.AdvancedSettings.Menu.Loot.Description`),
-          i18nName: i18n(`${BRTCONFIG.NAMESPACE}.Settings.Module.AdvancedSettings.Menu.Loot.Title`),
+          description: i18n(`${CONSTANTS.MODULE_ID}.Settings.Module.AdvancedSettings.Menu.Loot.Description`),
+          i18nName: i18n(`${CONSTANTS.MODULE_ID}.Settings.Module.AdvancedSettings.Menu.Loot.Title`),
           class: "fas fa-cog",
           menus: [],
           settings: [],
         },
         {
           name: GROUP_TAGS,
-          description: i18n(`${BRTCONFIG.NAMESPACE}.Settings.Module.AdvancedSettings.Menu.Tags.Description`),
-          i18nName: i18n(`${BRTCONFIG.NAMESPACE}.Settings.Module.AdvancedSettings.Menu.Tags.Title`),
+          description: i18n(`${CONSTANTS.MODULE_ID}.Settings.Module.AdvancedSettings.Menu.Tags.Description`),
+          i18nName: i18n(`${CONSTANTS.MODULE_ID}.Settings.Module.AdvancedSettings.Menu.Tags.Title`),
           class: "fas fa-tags",
           menus: [],
           settings: [],
