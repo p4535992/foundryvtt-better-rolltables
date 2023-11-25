@@ -458,7 +458,13 @@ export class RollTableToActorHelpers {
       if (newQty != newItemQty) {
         setProperty(updateItem, stackAttribute, newQty);
 
-        const newPrice = getProperty(originalItem, priceAttribute) + (getProperty(newItemData, priceAttribute) ?? 1);
+        const newPriceValue =
+          (getProperty(originalItem, priceAttribute)?.value ?? 0) +
+          (getProperty(newItemData, priceAttribute)?.value ?? 0);
+        const newPrice = {
+          denomination: getProperty(item, priceAttribute)?.denomination,
+          value: newPriceValue,
+        };
         setProperty(updateItem, `${priceAttribute}`, newPrice);
 
         const newWeight = getProperty(originalItem, weightAttribute) + (getProperty(newItemData, weightAttribute) ?? 1);

@@ -1,5 +1,10 @@
 TODO 
 - Add confirm dialog on reset button ???
+
+### 2.0.31
+
+- Little fix on _createItem function
+
 ### 2.0.30 
 
 - Clean up the code remove old and deprecated config class in favor of the constants class
