@@ -311,4 +311,16 @@ export class BRTUtils {
 
     return itemsData;
   }
+
+  static isTableResultText(result) {
+    return result?.type === CONST.TABLE_RESULT_TYPES.TEXT;
+  }
+
+  static isTableResultDocument(result) {
+    return result?.type === CONST.TABLE_RESULT_TYPES.DOCUMENT;
+  }
+
+  static isTableResultCompendium(result) {
+    return result?.type === CONST.TABLE_RESULT_TYPES.COMPENDIUM;
+  }
 }

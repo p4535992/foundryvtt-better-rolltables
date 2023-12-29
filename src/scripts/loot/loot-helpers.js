@@ -169,4 +169,38 @@ export class BRTLootHelpers {
     // }
     return actor;
   }
+
+  // /**
+  //  *
+  //  * @param {TableResult} result
+  //  * @returns {Array<{value:number,denom:string}>} currency extracted to insert on the actor
+  //  */
+  // static async retrieveLootFromTextLootRoll(result) {
+  //   var rollMap = formatLootRoll(result.text);
+
+  //   let currencyDataCalculate = [];
+  //   for (let [key, value] of rollMap) {
+  //     // var roll = new Roll(value);
+  //     // var rollResult = roll.roll({async: false});
+  //     var rollResult = await BRTBetterHelpers.tryRoll(value);
+  //     currencyDataCalculate.push({
+  //       value: rollResult,
+  //       denom: key
+  //     })
+  //   }
+  //   return currencyDataCalculate;
+  // }
+
+  // static formatLootRoll(resultText)
+  // {
+  //   let rollTableResult = resultText.replace(/(\[\[\/r\s)?(\]\])?(\}$)?/g,"").split("}");
+  //   let returnMap = new Map();
+
+  //   for(let i = 0; i < rollTableResult.length; i++)
+  //   {
+  //     let extractedRoll = rollTableResult[i].split("{");
+  //     returnMap.set(extractedRoll[1], extractedRoll[0]);
+  //   }
+  //   return returnMap;
+  // }
 }
