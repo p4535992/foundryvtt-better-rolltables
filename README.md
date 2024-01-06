@@ -61,8 +61,7 @@ In the BRT Harvest Rolltable sheet, the "Source Reference" field is the one used
 
 ## FAQ
 
-**Q: Is there a way to from a rolltable to call another roll table and have it roll 4d4 times?**
-R: The use case you told me is very general, but to roll an inner (or child ) rolltable 4d4 times of you just need to set in the quanity field the string "4d4" and an amount roll of at least 1.
+**Is there a way to from a rolltable to call another roll table and have it roll 4d4 times?** The use case you told me is very general, but to roll an inner (or child ) rolltable 4d4 times of you just need to set in the quanity field the string "4d4" and an amount roll of at least 1.
 
 ## Api
 
