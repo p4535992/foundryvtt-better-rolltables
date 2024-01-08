@@ -215,7 +215,12 @@
       "source": "Source reference",
       "sourcePlaceholder": "some string",
       "usePercentageMinAndMax": "Min - Max %",
-      "usePercentageOnlyMax": "Percentage"
+      "usePercentageOnlyMax": "Percentage",
+      "redFlagNoteTitle": "About the red background warnings on the table results",
+      "redFlagNote1Hint": "NOTE: If you see ALL the rows with a red background is a cache problem , click the 'Update' button and close the rolltable to force a refresh  of the table results.",
+      "redFlagNote2Hint": "NOTE: If you see SOME of the rows with a red background some item maybe some UUID is changed click the 'Update' button to force a refresh  of the table results.",
+      "redFlagNote3Hint": "As a general rule click always the button 'Update' at least one time after open the rolltable to force a refresh of the table results."
+    
     }
   }
 }
