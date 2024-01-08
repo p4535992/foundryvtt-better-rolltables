@@ -2,10 +2,12 @@ import { StoryBoolCondition } from "./story-bool-condition.js";
 import { BRTUtils } from "../core/utils.js";
 import { error, log, warn } from "../lib.js";
 import { CONSTANTS } from "../constants/constants.js";
+import { BetterRollTable } from "../core/brt-table.js";
 
 export class StoryBuilder {
   constructor(tableEntity) {
-    this.table = tableEntity;
+    let brtTable = new BetterRollTable(tableEntity, {});
+    this.table = brtTable;
     /** the story tokens with the respective values, either pulled from a rolltable or rolled with a formula */
     this._storyTokens = {};
     /** string containing the story, to be replaced with the tokens */
@@ -19,21 +21,22 @@ export class StoryBuilder {
    *
    */
   async drawStory() {
+    await this.table.initialize();
     const draw = await this.table.drawMany(1, { displayChat: false });
 
     let journalContent, errorString;
 
     for (const entry of draw.results) {
-      /** entity type 2 is when an entity in the world is linked */
-      if (entry.type === 1 && entry.documentCollection === "JournalEntry") {
+      /** entity type 1 is when an entity in the world is linked */
+      if (entry.type === CONST.TABLE_RESULT_TYPES.DOCUMENT && entry.documentCollection === "JournalEntry") {
         const storyJournal = game.journal.get(entry.documentId);
         if (storyJournal) {
           const pages = [...storyJournal.pages];
-          journalContent = pages[0].text.content;
+          journalContent = pages[0].text.content?.replaceAll("</p>", "</p>\n");
         } else {
           errorString = `Journal Entry ${entry.name} not found inside your world`;
         }
-      } else if (entry.type === 2) {
+      } else if (entry.type === CONST.TABLE_RESULT_TYPES.COMPENDIUM) {
         /** entity type 2 is when an entity inside a compendium is linked */
         let nameEntry = getProperty(
           entry,
@@ -46,7 +49,7 @@ export class StoryBuilder {
           errorString = `entity ${entry.text} not found in compendium ${entry.documentCollection}`;
         } else if (entity.documentCollection === "JournalEntry") {
           const pages = [...entity.pages];
-          journalContent = pages[0].text.content;
+          journalContent = pages[0].text.content?.replaceAll("</p>", "</p>\n");
         } else {
           errorString = "Only Journal entries are supported in the story generation as table results";
         }
@@ -80,7 +83,13 @@ export class StoryBuilder {
 
     /** remove html spaces and replacing with a space */
     storyDefinition = storyDefinition.replace(/(&nbsp;|<br>)+/g, " ");
-    const lines = storyDefinition.split(/\r\n|\r|\n/);
+    //splt the content by lines
+    let lines = storyDefinition.split(/\r\n|\r|\n/);
+    //remove empty lines
+    lines = lines.filter((line) => {
+      let lineTmp = line;
+      return lineTmp?.replaceAll("<p>", "")?.replaceAll("</p>", "").trim().length > 0;
+    });
 
     let parseMode = PARSE_MODE.DEFINITION;
 

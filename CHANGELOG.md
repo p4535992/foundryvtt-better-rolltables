@@ -1,6 +1,10 @@
 TODO 
 - Add confirm dialog on reset button ???
 
+### 2.0.33
+
+- Try to Bug fix https://github.com/p4535992/foundryvtt-better-rolltables/issues/22
+
 ### 2.0.32
 
 - Bug fix https://github.com/p4535992/foundryvtt-better-rolltables/issues/16
