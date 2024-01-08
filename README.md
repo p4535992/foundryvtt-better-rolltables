@@ -38,6 +38,10 @@ For every BRT Rolltable there is a specific sheet for manage the many use cases,
 - Red colored background for broken references to a document on the specific row of the results table
 - Use percentages instead of the mechanism with the range and weight to retrieve objects from a rolltable. Values range from 1 to 100 with a step of 0.1, so values such as 27.1 or 0.5 are accepted.
 
+### Add some contextual action on the compendium directory
+
+![](wiki/img/context_menu_compendium.png)
+
 ## Integration with the module [Better Harvesting and Looting](https://github.com/OhhLoz/Harvester)
 
 In the BRT Harvest Rolltable sheet, the "Source Reference" field is the one used by the  [Better Harvesting and Looting](https://github.com/OhhLoz/Harvester) module to connect the monster to the rolltable ! So **"Source Reference" === "Name of The Monster"** , and REMEMBER YOU MUST PUT THE NEW ROLLTABLE IN THE BRT COMPENDIUM "better-rolltables.brt-harvest-harvester" or in the Rolltable directory of the world itself (for now).
