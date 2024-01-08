@@ -170,7 +170,7 @@ export class BetterTables {
   //         .filter((entry) => entry.type === "spell")
   //         .map((i) => mergeObject(i, { collection: spellCompendium.collection }));
   //     } else {
-  //       ui.notifications.error(CONSTANTS.MODULE_ID + `| Spell cache could not be initialized/updated.`);
+  //       error(`Spell cache could not be initialized/updated.`);
   //     }
   //   }
   // }

@@ -224,7 +224,7 @@ export class BetterRollTableLootConfig extends RollTableConfig {
       const eel = event.target;
       const el = eel.dataset.resultId ? eel : eel.closest(".table-result[data-result-id]");
       if (!el) {
-        ui.notifications.warn("Drop target not found.");
+        warn("Drop target not found.", true);
         return;
       }
       return this.reorderIndex(event, json.result, el.dataset.resultId);
@@ -547,7 +547,7 @@ export class BetterRollTableLootConfig extends RollTableConfig {
       targetIx = results.findIndex((r) => r._id === target);
 
     if (sourceIx == targetIx) {
-      ui.notifications.warn("Can't move result onto itself.");
+      warn("Can't move result onto itself.", true);
       return;
     }
 

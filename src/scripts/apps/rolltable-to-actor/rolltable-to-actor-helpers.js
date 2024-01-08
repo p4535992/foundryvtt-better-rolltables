@@ -4,7 +4,7 @@ import { CONSTANTS } from "../../constants/constants";
 import SETTINGS from "../../constants/settings";
 import { BRTBetterHelpers } from "../../better/brt-helper";
 import { BRTUtils } from "../../core/utils";
-import { error, i18n, info, isRealNumber, warn } from "../../lib";
+import { error, i18n, info, isRealNumber, log, warn } from "../../lib";
 
 export class RollTableToActorHelpers {
   static async retrieveItemsDataFromRollTableResult(table, options = {}) {
@@ -329,7 +329,7 @@ export class RollTableToActorHelpers {
         continue;
       }
       if (flattenChar[k] !== flattenTable[k]) {
-        console.log(flattenChar[k], k);
+        log(flattenChar[k], k);
         return false;
       }
     }
@@ -661,8 +661,8 @@ export class RollTableToActorHelpers {
   //   const itemEntity = await RollTableToActorHelpers._getRandomSpell(level);
 
   //   if (!itemEntity) {
-  //     ui.notifications.warn(
-  //       CONSTANTS.MODULE_ID + ` | No spell of level ${level} found in compendium  ${itemEntity.collection} `
+  //     warn(
+  //       ` | No spell of level ${level} found in compendium  ${itemEntity.collection} `, true
   //     );
   //     return itemData;
   //   }

@@ -357,7 +357,7 @@ export class BetterRollTable {
     // // Ensure that at least one non-drawn result remains
     // const available = this.table.results.filter((r) => !r.drawn);
     // if (!available.length) {
-    //   ui.notifications.warn(game.i18n.localize("TABLE.NoAvailableResults"));
+    //   warn(game.i18n.localize("TABLE.NoAvailableResults"), true);
     //   return { roll, results };
     // }
 
@@ -368,7 +368,7 @@ export class BetterRollTable {
       // Ensure that at least one non-drawn result remains
       const available = this.table.results.filter((r) => !r.drawn);
       if (!available.length) {
-        ui.notifications.warn(game.i18n.localize("TABLE.NoAvailableResults"));
+        warn(game.i18n.localize("TABLE.NoAvailableResults"), true);
         return { roll, results };
       }
 
@@ -419,7 +419,7 @@ export class BetterRollTable {
       // Ensure that at least one non-drawn result remains
       const available = this.table.results.filter((r) => !r.drawn);
       if (!available.length) {
-        ui.notifications.warn(game.i18n.localize("TABLE.NoAvailableResults"));
+        warn(game.i18n.localize("TABLE.NoAvailableResults"), true);
         return { roll, results };
       }
       // Ensure that results are available within the minimum/maximum range
@@ -458,8 +458,8 @@ export class BetterRollTable {
             error(`Failed to draw an available entry from Table ${this.table.name}, maximum iteration reached`, true);
           }
           // END PATCH
-          // ui.notifications.error(
-          //   `Failed to draw an available entry from Table ${this.table.name}, maximum iteration reached`
+          // error(
+          //   `Failed to draw an available entry from Table ${this.table.name}, maximum iteration reached`, true
           // );
           break;
         }
@@ -773,7 +773,7 @@ export class BetterRollTable {
         let msg = game.i18n.format(`${CONSTANTS.MODULE_ID}.RollTable.NoFormula`, {
           name: this.table.name,
         });
-        ui.notifications.error(CONSTANTS.MODULE_ID + " | " + msg);
+        error(msg, true);
         return;
       }
 

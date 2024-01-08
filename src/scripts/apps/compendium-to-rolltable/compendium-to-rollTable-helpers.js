@@ -1,5 +1,5 @@
 import { CONSTANTS } from "../../constants/constants";
-import { warn } from "../../lib";
+import { info, warn } from "../../lib";
 import { CompendiumToRollTableDialog } from "./compendium-to-rollTable-dialog";
 import { CompendiumToRollTableSpecialHarvestDialog } from "./compendium-to-rollTable-dialog-special-harvest-";
 
@@ -52,24 +52,27 @@ export class CompendiumToRollTableHelpers {
 
   static async compendiumToRollTable(compendiumName, tableName, { weightPredicate = null } = {}) {
     const compendium = game.packs.get(compendiumName);
-    let msg = { name: compendiumName, tableName: tableName };
-    let api_msg = CONSTANTS.MODULE_ID + ".api | ";
-
     if (compendium === undefined) {
       api.msg += game.i18n.format(`${CONSTANTS.MODULE_ID}.api.msg.compendiumNotFound`, msg);
-      ui.notifications.warn(CONSTANTS.MODULE_ID + " | " + api_msg);
+      warn(api_msg, true);
       return;
     }
 
-    msg.title = compendium.title;
-    msg.compendiumSize = (await compendium.getIndex()).size;
+    let msg = {
+      name: compendiumName,
+      tableName: tableName,
+      title: compendium.title ?? compendium.metadata.name,
+      compendiumSize: (await compendium.getIndex()).size,
+    };
+
+    let api_msg = CONSTANTS.MODULE_ID + ".api | ";
 
     if (!msg.compendiumSize) {
-      ui.notifications.warn(api.msg + game.i18n.format(`${CONSTANTS.MODULE_ID}.api.msg.compendiumEmpty`, msg));
+      warn(api.msg + game.i18n.format(`${CONSTANTS.MODULE_ID}.api.msg.compendiumEmpty`, msg), true);
       return;
     }
 
-    ui.notifications.info(api_msg + game.i18n.format(`${CONSTANTS.MODULE_ID}.api.msg.startRolltableGeneration`, msg));
+    info(api_msg + game.i18n.format(`${CONSTANTS.MODULE_ID}.api.msg.startRolltableGeneration`, msg), true);
 
     const document = compendium
       .getDocuments()
@@ -91,9 +94,7 @@ export class CompendiumToRollTableHelpers {
       )
       .then((rolltable) => {
         rolltable.normalize();
-        ui.notifications.info(
-          api_msg + game.i18n.format(`${CONSTANTS.MODULE_ID}.api.msg.rolltableGenerationFinished`, msg)
-        );
+        info(api_msg + game.i18n.format(`${CONSTANTS.MODULE_ID}.api.msg.rolltableGenerationFinished`, msg), true);
         return rolltable;
       });
     return document;

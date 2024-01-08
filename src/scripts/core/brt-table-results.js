@@ -2,7 +2,7 @@ import { CONSTANTS } from "../constants/constants.js";
 import { BRTBetterHelpers } from "../better/brt-helper.js";
 import { BRTUtils } from "./utils.js";
 import { BetterRollTable } from "./brt-table.js";
-import { isEmptyObject } from "../lib.js";
+import { isEmptyObject, log, warn } from "../lib.js";
 
 export class BetterResults {
   constructor(tableResults) {
@@ -31,7 +31,7 @@ export class BetterResults {
   }
 
   async _parseResult(result) {
-    const betterResults = [];
+    let betterResults = [];
     if (result.type === CONST.TABLE_RESULT_TYPES.TEXT) {
       const textResults = result.text.split("|");
 
@@ -51,7 +51,7 @@ export class BetterResults {
         while ((matches = regex.exec(t)) !== null) {
           // matches[1] is undefined in case we are matching [tablename]
           // if we are matching @command[string] then matches[2] is the command and [3] is the arg inside []
-          // console.log(`match 0: ${matches[0]}, 1: ${matches[1]}, 2: ${matches[2]}, 3: ${matches[3]}`);
+          // log(`match 0: ${matches[0]}, 1: ${matches[1]}, 2: ${matches[2]}, 3: ${matches[3]}`);
 
           if (matches[1] !== undefined && matches[1].trim() !== "") {
             textString = matches[1];
@@ -76,7 +76,7 @@ export class BetterResults {
                 tableName: tableName,
                 packName: tableCompendiumName,
               });
-              ui.notifications.warn(CONSTANTS.MODULE_ID + " | " + msg);
+              warn(msg, true);
             }
             break;
           } else if (commandName) {
@@ -106,7 +106,7 @@ export class BetterResults {
           betterResults = betterResults.concat(innerResults);
         } else if (textString) {
           // if no table definition is found, the textString is the item name
-          console.log(`results text ${textString.trim()} and commands ${commands}`);
+          log(`results text ${textString.trim()} and commands ${commands}`);
           betterResult.img =
             result.thumbnail ?? result.img ?? CONFIG.RollTable.resultIcon ?? result.src ?? `icons/svg/d20-black.svg`;
           betterResult.text = textString.trim();
@@ -202,7 +202,7 @@ export class BetterResults {
           let msg = game.i18n.format(`${CONSTANTS.MODULE_ID}.Strings.Warnings.CurrencyFormat`, {
             currencyString: currency,
           });
-          ui.notifications.warn(CONSTANTS.MODULE_ID + " | " + msg);
+          warn(msg, true);
           continue;
         }
         const rollFormula = match[1];

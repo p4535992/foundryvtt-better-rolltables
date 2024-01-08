@@ -113,7 +113,7 @@ export class BRTBuilder {
         let msg = game.i18n.format(`${CONSTANTS.MODULE_ID}.RollTable.NoFormula`, {
           name: table.name,
         });
-        ui.notifications.error(CONSTANTS.MODULE_ID + " | " + msg);
+        error(msg, true);
         return;
       }
 

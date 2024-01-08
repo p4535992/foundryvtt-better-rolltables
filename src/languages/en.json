@@ -5,7 +5,7 @@
         "compendiumEmpty": "Compendium named {title} ({name}) is empty.`",
         "compendiumNotFound": "Compendium << {name} >> not found.",
         "generateRolltableFromCompendium": "BRT Generate rolltable.",
-        "generateRolltableFromCompendiumWithFilters": "BRT Generate rolltable with Filters (BETA Tested only on Dnd5e).",
+        "generateRolltableFromCompendiumWithFilters": "BRT [BETA] Generate rolltable with Filters (Dnd5e Only).",
         "startRolltableGeneration": "Starting generation of rolltable for {title} ({name}) with {compendiumSize} entries.",
         "rolltableGenerationFinished": "Rolltable generation for {title} ({name}) finished.",
         "rollCompendiumAsRolltable": "BRT Rolling compendium as rolltable."

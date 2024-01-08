@@ -9,7 +9,7 @@ export class BRTBetterHelpers {
    * @param {RollTable} table the rolltable the event is called on
    */
   static async dropEventOnTable(event, table) {
-    // console.log("EVENT ", event);
+    // log("EVENT ", event);
     try {
       JSON.parse(event.dataTransfer.getData("text/plain"));
     } catch (err) {

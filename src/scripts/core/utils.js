@@ -1,7 +1,7 @@
 import { NULL } from "sass";
 import { BRTBetterHelpers } from "../better/brt-helper";
 import { CONSTANTS } from "../constants/constants";
-import { isRealBoolean, isRealBooleanOrElseNull, isRealNumber } from "../lib";
+import { isRealBoolean, isRealBooleanOrElseNull, isRealNumber, warn } from "../lib";
 import SETTINGS from "../constants/settings";
 
 export class BRTUtils {
@@ -97,7 +97,7 @@ export class BRTUtils {
     if (!pack) return;
     const size = pack.index.size;
     if (size === 0) {
-      ui.notifications.warn(`Compendium ${pack.title} is empty.`);
+      warn(`Compendium ${pack.title} is empty.`, true);
       return;
     }
     const randonIndex = Math.floor(Math.random() * size);

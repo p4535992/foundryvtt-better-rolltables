@@ -1,4 +1,5 @@
-import { debug } from "../../lib";
+import { CONSTANTS } from "../../constants/constants";
+import { debug, error, info, log } from "../../lib";
 
 /**
  * @href https://gist.github.com/crazycalya/0cd20cd12b1a344d21302a794cb229ff
@@ -221,9 +222,12 @@ export class CompendiumToRollTableDialog extends Dialog {
 
               let compendium = await game.packs.get(selected);
 
-              let msg = compendium.metadata.label;
+              let msg = {
+                name: compendium.metadata.label,
+                title: compendium.title ?? compendium.metadata.name,
+              };
 
-              ui.notifications.info(game.i18n.format(`${CONSTANTS.MODULE_ID}.api.msg.startRolltableGeneration`, msg));
+              info(game.i18n.format(`${CONSTANTS.MODULE_ID}.api.msg.startRolltableGeneration`, msg), true);
               const document = await this.fromCompendium(
                 customFilters,
                 nameFilters,
@@ -234,9 +238,7 @@ export class CompendiumToRollTableDialog extends Dialog {
                 weightPredicate,
                 compendium
               );
-              ui.notifications.info(
-                game.i18n.format(`${CONSTANTS.MODULE_ID}.api.msg.rolltableGenerationFinished`, msg)
-              );
+              info(game.i18n.format(`${CONSTANTS.MODULE_ID}.api.msg.rolltableGenerationFinished`, msg), true);
               return document;
             },
             height: 40,
@@ -269,7 +271,7 @@ export class CompendiumToRollTableDialog extends Dialog {
     //         return [...new Set(index.map(i => i.type))]; // extract the "type" property from each object, create a set of unique values, and convert the set back to an array
     //     });
 
-    //     console.log(types)
+    //     log(types)
     // });
 
     html.find("#toggleAll").on("click", async () => {
@@ -386,10 +388,10 @@ export class CompendiumToRollTableDialog extends Dialog {
   async fromCompendiumSimple(compendium, options = {}) {
     // Ported from Foundry's existing RollTable.fromFolder()
     const results = await compendium.index.map((e, i) => {
-      console.log("Compendium Item:");
-      console.log(e);
-      console.log("Compendium Index:");
-      console.log(i);
+      log("Compendium Item:");
+      log(e);
+      log("Compendium Index:");
+      log(i);
       return {
         text: e.name,
         type: CONST.TABLE_RESULT_TYPES.COMPENDIUM,
@@ -417,8 +419,8 @@ export class CompendiumToRollTableDialog extends Dialog {
     options = {}
   ) {
     // Ported from Foundry's existing RollTable.fromFolder()
-    // const entries = await compendium.getDocuments();
-    const entries = compendium.contents;
+    const entries = await compendium.getDocuments();
+    // const entries = compendium.contents;
     const filteredEntries = entries.filter((entry) => {
       let customFiltersValid = customFilters.every(({ filterPath, filterRequirements }) => {
         let filterPathValue = this.getValueByPath(entry, filterPath);
@@ -448,7 +450,7 @@ export class CompendiumToRollTableDialog extends Dialog {
     });
 
     if (filteredEntries.length === 0) {
-      return ui.notifications.error("No valid items within compendium for selected filters.");
+      return error("No valid items within compendium for selected filters.", true);
     }
     const results = filteredEntries.map((entry, i) => {
       debug("Compendium Item:");

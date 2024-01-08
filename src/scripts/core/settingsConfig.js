@@ -1,5 +1,5 @@
 import { CONSTANTS } from "../constants/constants.js";
-import { i18n } from "../lib.js";
+import { error, i18n } from "../lib.js";
 import { GROUP_DEFAULT, GROUP_LOOT, GROUP_TAGS, GROUP_UI } from "../settings.js";
 
 /**
@@ -120,7 +120,9 @@ export class BetterRolltableSettingsConfig extends FormApplication {
   _onClickSubmenu(event) {
     event.preventDefault();
     const menu = game.settings.menus.get(event.currentTarget.dataset.key);
-    if (!menu) return ui.notifications.error("No submenu found for the provided key");
+    if (!menu) {
+      return error("No submenu found for the provided key", true);
+    }
     const app = new menu.type();
     return app.render(true);
   }

@@ -281,7 +281,7 @@ export class HarvestChatCard {
       htmlDescription: htmlDescription,
       // gmTitleLabel: i18n(`${CONSTANTS.MODULE_ID}.label.tableTextGmTitleLabel`),
       itemsData: this.itemsData,
-      compendium: table.pack,
+      compendium: table,
       id: table.id,
       users: game.users
         .filter((user) => !user.isGM && user.character)
@@ -342,7 +342,7 @@ export class HarvestChatCard {
       htmlDescription: htmlDescription,
       gmTitleLabel: i18n(`${CONSTANTS.MODULE_ID}.label.tableTextGmTitleLabel`),
       itemsData: this.itemsDataGM,
-      compendium: table.pack,
+      compendium: table,
       id: table.id,
       users: game.users
         .filter((user) => user.isGM && user.character)
