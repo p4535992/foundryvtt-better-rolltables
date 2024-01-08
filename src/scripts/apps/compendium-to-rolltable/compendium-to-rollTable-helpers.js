@@ -15,7 +15,7 @@ export class CompendiumToRollTableHelpers {
   static async compendiumToRollTableWithDialog(compendiumName, { weightPredicate = null } = {}) {
     let allCompendiums = [];
     if (compendiumName) {
-      if (!game.packs.getName(compendiumName)) {
+      if (!game.packs.get(compendiumName)) {
         warn(`No compendium found with id '${compendiumName}'`, true);
         return;
       }

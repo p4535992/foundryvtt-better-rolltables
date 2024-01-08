@@ -32,7 +32,7 @@ export class CompendiumToRollTableDialog extends Dialog {
     }
 
     let itemTypeSelect = ``;
-    for (let i = 0; i < itemTypesLength; i++)
+    for (let i = 0; i < itemTypesLength; i++) {
       itemTypeSelect += `
             <div class="form-group has-boxes">
                 <label>${capitalize(itemTypes[i])}</label>
@@ -41,7 +41,7 @@ export class CompendiumToRollTableDialog extends Dialog {
                 </div>
             </div>
             `;
-
+    }
     // TODO TO PUT ON SYSTEM MANAGEMENT CHECK OUT THE LEVEL PATH PROPERTY
     let spellLevel = [];
     switch (thisSystem) {
