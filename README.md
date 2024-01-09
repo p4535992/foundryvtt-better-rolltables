@@ -31,7 +31,7 @@ For every BRT Rolltable there is a specific sheet for manage the many use cases,
 - Enhance your RollTables with Drag and Drop, Generate Loot, Encounters and and build your NPC Generator!
 - Roll on multiple tables with roll formulas
 - Auto create a loot actor to store generated loot
-- Automatically select a random spells when a scroll item is selected
+- (REMOVED) Automatically select a random spells when a scroll item is selected
 - A table can specify multiple currencies (with roll formulas) to always be awarded
 - Adds an option to change the table roll to GM only.
 - Adds the option to automatically import rolled items in controlled actors
