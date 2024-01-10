@@ -1,5 +1,5 @@
 import { CONSTANTS } from "../../constants/constants";
-import { debug, error, info, log } from "../../lib";
+import { debug, error, getCompendiumCollectionAsync, info, log } from "../../lib";
 
 /**
  * @href https://gist.github.com/crazycalya/0cd20cd12b1a344d21302a794cb229ff
@@ -220,7 +220,8 @@ export class CompendiumToRollTableDialog extends Dialog {
                 })
                 .get();
 
-              let compendium = await game.packs.get(selected);
+              const myPack = await getCompendiumCollectionAsync(selected, false, false);
+              let compendium = myPack;
 
               let msg = {
                 name: compendium.metadata.label,
@@ -264,7 +265,7 @@ export class CompendiumToRollTableDialog extends Dialog {
     // html.find('select[name="compendiumSelect"]').on('change', async (e) => {
     //     let selectedOptionValue = $(e.currentTarget).val();
     //     let selectedOptionName = html.find(`option[value="${selectedOptionValue}"]`).val();
-    //     let thisPack = game.packs.get(selectedOptionName);
+    //     let thisPack = await getCompendiumCollectionAsync(selectedOptionName, false, false);
 
     //     // Get all of the "type" properties within the pack and save it to an array
     //     let types = await thisPack.getIndex().then(index => {

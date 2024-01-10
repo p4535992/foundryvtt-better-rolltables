@@ -1,7 +1,7 @@
 import { NULL } from "sass";
 import { BRTBetterHelpers } from "../better/brt-helper";
 import { CONSTANTS } from "../constants/constants";
-import { isRealBoolean, isRealBooleanOrElseNull, isRealNumber, warn } from "../lib";
+import { getCompendiumCollectionAsync, isRealBoolean, isRealBooleanOrElseNull, isRealNumber, warn } from "../lib";
 import SETTINGS from "../constants/settings";
 
 export class BRTUtils {
@@ -33,7 +33,8 @@ export class BRTUtils {
    * @returns {Item}
    */
   static async findInCompendiumByName(compendiumName, entityName) {
-    const compendium = game.packs.get(compendiumName);
+    const myPack = await getCompendiumCollectionAsync(compendiumName, true, false);
+    const compendium = myPack;
     if (compendium) {
       const entry = compendium.index.getName(entityName);
       if (entry) {
@@ -62,7 +63,8 @@ export class BRTUtils {
   }
 
   static async findInCompendiumById(compendiumName, entityId) {
-    return await game.packs.get(compendiumName)?.getDocument(entityId);
+    const myPack = await getCompendiumCollectionAsync(compendiumName, false, false);
+    return await myPack?.getDocument(entityId);
   }
 
   static separateIdComendiumName(stringWithComendium) {
@@ -93,8 +95,11 @@ export class BRTUtils {
    * @returns {object} item from compendium
    */
   static async getRandomItemFromCompendium(compendium) {
-    const pack = game.packs.get(compendium);
-    if (!pack) return;
+    const myPack = await getCompendiumCollectionAsync(compendium, true, false);
+    const pack = myPack;
+    if (!pack) {
+      return;
+    }
     const size = pack.index.size;
     if (size === 0) {
       warn(`Compendium ${pack.title} is empty.`, true);

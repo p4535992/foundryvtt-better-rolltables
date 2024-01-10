@@ -1,5 +1,5 @@
 import { CONSTANTS } from "../constants/constants.js";
-import { debug, error, warn } from "../lib.js";
+import { debug, error, getCompendiumCollectionAsync, warn } from "../lib.js";
 
 export class BRTBetterHelpers {
   /**
@@ -112,7 +112,7 @@ export class BRTBetterHelpers {
     if (!findDocument) {
       if (result.type === CONST.TABLE_RESULT_TYPES.COMPENDIUM) {
         // Compendium.world.prodottifiniti.Item.cGvOfBMe8XQjL8ra
-        let compendium = game.packs.get(`${result.documentCollection}`);
+        let compendium = await getCompendiumCollectionAsync(result.documentCollection, true, false);
         if (!compendium) {
           if (throwError) {
             throw error(`Compendium ${result.documentCollection} was not found`);

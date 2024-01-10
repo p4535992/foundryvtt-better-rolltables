@@ -390,7 +390,7 @@ export class BetterRollTableBetterConfig extends RollTableConfig {
 
   //         // Compendium results
   //         case CONST.TABLE_RESULT_TYPES.COMPENDIUM:
-  //           const pack = game.packs.get(r.documentCollection);
+  //           const pack = await getCompendiumCollectionAsync(result.documentCollection, true, false);
   //           if (pack) {
 
   //             // Get the original entry, if the name still matches - take no action

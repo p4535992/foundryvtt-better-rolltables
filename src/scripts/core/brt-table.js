@@ -1,5 +1,5 @@
 import { CONSTANTS } from "../constants/constants.js";
-import { error, isRealNumber, log, warn } from "../lib.js";
+import { error, getCompendiumCollectionAsync, isRealNumber, log, warn } from "../lib.js";
 import { BRTBetterHelpers } from "../better/brt-helper.js";
 import { BRTUtils } from "./utils.js";
 import { LootChatCard } from "../loot/loot-chat-card.js";
@@ -485,7 +485,7 @@ export class BetterRollTable {
         let documentName;
         if (result.type === CONST.TABLE_RESULT_TYPES.DOCUMENT) documentName = result.documentCollection;
         else if (result.type === CONST.TABLE_RESULT_TYPES.COMPENDIUM) {
-          pack = game.packs.get(result.documentCollection);
+          pack = await getCompendiumCollectionAsync(result.documentCollection, false, false);
           documentName = pack?.documentName;
         }
         if (documentName === "RollTable") {

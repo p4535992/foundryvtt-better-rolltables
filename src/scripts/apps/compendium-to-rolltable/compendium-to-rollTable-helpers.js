@@ -1,5 +1,5 @@
 import { CONSTANTS } from "../../constants/constants";
-import { info, warn } from "../../lib";
+import { getCompendiumCollectionAsync, info, warn } from "../../lib";
 import { CompendiumToRollTableDialog } from "./compendium-to-rollTable-dialog";
 import { CompendiumToRollTableSpecialHarvestDialog } from "./compendium-to-rollTable-dialog-special-harvest-";
 
@@ -15,20 +15,19 @@ export class CompendiumToRollTableHelpers {
   static async compendiumToRollTableWithDialog(compendiumName, { weightPredicate = null } = {}) {
     let allCompendiums = [];
     if (compendiumName) {
-      if (!game.packs.get(compendiumName)) {
+      const myPack = await getCompendiumCollectionAsync(compendiumName, true, false);
+      if (!myPack) {
         warn(`No compendium found with id '${compendiumName}'`, true);
         return;
       }
-      allCompendiums = [game.packs.get(compendiumName)];
+      allCompendiums = [myPack];
     } else {
       allCompendiums = await game.packs.contents;
     }
     let itemTypes = await game.documentTypes.Item.sort();
-    const documents = new CompendiumToRollTableDialog(
-      allCompendiums,
-      itemTypes,
-      ({ weightPredicate = null } = {})
-    ).render(true);
+    const documents = new CompendiumToRollTableDialog(allCompendiums, itemTypes, {
+      weightPredicate: weightPredicate,
+    }).render(true);
     return documents;
   }
 
@@ -40,7 +39,8 @@ export class CompendiumToRollTableHelpers {
       warn(`You must activate the module 'harvester'`, true);
       return;
     }
-    let allCompendiums = [game.packs.get("harvester.harvest")];
+    const myPack = await getCompendiumCollectionAsync("harvester.harvest", false, false);
+    let allCompendiums = [myPack];
     let itemTypes = await game.documentTypes.Item.sort();
     const documents = new CompendiumToRollTableSpecialHarvestDialog(
       allCompendiums,
@@ -51,10 +51,10 @@ export class CompendiumToRollTableHelpers {
   }
 
   static async compendiumToRollTable(compendiumName, tableName, { weightPredicate = null } = {}) {
-    const compendium = game.packs.get(compendiumName);
-    if (compendium === undefined) {
-      api.msg += game.i18n.format(`${CONSTANTS.MODULE_ID}.api.msg.compendiumNotFound`, msg);
-      warn(api_msg, true);
+    const myPack = await getCompendiumCollectionAsync(compendiumName, true, false);
+    const compendium = myPack;
+    if (!compendium) {
+      warn(game.i18n.format(`${CONSTANTS.MODULE_ID}.api.msg.compendiumNotFound`, { name: compendiumName }), true);
       return;
     }
 
@@ -65,14 +65,12 @@ export class CompendiumToRollTableHelpers {
       compendiumSize: (await compendium.getIndex()).size,
     };
 
-    let api_msg = CONSTANTS.MODULE_ID + ".api | ";
-
     if (!msg.compendiumSize) {
-      warn(api.msg + game.i18n.format(`${CONSTANTS.MODULE_ID}.api.msg.compendiumEmpty`, msg), true);
+      warn(game.i18n.format(`${CONSTANTS.MODULE_ID}.api.msg.compendiumEmpty`, msg), true);
       return;
     }
 
-    info(api_msg + game.i18n.format(`${CONSTANTS.MODULE_ID}.api.msg.startRolltableGeneration`, msg), true);
+    info(game.i18n.format(`${CONSTANTS.MODULE_ID}.api.msg.startRolltableGeneration`, msg), true);
 
     const document = compendium
       .getDocuments()
@@ -94,7 +92,7 @@ export class CompendiumToRollTableHelpers {
       )
       .then((rolltable) => {
         rolltable.normalize();
-        info(api_msg + game.i18n.format(`${CONSTANTS.MODULE_ID}.api.msg.rolltableGenerationFinished`, msg), true);
+        info(game.i18n.format(`${CONSTANTS.MODULE_ID}.api.msg.rolltableGenerationFinished`, msg), true);
         return rolltable;
       });
     return document;

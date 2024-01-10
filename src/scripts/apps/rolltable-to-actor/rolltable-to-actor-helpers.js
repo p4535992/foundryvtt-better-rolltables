@@ -4,7 +4,7 @@ import { CONSTANTS } from "../../constants/constants";
 import SETTINGS from "../../constants/settings";
 import { BRTBetterHelpers } from "../../better/brt-helper";
 import { BRTUtils } from "../../core/utils";
-import { error, i18n, info, isRealNumber, log, warn } from "../../lib";
+import { error, getCompendiumCollectionAsync, i18n, info, isRealNumber, log, warn } from "../../lib";
 
 export class RollTableToActorHelpers {
   static async retrieveItemsDataFromRollTableResult(table, options = {}) {
@@ -148,11 +148,15 @@ export class RollTableToActorHelpers {
           getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`)
         );
         if (!document) {
-          const collection = game.collections.get(r.documentCollection) ?? game.packs.get(r.documentCollection);
+          const collection =
+            game.collections.get(r.documentCollection) ??
+            (await getCompendiumCollectionAsync(r.documentCollection, true, false));
           document = (await collection?.get(r.documentId)) ?? (await collection?.getDocument(r.documentId));
         }
       } else {
-        const collection = game.collections.get(r.documentCollection) ?? game.packs.get(r.documentCollection);
+        const collection =
+          game.collections.get(r.documentCollection) ??
+          (await getCompendiumCollectionAsync(r.documentCollection, true, false));
         document = (await collection?.get(r.documentId)) ?? (await collection?.getDocument(r.documentId));
       }
       if (document instanceof Item) {

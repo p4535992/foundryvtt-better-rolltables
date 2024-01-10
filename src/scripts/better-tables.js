@@ -3,7 +3,16 @@ import { BetterResults } from "./core/brt-table-results.js";
 import { BRTUtils } from "./core/utils.js";
 import API from "./API.js";
 import { CONSTANTS } from "./constants/constants.js";
-import { debug, i18n, info, isEmptyObject, isRealBoolean, isRealBooleanOrElseNull, warn } from "./lib.js";
+import {
+  debug,
+  getCompendiumCollectionAsync,
+  i18n,
+  info,
+  isEmptyObject,
+  isRealBoolean,
+  isRealBooleanOrElseNull,
+  warn,
+} from "./lib.js";
 import { HarvestChatCard } from "./harvest/harvest-chat-card.js";
 import { StoryChatCard } from "./story/story-chat-card.js";
 import { BetterChatCard } from "./better/brt-chat-card.js";
@@ -160,7 +169,7 @@ export class BetterTables {
   // async updateSpellCache(pack) {
   //   if (game.user.isGM) {
   //     const defaultPack = game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SPELL_COMPENDIUM_KEY),
-  //       spellCompendium = game.packs.get(defaultPack);
+  //       spellCompendium = await getCompendiumCollectionAsync(defaultPack);
 
   //     if ((!pack && spellCompendium) || pack === defaultPack) {
   //       const spellCompendiumIndex = await spellCompendium.getIndex({
@@ -376,7 +385,8 @@ export class BetterTables {
         } else {
           let rolltable;
           if (pack && id) {
-            rolltable = await game.packs.get(pack)?.getDocument(id);
+            const myPack = await getCompendiumCollectionAsync(pack, true, false);
+            rolltable = await myPack?.getDocument(id);
           } else {
             rolltable = game.tables.get(id);
           }
@@ -415,7 +425,8 @@ export class BetterTables {
       // Open link
       let document;
       if (pack && id) {
-        document = await game.packs.get(pack)?.getDocument(id);
+        const myPack = await getCompendiumCollectionAsync(pack, true, false);
+        document = await myPack?.getDocument(id);
       } else {
         document = game.tables.get(id);
       }
@@ -494,9 +505,11 @@ export class BetterTables {
         .find("a.content-link[data-pack]")
         .each(async (index, link) => {
           const packName = $(link).data("pack");
-          const pack = game.packs.get(packName);
-          if (!pack) return;
-
+          const myPack = await getCompendiumCollectionAsync(packName, true, false);
+          const pack = myPack;
+          if (!pack) {
+            return;
+          }
           const id = $(link).data("id");
           const document = await pack.getDocument(id);
           if (!document || document.documentName !== "RollTable") return;
@@ -584,9 +597,11 @@ export class BetterTables {
         .find("a.content-link[data-pack]")
         .each(async (index, link) => {
           const packName = $(link).data("pack");
-          const pack = game.packs.get(packName);
-          if (!pack) return;
-
+          const myPack = await getCompendiumCollectionAsync(packName, true, false);
+          const pack = myPack;
+          if (!pack) {
+            return;
+          }
           const id = $(link).data("id");
           const document = await pack.getDocument(id);
           if (!document || document.documentName !== "RollTable") return;
