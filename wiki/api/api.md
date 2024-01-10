@@ -1,6 +1,12 @@
 # API DOCUMENTATION
 
-### This is the documentation to the old api, it will remain for retrocompatibility, all the api references are moved from ` game.betterTables` and `game.modules.get("better-rolltables").public.API` to `game.modules.get("better-rolltables").api`, so please use  `game.modules.get("better-rolltables").api` for get api form this module.
+The api is reachable from the variable `game.modules.get('better-rolltables').api` or from the socket libary `socketLib` on the variable `game.modules.get('better-rolltables').socket` if present and active.
+
+### The documentation can be out of sync with the API code checkout the code if you want to dig up [API](../../src/scripts/API.js)
+
+You can find some javascript examples here **=> [macros](./macros/) <=**
+
+### NOTE: The refrence to the old api, it will remain for retrocompatibility, `game.betterTables` and `game.modules.get("better-rolltables").public.API`, but all the api references are moved from ` game.betterTables` and `game.modules.get("better-rolltables").public.API` to `game.modules.get("better-rolltables").api`, so please use  `game.modules.get("better-rolltables").api` for get api from this module.
 
 ### The documentation can be out of sync with the API code checkout the code if you want to dig up [API](../../src/scripts/API.js)
 
