@@ -1,6 +1,5 @@
-import API from "./API";
-import { CONSTANTS } from "./constants/constants";
-import { debug } from "./lib";
+import API from "./API.js";
+import { CONSTANTS } from "./constants/constants.js";
 
 export let betterRolltablesSocket;
 export function registerSocket() {

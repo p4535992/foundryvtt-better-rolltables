@@ -1,7 +1,7 @@
-import { CONSTANTS } from "../../constants/constants";
-import { BRTBetterHelpers } from "../../better/brt-helper";
-import { debug, getSubstring, info, log } from "../../lib";
-import { CompendiumToRollTableDialog } from "./compendium-to-rollTable-dialog";
+import { CONSTANTS } from "../../constants/constants.js";
+import { BRTBetterHelpers } from "../../better/brt-helper.js";
+import { debug, getSubstring, info, log } from "../../lib/lib.js";
+import { CompendiumToRollTableDialog } from "./compendium-to-rollTable-dialog.js";
 
 /**
  * @href https://gist.github.com/crazycalya/0cd20cd12b1a344d21302a794cb229ff

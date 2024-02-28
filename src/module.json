@@ -176,6 +176,10 @@
         "type": "module",
         "manifest": "https://raw.githubusercontent.com/manuelVo/foundryvtt-socketlib/develop/module.json",
         "compatibility": {}
+      },
+      {
+        "id": "item-piles",
+        "type": "module"
       }
     ],
     "conflicts": []

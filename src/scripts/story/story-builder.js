@@ -1,6 +1,6 @@
 import { StoryBoolCondition } from "./story-bool-condition.js";
 import { BRTUtils } from "../core/utils.js";
-import { error, log, warn } from "../lib.js";
+import { error, log, warn } from "../lib/lib.js";
 import { CONSTANTS } from "../constants/constants.js";
 import { BetterRollTable } from "../core/brt-table.js";
 

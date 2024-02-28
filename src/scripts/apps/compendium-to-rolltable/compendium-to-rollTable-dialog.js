@@ -1,5 +1,5 @@
 import { CONSTANTS } from "../../constants/constants";
-import { debug, error, getCompendiumCollectionAsync, info, log } from "../../lib";
+import { debug, error, getCompendiumCollectionAsync, info, log } from "../../lib/lib";
 
 /**
  * @href https://gist.github.com/crazycalya/0cd20cd12b1a344d21302a794cb229ff

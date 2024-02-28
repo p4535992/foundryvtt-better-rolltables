@@ -1,7 +1,7 @@
 import { CONSTANTS } from "./constants/constants";
 import SETTINGS from "./constants/settings";
 import { BetterRolltableSettingsConfig } from "./core/settingsConfig";
-import { i18n } from "./lib";
+import { i18n } from "./lib/lib";
 import { SYSTEMS } from "./systems";
 
 export const WORLD = "world";

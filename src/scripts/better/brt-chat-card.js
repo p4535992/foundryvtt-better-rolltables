@@ -2,7 +2,7 @@ import { CONSTANTS } from "../constants/constants.js";
 import { BRTUtils } from "../core/utils.js";
 import { BRTBetterHelpers } from "./brt-helper.js";
 import { RollTableToActorHelpers } from "../apps/rolltable-to-actor/rolltable-to-actor-helpers.js";
-import { i18n, warn } from "../lib.js";
+import { i18n, warn } from "../lib/lib.js";
 import { betterRolltablesSocket } from "../socket.js";
 
 /**

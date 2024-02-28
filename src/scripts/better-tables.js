@@ -12,7 +12,7 @@ import {
   isRealBoolean,
   isRealBooleanOrElseNull,
   warn,
-} from "./lib.js";
+} from "./lib/lib.js";
 import { HarvestChatCard } from "./harvest/harvest-chat-card.js";
 import { StoryChatCard } from "./story/story-chat-card.js";
 import { BetterChatCard } from "./better/brt-chat-card.js";

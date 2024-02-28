@@ -3,7 +3,7 @@ import { CONSTANTS } from "../constants/constants";
 import { BRTBetterHelpers } from "../better/brt-helper";
 import { RichResultEdit } from "../core/brt-result-editor";
 import { BetterRollTableBetterConfig } from "../better/brt-rolltable-config";
-import { i18n, warn } from "../lib";
+import { i18n, warn } from "../lib/lib";
 
 /**
  * The Application responsible for displaying and editing a single RollTable document.

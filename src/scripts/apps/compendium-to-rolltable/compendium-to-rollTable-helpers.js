@@ -1,5 +1,5 @@
 import { CONSTANTS } from "../../constants/constants";
-import { getCompendiumCollectionAsync, info, warn } from "../../lib";
+import { getCompendiumCollectionAsync, info, warn } from "../../lib/lib";
 import { CompendiumToRollTableDialog } from "./compendium-to-rollTable-dialog";
 import { CompendiumToRollTableSpecialHarvestDialog } from "./compendium-to-rollTable-dialog-special-harvest-";
 

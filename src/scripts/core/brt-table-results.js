@@ -2,7 +2,7 @@ import { CONSTANTS } from "../constants/constants.js";
 import { BRTBetterHelpers } from "../better/brt-helper.js";
 import { BRTUtils } from "./utils.js";
 import { BetterRollTable } from "./brt-table.js";
-import { isEmptyObject, log, warn } from "../lib.js";
+import { isEmptyObject, log, warn } from "../lib/lib.js";
 
 export class BetterResults {
   constructor(tableResults) {

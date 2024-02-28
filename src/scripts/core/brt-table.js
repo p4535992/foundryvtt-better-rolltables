@@ -1,5 +1,5 @@
 import { CONSTANTS } from "../constants/constants.js";
-import { error, getCompendiumCollectionAsync, isRealNumber, log, warn } from "../lib.js";
+import { error, getCompendiumCollectionAsync, isRealNumber, log, warn } from "../lib/lib.js";
 import { BRTBetterHelpers } from "../better/brt-helper.js";
 import { BRTUtils } from "./utils.js";
 import { LootChatCard } from "../loot/loot-chat-card.js";

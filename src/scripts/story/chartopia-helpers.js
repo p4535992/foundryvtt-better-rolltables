@@ -1,4 +1,4 @@
-import { error, info } from "../lib";
+import { error, info } from "../lib/lib";
 
 export class BRTChartopiaHelpers {
   static populateLocalRolltableFromChartopiaResults(chartopiaId, options) {}

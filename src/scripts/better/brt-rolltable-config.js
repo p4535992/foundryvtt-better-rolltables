@@ -1,7 +1,6 @@
-import { sortable } from "../../libs/sortable";
 import API from "../API";
 import { CONSTANTS } from "../constants/constants";
-import { error, i18n, warn } from "../lib";
+import { error, i18n, warn } from "../lib/lib.js";
 import { BRTBetterHelpers } from "./brt-helper";
 import { RichResultEdit } from "../core/brt-result-editor";
 

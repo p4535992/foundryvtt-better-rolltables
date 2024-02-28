@@ -12,7 +12,7 @@ import { LootChatCard } from "./loot/loot-chat-card.js";
 import { HarvestChatCard } from "./harvest/harvest-chat-card.js";
 import { StoryChatCard } from "./story/story-chat-card.js";
 import { betterRolltablesSocket } from "./socket.js";
-import { isRealBoolean, warn } from "./lib.js";
+import { isRealBoolean, warn } from "./lib/lib.js";
 import { BetterRollTable } from "./core/brt-table.js";
 
 /**

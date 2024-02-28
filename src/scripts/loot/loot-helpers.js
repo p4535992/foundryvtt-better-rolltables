@@ -6,7 +6,7 @@ import { LootChatCard } from "./loot-chat-card";
 import { BRTUtils } from "../core/utils";
 import { BetterRollTable } from "../core/brt-table";
 import SETTINGS from "../constants/settings";
-import { error, info } from "../lib";
+import { error, info } from "../lib/lib";
 
 export class BRTLootHelpers {
   /**

@@ -1,6 +1,6 @@
 import { CONSTANTS } from "../../constants/constants";
 import { BRTUtils } from "../../core/utils";
-import { warn } from "../../lib";
+import { warn } from "../../lib/lib";
 
 export class RollFromCompendiumAsRollTableHelpers {
   /**
