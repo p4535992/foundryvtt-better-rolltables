@@ -109,12 +109,7 @@
       "name": "D&D SRD Content",
       "sorting": "m",
       "color": "#7d160c",
-      "packs": [
-        "brt-loot",
-        "brt-story",
-        "brt-gen",
-        "brt-harvest-harvester"
-      ]
+      "packs": ["brt-loot", "brt-story", "brt-gen", "brt-harvest-harvester"]
     }
   ],
   "languages": [

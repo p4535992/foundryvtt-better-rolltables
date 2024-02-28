@@ -1,8 +1,8 @@
-import API from "../API";
-import { CONSTANTS } from "../constants/constants";
-import { error, i18n, warn } from "../lib/lib.js";
-import { BRTBetterHelpers } from "./brt-helper";
-import { RichResultEdit } from "../core/brt-result-editor";
+import API from "../../API.js";
+import { CONSTANTS } from "../../constants/constants.js";
+import { error, i18n, warn } from "../../lib/lib.js";
+import { BRTBetterHelpers } from "./brt-helper.js";
+import { RichResultEdit } from "../../core/brt-result-editor.js";
 
 /**
  * The Application responsible for displaying and editing a single RollTable document.

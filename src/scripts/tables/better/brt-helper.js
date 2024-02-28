@@ -1,5 +1,5 @@
-import { CONSTANTS } from "../constants/constants.js";
-import { debug, error, getCompendiumCollectionAsync, warn } from "../lib/lib.js";
+import { CONSTANTS } from "../../constants/constants.js";
+import { debug, error, getCompendiumCollectionAsync, warn } from "../../lib/lib.js";
 
 export class BRTBetterHelpers {
   /**

@@ -1,4 +1,4 @@
-import { BRTUtils } from "../core/utils";
+import { BRTUtils } from "../../core/utils";
 import { BRTStoryHelpers } from "./story-helpers";
 
 export class StoryChatCard {

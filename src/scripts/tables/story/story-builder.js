@@ -1,8 +1,8 @@
 import { StoryBoolCondition } from "./story-bool-condition.js";
-import { BRTUtils } from "../core/utils.js";
-import { error, log, warn } from "../lib/lib.js";
-import { CONSTANTS } from "../constants/constants.js";
-import { BetterRollTable } from "../core/brt-table.js";
+import { BRTUtils } from "../../core/utils.js";
+import { error, log, warn } from "../../lib/lib.js";
+import { CONSTANTS } from "../../constants/constants.js";
+import { BetterRollTable } from "../../core/brt-table.js";
 
 export class StoryBuilder {
   constructor(tableEntity) {

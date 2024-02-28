@@ -4,11 +4,11 @@ import { BetterTables } from "../better-tables.js";
 import { BRTUtils } from "../core/utils.js";
 import { setApi } from "../../module.js";
 import { registerSettings } from "../settings.js";
-import { BetterRollTableBetterConfig } from "../better/brt-rolltable-config.js";
+import { BetterRollTableBetterConfig } from "../tables/better/brt-rolltable-config.js";
 import SETTINGS from "../constants/settings.js";
-import { BetterRollTableLootConfig } from "../loot/loot-rolltable-config.js";
-import { BetterRollTableStoryConfig } from "../story/story-rolltable-config.js";
-import { BetterRollTableHarvestConfig } from "../harvest/harvest-rolltable-config.js";
+import { BetterRollTableLootConfig } from "../tables/loot/loot-rolltable-config.js";
+import { BetterRollTableStoryConfig } from "../tables/story/story-rolltable-config.js";
+import { BetterRollTableHarvestConfig } from "../tables/harvest/harvest-rolltable-config.js";
 import { i18n, i18nFormat, isEmptyObject } from "../lib/lib.js";
 
 /**

@@ -1,4 +1,4 @@
-import { LootChatCard } from "./loot/loot-chat-card.js";
+import { LootChatCard } from "./tables/loot/loot-chat-card.js";
 import { BetterResults } from "./core/brt-table-results.js";
 import { BRTUtils } from "./core/utils.js";
 import API from "./API.js";
@@ -13,9 +13,9 @@ import {
   isRealBooleanOrElseNull,
   warn,
 } from "./lib/lib.js";
-import { HarvestChatCard } from "./harvest/harvest-chat-card.js";
-import { StoryChatCard } from "./story/story-chat-card.js";
-import { BetterChatCard } from "./better/brt-chat-card.js";
+import { HarvestChatCard } from "./tables/harvest/harvest-chat-card.js";
+import { StoryChatCard } from "./tables/story/story-chat-card.js";
+import { BetterChatCard } from "./tables/better/brt-chat-card.js";
 import { BetterRollTable } from "./core/brt-table.js";
 
 export class BetterTables {

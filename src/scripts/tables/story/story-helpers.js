@@ -1,4 +1,4 @@
-import { BRTUtils } from "../core/utils.js";
+import { BRTUtils } from "../../core/utils.js";
 import { StoryBuilder } from "./story-builder";
 import { StoryChatCard } from "./story-chat-card.js";
 

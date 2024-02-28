@@ -1,8 +1,8 @@
-import { CONSTANTS } from "../constants/constants.js";
-import { BRTUtils } from "../core/utils.js";
+import { CONSTANTS } from "../../constants/constants.js";
+import { BRTUtils } from "../../core/utils.js";
 import { BRTBetterHelpers } from "../better/brt-helper.js";
-import { RollTableToActorHelpers } from "../apps/rolltable-to-actor/rolltable-to-actor-helpers.js";
-import { i18n, warn } from "../lib/lib.js";
+import { RollTableToActorHelpers } from "../../apps/rolltable-to-actor/rolltable-to-actor-helpers.js";
+import { i18n, warn } from "../../lib/lib.js";
 
 /**
  * create a chat card based on the content of the object LootData

@@ -1,13 +1,14 @@
-import { CONSTANTS } from "../constants/constants.js";
-import { BRTUtils } from "../core/utils.js";
-import { BRTBetterHelpers } from "../better/brt-helper.js";
-import { RollTableToActorHelpers } from "../apps/rolltable-to-actor/rolltable-to-actor-helpers.js";
-import { i18n, warn } from "../lib/lib.js";
+import { CONSTANTS } from "../../constants/constants.js";
+import { BRTUtils } from "../../core/utils.js";
+import { BRTBetterHelpers } from "./brt-helper.js";
+import { RollTableToActorHelpers } from "../../apps/rolltable-to-actor/rolltable-to-actor-helpers.js";
+import { i18n, warn } from "../../lib/lib.js";
+import { betterRolltablesSocket } from "../../socket.js";
 
 /**
- * create a chat card based on the content of the object HarvestData
+ * create a chat card based on the content of the object LootData
  */
-export class HarvestChatCard {
+export class BetterChatCard {
   /**
    * @param {object} betterResults
    */
@@ -180,7 +181,7 @@ export class HarvestChatCard {
       if (itemFolder) {
         itemData.folder = itemFolder.id;
       } else {
-        warn(`No folder tables found with name 'Better RollTable | Harvest Items'`);
+        warn(`No folder tables found with name 'Better RollTable | Better Items'`);
       }
 
       setProperty(itemData, "permission.default", CONST.DOCUMENT_PERMISSION_LEVELS.OBSERVER);
@@ -229,15 +230,15 @@ export class HarvestChatCard {
   }
 
   async renderMessage(data) {
-    return renderTemplate(`modules/${CONSTANTS.MODULE_ID}/templates/card/harvest-chat-card.hbs`, data);
+    return renderTemplate(`modules/${CONSTANTS.MODULE_ID}/templates/card/better-chat-card.hbs`, data);
   }
 
   async getBRTFolder() {
     if (!this.historyFolder) {
-      let historyFolder = game.folders.getName("Better RollTable | Harvest Items");
+      let historyFolder = game.folders.getName("Better RollTable | Better Items");
       if (!historyFolder) {
         historyFolder = await Folder.create({
-          name: "Better RollTable | Harvest Items",
+          name: "Better RollTable | Better Items",
           parent: null,
           type: "Item",
         });
@@ -281,7 +282,7 @@ export class HarvestChatCard {
       htmlDescription: htmlDescription,
       // gmTitleLabel: i18n(`${CONSTANTS.MODULE_ID}.label.tableTextGmTitleLabel`),
       itemsData: this.itemsData,
-      compendium: table,
+      compendium: table.pack,
       id: table.id,
       users: game.users
         .filter((user) => !user.isGM && user.character)
@@ -301,7 +302,7 @@ export class HarvestChatCard {
       content: cardHtml,
       flags: {
         [`${CONSTANTS.MODULE_ID}`]: {
-          [`${CONSTANTS.FLAGS.HARVEST}`]: chatCardData,
+          [`${CONSTANTS.FLAGS.BETTER}`]: chatCardData,
         },
       },
     };
@@ -342,7 +343,7 @@ export class HarvestChatCard {
       htmlDescription: htmlDescription,
       gmTitleLabel: i18n(`${CONSTANTS.MODULE_ID}.label.tableTextGmTitleLabel`),
       itemsData: this.itemsDataGM,
-      compendium: table,
+      compendium: table.pack,
       id: table.id,
       users: game.users
         .filter((user) => user.isGM && user.character)
@@ -362,7 +363,7 @@ export class HarvestChatCard {
       content: cardHtml,
       flags: {
         [`${CONSTANTS.MODULE_ID}`]: {
-          [`${CONSTANTS.FLAGS.HARVEST}`]: chatCardData,
+          [`${CONSTANTS.FLAGS.BETTER}`]: chatCardData,
         },
       },
     };

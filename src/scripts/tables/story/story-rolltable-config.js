@@ -1,16 +1,16 @@
-import API from "../API";
-import { CONSTANTS } from "../constants/constants";
+import API from "../../API";
+import { CONSTANTS } from "../../constants/constants";
 import { BRTBetterHelpers } from "../better/brt-helper";
-import { RichResultEdit } from "../core/brt-result-editor";
+import { RichResultEdit } from "../../core/brt-result-editor";
 import { BetterRollTableBetterConfig } from "../better/brt-rolltable-config";
-import { i18n, warn } from "../lib/lib";
+import { i18n, warn } from "../../lib/lib";
 
 /**
  * The Application responsible for displaying and editing a single RollTable document.
  * @param {RollTable} table                 The RollTable document being configured
  * @param {DocumentSheetOptions} [options]  Additional application configuration options
  */
-export class BetterRollTableLootConfig extends RollTableConfig {
+export class BetterRollTableStoryConfig extends RollTableConfig {
   /** @inheritdoc */
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
@@ -72,13 +72,13 @@ export class BetterRollTableLootConfig extends RollTableConfig {
     });
 
     // Set brt type
-    if (this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) !== CONSTANTS.TABLE_TYPE_LOOT) {
-      await this.document.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY, CONSTANTS.TABLE_TYPE_LOOT);
+    if (this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) !== CONSTANTS.TABLE_TYPE_STORY) {
+      await this.document.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY, CONSTANTS.TABLE_TYPE_STORY);
     }
     brtData.usePercentage = this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.GENERIC_USE_PERCENTAGE);
-    brtData.tableType = CONSTANTS.TABLE_TYPE_LOOT;
+    brtData.tableType = CONSTANTS.TABLE_TYPE_STORY;
     brtData.textType =
-      i18n(`${CONSTANTS.MODULE_ID}.${"TypePrefixLabel"}`) + " " + i18n(`${CONSTANTS.MODULE_ID}.${"TypeLoot"}`) + "";
+      i18n(`${CONSTANTS.MODULE_ID}.${"TypePrefixLabel"}`) + " " + i18n(`${CONSTANTS.MODULE_ID}.${"TypeStory"}`) + "";
 
     brtData = foundry.utils.mergeObject(brtData, duplicate(this.document.flags));
     brtData.disabled = !this.isEditable;
@@ -113,7 +113,11 @@ export class BetterRollTableLootConfig extends RollTableConfig {
     html.querySelector(".normalize-weights").addEventListener("click", this._onNormalizeWeights.bind(this));
 
     html
-      .querySelector(".better-rolltables-roll-loot")
+      .querySelectorAll(".rich-edit-result")
+      .forEach((el) => el.addEventListener("click", this._openRichEditor.bind(this)));
+
+    html
+      .querySelector(".better-rolltables-roll-story")
       .addEventListener("click", this._onBetterRollTablesRoll.bind(this));
 
     // Edit a Result
@@ -128,14 +132,6 @@ export class BetterRollTableLootConfig extends RollTableConfig {
 
     // TODO
     // html.querySelector(".toggle-editor").addEventListener("click", (ev) => this._toggleSimpleEditor(ev, html));
-
-    // TIPO SPECIFICO
-    html
-      .querySelectorAll("#BRT-gen-loot")
-      .forEach((el) => el.addEventListener("click", this._onBetterRollTablesGenerateLoot.bind(this)));
-    html
-      .querySelectorAll("#BRT-gen-loot-token")
-      .forEach((el) => el.addEventListener("click", this._onBetterRollTablesGenerateLootToken.bind(this)));
   }
 
   /* -------------------------------------------- */
@@ -675,65 +671,11 @@ export class BetterRollTableLootConfig extends RollTableConfig {
       event.target.disabled = true;
     }
     // Set brt type
-    if (this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) !== CONSTANTS.TABLE_TYPE_LOOT) {
-      await this.document.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY, CONSTANTS.TABLE_TYPE_LOOT);
+    if (this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) !== CONSTANTS.TABLE_TYPE_STORY) {
+      await this.document.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY, CONSTANTS.TABLE_TYPE_STORY);
     }
     const tableEntity = this.document;
-    await API.generateChatLoot(tableEntity);
-    if (event.currentTarget) {
-      event.currentTarget.disabled = false;
-    } else {
-      event.target.disabled = false;
-    }
-  }
-
-  /* -------------------------------------------- */
-
-  /**
-   * Handle drawing a result from the RollTable
-   * @param {Event} event
-   * @private
-   */
-  async _onBetterRollTablesGenerateLoot(event) {
-    event.preventDefault();
-    await this.submit({ preventClose: true, preventRender: true });
-    if (event.currentTarget) {
-      event.currentTarget.disabled = true;
-    } else {
-      event.target.disabled = true;
-    }
-    // Set brt type
-    if (this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) !== CONSTANTS.TABLE_TYPE_LOOT) {
-      await this.document.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY, CONSTANTS.TABLE_TYPE_LOOT);
-    }
-    const tableEntity = this.document;
-    await API.generateLoot(tableEntity);
-    if (event.currentTarget) {
-      event.currentTarget.disabled = false;
-    } else {
-      event.target.disabled = false;
-    }
-  }
-
-  /**
-   * Handle drawing a result from the RollTable
-   * @param {Event} event
-   * @private
-   */
-  async _onBetterRollTablesGenerateLootToken(event) {
-    event.preventDefault();
-    await this.submit({ preventClose: true, preventRender: true });
-    if (event.currentTarget) {
-      event.currentTarget.disabled = true;
-    } else {
-      event.target.disabled = true;
-    }
-    // Set brt type
-    if (this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) !== CONSTANTS.TABLE_TYPE_LOOT) {
-      await this.document.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY, CONSTANTS.TABLE_TYPE_LOOT);
-    }
-    const tableEntity = this.document;
-    await API.generateLootOnSelectedToken(tableEntity);
+    await API.generateChatStory(tableEntity);
     if (event.currentTarget) {
       event.currentTarget.disabled = false;
     } else {

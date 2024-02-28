@@ -1,5 +1,5 @@
 import { NULL } from "sass";
-import { BRTBetterHelpers } from "../better/brt-helper";
+import { BRTBetterHelpers } from "../tables/better/brt-helper";
 import { CONSTANTS } from "../constants/constants";
 import { getCompendiumCollectionAsync, isRealBoolean, isRealBooleanOrElseNull, isRealNumber, warn } from "../lib/lib";
 import SETTINGS from "../constants/settings";

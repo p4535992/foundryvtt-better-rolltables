@@ -1,5 +1,5 @@
 import { CONSTANTS } from "../../constants/constants.js";
-import { BRTBetterHelpers } from "../../better/brt-helper.js";
+import { BRTBetterHelpers } from "../../tables/better/brt-helper.js";
 import { debug, getSubstring, info, log } from "../../lib/lib.js";
 import { CompendiumToRollTableDialog } from "./compendium-to-rollTable-dialog.js";
 

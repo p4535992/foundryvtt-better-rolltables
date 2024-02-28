@@ -1,16 +1,16 @@
-import API from "../API";
-import { CONSTANTS } from "../constants/constants";
+import API from "../../API";
+import { CONSTANTS } from "../../constants/constants";
 import { BRTBetterHelpers } from "../better/brt-helper";
-import { RichResultEdit } from "../core/brt-result-editor";
+import { RichResultEdit } from "../../core/brt-result-editor";
 import { BetterRollTableBetterConfig } from "../better/brt-rolltable-config";
-import { i18n, error, warn } from "../lib/lib";
+import { i18n, warn } from "../../lib/lib";
 
 /**
  * The Application responsible for displaying and editing a single RollTable document.
  * @param {RollTable} table                 The RollTable document being configured
  * @param {DocumentSheetOptions} [options]  Additional application configuration options
  */
-export class BetterRollTableHarvestConfig extends RollTableConfig {
+export class BetterRollTableLootConfig extends RollTableConfig {
   /** @inheritdoc */
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
@@ -72,13 +72,13 @@ export class BetterRollTableHarvestConfig extends RollTableConfig {
     });
 
     // Set brt type
-    if (this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) !== CONSTANTS.TABLE_TYPE_HARVEST) {
-      await this.document.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY, CONSTANTS.TABLE_TYPE_HARVEST);
+    if (this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) !== CONSTANTS.TABLE_TYPE_LOOT) {
+      await this.document.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY, CONSTANTS.TABLE_TYPE_LOOT);
     }
     brtData.usePercentage = this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.GENERIC_USE_PERCENTAGE);
-    brtData.tableType = CONSTANTS.TABLE_TYPE_HARVEST;
+    brtData.tableType = CONSTANTS.TABLE_TYPE_LOOT;
     brtData.textType =
-      i18n(`${CONSTANTS.MODULE_ID}.${"TypePrefixLabel"}`) + " " + i18n(`${CONSTANTS.MODULE_ID}.${"TypeHarvest"}`) + "";
+      i18n(`${CONSTANTS.MODULE_ID}.${"TypePrefixLabel"}`) + " " + i18n(`${CONSTANTS.MODULE_ID}.${"TypeLoot"}`) + "";
 
     brtData = foundry.utils.mergeObject(brtData, duplicate(this.document.flags));
     brtData.disabled = !this.isEditable;
@@ -113,7 +113,7 @@ export class BetterRollTableHarvestConfig extends RollTableConfig {
     html.querySelector(".normalize-weights").addEventListener("click", this._onNormalizeWeights.bind(this));
 
     html
-      .querySelector(".better-rolltables-roll-harvest")
+      .querySelector(".better-rolltables-roll-loot")
       .addEventListener("click", this._onBetterRollTablesRoll.bind(this));
 
     // Edit a Result
@@ -131,11 +131,11 @@ export class BetterRollTableHarvestConfig extends RollTableConfig {
 
     // TIPO SPECIFICO
     html
-      .querySelectorAll("#BRT-gen-harvest")
-      .forEach((el) => el.addEventListener("click", this._onBetterRollTablesGenerateHarvest.bind(this)));
+      .querySelectorAll("#BRT-gen-loot")
+      .forEach((el) => el.addEventListener("click", this._onBetterRollTablesGenerateLoot.bind(this)));
     html
-      .querySelectorAll("#BRT-gen-harvest-token")
-      .forEach((el) => el.addEventListener("click", this._onBetterRollTablesGenerateHarvestToken.bind(this)));
+      .querySelectorAll("#BRT-gen-loot-token")
+      .forEach((el) => el.addEventListener("click", this._onBetterRollTablesGenerateLootToken.bind(this)));
   }
 
   /* -------------------------------------------- */
@@ -675,11 +675,11 @@ export class BetterRollTableHarvestConfig extends RollTableConfig {
       event.target.disabled = true;
     }
     // Set brt type
-    if (this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) !== CONSTANTS.TABLE_TYPE_HARVEST) {
-      await this.document.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY, CONSTANTS.TABLE_TYPE_HARVEST);
+    if (this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) !== CONSTANTS.TABLE_TYPE_LOOT) {
+      await this.document.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY, CONSTANTS.TABLE_TYPE_LOOT);
     }
     const tableEntity = this.document;
-    await API.generateChatHarvest(tableEntity);
+    await API.generateChatLoot(tableEntity);
     if (event.currentTarget) {
       event.currentTarget.disabled = false;
     } else {
@@ -694,7 +694,7 @@ export class BetterRollTableHarvestConfig extends RollTableConfig {
    * @param {Event} event
    * @private
    */
-  async _onBetterRollTablesGenerateHarvest(event) {
+  async _onBetterRollTablesGenerateLoot(event) {
     event.preventDefault();
     await this.submit({ preventClose: true, preventRender: true });
     if (event.currentTarget) {
@@ -703,11 +703,11 @@ export class BetterRollTableHarvestConfig extends RollTableConfig {
       event.target.disabled = true;
     }
     // Set brt type
-    if (this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) !== CONSTANTS.TABLE_TYPE_HARVEST) {
-      await this.document.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY, CONSTANTS.TABLE_TYPE_HARVEST);
+    if (this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) !== CONSTANTS.TABLE_TYPE_LOOT) {
+      await this.document.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY, CONSTANTS.TABLE_TYPE_LOOT);
     }
     const tableEntity = this.document;
-    await API.generateHarvest(tableEntity);
+    await API.generateLoot(tableEntity);
     if (event.currentTarget) {
       event.currentTarget.disabled = false;
     } else {
@@ -720,7 +720,7 @@ export class BetterRollTableHarvestConfig extends RollTableConfig {
    * @param {Event} event
    * @private
    */
-  async _onBetterRollTablesGenerateHarvestToken(event) {
+  async _onBetterRollTablesGenerateLootToken(event) {
     event.preventDefault();
     await this.submit({ preventClose: true, preventRender: true });
     if (event.currentTarget) {
@@ -729,11 +729,11 @@ export class BetterRollTableHarvestConfig extends RollTableConfig {
       event.target.disabled = true;
     }
     // Set brt type
-    if (this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) !== CONSTANTS.TABLE_TYPE_HARVEST) {
-      await this.document.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY, CONSTANTS.TABLE_TYPE_HARVEST);
+    if (this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) !== CONSTANTS.TABLE_TYPE_LOOT) {
+      await this.document.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY, CONSTANTS.TABLE_TYPE_LOOT);
     }
     const tableEntity = this.document;
-    await API.generateHarvestOnSelectedToken(tableEntity);
+    await API.generateLootOnSelectedToken(tableEntity);
     if (event.currentTarget) {
       event.currentTarget.disabled = false;
     } else {

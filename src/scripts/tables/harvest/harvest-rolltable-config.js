@@ -1,16 +1,16 @@
-import API from "../API";
-import { CONSTANTS } from "../constants/constants";
+import API from "../../API";
+import { CONSTANTS } from "../../constants/constants";
 import { BRTBetterHelpers } from "../better/brt-helper";
-import { RichResultEdit } from "../core/brt-result-editor";
+import { RichResultEdit } from "../../core/brt-result-editor";
 import { BetterRollTableBetterConfig } from "../better/brt-rolltable-config";
-import { i18n, warn } from "../lib/lib";
+import { i18n, error, warn } from "../../lib/lib";
 
 /**
  * The Application responsible for displaying and editing a single RollTable document.
  * @param {RollTable} table                 The RollTable document being configured
  * @param {DocumentSheetOptions} [options]  Additional application configuration options
  */
-export class BetterRollTableStoryConfig extends RollTableConfig {
+export class BetterRollTableHarvestConfig extends RollTableConfig {
   /** @inheritdoc */
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
@@ -72,13 +72,13 @@ export class BetterRollTableStoryConfig extends RollTableConfig {
     });
 
     // Set brt type
-    if (this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) !== CONSTANTS.TABLE_TYPE_STORY) {
-      await this.document.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY, CONSTANTS.TABLE_TYPE_STORY);
+    if (this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) !== CONSTANTS.TABLE_TYPE_HARVEST) {
+      await this.document.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY, CONSTANTS.TABLE_TYPE_HARVEST);
     }
     brtData.usePercentage = this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.GENERIC_USE_PERCENTAGE);
-    brtData.tableType = CONSTANTS.TABLE_TYPE_STORY;
+    brtData.tableType = CONSTANTS.TABLE_TYPE_HARVEST;
     brtData.textType =
-      i18n(`${CONSTANTS.MODULE_ID}.${"TypePrefixLabel"}`) + " " + i18n(`${CONSTANTS.MODULE_ID}.${"TypeStory"}`) + "";
+      i18n(`${CONSTANTS.MODULE_ID}.${"TypePrefixLabel"}`) + " " + i18n(`${CONSTANTS.MODULE_ID}.${"TypeHarvest"}`) + "";
 
     brtData = foundry.utils.mergeObject(brtData, duplicate(this.document.flags));
     brtData.disabled = !this.isEditable;
@@ -113,11 +113,7 @@ export class BetterRollTableStoryConfig extends RollTableConfig {
     html.querySelector(".normalize-weights").addEventListener("click", this._onNormalizeWeights.bind(this));
 
     html
-      .querySelectorAll(".rich-edit-result")
-      .forEach((el) => el.addEventListener("click", this._openRichEditor.bind(this)));
-
-    html
-      .querySelector(".better-rolltables-roll-story")
+      .querySelector(".better-rolltables-roll-harvest")
       .addEventListener("click", this._onBetterRollTablesRoll.bind(this));
 
     // Edit a Result
@@ -132,6 +128,14 @@ export class BetterRollTableStoryConfig extends RollTableConfig {
 
     // TODO
     // html.querySelector(".toggle-editor").addEventListener("click", (ev) => this._toggleSimpleEditor(ev, html));
+
+    // TIPO SPECIFICO
+    html
+      .querySelectorAll("#BRT-gen-harvest")
+      .forEach((el) => el.addEventListener("click", this._onBetterRollTablesGenerateHarvest.bind(this)));
+    html
+      .querySelectorAll("#BRT-gen-harvest-token")
+      .forEach((el) => el.addEventListener("click", this._onBetterRollTablesGenerateHarvestToken.bind(this)));
   }
 
   /* -------------------------------------------- */
@@ -671,11 +675,65 @@ export class BetterRollTableStoryConfig extends RollTableConfig {
       event.target.disabled = true;
     }
     // Set brt type
-    if (this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) !== CONSTANTS.TABLE_TYPE_STORY) {
-      await this.document.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY, CONSTANTS.TABLE_TYPE_STORY);
+    if (this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) !== CONSTANTS.TABLE_TYPE_HARVEST) {
+      await this.document.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY, CONSTANTS.TABLE_TYPE_HARVEST);
     }
     const tableEntity = this.document;
-    await API.generateChatStory(tableEntity);
+    await API.generateChatHarvest(tableEntity);
+    if (event.currentTarget) {
+      event.currentTarget.disabled = false;
+    } else {
+      event.target.disabled = false;
+    }
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Handle drawing a result from the RollTable
+   * @param {Event} event
+   * @private
+   */
+  async _onBetterRollTablesGenerateHarvest(event) {
+    event.preventDefault();
+    await this.submit({ preventClose: true, preventRender: true });
+    if (event.currentTarget) {
+      event.currentTarget.disabled = true;
+    } else {
+      event.target.disabled = true;
+    }
+    // Set brt type
+    if (this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) !== CONSTANTS.TABLE_TYPE_HARVEST) {
+      await this.document.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY, CONSTANTS.TABLE_TYPE_HARVEST);
+    }
+    const tableEntity = this.document;
+    await API.generateHarvest(tableEntity);
+    if (event.currentTarget) {
+      event.currentTarget.disabled = false;
+    } else {
+      event.target.disabled = false;
+    }
+  }
+
+  /**
+   * Handle drawing a result from the RollTable
+   * @param {Event} event
+   * @private
+   */
+  async _onBetterRollTablesGenerateHarvestToken(event) {
+    event.preventDefault();
+    await this.submit({ preventClose: true, preventRender: true });
+    if (event.currentTarget) {
+      event.currentTarget.disabled = true;
+    } else {
+      event.target.disabled = true;
+    }
+    // Set brt type
+    if (this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) !== CONSTANTS.TABLE_TYPE_HARVEST) {
+      await this.document.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY, CONSTANTS.TABLE_TYPE_HARVEST);
+    }
+    const tableEntity = this.document;
+    await API.generateHarvestOnSelectedToken(tableEntity);
     if (event.currentTarget) {
       event.currentTarget.disabled = false;
     } else {

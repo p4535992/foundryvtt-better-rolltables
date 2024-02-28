@@ -1,12 +1,12 @@
-import { RollTableToActorHelpers } from "../apps/rolltable-to-actor/rolltable-to-actor-helpers";
-import { CONSTANTS } from "../constants/constants";
+import { RollTableToActorHelpers } from "../../apps/rolltable-to-actor/rolltable-to-actor-helpers";
+import { CONSTANTS } from "../../constants/constants";
 import { BRTBetterHelpers } from "../better/brt-helper";
-import { BetterResults } from "../core/brt-table-results";
+import { BetterResults } from "../../core/brt-table-results";
 import { HarvestChatCard } from "./harvest-chat-card";
-import { error, info, isRealNumber } from "../lib/lib";
-import { BRTUtils } from "../core/utils";
-import { BetterRollTable } from "../core/brt-table";
-import SETTINGS from "../constants/settings";
+import { error, info, isRealNumber } from "../../lib/lib";
+import { BRTUtils } from "../../core/utils";
+import { BetterRollTable } from "../../core/brt-table";
+import SETTINGS from "../../constants/settings";
 
 export class BRTHarvestHelpers {
   /**

@@ -1,11 +1,11 @@
 import { CONSTANTS } from "../constants/constants.js";
 import { error, getCompendiumCollectionAsync, isRealNumber, log, warn } from "../lib/lib.js";
-import { BRTBetterHelpers } from "../better/brt-helper.js";
+import { BRTBetterHelpers } from "../tables/better/brt-helper.js";
 import { BRTUtils } from "./utils.js";
-import { LootChatCard } from "../loot/loot-chat-card.js";
-import { StoryChatCard } from "../story/story-chat-card.js";
-import { HarvestChatCard } from "../harvest/harvest-chat-card.js";
-import { BetterChatCard } from "../better/brt-chat-card.js";
+import { LootChatCard } from "../tables/loot/loot-chat-card.js";
+import { StoryChatCard } from "../tables/story/story-chat-card.js";
+import { HarvestChatCard } from "../tables/harvest/harvest-chat-card.js";
+import { BetterChatCard } from "../tables/better/brt-chat-card.js";
 
 export class BetterRollTable {
   // extends RollTable {
