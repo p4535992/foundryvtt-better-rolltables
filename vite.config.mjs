@@ -160,7 +160,7 @@ export default () => {
             src: normalizePath(path.resolve(__dirname, './src/module.json')),
             dest: normalizePath(path.resolve(__dirname, `./dist/${s_MODULE_ID}/`)),
           },
-		  {
+          {
             src: normalizePath(path.resolve(__dirname, './src/scripts/libs')) + '/[!.]*',
             dest: normalizePath(path.resolve(__dirname, `./dist/${s_MODULE_ID}/scripts/libs`)),
           },
