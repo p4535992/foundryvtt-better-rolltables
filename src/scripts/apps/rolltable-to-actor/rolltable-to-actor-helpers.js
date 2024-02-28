@@ -4,7 +4,8 @@ import { CONSTANTS } from "../../constants/constants";
 import SETTINGS from "../../constants/settings";
 import { BRTBetterHelpers } from "../../tables/better/brt-helper";
 import { BRTUtils } from "../../core/utils";
-import { error, getCompendiumCollectionAsync, i18n, info, isRealNumber, log, warn } from "../../lib/lib";
+import { getCompendiumCollectionAsync, i18n, isRealNumber } from "../../lib/lib";
+import Logger from "../../lib/Logger";
 
 export class RollTableToActorHelpers {
   static async retrieveItemsDataFromRollTableResult(table, options = {}) {
@@ -54,7 +55,7 @@ export class RollTableToActorHelpers {
       itemNames,
       actorNames,
     ]);
-    info(infoStr, true);
+    Logger.info(infoStr, true);
     const items = itemsData;
     return items;
   }
@@ -80,7 +81,7 @@ export class RollTableToActorHelpers {
     const tokenstack = token ? (token.constructor === Array ? token : [token]) : canvas.tokens.controlled;
     const controlledActors = tokenstack.map((t) => t.actor).filter((a) => a.isOwner);
     if (controlledActors.length === 0) {
-      warn(`No actors founded on the token passed`, true);
+      Logger.warn(`No actors founded on the token passed`, true);
       return;
     }
     // Add the items
@@ -108,7 +109,7 @@ export class RollTableToActorHelpers {
       itemNames,
       actorNames,
     ]);
-    info(infoStr, true);
+    Logger.info(infoStr, true);
     const items = itemsData;
     return items;
   }
@@ -190,7 +191,7 @@ export class RollTableToActorHelpers {
         mergeObject(itemTmp.flags[CONSTANTS.MODULE_ID], getProperty(r, `flags.${CONSTANTS.MODULE_ID}`));
         itemsData.push(itemTmp);
       } else {
-        warn(`The Table Result is not a item`, false, r);
+        Logger.warn(`The Table Result is not a item`, false, r);
       }
     }
     return itemsData;
@@ -333,7 +334,7 @@ export class RollTableToActorHelpers {
         continue;
       }
       if (flattenChar[k] !== flattenTable[k]) {
-        log(flattenChar[k], k);
+        Logger.log(flattenChar[k], k);
         return false;
       }
     }
@@ -549,7 +550,7 @@ export class RollTableToActorHelpers {
     }
 
     if (!existingItem) {
-      error(`Cannot find document for result`, false, result);
+      Logger.error(`Cannot find document for result`, false, result);
       return null;
     }
 
@@ -621,7 +622,7 @@ export class RollTableToActorHelpers {
       try {
         rolledValue = new Roll(cmd.arg).roll({ async: false }).total;
       } catch (e) {
-        error(e.message, false, e);
+        Logger.error(e.message, false, e);
         continue;
       }
       setProperty(itemData, `system.${cmd.command.toLowerCase()}`, rolledValue);
@@ -665,7 +666,7 @@ export class RollTableToActorHelpers {
   //   const itemEntity = await RollTableToActorHelpers._getRandomSpell(level);
 
   //   if (!itemEntity) {
-  //     warn(
+  //     Logger.warn(
   //       ` | No spell of level ${level} found in compendium  ${itemEntity.collection} `, true
   //     );
   //     return itemData;

@@ -1,8 +1,8 @@
 import { StoryBoolCondition } from "./story-bool-condition.js";
 import { BRTUtils } from "../../core/utils.js";
-import { error, log, warn } from "../../lib/lib.js";
 import { CONSTANTS } from "../../constants/constants.js";
 import { BetterRollTable } from "../../core/brt-table.js";
+import Logger from "../../lib/Logger.js";
 
 export class StoryBuilder {
   constructor(tableEntity) {
@@ -62,11 +62,11 @@ export class StoryBuilder {
       }
 
       if (errorString) {
-        error(errorString, true);
+        Logger.error(errorString, true);
       }
     }
-    // log("this._storyTokens ", this._storyTokens);
-    // log("story ", this._story);
+    // Logger.log("this._storyTokens ", this._storyTokens);
+    // Logger.log("story ", this._story);
   }
 
   /**
@@ -94,7 +94,7 @@ export class StoryBuilder {
     let parseMode = PARSE_MODE.DEFINITION;
 
     for (const line of lines) {
-      // log("LINE ", line);
+      // Logger.log("LINE ", line);
       const sectionMatch = /.*#([a-zA-Z]+)/.exec(line);
       if (sectionMatch) {
         switch (sectionMatch[1].toLowerCase()) {
@@ -130,20 +130,23 @@ export class StoryBuilder {
    * @returns
    */
   async _processDefinition(defValue, definitionName) {
-    // log("value ", defValue);
+    // Logger.log("value ", defValue);
 
     const match = /{ *([^}]*?) *}/.exec(definitionName);
     if (!match) {
-      error(`definition error, ${definitionName} is malformed. After keyword AS we expect a name in brackets {}`, true);
+      Logger.error(
+        `definition error, ${definitionName} is malformed. After keyword AS we expect a name in brackets {}`,
+        true
+      );
       return;
     }
     const definition = match[1];
     if (hasProperty(this._storyTokens, definition)) {
-      log(`definition ${definition} is already defined, skipping line`);
+      Logger.log(`definition ${definition} is already defined, skipping line`);
       return;
     }
 
-    // log("definition ", definition);
+    // Logger.log("definition ", definition);
     const regexIF = /IF\s*\((.+)\)/;
     const ifMatch = regexIF.exec(defValue);
     let conditionMet = true;
@@ -173,7 +176,10 @@ export class StoryBuilder {
       }
 
       if (!table) {
-        error(`table with id ${tableId} not found in the world, check the generation journal for broken links`, true);
+        Logger.error(
+          `table with id ${tableId} not found in the world, check the generation journal for broken links`,
+          true
+        );
         return;
       }
       let draw = await table.drawMany(1, { displayChat: false });
@@ -183,7 +189,7 @@ export class StoryBuilder {
       }
 
       if (draw.results.length !== 1) {
-        error(
+        Logger.error(
           `0 or more than 1 result was drawn from table ${table.name}, only 1 result is supported check your table config`,
           true
         );
@@ -192,7 +198,7 @@ export class StoryBuilder {
 
       const tableResult = draw.results[0];
       if (tableResult.type !== 0) {
-        warn(`only text result from table are supported at the moment, check table ${table.name}`, true);
+        Logger.warn(`only text result from table are supported at the moment, check table ${table.name}`, true);
       }
       valueResult = tableResult.text;
     } else {
@@ -204,11 +210,14 @@ export class StoryBuilder {
         try {
           valueResult = new Roll(rollFormula).roll({ async: false }).total || 0;
         } catch (e) {
-          error(e.message, false, e);
+          Logger.error(e.message, false, e);
           valueResult = 0;
         }
       } else {
-        error("on the left side of the AS in a story definition a rolltable or rollformula must be provided", true);
+        Logger.error(
+          "on the left side of the AS in a story definition a rolltable or rollformula must be provided",
+          true
+        );
       }
     }
 
@@ -231,7 +240,7 @@ export class StoryBuilder {
    */
   _generateStory(story) {
     if (!story) {
-      warn(`No story is been passed in th correct format`, true);
+      Logger.warn(`No story is been passed in th correct format`, true);
       return story;
     }
     const regex = /{ *([^}]*?) *}/g;
@@ -241,7 +250,7 @@ export class StoryBuilder {
     while ((matches = regex.exec(story)) != null) {
       const value = getProperty(this._storyTokens, matches[1]);
       if (!value) {
-        error(`cannot find a value for token ${matches[1]} in #story definition`, true);
+        Logger.error(`cannot find a value for token ${matches[1]} in #story definition`, true);
         continue;
       }
       replacedStory = replacedStory.replace(matches[0], value);

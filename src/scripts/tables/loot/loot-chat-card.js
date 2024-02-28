@@ -2,7 +2,8 @@ import { CONSTANTS } from "../../constants/constants.js";
 import { BRTUtils } from "../../core/utils.js";
 import { BRTBetterHelpers } from "../better/brt-helper.js";
 import { RollTableToActorHelpers } from "../../apps/rolltable-to-actor/rolltable-to-actor-helpers.js";
-import { i18n, warn } from "../../lib/lib.js";
+import { i18n } from "../../lib/lib.js";
+import Logger from "../../lib/Logger.js";
 
 /**
  * create a chat card based on the content of the object LootData
@@ -190,7 +191,7 @@ export class LootChatCard {
       if (itemFolder) {
         itemData.folder = itemFolder.id;
       } else {
-        warn(`No folder tables found with name 'Better RollTable | Loot Items'`);
+        Logger.warn(`No folder tables found with name 'Better RollTable | Loot Items'`);
       }
 
       setProperty(itemData, "permission.default", CONST.DOCUMENT_PERMISSION_LEVELS.OBSERVER);

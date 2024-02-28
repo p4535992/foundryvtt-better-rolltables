@@ -12,8 +12,9 @@ import { LootChatCard } from "./tables/loot/loot-chat-card.js";
 import { HarvestChatCard } from "./tables/harvest/harvest-chat-card.js";
 import { StoryChatCard } from "./tables/story/story-chat-card.js";
 import { betterRolltablesSocket } from "./socket.js";
-import { isRealBoolean, warn } from "./lib/lib.js";
+import { isRealBoolean } from "./lib/lib.js";
 import { BetterRollTable } from "./core/brt-table.js";
+import Logger from "./lib/Logger.js";
 
 /**
  * Create a new API class and export it as default
@@ -39,7 +40,7 @@ const API = {
    */
   async rollOld(tableEntity, options = {}) {
     if (!tableEntity) {
-      warn(`roll | No reference to a rollTable is been passed`, true);
+      Logger.warn(`roll | No reference to a rollTable is been passed`, true);
       return;
     }
 
@@ -53,7 +54,7 @@ const API = {
    */
   async roll(tableEntity, options = {}) {
     if (!tableEntity) {
-      warn(`roll | No reference to a rollTable is been passed`, true);
+      Logger.warn(`roll | No reference to a rollTable is been passed`, true);
       return;
     }
 
@@ -90,7 +91,7 @@ const API = {
    */
   async betterTableRoll(tableEntity, options = {}) {
     if (!tableEntity) {
-      warn(`betterTableRoll | No reference to a rollTable is been passed`, true);
+      Logger.warn(`betterTableRoll | No reference to a rollTable is been passed`, true);
       return;
     }
     return await this.betterTables.betterTableRoll(tableEntity, options);
@@ -117,7 +118,7 @@ const API = {
    */
   async rollCompendiumAsRolltable(compendium = null, hideChatMessage) {
     if (!compendium) {
-      warn(`rollCompendiumAsRolltable | No reference to a compendium is been passed`, true);
+      Logger.warn(`rollCompendiumAsRolltable | No reference to a compendium is been passed`, true);
       return;
     }
     return await RollFromCompendiumAsRollTableHelpers.rollCompendiumAsRollTable(compendium, hideChatMessage);
@@ -144,7 +145,7 @@ const API = {
     { weightPredicate = null } = {}
   ) {
     if (!compendiumName) {
-      warn(`createRolltableFromCompendium | No reference to a compendiumName is been passed`, true);
+      Logger.warn(`createRolltableFromCompendium | No reference to a compendiumName is been passed`, true);
       return;
     }
     return await CompendiumToRollTableHelpers.compendiumToRollTable(
@@ -169,7 +170,7 @@ const API = {
     { weightPredicate = null } = {}
   ) {
     if (!compendiumName) {
-      warn(`createTableFromCompendium | No reference to a compendiumName is been passed`, true);
+      Logger.warn(`createTableFromCompendium | No reference to a compendiumName is been passed`, true);
       return;
     }
     return await CompendiumToRollTableHelpers.compendiumToRollTable(
@@ -201,7 +202,7 @@ const API = {
    */
   async addLootToSelectedToken(tableEntity, token = null, options = {}) {
     if (!tableEntity) {
-      warn(`addLootToSelectedToken | No reference to a RollTable is been passed`, true);
+      Logger.warn(`addLootToSelectedToken | No reference to a RollTable is been passed`, true);
       return;
     }
     return await BRTLootHelpers.addLootToSelectedToken(tableEntity, token, options);
@@ -223,7 +224,7 @@ const API = {
    */
   async generateLoot(tableEntity, options = {}) {
     if (!tableEntity) {
-      warn(`generateLoot | No reference to a RollTable is been passed`, true);
+      Logger.warn(`generateLoot | No reference to a RollTable is been passed`, true);
       return;
     }
     return await BRTLootHelpers.generateLoot(tableEntity, options);
@@ -245,7 +246,7 @@ const API = {
    */
   async generateLootOnSelectedToken(tableEntity, options = {}) {
     if (!tableEntity) {
-      warn(`generateLootOnSelectedToken | No reference to a RollTable is been passed`, true);
+      Logger.warn(`generateLootOnSelectedToken | No reference to a RollTable is been passed`, true);
       return;
     }
     return await BRTLootHelpers.addLootToSelectedToken(tableEntity, null, options);
@@ -267,7 +268,7 @@ const API = {
    */
   async generateChatLoot(tableEntity, options = {}) {
     if (!tableEntity) {
-      warn(`generateChatLoot | No reference to a RollTable is been passed`, true);
+      Logger.warn(`generateChatLoot | No reference to a RollTable is been passed`, true);
       return;
     }
     return await BRTLootHelpers.generateChatLoot(tableEntity, options);
@@ -293,7 +294,7 @@ const API = {
    */
   async generateHarvest(tableEntity, options = {}) {
     if (!tableEntity) {
-      warn(`generateHarvest | No reference to a RollTable is been passed`, true);
+      Logger.warn(`generateHarvest | No reference to a RollTable is been passed`, true);
       return;
     }
     return await BRTHarvestHelpers.generateHarvest(tableEntity, options);
@@ -315,7 +316,7 @@ const API = {
    */
   async generateHarvestOnSelectedToken(tableEntity, options = {}) {
     if (!tableEntity) {
-      warn(`generateHarvestOnSelectedToken | No reference to a RollTable is been passed`, true);
+      Logger.warn(`generateHarvestOnSelectedToken | No reference to a RollTable is been passed`, true);
       return;
     }
     return await BRTHarvestHelpers.addHarvestToSelectedToken(tableEntity, null, options);
@@ -337,7 +338,7 @@ const API = {
    */
   async generateChatHarvest(tableEntity, options = {}) {
     if (!tableEntity) {
-      warn(`generateChatHarvest | No reference to a RollTable is been passed`, true);
+      Logger.warn(`generateChatHarvest | No reference to a RollTable is been passed`, true);
       return;
     }
     return await BRTHarvestHelpers.generateChatHarvest(tableEntity, options);
@@ -354,7 +355,7 @@ const API = {
    */
   async getStoryResults(tableEntity) {
     if (!tableEntity) {
-      warn(`getStoryResults | No reference to a RollTable is been passed`, true);
+      Logger.warn(`getStoryResults | No reference to a RollTable is been passed`, true);
       return;
     }
     return await BRTStoryHelpers.getStoryResults(tableEntity);
@@ -367,7 +368,7 @@ const API = {
    */
   async generateChatStory(tableEntity) {
     if (!tableEntity) {
-      warn(`generateChatStory | No reference to a RollTable is been passed`, true);
+      Logger.warn(`generateChatStory | No reference to a RollTable is been passed`, true);
       return;
     }
     return await BRTStoryHelpers.generateChatStory(tableEntity);
@@ -379,7 +380,7 @@ const API = {
 
   async compendiumToRollTableWithDialog(compendiumName = null, { weightPredicate = null } = {}) {
     if (!compendiumName) {
-      warn(`compendiumToRollTableWithDialog | No reference to a compendiumName is been passed`, true);
+      Logger.warn(`compendiumToRollTableWithDialog | No reference to a compendiumName is been passed`, true);
       return;
     }
     return await CompendiumToRollTableHelpers.compendiumToRollTableWithDialog(compendiumName, { weightPredicate });
@@ -401,18 +402,18 @@ const API = {
    */
   async createRollTableFromCompendium(inAttributes) {
     // if (!Array.isArray(inAttributes)) {
-    //   throw error("createRollTableFromCompendium | inAttributes must be of type array");
+    //   throw Logger.error("createRollTableFromCompendium | inAttributes must be of type array");
     // }
     // const [uuidOrItem] = inAttributes;
     if (typeof inAttributes !== "object") {
-      throw error("createRollTableFromCompendium | inAttributes must be of type object");
+      throw Logger.error("createRollTableFromCompendium | inAttributes must be of type object");
     }
 
     const compendiumName = inAttributes.compendiumName;
     const tableName = inAttributes.tableName ?? compendiumName + " RollTable";
     const weightPredicate = inAttributes.weightPredicate;
     if (!compendiumName) {
-      warn(`createRollTableFromCompendium | No reference to a compendiumName is been passed`, true);
+      Logger.warn(`createRollTableFromCompendium | No reference to a compendiumName is been passed`, true);
       return;
     }
     return await CompendiumToRollTableHelpers.compendiumToRollTable(compendiumName, tableName, { weightPredicate });
@@ -425,16 +426,16 @@ const API = {
    */
   async rollCompendiumAsRollTable(inAttributes) {
     // if (!Array.isArray(inAttributes)) {
-    //   throw error("rollCompendiumAsRollTable | inAttributes must be of type array");
+    //   throw Logger.error("rollCompendiumAsRollTable | inAttributes must be of type array");
     // }
     // const [uuidOrItem] = inAttributes;
     if (typeof inAttributes !== "object") {
-      throw error("rollCompendiumAsRollTable | inAttributes must be of type object");
+      throw Logger.error("rollCompendiumAsRollTable | inAttributes must be of type object");
     }
     const compendium = inAttributes.compendium;
     const hideChatMessage = inAttributes.hideChatMessage;
     if (!compendium) {
-      warn(`rollCompendiumAsRollTable | No reference to a compendium is been passed`, true);
+      Logger.warn(`rollCompendiumAsRollTable | No reference to a compendium is been passed`, true);
       return;
     }
     const obj = await RollFromCompendiumAsRollTableHelpers.rollCompendiumAsRollTable(compendium, hideChatMessage);
@@ -443,11 +444,11 @@ const API = {
 
   async addRollTableItemsToActor(inAttributes) {
     // if (!Array.isArray(inAttributes)) {
-    //   throw error("rollCompendiumAsRollTable | inAttributes must be of type array");
+    //   throw Logger.error("rollCompendiumAsRollTable | inAttributes must be of type array");
     // }
     // const [uuidOrItem] = inAttributes;
     if (typeof inAttributes !== "object") {
-      throw error("rollCompendiumAsRollTable | inAttributes must be of type object");
+      throw Logger.error("rollCompendiumAsRollTable | inAttributes must be of type object");
     }
     const table = inAttributes.table;
     const actor = inAttributes.actor;
@@ -458,11 +459,11 @@ const API = {
 
   async retrieveItemsDataFromRollTableResult(inAttributes) {
     // if (!Array.isArray(inAttributes)) {
-    //   throw error("rollCompendiumAsRollTable | inAttributes must be of type array");
+    //   throw Logger.error("rollCompendiumAsRollTable | inAttributes must be of type array");
     // }
     // const [uuidOrItem] = inAttributes;
     if (typeof inAttributes !== "object") {
-      throw error("rollCompendiumAsRollTable | inAttributes must be of type object");
+      throw Logger.error("rollCompendiumAsRollTable | inAttributes must be of type object");
     }
     const table = inAttributes.table;
     const options = inAttributes.options;
@@ -472,11 +473,11 @@ const API = {
 
   async retrieveItemsDataFromRollTableResultSpecialHarvester(inAttributes) {
     // if (!Array.isArray(inAttributes)) {
-    //   throw error("rollCompendiumAsRollTable | inAttributes must be of type array");
+    //   throw Logger.error("rollCompendiumAsRollTable | inAttributes must be of type array");
     // }
     // const [uuidOrItem] = inAttributes;
     if (typeof inAttributes !== "object") {
-      throw error("rollCompendiumAsRollTable | inAttributes must be of type object");
+      throw Logger.error("rollCompendiumAsRollTable | inAttributes must be of type object");
     }
     const table = inAttributes.table;
     const options = inAttributes.options;
@@ -507,7 +508,7 @@ const API = {
    */
   async invokeBetterTableRollArr(...inAttributes) {
     if (!Array.isArray(inAttributes)) {
-      throw error("invokeBetterTableRollArr | inAttributes must be of type array");
+      throw Logger.error("invokeBetterTableRollArr | inAttributes must be of type array");
     }
     const [tableReferenceUuid, options] = inAttributes;
     const tableEntity = await fromUuid(tableReferenceUuid);
@@ -516,7 +517,7 @@ const API = {
 
   async invokeGenericChatCardCreateArr(...inAttributes) {
     if (!Array.isArray(inAttributes)) {
-      throw error("invokeGenericTableRollArr | inAttributes must be of type array");
+      throw Logger.error("invokeGenericTableRollArr | inAttributes must be of type array");
     }
 
     const [tableReferenceUuid, results, rollMode, roll] = inAttributes;

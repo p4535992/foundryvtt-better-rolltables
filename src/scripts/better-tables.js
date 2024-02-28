@@ -4,19 +4,17 @@ import { BRTUtils } from "./core/utils.js";
 import API from "./API.js";
 import { CONSTANTS } from "./constants/constants.js";
 import {
-  debug,
   getCompendiumCollectionAsync,
   i18n,
-  info,
   isEmptyObject,
   isRealBoolean,
   isRealBooleanOrElseNull,
-  warn,
 } from "./lib/lib.js";
 import { HarvestChatCard } from "./tables/harvest/harvest-chat-card.js";
 import { StoryChatCard } from "./tables/story/story-chat-card.js";
 import { BetterChatCard } from "./tables/better/brt-chat-card.js";
 import { BetterRollTable } from "./core/brt-table.js";
+import Logger from "./lib/Logger.js";
 
 export class BetterTables {
   constructor() {
@@ -179,7 +177,7 @@ export class BetterTables {
   //         .filter((entry) => entry.type === "spell")
   //         .map((i) => mergeObject(i, { collection: spellCompendium.collection }));
   //     } else {
-  //       error(`Spell cache could not be initialized/updated.`);
+  //       Logger.error(`Spell cache could not be initialized/updated.`);
   //     }
   //   }
   // }
@@ -648,13 +646,13 @@ export class BetterTables {
           })
         );
         if (atLeastOneIsUpdated) {
-          //info(`Try to Update the rolltable`, false, rollTableConfig.object);
+          //Logger.info(`Try to Update the rolltable`, false, rollTableConfig.object);
           // This little trick seem to refresh the config
           if(isEmptyObject(API.cacheBrtRender)){
             API.cacheBrtRender = {};
           }
           if(!API.cacheBrtRender[rollTableConfig.object.id]) {
-            info(`Update the rolltable`, false, rollTableConfig.object);
+            Logger.info(`Update the rolltable`, false, rollTableConfig.object);
             await rollTableConfig.object.updateEmbeddedDocuments("TableResult", resultsToUpdate);
             API.cacheBrtRender[rollTableConfig.object.id] = true;
           }
@@ -662,7 +660,7 @@ export class BetterTables {
       }
       */
     } else {
-      debug(`Set table type to null for default sheet rolltable config`);
+      Logger.debug(`Set table type to null for default sheet rolltable config`);
       // If the flas is not null
       if (!rollTableConfig.object.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY)) {
         await rollTableConfig.object.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY, null);

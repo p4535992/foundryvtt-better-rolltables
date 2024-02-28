@@ -1,11 +1,12 @@
 import { CONSTANTS } from "../constants/constants.js";
-import { error, getCompendiumCollectionAsync, isRealNumber, log, warn } from "../lib/lib.js";
+import { getCompendiumCollectionAsync, isRealNumber } from "../lib/lib.js";
 import { BRTBetterHelpers } from "../tables/better/brt-helper.js";
 import { BRTUtils } from "./utils.js";
 import { LootChatCard } from "../tables/loot/loot-chat-card.js";
 import { StoryChatCard } from "../tables/story/story-chat-card.js";
 import { HarvestChatCard } from "../tables/harvest/harvest-chat-card.js";
 import { BetterChatCard } from "../tables/better/brt-chat-card.js";
+import Logger from "../lib/Logger.js";
 
 export class BetterRollTable {
   // extends RollTable {
@@ -172,13 +173,13 @@ export class BetterRollTable {
       } else {
         const qtRoll = Roll.create(qtFormula);
         const qt = (await qtRoll.evaluate({ async: true })).total;
-        log(qt);
+        Logger.log(qt);
         newResults = newResults.concat(Array(qt).fill(r));
       }
     }
     draw.results = newResults;
 
-    log(draw);
+    Logger.log(draw);
 
     // Forward drawn results to create chat messages
     if (displayChat) {
@@ -187,7 +188,7 @@ export class BetterRollTable {
         messageOptions: { rollMode },
       });
     }
-    log(`Draw results:`, false, draw.results);
+    Logger.log(`Draw results:`, false, draw.results);
     return draw;
   }
 
@@ -342,7 +343,7 @@ export class BetterRollTable {
   async roll({ roll, recursive = true, _depth = 0 } = {}) {
     // Prevent excessive recursion
     if (_depth > 5) {
-      throw new Error(`Maximum recursion depth exceeded when attempting to draw from RollTable ${this.table.id}`);
+      throw Logger.error(`Maximum recursion depth exceeded when attempting to draw from RollTable ${this.table.id}`);
     }
 
     // If there is no formula, automatically calculate an even distribution
@@ -357,7 +358,7 @@ export class BetterRollTable {
     // // Ensure that at least one non-drawn result remains
     // const available = this.table.results.filter((r) => !r.drawn);
     // if (!available.length) {
-    //   warn(game.i18n.localize("TABLE.NoAvailableResults"), true);
+    //   Logger.warn(game.i18n.localize("TABLE.NoAvailableResults"), true);
     //   return { roll, results };
     // }
 
@@ -368,7 +369,7 @@ export class BetterRollTable {
       // Ensure that at least one non-drawn result remains
       const available = this.table.results.filter((r) => !r.drawn);
       if (!available.length) {
-        warn(game.i18n.localize("TABLE.NoAvailableResults"), true);
+        Logger.warn(game.i18n.localize("TABLE.NoAvailableResults"), true);
         return { roll, results };
       }
 
@@ -401,7 +402,7 @@ export class BetterRollTable {
         [null, null]
       );
       if (availableRange[0] > maxRoll || availableRange[1] < minRoll) {
-        // warn("No results can possibly be drawn from this table and formula.", true);
+        // Logger.warn("No results can possibly be drawn from this table and formula.", true);
         return { roll, results };
       }
 
@@ -419,7 +420,7 @@ export class BetterRollTable {
       // Ensure that at least one non-drawn result remains
       const available = this.table.results.filter((r) => !r.drawn);
       if (!available.length) {
-        warn(game.i18n.localize("TABLE.NoAvailableResults"), true);
+        Logger.warn(game.i18n.localize("TABLE.NoAvailableResults"), true);
         return { roll, results };
       }
       // Ensure that results are available within the minimum/maximum range
@@ -435,7 +436,7 @@ export class BetterRollTable {
         [null, null]
       );
       if (availableRange[0] > maxRoll || availableRange[1] < minRoll) {
-        warn("No results can possibly be drawn from this table and formula.", true);
+        Logger.warn("No results can possibly be drawn from this table and formula.", true);
         return { roll, results };
       }
 
@@ -455,10 +456,13 @@ export class BetterRollTable {
           if (isTableDistinct && !isTableDistinctKeepRolling) {
             // Failed to draw an available entry from Table ${this.table.name}, maximum iteration reached, but is ok because is under the 'distinct' behavior
           } else {
-            error(`Failed to draw an available entry from Table ${this.table.name}, maximum iteration reached`, true);
+            Logger.error(
+              `Failed to draw an available entry from Table ${this.table.name}, maximum iteration reached`,
+              true
+            );
           }
           // END PATCH
-          // error(
+          // Logger.error(
           //   `Failed to draw an available entry from Table ${this.table.name}, maximum iteration reached`, true
           // );
           break;
@@ -692,7 +696,7 @@ export class BetterRollTable {
       if (rTmp.type !== CONST.TABLE_RESULT_TYPES.TEXT) {
         let rDoc = await BRTBetterHelpers.retrieveDocumentFromResultOnlyUuid(r, false);
         if (!rDoc || !rDoc.uuid) {
-          warn(`Cannot find document for result`, false, r);
+          Logger.warn(`Cannot find document for result`, false, r);
           if (!rDoc) {
             rDoc = {};
           }
@@ -748,7 +752,7 @@ export class BetterRollTable {
         maxRecursions: maxRecursions,
         tableId: this.table.id,
       });
-      throw new Error(CONSTANTS.MODULE_ID + " | " + msg);
+      throw Logger.error(msg);
     }
 
     let drawnResults = [];
@@ -773,7 +777,7 @@ export class BetterRollTable {
         let msg = game.i18n.format(`${CONSTANTS.MODULE_ID}.RollTable.NoFormula`, {
           name: this.table.name,
         });
-        error(msg, true);
+        Logger.error(msg, true);
         return;
       }
 
@@ -852,7 +856,7 @@ export class BetterRollTable {
         // Patch add uuid to every each result for better module compatibility
         let rDoc = await BRTBetterHelpers.retrieveDocumentFromResultOnlyUuid(r, false);
         if (!rDoc || !rDoc.uuid) {
-          warn(`Cannot find document for result`, false, r);
+          Logger.warn(`Cannot find document for result`, false, r);
           if (!rDoc) {
             rDoc = {};
           }
@@ -940,7 +944,7 @@ export class BetterRollTable {
   //     if (rTmp.type !== CONST.TABLE_RESULT_TYPES.TEXT) {
   //       let rDoc = await BRTBetterHelpers.retrieveDocumentFromResultOnlyUuid(r, false);
   //      if(!rDoc || !rDoc.uuid) {
-  //        warn(`Cannot find document for result`, false, r);
+  //        Logger.warn(`Cannot find document for result`, false, r);
   //        if(!rDoc) {
   //          rDoc = {};
   //        }

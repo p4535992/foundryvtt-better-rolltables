@@ -88,7 +88,7 @@ export class BRTBuilder {
         maxRecursions: maxRecursions,
         tableId: table.id,
       });
-      throw new Error(CONSTANTS.MODULE_ID + " | " + msg);
+      throw Logger.error(CONSTANTS.MODULE_ID + " | " + msg);
     }
 
     let drawnResults = [];
@@ -113,7 +113,7 @@ export class BRTBuilder {
         let msg = game.i18n.format(`${CONSTANTS.MODULE_ID}.RollTable.NoFormula`, {
           name: table.name,
         });
-        error(msg, true);
+        Logger.error(msg, true);
         return;
       }
 

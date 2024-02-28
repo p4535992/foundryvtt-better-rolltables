@@ -1,8 +1,8 @@
-import { NULL } from "sass";
 import { BRTBetterHelpers } from "../tables/better/brt-helper";
 import { CONSTANTS } from "../constants/constants";
-import { getCompendiumCollectionAsync, isRealBoolean, isRealBooleanOrElseNull, isRealNumber, warn } from "../lib/lib";
+import { getCompendiumCollectionAsync, isRealBoolean, isRealBooleanOrElseNull, isRealNumber } from "../lib/lib";
 import SETTINGS from "../constants/settings";
+import Logger from "../lib/Logger";
 
 export class BRTUtils {
   static addRollModeToChatData(chatData, rollMode) {
@@ -102,7 +102,7 @@ export class BRTUtils {
     }
     const size = pack.index.size;
     if (size === 0) {
-      warn(`Compendium ${pack.title} is empty.`, true);
+      Logger.warn(`Compendium ${pack.title} is empty.`, true);
       return;
     }
     const randonIndex = Math.floor(Math.random() * size);

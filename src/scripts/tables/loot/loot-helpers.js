@@ -6,7 +6,7 @@ import { LootChatCard } from "./loot-chat-card";
 import { BRTUtils } from "../../core/utils";
 import { BetterRollTable } from "../../core/brt-table";
 import SETTINGS from "../../constants/settings";
-import { error, info } from "../../lib/lib";
+import Logger from "../../lib/Logger";
 
 export class BRTLootHelpers {
   /**
@@ -20,12 +20,12 @@ export class BRTLootHelpers {
   static async addLootToSelectedToken(tableEntity, token = null, options = {}) {
     let tokenstack = [];
     if (null == token && canvas.tokens.controlled.length === 0) {
-      return error("Please select a token first", true);
+      return Logger.error("Please select a token first", true);
     } else {
       tokenstack = token ? (token.constructor === Array ? token : [token]) : canvas.tokens.controlled;
     }
 
-    info("Loot generation started.", true);
+    Logger.info("Loot generation started.", true);
 
     const brtTable = new BetterRollTable(tableEntity, options);
     await brtTable.initialize();
@@ -35,7 +35,7 @@ export class BRTLootHelpers {
     const itemLimit = brtTable.options?.itemLimit;
 
     for (const token of tokenstack) {
-      info(`Loot generation started on token '${token.name}'`, true);
+      Logger.info(`Loot generation started on token '${token.name}'`, true);
       const resultsBrt = await brtTable.betterRoll();
 
       const results = resultsBrt?.results;
@@ -44,10 +44,11 @@ export class BRTLootHelpers {
       const currencyData = br.getCurrencyData();
       await BRTLootHelpers.addCurrenciesToToken(token, currencyData, isTokenActor);
       await RollTableToActorHelpers.addItemsToTokenOld(token, betterResults, stackSame, isTokenActor, itemLimit);
-      info(`Loot generation ended on token '${token.name}'`, true);
+      Logger.info(`Loot generation ended on token '${token.name}'`, true);
     }
 
-    return info("Loot generation complete.", true);
+    Logger.info("Loot generation complete.", true);
+    return;
   }
 
   /**

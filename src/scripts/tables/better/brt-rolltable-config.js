@@ -1,8 +1,9 @@
 import API from "../../API.js";
 import { CONSTANTS } from "../../constants/constants.js";
-import { error, i18n, warn } from "../../lib/lib.js";
+import { i18n } from "../../lib/lib.js";
 import { BRTBetterHelpers } from "./brt-helper.js";
 import { RichResultEdit } from "../../core/brt-result-editor.js";
+import Logger from "../../lib/Logger.js";
 
 /**
  * The Application responsible for displaying and editing a single RollTable document.
@@ -217,7 +218,7 @@ export class BetterRollTableBetterConfig extends RollTableConfig {
       const eel = event.target;
       const el = eel.dataset.resultId ? eel : eel.closest(".table-result[data-result-id]");
       if (!el) {
-        warn("Drop target not found.", true);
+        Logger.warn("Drop target not found.", true);
         return;
       }
       return this.reorderIndex(event, json.result, el.dataset.resultId);
@@ -540,7 +541,7 @@ export class BetterRollTableBetterConfig extends RollTableConfig {
       targetIx = results.findIndex((r) => r._id === target);
 
     if (sourceIx == targetIx) {
-      warn("Can't move result onto itself.", true);
+      Logger.warn("Can't move result onto itself.", true);
       return;
     }
 
@@ -648,7 +649,7 @@ export class BetterRollTableBetterConfig extends RollTableConfig {
     if (findDocument) {
       findDocument.sheet.render(true);
     } else {
-      warn(`No document is been found to edit`, true);
+      Logger.warn(`No document is been found to edit`, true);
     }
   }
 

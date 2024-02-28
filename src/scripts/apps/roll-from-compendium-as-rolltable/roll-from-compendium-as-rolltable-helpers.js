@@ -1,6 +1,6 @@
 import { CONSTANTS } from "../../constants/constants";
 import { BRTUtils } from "../../core/utils";
-import { warn } from "../../lib/lib";
+import Logger from "../../lib/Logger";
 
 export class RollFromCompendiumAsRollTableHelpers {
   /**
@@ -9,11 +9,11 @@ export class RollFromCompendiumAsRollTableHelpers {
    */
   static async rollCompendiumAsRollTable(compendium = null, hideChatMessage) {
     if (!game.user.isGM) {
-      warn(`Only gm can roll directly from compendium`, true);
+      Logger.warn(`Only gm can roll directly from compendium`, true);
       return;
     }
     if (!compendium) {
-      warn(`No reference to a compendium is been passed`, true);
+      Logger.warn(`No reference to a compendium is been passed`, true);
       return;
     }
 

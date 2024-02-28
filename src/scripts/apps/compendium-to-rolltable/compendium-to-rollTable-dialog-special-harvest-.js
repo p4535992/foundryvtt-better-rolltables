@@ -1,7 +1,8 @@
 import { CONSTANTS } from "../../constants/constants.js";
 import { BRTBetterHelpers } from "../../tables/better/brt-helper.js";
-import { debug, getSubstring, info, log } from "../../lib/lib.js";
+import { getSubstring, log } from "../../lib/lib.js";
 import { CompendiumToRollTableDialog } from "./compendium-to-rollTable-dialog.js";
+import Logger from "../../lib/Logger.js";
 
 /**
  * @href https://gist.github.com/crazycalya/0cd20cd12b1a344d21302a794cb229ff
@@ -18,9 +19,9 @@ export class CompendiumToRollTableSpecialHarvestDialog {
       title: compendium.title ?? compendium.metadata.name,
     };
 
-    info(game.i18n.format(`${CONSTANTS.MODULE_ID}.api.msg.startRolltableGeneration`, msg), true);
+    Logger.info(game.i18n.format(`${CONSTANTS.MODULE_ID}.api.msg.startRolltableGeneration`, msg), true);
     const document = this.fromCompendium(compendium);
-    info(game.i18n.format(`${CONSTANTS.MODULE_ID}.api.msg.rolltableGenerationFinished`, msg), true);
+    Logger.info(game.i18n.format(`${CONSTANTS.MODULE_ID}.api.msg.rolltableGenerationFinished`, msg), true);
     return document;
   }
 
@@ -78,8 +79,8 @@ export class CompendiumToRollTableSpecialHarvestDialog {
     const results = await Promise.all(
       // compendium.contents.map(async (es, i) => {
       compendium.index.contents.map(async (es, i) => {
-        log("Compendium Item:" + es);
-        log("Compendium Index:" + i);
+        Logger.log("Compendium Item:" + es);
+        Logger.log("Compendium Index:" + i);
         const e = await fromUuid(es.uuid);
         const dcValue = getProperty(e, `system.description.chat`);
         const skillValue = getProperty(e, `system.description.unidentified`);

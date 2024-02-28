@@ -3,7 +3,7 @@ import { CONSTANTS } from "./constants/constants.js";
 
 export let betterRolltablesSocket;
 export function registerSocket() {
-  //debug("Registered betterRolltablesSocket");
+  //Logger.debug("Registered betterRolltablesSocket");
   if (betterRolltablesSocket) {
     return betterRolltablesSocket;
   }

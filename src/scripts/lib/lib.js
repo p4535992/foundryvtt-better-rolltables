@@ -1,89 +1,9 @@
 import { CONSTANTS } from "../constants/constants";
+import Logger from "./Logger";
 
 // ================================
 // Logger utility
 // ================================
-
-// export let debugEnabled = 0;
-// 0 = none, warnings = 1, debug = 2, all = 3
-
-export function debug(msg, ...args) {
-  try {
-    if (
-      game.settings.get(CONSTANTS.MODULE_ID, "debug") ||
-      game.modules.get("_dev-mode")?.api?.getPackageDebugValue(CONSTANTS.MODULE_ID, "boolean")
-    ) {
-      console.log(`DEBUG | ${CONSTANTS.MODULE_ID} | ${msg}`, ...args);
-    }
-  } catch (e) {
-    console.error(e.message);
-  }
-  return msg;
-}
-
-export function log(message, ...args) {
-  try {
-    message = `${CONSTANTS.MODULE_ID} | ${message}`;
-    console.log(message.replace("<br>", "\n"), ...args);
-  } catch (e) {
-    console.error(e.message);
-  }
-  return message;
-}
-
-export function notify(message, ...args) {
-  try {
-    message = `${CONSTANTS.MODULE_ID} | ${message}`;
-    ui.notifications?.notify(message);
-    console.log(message.replace("<br>", "\n"), ...args);
-  } catch (e) {
-    console.error(e.message);
-  }
-  return message;
-}
-
-export function info(info, notify = false, ...args) {
-  try {
-    info = `${CONSTANTS.MODULE_ID} | ${info}`;
-    if (notify) {
-      ui.notifications?.info(info);
-    }
-    console.log(info.replace("<br>", "\n"), ...args);
-  } catch (e) {
-    console.error(e.message);
-  }
-  return info;
-}
-
-export function warn(warning, notify = false, ...args) {
-  try {
-    warning = `${CONSTANTS.MODULE_ID} | ${warning}`;
-    if (notify) {
-      ui.notifications?.warn(warning);
-    }
-    console.warn(warning.replace("<br>", "\n"), ...args);
-  } catch (e) {
-    console.error(e.message);
-  }
-  return warning;
-}
-
-export function error(error, notify = true, ...args) {
-  try {
-    error = `${CONSTANTS.MODULE_ID} | ${error}`;
-    if (notify) {
-      ui.notifications?.error(error);
-    }
-    console.error(error.replace("<br>", "\n"), ...args);
-  } catch (e) {
-    console.error(e.message);
-  }
-  return new Error(error.replace("<br>", "\n"));
-}
-
-export function timelog(message) {
-  warn(Date.now(), message);
-}
 
 export const i18n = (key) => {
   return game.i18n.localize(key)?.trim();
@@ -172,7 +92,7 @@ export function getUuid(target) {
 export function getCompendiumCollectionSync(target, ignoreError = false, ignoreName = true) {
   let targetTmp = target;
   if (!targetTmp) {
-    throw error(`CompendiumCollection is undefined`, true, targetTmp);
+    throw Logger.error(`CompendiumCollection is undefined`, true, targetTmp);
   }
   if (targetTmp instanceof CompendiumCollection) {
     return targetTmp;
@@ -198,19 +118,19 @@ export function getCompendiumCollectionSync(target, ignoreError = false, ignoreN
   // }
   if (!targetTmp) {
     if (ignoreError) {
-      warn(`CompendiumCollection is not found`, false, targetTmp);
+      Logger.warn(`CompendiumCollection is not found`, false, targetTmp);
       return;
     } else {
-      throw error(`CompendiumCollection is not found`, true, targetTmp);
+      throw Logger.error(`CompendiumCollection is not found`, true, targetTmp);
     }
   }
   // Type checking
   if (!(targetTmp instanceof CompendiumCollection)) {
     if (ignoreError) {
-      warn(`Invalid CompendiumCollection`, true, targetTmp);
+      Logger.warn(`Invalid CompendiumCollection`, true, targetTmp);
       return;
     } else {
-      throw error(`Invalid CompendiumCollection`, true, targetTmp);
+      throw Logger.error(`Invalid CompendiumCollection`, true, targetTmp);
     }
   }
   return targetTmp;
@@ -219,7 +139,7 @@ export function getCompendiumCollectionSync(target, ignoreError = false, ignoreN
 export async function getCompendiumCollectionAsync(target, ignoreError = false, ignoreName = true) {
   let targetTmp = target;
   if (!targetTmp) {
-    throw error(`CompendiumCollection is undefined`, true, targetTmp);
+    throw Logger.error(`CompendiumCollection is undefined`, true, targetTmp);
   }
   if (targetTmp instanceof CompendiumCollection) {
     return targetTmp;
@@ -245,19 +165,19 @@ export async function getCompendiumCollectionAsync(target, ignoreError = false, 
   // }
   if (!targetTmp) {
     if (ignoreError) {
-      warn(`CompendiumCollection is not found`, false, targetTmp);
+      Logger.warn(`CompendiumCollection is not found`, false, targetTmp);
       return;
     } else {
-      throw error(`CompendiumCollection is not found`, true, targetTmp);
+      throw Logger.error(`CompendiumCollection is not found`, true, targetTmp);
     }
   }
   // Type checking
   if (!(targetTmp instanceof CompendiumCollection)) {
     if (ignoreError) {
-      warn(`Invalid CompendiumCollection`, true, targetTmp);
+      Logger.warn(`Invalid CompendiumCollection`, true, targetTmp);
       return;
     } else {
-      throw error(`Invalid CompendiumCollection`, true, targetTmp);
+      throw Logger.error(`Invalid CompendiumCollection`, true, targetTmp);
     }
   }
   return targetTmp;

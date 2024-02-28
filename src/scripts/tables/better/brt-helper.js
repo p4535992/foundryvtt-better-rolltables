@@ -1,5 +1,6 @@
 import { CONSTANTS } from "../../constants/constants.js";
-import { debug, error, getCompendiumCollectionAsync, warn } from "../../lib/lib.js";
+import Logger from "../../lib/Logger.js";
+import { getCompendiumCollectionAsync } from "../../lib/lib.js";
 
 export class BRTBetterHelpers {
   /**
@@ -9,11 +10,11 @@ export class BRTBetterHelpers {
    * @param {RollTable} table the rolltable the event is called on
    */
   static async dropEventOnTable(event, table) {
-    // log("EVENT ", event);
+    // Logger.log("EVENT ", event);
     try {
       JSON.parse(event.dataTransfer.getData("text/plain"));
     } catch (err) {
-      error(`no entity dropped`, false, err);
+      Logger.error(`no entity dropped`, false, err);
       return;
     }
 
@@ -63,14 +64,14 @@ export class BRTBetterHelpers {
           const qt = (await new Roll(qtFormula).roll({ async: true })).total || 1;
           return qt;
         } catch (e) {
-          debug(e.message, false, e);
+          Logger.debug(e.message, false, e);
           const qtRoll = Roll.create(qtFormula);
           const qt = (await qtRoll.evaluate({ async: true })).total || 1;
           return qt;
         }
       }
     } catch (e) {
-      error(e.message, false, e);
+      Logger.error(e.message, false, e);
       return 1;
     }
   }
@@ -115,9 +116,9 @@ export class BRTBetterHelpers {
         let compendium = await getCompendiumCollectionAsync(result.documentCollection, true, false);
         if (!compendium) {
           if (throwError) {
-            throw error(`Compendium ${result.documentCollection} was not found`);
+            throw Logger.error(`Compendium ${result.documentCollection} was not found`);
           } else {
-            warn(`Compendium ${result.documentCollection} was not found`);
+            Logger.warn(`Compendium ${result.documentCollection} was not found`);
             return null;
           }
         }
@@ -129,9 +130,11 @@ export class BRTBetterHelpers {
         // let findDocument = compendium.contents.find((m) => m.id === `${result.documentId}`);
         if (!findDocument) {
           if (throwError) {
-            throw error(`The "${result.documentId}" document was not found in Compendium ${result.documentCollection}`);
+            throw Logger.error(
+              `The "${result.documentId}" document was not found in Compendium ${result.documentCollection}`
+            );
           } else {
-            warn(`The "${result.documentId}" document was not found in Compendium ${result.documentCollection}`);
+            Logger.warn(`The "${result.documentId}" document was not found in Compendium ${result.documentCollection}`);
             return null;
           }
         }
@@ -139,9 +142,9 @@ export class BRTBetterHelpers {
         let collection = game.collections.get(result.documentCollection);
         if (!collection) {
           if (throwError) {
-            throw error(`Collection ${result.documentCollection} was not found`);
+            throw Logger.error(`Collection ${result.documentCollection} was not found`);
           } else {
-            warn(`Collection ${result.documentCollection} was not found`);
+            Logger.warn(`Collection ${result.documentCollection} was not found`);
             return null;
           }
         }
@@ -155,11 +158,13 @@ export class BRTBetterHelpers {
           // let findDocument = compendium.contents.find((m) => m.id === `${result.documentId}`);
           if (!findDocument) {
             if (throwError) {
-              throw error(
+              throw Logger.error(
                 `The "${result.documentId}" document was not found in collection ${result.documentCollection}`
               );
             } else {
-              warn(`The "${result.documentId}" document was not found in collection ${result.documentCollection}`);
+              Logger.warn(
+                `The "${result.documentId}" document was not found in collection ${result.documentCollection}`
+              );
               return null;
             }
           }
@@ -167,11 +172,11 @@ export class BRTBetterHelpers {
           findDocument = fromUuid(`${result.documentName}.${result.documentId}`); // Actor.KjoEEN077oSC4WG4
           if (!findDocument) {
             if (throwError) {
-              throw error(
+              throw Logger.error(
                 `The "${result.documentId}" document was not found in collection ${result.documentName}.${result.documentId}`
               );
             } else {
-              warn(
+              Logger.warn(
                 `The "${result.documentId}" document was not found in collection ${result.documentName}.${result.documentId}`
               );
               return null;
@@ -181,7 +186,7 @@ export class BRTBetterHelpers {
       }
     }
     if (!findDocument) {
-      warn(
+      Logger.warn(
         `The uuid can be retrieved only from result type '${CONST.TABLE_RESULT_TYPES.COMPENDIUM}' or '${CONST.TABLE_RESULT_TYPES.DOCUMENT}'`
       );
       findDocument = null;

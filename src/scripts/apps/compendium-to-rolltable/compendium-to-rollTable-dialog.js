@@ -1,5 +1,6 @@
 import { CONSTANTS } from "../../constants/constants";
-import { debug, error, getCompendiumCollectionAsync, info, log } from "../../lib/lib";
+import Logger from "../../lib/Logger";
+import { getCompendiumCollectionAsync } from "../../lib/lib";
 
 /**
  * @href https://gist.github.com/crazycalya/0cd20cd12b1a344d21302a794cb229ff
@@ -228,7 +229,7 @@ export class CompendiumToRollTableDialog extends Dialog {
                 title: compendium.title ?? compendium.metadata.name,
               };
 
-              info(game.i18n.format(`${CONSTANTS.MODULE_ID}.api.msg.startRolltableGeneration`, msg), true);
+              Logger.info(game.i18n.format(`${CONSTANTS.MODULE_ID}.api.msg.startRolltableGeneration`, msg), true);
               const document = await this.fromCompendium(
                 customFilters,
                 nameFilters,
@@ -239,7 +240,7 @@ export class CompendiumToRollTableDialog extends Dialog {
                 weightPredicate,
                 compendium
               );
-              info(game.i18n.format(`${CONSTANTS.MODULE_ID}.api.msg.rolltableGenerationFinished`, msg), true);
+              Logger.info(game.i18n.format(`${CONSTANTS.MODULE_ID}.api.msg.rolltableGenerationFinished`, msg), true);
               return document;
             },
             height: 40,
@@ -272,7 +273,7 @@ export class CompendiumToRollTableDialog extends Dialog {
     //         return [...new Set(index.map(i => i.type))]; // extract the "type" property from each object, create a set of unique values, and convert the set back to an array
     //     });
 
-    //     log(types)
+    //     Logger.log(types)
     // });
 
     html.find("#toggleAll").on("click", async () => {
@@ -389,10 +390,10 @@ export class CompendiumToRollTableDialog extends Dialog {
   async fromCompendiumSimple(compendium, options = {}) {
     // Ported from Foundry's existing RollTable.fromFolder()
     const results = await compendium.index.map((e, i) => {
-      log("Compendium Item:");
-      log(e);
-      log("Compendium Index:");
-      log(i);
+      Logger.log("Compendium Item:");
+      Logger.log(e);
+      Logger.log("Compendium Index:");
+      Logger.log(i);
       return {
         text: e.name,
         type: CONST.TABLE_RESULT_TYPES.COMPENDIUM,
@@ -451,13 +452,13 @@ export class CompendiumToRollTableDialog extends Dialog {
     });
 
     if (filteredEntries.length === 0) {
-      return error("No valid items within compendium for selected filters.", true);
+      return Logger.error("No valid items within compendium for selected filters.", true);
     }
     const results = filteredEntries.map((entry, i) => {
-      debug("Compendium Item:");
-      debug(entry);
-      debug("Compendium Index:");
-      debug(i);
+      Logger.debug("Compendium Item:");
+      Logger.debug(entry);
+      Logger.debug("Compendium Index:");
+      Logger.debug(i);
 
       return {
         text: entry.name,
@@ -473,10 +474,10 @@ export class CompendiumToRollTableDialog extends Dialog {
     });
 
     // const results = await compendium.index.map((e, i) => {
-    //         debug("Compendium Item:");
-    //         debug(entry);
-    //         debug("Compendium Index:");
-    //         debug(i);
+    //         Logger.debug("Compendium Item:");
+    //         Logger.debug(entry);
+    //         Logger.debug("Compendium Index:");
+    //         Logger.debug(i);
     //     return {
     //         text: e.name,
     //         type: CONST.TABLE_RESULT_TYPES.COMPENDIUM,,

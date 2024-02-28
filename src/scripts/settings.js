@@ -1,6 +1,7 @@
 import { CONSTANTS } from "./constants/constants";
 import SETTINGS from "./constants/settings";
 import { BetterRolltableSettingsConfig } from "./core/settingsConfig";
+import Logger from "./lib/Logger";
 import { i18n } from "./lib/lib";
 import { SYSTEMS } from "./systems";
 
@@ -291,7 +292,7 @@ export async function checkSystem() {
 
     new Dialog({
       title: game.i18n.localize(`${Constants.MODULE_ID}.Dialog.systemfound.title`),
-      content: warn(game.i18n.localize(`${Constants.MODULE_ID}.Dialog.systemfound.content`), true),
+      content: Logger.warn(game.i18n.localize(`${Constants.MODULE_ID}.Dialog.systemfound.content`), true),
       buttons: {
         confirm: {
           icon: '<i class="fas fa-check"></i>',
@@ -314,9 +315,9 @@ export async function checkSystem() {
   if (game.settings.get(Constants.MODULE_ID, SETTINGS.SYSTEM_FOUND) || SYSTEMS.DATA.INTEGRATION) {
     const currentVersion = game.settings.get(Constants.MODULE_ID, SETTINGS.SYSTEM_VERSION);
     const newVersion = SYSTEMS.DATA.VERSION;
-    debug(`Comparing system version - Current: ${currentVersion} - New: ${newVersion}`);
+    Logger.debug(`Comparing system version - Current: ${currentVersion} - New: ${newVersion}`);
     if (foundry.utils.isNewerVersion(newVersion, currentVersion)) {
-      debug(`Applying system settings for ${game.system.title}`);
+      Logger.debug(`Applying system settings for ${game.system.title}`);
       await applyDefaultSettings();
     }
     return;

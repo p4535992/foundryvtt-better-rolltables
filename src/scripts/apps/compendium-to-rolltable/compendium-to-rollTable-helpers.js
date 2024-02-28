@@ -1,5 +1,6 @@
 import { CONSTANTS } from "../../constants/constants";
-import { getCompendiumCollectionAsync, info, warn } from "../../lib/lib";
+import Logger from "../../lib/Logger";
+import { getCompendiumCollectionAsync } from "../../lib/lib";
 import { CompendiumToRollTableDialog } from "./compendium-to-rollTable-dialog";
 import { CompendiumToRollTableSpecialHarvestDialog } from "./compendium-to-rollTable-dialog-special-harvest-";
 
@@ -17,7 +18,7 @@ export class CompendiumToRollTableHelpers {
     if (compendiumName) {
       const myPack = await getCompendiumCollectionAsync(compendiumName, true, false);
       if (!myPack) {
-        warn(`No compendium found with id '${compendiumName}'`, true);
+        Logger.warn(`No compendium found with id '${compendiumName}'`, true);
         return;
       }
       allCompendiums = [myPack];
@@ -36,7 +37,7 @@ export class CompendiumToRollTableHelpers {
    */
   static async compendiumToRollTableWithDialogSpecialCaseHarvester({ weightPredicate = null } = {}) {
     if (!game.modules.get("harvester")?.active) {
-      warn(`You must activate the module 'harvester'`, true);
+      Logger.warn(`You must activate the module 'harvester'`, true);
       return;
     }
     const myPack = await getCompendiumCollectionAsync("harvester.harvest", false, false);
@@ -54,7 +55,10 @@ export class CompendiumToRollTableHelpers {
     const myPack = await getCompendiumCollectionAsync(compendiumName, true, false);
     const compendium = myPack;
     if (!compendium) {
-      warn(game.i18n.format(`${CONSTANTS.MODULE_ID}.api.msg.compendiumNotFound`, { name: compendiumName }), true);
+      Logger.warn(
+        game.i18n.format(`${CONSTANTS.MODULE_ID}.api.msg.compendiumNotFound`, { name: compendiumName }),
+        true
+      );
       return;
     }
 
@@ -66,11 +70,11 @@ export class CompendiumToRollTableHelpers {
     };
 
     if (!msg.compendiumSize) {
-      warn(game.i18n.format(`${CONSTANTS.MODULE_ID}.api.msg.compendiumEmpty`, msg), true);
+      Logger.warn(game.i18n.format(`${CONSTANTS.MODULE_ID}.api.msg.compendiumEmpty`, msg), true);
       return;
     }
 
-    info(game.i18n.format(`${CONSTANTS.MODULE_ID}.api.msg.startRolltableGeneration`, msg), true);
+    Logger.info(game.i18n.format(`${CONSTANTS.MODULE_ID}.api.msg.startRolltableGeneration`, msg), true);
 
     const document = compendium
       .getDocuments()
@@ -92,7 +96,7 @@ export class CompendiumToRollTableHelpers {
       )
       .then((rolltable) => {
         rolltable.normalize();
-        info(game.i18n.format(`${CONSTANTS.MODULE_ID}.api.msg.rolltableGenerationFinished`, msg), true);
+        Logger.info(game.i18n.format(`${CONSTANTS.MODULE_ID}.api.msg.rolltableGenerationFinished`, msg), true);
         return rolltable;
       });
     return document;

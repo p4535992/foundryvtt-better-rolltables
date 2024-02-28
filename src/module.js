@@ -1,5 +1,6 @@
 import { CONSTANTS } from "./scripts/constants/constants.js";
 import { BetterRolltableHooks } from "./scripts/hooks/init.js";
+import Logger from "./scripts/lib/Logger.js";
 import { registerSocket } from "./scripts/socket.js";
 
 //   BetterRolltableHooks.init();
@@ -8,7 +9,7 @@ import { registerSocket } from "./scripts/socket.js";
 /* Initialize module					*/
 /* ------------------------------------ */
 Hooks.once("init", async () => {
-  // log(`${CONSTANTS.MODULE_ID} | Initializing ${CONSTANTS.MODULE_ID}`);
+  // Logger.log(`${CONSTANTS.MODULE_ID} | Initializing ${CONSTANTS.MODULE_ID}`);
 
   // Register custom module settings
   //   registerSettings();
@@ -37,13 +38,18 @@ Hooks.once("ready", async () => {
   // if (!game.modules.get('lib-wrapper')?.active && game.user?.isGM) {
   //   let word = 'install and activate';
   //   if (game.modules.get('lib-wrapper')) word = 'activate';
-  //   throw error(`Requires the 'libWrapper' module. Please ${word} it.`);
+  //   throw Logger.error(`Requires the 'libWrapper' module. Please ${word} it.`);
   // }
-  // if (!game.modules.get('socketLib')?.active && game.user?.isGM) {
-  //   let word = 'install and activate';
-  //   if (game.modules.get('socketLib')) word = 'activate';
-  //   throw error(`Requires the 'socketLib' module. Please ${word} it.`);
-  // }
+  if (!game.modules.get("socketLib")?.active && game.user?.isGM) {
+    let word = "install and activate";
+    if (game.modules.get("socketLib")) word = "activate";
+    throw Logger.error(`Requires the 'socketLib' module. Please ${word} it.`);
+  }
+  if (!game.modules.get("item-piles")?.active && game.user?.isGM) {
+    let word = "install and activate";
+    if (game.modules.get("item-piles")) word = "activate";
+    throw Logger.error(`Requires the 'item-piles' module. Please ${word} it.`);
+  }
   //   readyHooks();
   BetterRolltableHooks.foundryReady();
 });

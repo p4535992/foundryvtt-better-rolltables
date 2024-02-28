@@ -1,4 +1,4 @@
-import { error, info } from "../lib/lib";
+import Logger from "../../lib/Logger";
 
 export class BRTChartopiaHelpers {
   static populateLocalRolltableFromChartopiaResults(chartopiaId, options) {}
@@ -7,7 +7,7 @@ export class BRTChartopiaHelpers {
     const API_ROOT = "https://chartopia.d12dev.com";
     const mult = options.multiple;
 
-    info("Chartopia | loading...", true);
+    Logger.info("Chartopia | loading...", true);
 
     fetch(`${API_ROOT}/api/charts/${chartopiaId}/roll/`, {
       method: "POST",
@@ -19,15 +19,15 @@ export class BRTChartopiaHelpers {
     })
       .then((response) => {
         if (response.status == 403) {
-          error("Chartopia | Chart is inaccessible", true);
+          Logger.error("Chartopia | Chart is inaccessible", true);
         } else if (response.status == 404) {
-          error("Chartopia | Chart does not exist", true);
+          Logger.error("Chartopia | Chart does not exist", true);
         } else if (response.status == 429) {
           result = "Chartopia | Too many rolls in a short space of time.";
         } else if (response.status == 201) {
           var resultStr = "";
           response.json().then((data) => {
-            info("Chartopia | results:", false, data.results);
+            Logger.info("Chartopia | results:", false, data.results);
             data.results.forEach(function (result) {
               // TODO REMEBER TO IMPORT THELIBRARY
               // var resultAsMarkdown = marked.parse(result, { gfm: true, breaks: true });
@@ -43,14 +43,14 @@ export class BRTChartopiaHelpers {
               ChatMessage.create(chatData, {});
               resultStr += `<div>${resultAsMarkdown}</div>`;
             });
-            info("Chartopia | Loaded", false, resultStr);
+            Logger.info("Chartopia | Loaded", false, resultStr);
           });
         } else {
-          error(`Chartopia | Unexpected status code: ${response.status}`, true);
+          Logger.error(`Chartopia | Unexpected status code: ${response.status}`, true);
         }
       })
       .catch((data) => {
-        error("Chartopia | Unknown error.", true, data);
+        Logger.error("Chartopia | Unknown error.", true, data);
       });
   }
 }
