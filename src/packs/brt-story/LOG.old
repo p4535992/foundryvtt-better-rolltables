@@ -1,6 +1,1 @@
-2023/09/30-13:17:35.193 2f44 Delete type=3 #70
-2023/09/30-16:13:17.270 1508 Level-0 table #78: started
-2023/09/30-16:13:17.271 1508 Level-0 table #78: 0 bytes OK
-2023/09/30-16:13:17.287 1508 Delete type=0 #76
-2023/09/30-16:13:17.312 1508 Manual compaction at level-0 from '!tables!2tuVrRiWatRRiuJL' @ 72057594037927935 : 1 .. '!tables.results!zIOBrxDOh7fCz2u2.zxoApcg7EnEDMhzC' @ 0 : 0; will stop at (end)
-2023/09/30-16:13:17.313 1508 Manual compaction at level-1 from '!tables!2tuVrRiWatRRiuJL' @ 72057594037927935 : 1 .. '!tables.results!zIOBrxDOh7fCz2u2.zxoApcg7EnEDMhzC' @ 0 : 0; will stop at (end)
+2024/02/28-22:19:15.964 169c Delete type=3 #79

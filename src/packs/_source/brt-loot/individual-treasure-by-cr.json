@@ -1,0 +1,111 @@
+{
+  "name": "Individual Treasure By CR",
+  "permission": {
+    "default": 0,
+    "9rRGGI8f6sVuXlQQ": 3
+  },
+  "flags": {
+    "better-rolltables": {
+      "table-type": "loot",
+      "table-currency-string": "",
+      "loot-actor-name": "",
+      "loot-amount-key": ""
+    }
+  },
+  "description": "A Table to roll currency by monster CR",
+  "results": [
+    {
+      "_id": "jbvhfiOZ4hqlb9Qb",
+      "flags": {
+        "better-rolltables": {
+          "brt-result-formula": {
+            "formula": "1"
+          }
+        }
+      },
+      "type": 2,
+      "text": "Treasure CR 1",
+      "img": "icons/svg/d20-black.svg",
+      "collection": "better-rolltables.brt-loot",
+      "resultId": "MC9eTr0r7GdW9KHs",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_key": "!tables.results!cUqBVBL0fqttuVwn.jbvhfiOZ4hqlb9Qb"
+    },
+    {
+      "_id": "ofawtpVqiG10yrOW",
+      "flags": {
+        "better-rolltables": {
+          "brt-result-formula": {
+            "formula": "1"
+          }
+        }
+      },
+      "type": 2,
+      "text": "Treasure CR 2",
+      "img": "icons/svg/d20-black.svg",
+      "collection": "better-rolltables.brt-loot",
+      "resultId": "owwU9FWTwIW3ifSx",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_key": "!tables.results!cUqBVBL0fqttuVwn.ofawtpVqiG10yrOW"
+    },
+    {
+      "_id": "nmOPFjgTgoJV35dG",
+      "flags": {
+        "better-rolltables": {
+          "brt-result-formula": {
+            "formula": "1"
+          }
+        }
+      },
+      "type": 2,
+      "text": "Treasure CR 3",
+      "img": "icons/svg/d20-black.svg",
+      "collection": "better-rolltables.brt-loot",
+      "resultId": "g71Z0aejCXRpMLfV",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_key": "!tables.results!cUqBVBL0fqttuVwn.nmOPFjgTgoJV35dG"
+    },
+    {
+      "_id": "6Kr8s7t7flHWR0Uh",
+      "flags": {
+        "better-rolltables": {
+          "brt-result-formula": {
+            "formula": "1"
+          }
+        }
+      },
+      "type": 2,
+      "text": "Treasure CR 4",
+      "img": "icons/svg/d20-black.svg",
+      "collection": "better-rolltables.brt-loot",
+      "resultId": "WwNePUHlVwasnOvf",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_key": "!tables.results!cUqBVBL0fqttuVwn.6Kr8s7t7flHWR0Uh"
+    }
+  ],
+  "formula": "4",
+  "replacement": true,
+  "displayRoll": true,
+  "_id": "cUqBVBL0fqttuVwn",
+  "_key": "!tables!cUqBVBL0fqttuVwn"
+}

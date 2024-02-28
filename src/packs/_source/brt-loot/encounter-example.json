@@ -1,0 +1,120 @@
+{
+  "name": "Encounter Example",
+  "flags": {
+    "better-rolltables": {
+      "table-type": "loot",
+      "table-currency-string": "",
+      "loot-actor-name": "",
+      "loot-amount-key": "1"
+    }
+  },
+  "description": "You can use overlapping result to draw with 1 roll from different tables!\r\nRember to hit the UPDATE button to save",
+  "results": [
+    {
+      "_id": "25bmY8oC8mvTAMHr",
+      "flags": {
+        "better-rolltables": {
+          "brt-result-formula": {
+            "formula": "1d3"
+          }
+        }
+      },
+      "type": 1,
+      "text": "Dire Wolf",
+      "img": "systems/dnd5e/tokens/beast/DireWolf.png",
+      "collection": "Actor",
+      "resultId": "CVv4gqWA1HbRujaa",
+      "weight": 1,
+      "range": [
+        1,
+        2
+      ],
+      "drawn": false,
+      "_key": "!tables.results!mnStX6qD4ndEvd1e.25bmY8oC8mvTAMHr"
+    },
+    {
+      "_id": "rQyzXDdSR8HeTaNX",
+      "flags": {
+        "better-rolltables": {
+          "brt-result-formula": {
+            "formula": "2"
+          }
+        }
+      },
+      "type": 2,
+      "text": "Giant Frog",
+      "img": "systems/dnd5e/tokens/beast/GiantFrog.png",
+      "collection": "dnd5e.monsters",
+      "resultId": "kSAi2KRonL4G4JpO",
+      "weight": 1,
+      "range": [
+        1,
+        2
+      ],
+      "drawn": false,
+      "_key": "!tables.results!mnStX6qD4ndEvd1e.rQyzXDdSR8HeTaNX"
+    },
+    {
+      "_id": "7cXZlpQM8It6cQ1O",
+      "flags": {
+        "better-rolltables": {
+          "brt-result-formula": {
+            "formula": ""
+          }
+        }
+      },
+      "type": 0,
+      "text": "In a humid cave",
+      "img": "icons/svg/d20-black.svg",
+      "resultId": "L09taG8jX9mHYNmJ",
+      "weight": 1,
+      "range": [
+        1,
+        2
+      ],
+      "drawn": false,
+      "_key": "!tables.results!mnStX6qD4ndEvd1e.7cXZlpQM8It6cQ1O"
+    },
+    {
+      "_id": "DCnUOwbIY9VmXEsg",
+      "flags": {
+        "better-rolltables": {
+          "brt-result-formula": {
+            "formula": "1d3"
+          }
+        }
+      },
+      "type": 2,
+      "text": "Potions Table",
+      "img": "icons/svg/d20-black.svg",
+      "collection": "better-rolltables.brt-loot",
+      "resultId": "L09taG8jX9mHYNmJ",
+      "weight": 1,
+      "range": [
+        1,
+        2
+      ],
+      "drawn": false,
+      "_key": "!tables.results!mnStX6qD4ndEvd1e.DCnUOwbIY9VmXEsg"
+    }
+  ],
+  "formula": "1d2",
+  "replacement": true,
+  "displayRoll": false,
+  "_id": "mnStX6qD4ndEvd1e",
+  "ownership": {
+    "default": 0
+  },
+  "img": "icons/svg/d20-grey.svg",
+  "folder": null,
+  "sort": 0,
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "2.3.1",
+    "coreVersion": "11.311",
+    "createdTime": null,
+    "modifiedTime": 1696024983386,
+    "lastModifiedBy": "packsebuilder0000"
+  },
+  "_key": "!tables!mnStX6qD4ndEvd1e"
+}

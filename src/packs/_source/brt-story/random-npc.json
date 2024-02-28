@@ -1,0 +1,62 @@
+{
+  "_id": "8vjHa6SoZibxeTke",
+  "name": "Random NPC",
+  "flags": {
+    "better-rolltables": {
+      "table-type": "loot"
+    }
+  },
+  "description": "generating a random npc",
+  "results": [
+    {
+      "_id": "fqdSCuaaZPn7W2eW",
+      "flags": {},
+      "type": 2,
+      "text": "Human Male NPC Generator",
+      "img": "icons/svg/d20-black.svg",
+      "collection": "better-rolltables.brt-gen",
+      "resultId": "cbRWiUnHpH0aDN32",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_key": "!tables.results!8vjHa6SoZibxeTke.fqdSCuaaZPn7W2eW"
+    },
+    {
+      "_id": "91murnOfOW3cwNbX",
+      "flags": {},
+      "type": 2,
+      "text": "Human Female NPC Generator",
+      "img": "icons/svg/d20-black.svg",
+      "collection": "better-rolltables.brt-gen",
+      "resultId": "QznNN2bWOBmBV24Y",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_key": "!tables.results!8vjHa6SoZibxeTke.91murnOfOW3cwNbX"
+    }
+  ],
+  "formula": "1d2",
+  "replacement": true,
+  "displayRoll": true,
+  "ownership": {
+    "default": 0
+  },
+  "img": "icons/svg/d20-grey.svg",
+  "folder": null,
+  "sort": 0,
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "2.3.1",
+    "coreVersion": "11.311",
+    "createdTime": null,
+    "modifiedTime": 1696025031477,
+    "lastModifiedBy": "packsebuilder0000"
+  },
+  "_key": "!tables!8vjHa6SoZibxeTke"
+}

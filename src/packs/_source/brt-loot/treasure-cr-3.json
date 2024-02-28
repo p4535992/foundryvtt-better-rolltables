@@ -1,0 +1,83 @@
+{
+  "_id": "g71Z0aejCXRpMLfV",
+  "name": "Treasure CR 3",
+  "permission": {
+    "default": 0,
+    "9rRGGI8f6sVuXlQQ": 3
+  },
+  "flags": {
+    "better-rolltables": {
+      "table-type": "loot",
+      "table-currency-string": "",
+      "loot-actor-name": "",
+      "loot-amount-key": ""
+    }
+  },
+  "description": "Treasure for CR 3 monsters",
+  "results": [
+    {
+      "_id": "E0KZFpkFp1Nvc6BB",
+      "flags": {},
+      "type": 0,
+      "text": "{(2d8+1)*10[cp], 6d8+3 [sp]}",
+      "img": "icons/svg/d20-black.svg",
+      "resultId": "",
+      "weight": 1,
+      "range": [
+        1,
+        40
+      ],
+      "drawn": false,
+      "_key": "!tables.results!g71Z0aejCXRpMLfV.E0KZFpkFp1Nvc6BB"
+    },
+    {
+      "_id": "TbXuKVheYrVlwGTH",
+      "flags": {},
+      "type": 0,
+      "text": "{2d6+1 [gp]}",
+      "img": "icons/svg/d20-black.svg",
+      "resultId": "",
+      "weight": 1,
+      "range": [
+        41,
+        70
+      ],
+      "drawn": false,
+      "_key": "!tables.results!g71Z0aejCXRpMLfV.TbXuKVheYrVlwGTH"
+    },
+    {
+      "_id": "XD1r8oCmzip2obHQ",
+      "flags": {},
+      "type": 0,
+      "text": "{4d8 [gp]}",
+      "img": "icons/svg/d20-black.svg",
+      "resultId": "",
+      "weight": 1,
+      "range": [
+        71,
+        95
+      ],
+      "drawn": false,
+      "_key": "!tables.results!g71Z0aejCXRpMLfV.XD1r8oCmzip2obHQ"
+    },
+    {
+      "_id": "4rTjTqeqy2FSNojm",
+      "flags": {},
+      "type": 0,
+      "text": "{1d6[pp]}",
+      "img": "icons/svg/d20-black.svg",
+      "resultId": "",
+      "weight": 1,
+      "range": [
+        96,
+        100
+      ],
+      "drawn": false,
+      "_key": "!tables.results!g71Z0aejCXRpMLfV.4rTjTqeqy2FSNojm"
+    }
+  ],
+  "formula": "1d100",
+  "replacement": true,
+  "displayRoll": true,
+  "_key": "!tables!g71Z0aejCXRpMLfV"
+}

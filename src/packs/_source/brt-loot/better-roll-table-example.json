@@ -1,0 +1,89 @@
+{
+  "name": "Better Roll Table Example",
+  "permission": {
+    "default": 0,
+    "9rRGGI8f6sVuXlQQ": 3
+  },
+  "flags": {
+    "better-rolltables": {
+      "table-type": "loot",
+      "table-currency-string": "(2d6)*100[cp], (2d6)*1000[sp], (6d6)*100[gp], (3d6)*10[pp]",
+      "loot-actor-name": "shop",
+      "loot-amount-key": "1"
+    }
+  },
+  "description": "a table that creates a loot reward actor containing multiple rolls from multiple tables at once.",
+  "results": [
+    {
+      "_id": "51KMxyPi70aoIWYd",
+      "flags": {
+        "better-rolltables": {
+          "brt-result-formula": {
+            "formula": "1d4+1"
+          }
+        }
+      },
+      "type": 2,
+      "text": "Potions Table",
+      "img": "icons/svg/d20-black.svg",
+      "collection": "better-rolltables.brt-loot",
+      "resultId": "L09taG8jX9mHYNmJ",
+      "weight": 3,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_key": "!tables.results!Qnq77jW4J0P1IJ50.51KMxyPi70aoIWYd"
+    },
+    {
+      "_id": "xrMl23qI4WgNWyYK",
+      "flags": {
+        "better-rolltables": {
+          "brt-result-formula": {
+            "formula": "1d6+1"
+          }
+        }
+      },
+      "type": 2,
+      "text": "Item Table",
+      "img": "icons/svg/d20-black.svg",
+      "collection": "better-rolltables.brt-loot",
+      "resultId": "8LNr3THKzlaL1vQT",
+      "weight": 3,
+      "range": [
+        2,
+        4
+      ],
+      "drawn": false,
+      "_key": "!tables.results!Qnq77jW4J0P1IJ50.xrMl23qI4WgNWyYK"
+    },
+    {
+      "_id": "Zn7AgirxPkSAxMtm",
+      "flags": {
+        "better-rolltables": {
+          "brt-result-formula": {
+            "formula": "1d6"
+          }
+        }
+      },
+      "type": 2,
+      "text": "Scrolls Table",
+      "img": "icons/svg/d20-black.svg",
+      "collection": "better-rolltables.brt-loot",
+      "resultId": "A2bYCUxE9EFxhgqr",
+      "weight": 3,
+      "range": [
+        2,
+        4
+      ],
+      "drawn": false,
+      "_key": "!tables.results!Qnq77jW4J0P1IJ50.Zn7AgirxPkSAxMtm"
+    }
+  ],
+  "formula": "1d4",
+  "replacement": true,
+  "displayRoll": true,
+  "_id": "Qnq77jW4J0P1IJ50",
+  "_key": "!tables!Qnq77jW4J0P1IJ50"
+}

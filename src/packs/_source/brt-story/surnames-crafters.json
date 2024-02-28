@@ -1,0 +1,797 @@
+{
+  "name": "Surnames Crafters",
+  "flags": {
+    "better-rolltables": {
+      "table-type": "loot"
+    }
+  },
+  "description": "a list of surnames",
+  "results": [
+    {
+      "_id": "e2EtDykvf5oevDxj",
+      "flags": {},
+      "type": 0,
+      "text": "Arch",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.e2EtDykvf5oevDxj"
+    },
+    {
+      "_id": "mhR55Lxf23LlEHXn",
+      "flags": {},
+      "type": 0,
+      "text": " Archmaker",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.mhR55Lxf23LlEHXn"
+    },
+    {
+      "_id": "NCQJgURkKmCBQpMZ",
+      "flags": {},
+      "type": 0,
+      "text": " Baskett",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.NCQJgURkKmCBQpMZ"
+    },
+    {
+      "_id": "nRWWESuN8zqwB3bt",
+      "flags": {},
+      "type": 0,
+      "text": " Basket",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.nRWWESuN8zqwB3bt"
+    },
+    {
+      "_id": "OS4CjyqRC5jYi3jy",
+      "flags": {},
+      "type": 0,
+      "text": " Bilder",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.OS4CjyqRC5jYi3jy"
+    },
+    {
+      "_id": "ziCZUKzlQbewSluJ",
+      "flags": {},
+      "type": 0,
+      "text": " Builder",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.ziCZUKzlQbewSluJ"
+    },
+    {
+      "_id": "WT4ZcnqzDWsVV7pz",
+      "flags": {},
+      "type": 0,
+      "text": " Bulder",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.WT4ZcnqzDWsVV7pz"
+    },
+    {
+      "_id": "COR4Zve0ZSSv4hrf",
+      "flags": {},
+      "type": 0,
+      "text": " Bilds",
+      "weight": 1,
+      "range": [
+        8,
+        8
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.COR4Zve0ZSSv4hrf"
+    },
+    {
+      "_id": "ClJbSY0Eme6rDZUI",
+      "flags": {},
+      "type": 0,
+      "text": " Blow",
+      "weight": 1,
+      "range": [
+        9,
+        9
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.ClJbSY0Eme6rDZUI"
+    },
+    {
+      "_id": "SAXq8Ri8h4eCvsmf",
+      "flags": {},
+      "type": 0,
+      "text": " Brickman",
+      "weight": 1,
+      "range": [
+        10,
+        10
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.SAXq8Ri8h4eCvsmf"
+    },
+    {
+      "_id": "7pSJ4KZ4Bg0OFWjo",
+      "flags": {},
+      "type": 0,
+      "text": " Bricker",
+      "weight": 1,
+      "range": [
+        11,
+        11
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.7pSJ4KZ4Bg0OFWjo"
+    },
+    {
+      "_id": "GJBnVw14fl93Jr8z",
+      "flags": {},
+      "type": 0,
+      "text": " Brycks",
+      "weight": 1,
+      "range": [
+        12,
+        12
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.GJBnVw14fl93Jr8z"
+    },
+    {
+      "_id": "PWejTtcPcfh0B5ig",
+      "flags": {},
+      "type": 0,
+      "text": " Bricks",
+      "weight": 1,
+      "range": [
+        13,
+        13
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.PWejTtcPcfh0B5ig"
+    },
+    {
+      "_id": "0BW7nuUbbBFVesP4",
+      "flags": {},
+      "type": 0,
+      "text": " Burgh",
+      "weight": 1,
+      "range": [
+        14,
+        14
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.0BW7nuUbbBFVesP4"
+    },
+    {
+      "_id": "zJVhv0XxAb9B644l",
+      "flags": {},
+      "type": 0,
+      "text": " Berg",
+      "weight": 1,
+      "range": [
+        15,
+        15
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.zJVhv0XxAb9B644l"
+    },
+    {
+      "_id": "Yc8kaOZV0hjnluCk",
+      "flags": {},
+      "type": 0,
+      "text": " Burg",
+      "weight": 1,
+      "range": [
+        16,
+        16
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.Yc8kaOZV0hjnluCk"
+    },
+    {
+      "_id": "GtghNjYR1NdLWh8O",
+      "flags": {},
+      "type": 0,
+      "text": " Burgher",
+      "weight": 1,
+      "range": [
+        17,
+        17
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.GtghNjYR1NdLWh8O"
+    },
+    {
+      "_id": "CZx4CWYtNxc8XFs7",
+      "flags": {},
+      "type": 0,
+      "text": " Berger",
+      "weight": 1,
+      "range": [
+        18,
+        18
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.CZx4CWYtNxc8XFs7"
+    },
+    {
+      "_id": "2w34o3vWo5TbkiIV",
+      "flags": {},
+      "type": 0,
+      "text": " Burger",
+      "weight": 1,
+      "range": [
+        19,
+        19
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.2w34o3vWo5TbkiIV"
+    },
+    {
+      "_id": "KYNWOHN8eTTEvIv0",
+      "flags": {},
+      "type": 0,
+      "text": " Carpenter",
+      "weight": 1,
+      "range": [
+        20,
+        20
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.KYNWOHN8eTTEvIv0"
+    },
+    {
+      "_id": "6ClAWL9jT7M7NkM1",
+      "flags": {},
+      "type": 0,
+      "text": " Chandler",
+      "weight": 1,
+      "range": [
+        21,
+        21
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.6ClAWL9jT7M7NkM1"
+    },
+    {
+      "_id": "cZNRG1q14Kkylv4P",
+      "flags": {},
+      "type": 0,
+      "text": " Candler",
+      "weight": 1,
+      "range": [
+        22,
+        22
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.cZNRG1q14Kkylv4P"
+    },
+    {
+      "_id": "qxjpAQ1jEOaERyQT",
+      "flags": {},
+      "type": 0,
+      "text": " Clay",
+      "weight": 1,
+      "range": [
+        23,
+        23
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.qxjpAQ1jEOaERyQT"
+    },
+    {
+      "_id": "XVoeCVaIiO82OBDC",
+      "flags": {},
+      "type": 0,
+      "text": " Cooper",
+      "weight": 1,
+      "range": [
+        24,
+        24
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.XVoeCVaIiO82OBDC"
+    },
+    {
+      "_id": "Xra8AlWYjkYVKLEq",
+      "flags": {},
+      "type": 0,
+      "text": " Crafter",
+      "weight": 1,
+      "range": [
+        25,
+        25
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.Xra8AlWYjkYVKLEq"
+    },
+    {
+      "_id": "ssgtJO9WVddOR1Mh",
+      "flags": {},
+      "type": 0,
+      "text": " Glass",
+      "weight": 1,
+      "range": [
+        26,
+        26
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.ssgtJO9WVddOR1Mh"
+    },
+    {
+      "_id": "Y0FCgModPzSuJdZY",
+      "flags": {},
+      "type": 0,
+      "text": " Glazier",
+      "weight": 1,
+      "range": [
+        27,
+        27
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.Y0FCgModPzSuJdZY"
+    },
+    {
+      "_id": "DFBuTiyhvzelDFpz",
+      "flags": {},
+      "type": 0,
+      "text": " Glasier",
+      "weight": 1,
+      "range": [
+        28,
+        28
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.DFBuTiyhvzelDFpz"
+    },
+    {
+      "_id": "EmEtYDEBVkfXVFBo",
+      "flags": {},
+      "type": 0,
+      "text": " Hammer",
+      "weight": 1,
+      "range": [
+        29,
+        29
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.EmEtYDEBVkfXVFBo"
+    },
+    {
+      "_id": "JSPs6BWJeu0Idlob",
+      "flags": {},
+      "type": 0,
+      "text": " Maker",
+      "weight": 1,
+      "range": [
+        30,
+        30
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.JSPs6BWJeu0Idlob"
+    },
+    {
+      "_id": "mcoXn80TM6qD6twy",
+      "flags": {},
+      "type": 0,
+      "text": " Mason",
+      "weight": 1,
+      "range": [
+        31,
+        31
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.mcoXn80TM6qD6twy"
+    },
+    {
+      "_id": "wPPrLwRcS0lbOO9H",
+      "flags": {},
+      "type": 0,
+      "text": " Masen",
+      "weight": 1,
+      "range": [
+        32,
+        32
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.wPPrLwRcS0lbOO9H"
+    },
+    {
+      "_id": "ShepFDuWBM7XXM1O",
+      "flags": {},
+      "type": 0,
+      "text": " Masyn",
+      "weight": 1,
+      "range": [
+        33,
+        33
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.ShepFDuWBM7XXM1O"
+    },
+    {
+      "_id": "cD1nmznlavwRt92Q",
+      "flags": {},
+      "type": 0,
+      "text": " Potts",
+      "weight": 1,
+      "range": [
+        34,
+        34
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.cD1nmznlavwRt92Q"
+    },
+    {
+      "_id": "4CH9Rp9jNafQifri",
+      "flags": {},
+      "type": 0,
+      "text": " Pott",
+      "weight": 1,
+      "range": [
+        35,
+        35
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.4CH9Rp9jNafQifri"
+    },
+    {
+      "_id": "SKQYw4wS4S65bFTY",
+      "flags": {},
+      "type": 0,
+      "text": " Potter",
+      "weight": 1,
+      "range": [
+        36,
+        36
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.SKQYw4wS4S65bFTY"
+    },
+    {
+      "_id": "PyhF4eZfinf2EgJO",
+      "flags": {},
+      "type": 0,
+      "text": " Quarrier",
+      "weight": 1,
+      "range": [
+        37,
+        37
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.PyhF4eZfinf2EgJO"
+    },
+    {
+      "_id": "qa0DG4bhruPz9OtY",
+      "flags": {},
+      "type": 0,
+      "text": " Quarryman",
+      "weight": 1,
+      "range": [
+        38,
+        38
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.qa0DG4bhruPz9OtY"
+    },
+    {
+      "_id": "nOjZMff71ZDXPl39",
+      "flags": {},
+      "type": 0,
+      "text": " Rock",
+      "weight": 1,
+      "range": [
+        39,
+        39
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.nOjZMff71ZDXPl39"
+    },
+    {
+      "_id": "t7k4MUTJYf3bBWtB",
+      "flags": {},
+      "type": 0,
+      "text": " Rockman",
+      "weight": 1,
+      "range": [
+        40,
+        40
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.t7k4MUTJYf3bBWtB"
+    },
+    {
+      "_id": "wDB81ocweTF9qoMV",
+      "flags": {},
+      "type": 0,
+      "text": " Rocker",
+      "weight": 1,
+      "range": [
+        41,
+        41
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.wDB81ocweTF9qoMV"
+    },
+    {
+      "_id": "2db88Wdt0ty1JWJF",
+      "flags": {},
+      "type": 0,
+      "text": " Roof",
+      "weight": 1,
+      "range": [
+        42,
+        42
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.2db88Wdt0ty1JWJF"
+    },
+    {
+      "_id": "T5OG9kpiO3DYLenI",
+      "flags": {},
+      "type": 0,
+      "text": " Roofe",
+      "weight": 1,
+      "range": [
+        43,
+        43
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.T5OG9kpiO3DYLenI"
+    },
+    {
+      "_id": "0Fo8OzLqLv9r0BQa",
+      "flags": {},
+      "type": 0,
+      "text": " Sawyer",
+      "weight": 1,
+      "range": [
+        44,
+        44
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.0Fo8OzLqLv9r0BQa"
+    },
+    {
+      "_id": "zWLc4PEGdCzGxPyn",
+      "flags": {},
+      "type": 0,
+      "text": " Stone",
+      "weight": 1,
+      "range": [
+        45,
+        45
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.zWLc4PEGdCzGxPyn"
+    },
+    {
+      "_id": "7BwdpJmYUQZ4ovF7",
+      "flags": {},
+      "type": 0,
+      "text": " Stoneman",
+      "weight": 1,
+      "range": [
+        46,
+        46
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.7BwdpJmYUQZ4ovF7"
+    },
+    {
+      "_id": "EX5sQsU6XLqPKfPQ",
+      "flags": {},
+      "type": 0,
+      "text": " Townes",
+      "weight": 1,
+      "range": [
+        47,
+        47
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.EX5sQsU6XLqPKfPQ"
+    },
+    {
+      "_id": "dlQAiR1RslnqxCrJ",
+      "flags": {},
+      "type": 0,
+      "text": " Towns",
+      "weight": 1,
+      "range": [
+        48,
+        48
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.dlQAiR1RslnqxCrJ"
+    },
+    {
+      "_id": "gkdvxLN1J7HyALIB",
+      "flags": {},
+      "type": 0,
+      "text": " Towny",
+      "weight": 1,
+      "range": [
+        49,
+        49
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.gkdvxLN1J7HyALIB"
+    },
+    {
+      "_id": "qZLNPrUegJyQUyJx",
+      "flags": {},
+      "type": 0,
+      "text": " Wahl",
+      "weight": 1,
+      "range": [
+        50,
+        50
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.qZLNPrUegJyQUyJx"
+    },
+    {
+      "_id": "AXdVaqKaVr7pbzu6",
+      "flags": {},
+      "type": 0,
+      "text": " Wall",
+      "weight": 1,
+      "range": [
+        51,
+        51
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.AXdVaqKaVr7pbzu6"
+    },
+    {
+      "_id": "7GmxqeNdgkoQXZAS",
+      "flags": {},
+      "type": 0,
+      "text": " Wahls",
+      "weight": 1,
+      "range": [
+        52,
+        52
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.7GmxqeNdgkoQXZAS"
+    },
+    {
+      "_id": "ZW5QWG78qqTV1yX8",
+      "flags": {},
+      "type": 0,
+      "text": " Walls",
+      "weight": 1,
+      "range": [
+        53,
+        53
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.ZW5QWG78qqTV1yX8"
+    },
+    {
+      "_id": "0enNUVJnznnxkejE",
+      "flags": {},
+      "type": 0,
+      "text": " Waller",
+      "weight": 1,
+      "range": [
+        54,
+        54
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.0enNUVJnznnxkejE"
+    },
+    {
+      "_id": "B6IEwxbM46FOt9eY",
+      "flags": {},
+      "type": 0,
+      "text": " Waxman",
+      "weight": 1,
+      "range": [
+        55,
+        55
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.B6IEwxbM46FOt9eY"
+    },
+    {
+      "_id": "8jNQgemL2sFFOGoO",
+      "flags": {},
+      "type": 0,
+      "text": " Wax",
+      "weight": 1,
+      "range": [
+        56,
+        56
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.8jNQgemL2sFFOGoO"
+    },
+    {
+      "_id": "HdPKQ0csaI648sdj",
+      "flags": {},
+      "type": 0,
+      "text": " Wackes",
+      "weight": 1,
+      "range": [
+        57,
+        57
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.HdPKQ0csaI648sdj"
+    },
+    {
+      "_id": "Dq55wWHX4Hz17NAh",
+      "flags": {},
+      "type": 0,
+      "text": " Wood",
+      "weight": 1,
+      "range": [
+        58,
+        58
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.Dq55wWHX4Hz17NAh"
+    },
+    {
+      "_id": "MQunV5ger70QIjTZ",
+      "flags": {},
+      "type": 0,
+      "text": " Woods",
+      "weight": 1,
+      "range": [
+        59,
+        59
+      ],
+      "drawn": false,
+      "_key": "!tables.results!2tuVrRiWatRRiuJL.MQunV5ger70QIjTZ"
+    }
+  ],
+  "formula": "1d59",
+  "replacement": true,
+  "displayRoll": true,
+  "_id": "2tuVrRiWatRRiuJL",
+  "ownership": {
+    "default": 0
+  },
+  "img": "icons/svg/d20-grey.svg",
+  "folder": null,
+  "sort": 0,
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "2.3.1",
+    "coreVersion": "11.311",
+    "createdTime": null,
+    "modifiedTime": 1696025031479,
+    "lastModifiedBy": "packsebuilder0000"
+  },
+  "_key": "!tables!2tuVrRiWatRRiuJL"
+}

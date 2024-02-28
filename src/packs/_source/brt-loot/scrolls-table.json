@@ -1,0 +1,190 @@
+{
+  "name": "Scrolls Table",
+  "flags": {
+    "better-rolltables": {
+      "table-type": "loot"
+    }
+  },
+  "description": "with better roll tables a random spell is selected for the appropriate level. \r\nCheck table name \"BETTER ROLL TABLE EXAMPLE\" and roll from there",
+  "results": [
+    {
+      "_id": "WlnDsRdODg2fNBjr",
+      "flags": {},
+      "type": 2,
+      "text": "Spell Scroll Cantrip Level",
+      "img": "systems/dnd5e/icons/items/inventory/note-scroll.jpg",
+      "collection": "dnd5e.items",
+      "resultId": "rQ6sO7HDWzqMhSI3",
+      "weight": 1,
+      "range": [
+        1,
+        40
+      ],
+      "drawn": false,
+      "_key": "!tables.results!A2bYCUxE9EFxhgqr.WlnDsRdODg2fNBjr"
+    },
+    {
+      "_id": "FD2fhOeSBT3rHibG",
+      "flags": {},
+      "type": 2,
+      "text": "Spell Scroll 1st Level",
+      "img": "systems/dnd5e/icons/items/inventory/note-scroll.jpg",
+      "collection": "dnd5e.items",
+      "resultId": "9GSfMg0VOA2b4uFN",
+      "weight": 1,
+      "range": [
+        41,
+        60
+      ],
+      "drawn": false,
+      "_key": "!tables.results!A2bYCUxE9EFxhgqr.FD2fhOeSBT3rHibG"
+    },
+    {
+      "_id": "Jfl00l3U6IcMFHLJ",
+      "flags": {},
+      "type": 2,
+      "text": "Spell Scroll 2nd Level",
+      "img": "systems/dnd5e/icons/items/inventory/scroll-druid.jpg",
+      "collection": "dnd5e.items",
+      "resultId": "XdDp6CKh9qEvPTuS",
+      "weight": 1,
+      "range": [
+        61,
+        72
+      ],
+      "drawn": false,
+      "_key": "!tables.results!A2bYCUxE9EFxhgqr.Jfl00l3U6IcMFHLJ"
+    },
+    {
+      "_id": "t0Keb8jlqzEcjrru",
+      "flags": {},
+      "type": 2,
+      "text": "Spell Scroll 3rd Level",
+      "img": "systems/dnd5e/icons/items/inventory/scroll-druid.jpg",
+      "collection": "dnd5e.items",
+      "resultId": "hqVKZie7x9w3Kqds",
+      "weight": 1,
+      "range": [
+        73,
+        79
+      ],
+      "drawn": false,
+      "_key": "!tables.results!A2bYCUxE9EFxhgqr.t0Keb8jlqzEcjrru"
+    },
+    {
+      "_id": "UVlBvxsndxbc0z2C",
+      "flags": {},
+      "type": 2,
+      "text": "Spell Scroll 4th Level",
+      "img": "systems/dnd5e/icons/items/inventory/scroll-cursed.jpg",
+      "collection": "dnd5e.items",
+      "resultId": "DM7hzgL836ZyUFB1",
+      "weight": 1,
+      "range": [
+        80,
+        85
+      ],
+      "drawn": false,
+      "_key": "!tables.results!A2bYCUxE9EFxhgqr.UVlBvxsndxbc0z2C"
+    },
+    {
+      "_id": "Mb4xYwZn0eCx0kpp",
+      "flags": {},
+      "type": 2,
+      "text": "Spell Scroll 5th Level",
+      "img": "systems/dnd5e/icons/items/inventory/scroll-cursed.jpg",
+      "collection": "dnd5e.items",
+      "resultId": "wa1VF8TXHmkrrR35",
+      "weight": 1,
+      "range": [
+        86,
+        89
+      ],
+      "drawn": false,
+      "_key": "!tables.results!A2bYCUxE9EFxhgqr.Mb4xYwZn0eCx0kpp"
+    },
+    {
+      "_id": "NtIJuxJw7lM8ZUN7",
+      "flags": {},
+      "type": 2,
+      "text": "Spell Scroll 6th Level",
+      "img": "systems/dnd5e/icons/items/inventory/scroll-magic.jpg",
+      "collection": "dnd5e.items",
+      "resultId": "tI3rWx4bxefNCexS",
+      "weight": 1,
+      "range": [
+        90,
+        92
+      ],
+      "drawn": false,
+      "_key": "!tables.results!A2bYCUxE9EFxhgqr.NtIJuxJw7lM8ZUN7"
+    },
+    {
+      "_id": "uDPaUcvueqj4q2ht",
+      "flags": {},
+      "type": 2,
+      "text": "Spell Scroll 7th Level",
+      "img": "systems/dnd5e/icons/items/inventory/scroll-magic.jpg",
+      "collection": "dnd5e.items",
+      "resultId": "mtyw4NS1s7j2EJaD",
+      "weight": 1,
+      "range": [
+        93,
+        95
+      ],
+      "drawn": false,
+      "_key": "!tables.results!A2bYCUxE9EFxhgqr.uDPaUcvueqj4q2ht"
+    },
+    {
+      "_id": "qxWVQyA5iF4p0BcO",
+      "flags": {},
+      "type": 2,
+      "text": "Spell Scroll 8th Level",
+      "img": "systems/dnd5e/icons/items/inventory/scroll-magic.jpg",
+      "collection": "dnd5e.items",
+      "resultId": "aOrinPg7yuDZEuWr",
+      "weight": 1,
+      "range": [
+        96,
+        98
+      ],
+      "drawn": false,
+      "_key": "!tables.results!A2bYCUxE9EFxhgqr.qxWVQyA5iF4p0BcO"
+    },
+    {
+      "_id": "aXozekG4Jzimb9Za",
+      "flags": {},
+      "type": 2,
+      "text": "Spell Scroll 9th Level",
+      "img": "systems/dnd5e/icons/items/inventory/scroll-secret.jpg",
+      "collection": "dnd5e.items",
+      "resultId": "O4YbkJkLlnsgUszZ",
+      "weight": 1,
+      "range": [
+        99,
+        100
+      ],
+      "drawn": false,
+      "_key": "!tables.results!A2bYCUxE9EFxhgqr.aXozekG4Jzimb9Za"
+    }
+  ],
+  "formula": "1d100",
+  "replacement": true,
+  "displayRoll": true,
+  "_id": "A2bYCUxE9EFxhgqr",
+  "ownership": {
+    "default": 0
+  },
+  "img": "icons/svg/d20-grey.svg",
+  "folder": null,
+  "sort": 0,
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "2.3.1",
+    "coreVersion": "11.311",
+    "createdTime": null,
+    "modifiedTime": 1696024976188,
+    "lastModifiedBy": "packsebuilder0000"
+  },
+  "_key": "!tables!A2bYCUxE9EFxhgqr"
+}

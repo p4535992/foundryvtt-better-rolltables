@@ -1,0 +1,979 @@
+{
+  "name": "Surnames Foodmakers",
+  "flags": {
+    "better-rolltables": {
+      "table-type": "loot"
+    }
+  },
+  "description": "a list of surnames",
+  "results": [
+    {
+      "_id": "IghiFbJ5IDDuzABi",
+      "flags": {},
+      "type": 0,
+      "text": "Ales",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.IghiFbJ5IDDuzABi"
+    },
+    {
+      "_id": "YhF9YxGObIjP9bKd",
+      "flags": {},
+      "type": 0,
+      "text": " Aleman",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.YhF9YxGObIjP9bKd"
+    },
+    {
+      "_id": "cipwWYMY9YI6bCzb",
+      "flags": {},
+      "type": 0,
+      "text": " Aler",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.cipwWYMY9YI6bCzb"
+    },
+    {
+      "_id": "AdMPIccdNIMysOB8",
+      "flags": {},
+      "type": 0,
+      "text": " Baker",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.AdMPIccdNIMysOB8"
+    },
+    {
+      "_id": "oXuulJCJZXifgeXu",
+      "flags": {},
+      "type": 0,
+      "text": " Bake",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.oXuulJCJZXifgeXu"
+    },
+    {
+      "_id": "mrU3xhv4R3kfN556",
+      "flags": {},
+      "type": 0,
+      "text": " Bakeler",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.mrU3xhv4R3kfN556"
+    },
+    {
+      "_id": "aQrRIAHW11DKAIdz",
+      "flags": {},
+      "type": 0,
+      "text": " Barr",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.aQrRIAHW11DKAIdz"
+    },
+    {
+      "_id": "Rh9g0y2AXLNTznQE",
+      "flags": {},
+      "type": 0,
+      "text": " Barre",
+      "weight": 1,
+      "range": [
+        8,
+        8
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.Rh9g0y2AXLNTznQE"
+    },
+    {
+      "_id": "3yWiCyq57PEIegP0",
+      "flags": {},
+      "type": 0,
+      "text": " Barman",
+      "weight": 1,
+      "range": [
+        9,
+        9
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.3yWiCyq57PEIegP0"
+    },
+    {
+      "_id": "HkHUUxNYBcy6kNNu",
+      "flags": {},
+      "type": 0,
+      "text": " Berry",
+      "weight": 1,
+      "range": [
+        10,
+        10
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.HkHUUxNYBcy6kNNu"
+    },
+    {
+      "_id": "iRT2rPW3K1tW3uiB",
+      "flags": {},
+      "type": 0,
+      "text": " Berryman",
+      "weight": 1,
+      "range": [
+        11,
+        11
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.iRT2rPW3K1tW3uiB"
+    },
+    {
+      "_id": "X1F6y4cVHQQY9mnd",
+      "flags": {},
+      "type": 0,
+      "text": " Berriman",
+      "weight": 1,
+      "range": [
+        12,
+        12
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.X1F6y4cVHQQY9mnd"
+    },
+    {
+      "_id": "MIH5fHqQSSAePm2v",
+      "flags": {},
+      "type": 0,
+      "text": " Boyle",
+      "weight": 1,
+      "range": [
+        13,
+        13
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.MIH5fHqQSSAePm2v"
+    },
+    {
+      "_id": "COSVlVScJFRpuPD8",
+      "flags": {},
+      "type": 0,
+      "text": " Boiles",
+      "weight": 1,
+      "range": [
+        14,
+        14
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.COSVlVScJFRpuPD8"
+    },
+    {
+      "_id": "NWi4mJUZXlpb4cx8",
+      "flags": {},
+      "type": 0,
+      "text": " Boyles",
+      "weight": 1,
+      "range": [
+        15,
+        15
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.NWi4mJUZXlpb4cx8"
+    },
+    {
+      "_id": "V979hb1XgKJG9W3e",
+      "flags": {},
+      "type": 0,
+      "text": " Brewer",
+      "weight": 1,
+      "range": [
+        16,
+        16
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.V979hb1XgKJG9W3e"
+    },
+    {
+      "_id": "XTJmu4XiWaaUvgf1",
+      "flags": {},
+      "type": 0,
+      "text": " Brewster",
+      "weight": 1,
+      "range": [
+        17,
+        17
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.XTJmu4XiWaaUvgf1"
+    },
+    {
+      "_id": "Yd925OQoZD4Rf3WS",
+      "flags": {},
+      "type": 0,
+      "text": " Broyles",
+      "weight": 1,
+      "range": [
+        18,
+        18
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.Yd925OQoZD4Rf3WS"
+    },
+    {
+      "_id": "rbDR5Oe31QbtV1jT",
+      "flags": {},
+      "type": 0,
+      "text": " Broiles",
+      "weight": 1,
+      "range": [
+        19,
+        19
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.rbDR5Oe31QbtV1jT"
+    },
+    {
+      "_id": "lYkqDJLCJKlNyM2c",
+      "flags": {},
+      "type": 0,
+      "text": " Broyler",
+      "weight": 1,
+      "range": [
+        20,
+        20
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.lYkqDJLCJKlNyM2c"
+    },
+    {
+      "_id": "jQL1mt9dHN49K62C",
+      "flags": {},
+      "type": 0,
+      "text": " Butcher",
+      "weight": 1,
+      "range": [
+        21,
+        21
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.jQL1mt9dHN49K62C"
+    },
+    {
+      "_id": "MwtuIZSH7tOuUT1b",
+      "flags": {},
+      "type": 0,
+      "text": " Butchett",
+      "weight": 1,
+      "range": [
+        22,
+        22
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.MwtuIZSH7tOuUT1b"
+    },
+    {
+      "_id": "lYrNBQTwBwu5Re1p",
+      "flags": {},
+      "type": 0,
+      "text": " Cook",
+      "weight": 1,
+      "range": [
+        23,
+        23
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.lYrNBQTwBwu5Re1p"
+    },
+    {
+      "_id": "brUXDNMkzSMvwXuf",
+      "flags": {},
+      "type": 0,
+      "text": " Dice",
+      "weight": 1,
+      "range": [
+        24,
+        24
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.brUXDNMkzSMvwXuf"
+    },
+    {
+      "_id": "NAZmhg0DxWGlODVL",
+      "flags": {},
+      "type": 0,
+      "text": " Dougherman",
+      "weight": 1,
+      "range": [
+        25,
+        25
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.NAZmhg0DxWGlODVL"
+    },
+    {
+      "_id": "UiWKJDBXJNGbLQuz",
+      "flags": {},
+      "type": 0,
+      "text": " Dougher",
+      "weight": 1,
+      "range": [
+        26,
+        26
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.UiWKJDBXJNGbLQuz"
+    },
+    {
+      "_id": "oTnlT9oNUpAU50Df",
+      "flags": {},
+      "type": 0,
+      "text": " Fry",
+      "weight": 1,
+      "range": [
+        27,
+        27
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.oTnlT9oNUpAU50Df"
+    },
+    {
+      "_id": "L6hScPXST0dSwB2g",
+      "flags": {},
+      "type": 0,
+      "text": " Frey",
+      "weight": 1,
+      "range": [
+        28,
+        28
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.L6hScPXST0dSwB2g"
+    },
+    {
+      "_id": "cj2eyBykiOfLtg6z",
+      "flags": {},
+      "type": 0,
+      "text": " Fryman",
+      "weight": 1,
+      "range": [
+        29,
+        29
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.cj2eyBykiOfLtg6z"
+    },
+    {
+      "_id": "xnpvYwmkbbn1HhJJ",
+      "flags": {},
+      "type": 0,
+      "text": " Gardner",
+      "weight": 1,
+      "range": [
+        30,
+        30
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.xnpvYwmkbbn1HhJJ"
+    },
+    {
+      "_id": "qTv2uugimlKCVzrE",
+      "flags": {},
+      "type": 0,
+      "text": " Gardener",
+      "weight": 1,
+      "range": [
+        31,
+        31
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.qTv2uugimlKCVzrE"
+    },
+    {
+      "_id": "g1iblHPvbZcnWGvY",
+      "flags": {},
+      "type": 0,
+      "text": " Gardiner",
+      "weight": 1,
+      "range": [
+        32,
+        32
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.g1iblHPvbZcnWGvY"
+    },
+    {
+      "_id": "r0RQGZaGlSfxmXFF",
+      "flags": {},
+      "type": 0,
+      "text": " Grills",
+      "weight": 1,
+      "range": [
+        33,
+        33
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.r0RQGZaGlSfxmXFF"
+    },
+    {
+      "_id": "9TxwfBYw3dL7g5D2",
+      "flags": {},
+      "type": 0,
+      "text": " Grillett",
+      "weight": 1,
+      "range": [
+        34,
+        34
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.9TxwfBYw3dL7g5D2"
+    },
+    {
+      "_id": "o1kioiwAGzHVrj2z",
+      "flags": {},
+      "type": 0,
+      "text": " Innes",
+      "weight": 1,
+      "range": [
+        35,
+        35
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.o1kioiwAGzHVrj2z"
+    },
+    {
+      "_id": "J1hwP450lmQF9oTg",
+      "flags": {},
+      "type": 0,
+      "text": " Innman",
+      "weight": 1,
+      "range": [
+        36,
+        36
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.J1hwP450lmQF9oTg"
+    },
+    {
+      "_id": "dtT5NtYQio3WQ6Fd",
+      "flags": {},
+      "type": 0,
+      "text": " Inman",
+      "weight": 1,
+      "range": [
+        37,
+        37
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.dtT5NtYQio3WQ6Fd"
+    },
+    {
+      "_id": "clmjJMRaTN3C9UkV",
+      "flags": {},
+      "type": 0,
+      "text": " Kettle",
+      "weight": 1,
+      "range": [
+        38,
+        38
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.clmjJMRaTN3C9UkV"
+    },
+    {
+      "_id": "YTHYQ3nSGeM2QtOG",
+      "flags": {},
+      "type": 0,
+      "text": " Kettleblack",
+      "weight": 1,
+      "range": [
+        39,
+        39
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.YTHYQ3nSGeM2QtOG"
+    },
+    {
+      "_id": "cEwM6AiknX7bF7kz",
+      "flags": {},
+      "type": 0,
+      "text": " Kettleman",
+      "weight": 1,
+      "range": [
+        40,
+        40
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.cEwM6AiknX7bF7kz"
+    },
+    {
+      "_id": "7VOtso9mIxPjEb8f",
+      "flags": {},
+      "type": 0,
+      "text": " Kneadler",
+      "weight": 1,
+      "range": [
+        41,
+        41
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.7VOtso9mIxPjEb8f"
+    },
+    {
+      "_id": "4tC7axSmK39bLmJm",
+      "flags": {},
+      "type": 0,
+      "text": " Kneadman",
+      "weight": 1,
+      "range": [
+        42,
+        42
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.4tC7axSmK39bLmJm"
+    },
+    {
+      "_id": "lMaDfOCbmsEOW5pF",
+      "flags": {},
+      "type": 0,
+      "text": " Milk",
+      "weight": 1,
+      "range": [
+        43,
+        43
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.lMaDfOCbmsEOW5pF"
+    },
+    {
+      "_id": "KOZgidTky4K2Txz6",
+      "flags": {},
+      "type": 0,
+      "text": " Miller",
+      "weight": 1,
+      "range": [
+        44,
+        44
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.KOZgidTky4K2Txz6"
+    },
+    {
+      "_id": "NWwGiPV27kgkCuDd",
+      "flags": {},
+      "type": 0,
+      "text": " Mills",
+      "weight": 1,
+      "range": [
+        45,
+        45
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.NWwGiPV27kgkCuDd"
+    },
+    {
+      "_id": "FdAoyeQf1KO8JxEk",
+      "flags": {},
+      "type": 0,
+      "text": " Miller",
+      "weight": 1,
+      "range": [
+        46,
+        46
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.FdAoyeQf1KO8JxEk"
+    },
+    {
+      "_id": "PYTRyUQC5X5ettaO",
+      "flags": {},
+      "type": 0,
+      "text": " Palewine",
+      "weight": 1,
+      "range": [
+        47,
+        47
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.PYTRyUQC5X5ettaO"
+    },
+    {
+      "_id": "nI9JDZBai3GdzqFJ",
+      "flags": {},
+      "type": 0,
+      "text": " Pan",
+      "weight": 1,
+      "range": [
+        48,
+        48
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.nI9JDZBai3GdzqFJ"
+    },
+    {
+      "_id": "Sx70hj6wA605WD0W",
+      "flags": {},
+      "type": 0,
+      "text": " Pannerman",
+      "weight": 1,
+      "range": [
+        49,
+        49
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.Sx70hj6wA605WD0W"
+    },
+    {
+      "_id": "INTqYjNVQQeyFXLH",
+      "flags": {},
+      "type": 0,
+      "text": " Panning",
+      "weight": 1,
+      "range": [
+        50,
+        50
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.INTqYjNVQQeyFXLH"
+    },
+    {
+      "_id": "M8VB4CDdyj3X0Q2f",
+      "flags": {},
+      "type": 0,
+      "text": " Peppers",
+      "weight": 1,
+      "range": [
+        51,
+        51
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.M8VB4CDdyj3X0Q2f"
+    },
+    {
+      "_id": "PRcIl7zWa9ifFsx3",
+      "flags": {},
+      "type": 0,
+      "text": " Pepper",
+      "weight": 1,
+      "range": [
+        52,
+        52
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.PRcIl7zWa9ifFsx3"
+    },
+    {
+      "_id": "Xr6XT0WaHHGynGwH",
+      "flags": {},
+      "type": 0,
+      "text": " Pickler",
+      "weight": 1,
+      "range": [
+        53,
+        53
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.Xr6XT0WaHHGynGwH"
+    },
+    {
+      "_id": "q3q6CfS5SdMx6Ab6",
+      "flags": {},
+      "type": 0,
+      "text": " Pickleman",
+      "weight": 1,
+      "range": [
+        54,
+        54
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.q3q6CfS5SdMx6Ab6"
+    },
+    {
+      "_id": "4Puzq7NLIX5hAqDY",
+      "flags": {},
+      "type": 0,
+      "text": " Pickles",
+      "weight": 1,
+      "range": [
+        55,
+        55
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.4Puzq7NLIX5hAqDY"
+    },
+    {
+      "_id": "ptjUhzXIdNdUEMtD",
+      "flags": {},
+      "type": 0,
+      "text": " Pieman",
+      "weight": 1,
+      "range": [
+        56,
+        56
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.ptjUhzXIdNdUEMtD"
+    },
+    {
+      "_id": "SKZ9tP77CPbvuie3",
+      "flags": {},
+      "type": 0,
+      "text": " Piemaker",
+      "weight": 1,
+      "range": [
+        57,
+        57
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.SKZ9tP77CPbvuie3"
+    },
+    {
+      "_id": "fUgkj43u3YqenHn0",
+      "flags": {},
+      "type": 0,
+      "text": " Potts",
+      "weight": 1,
+      "range": [
+        58,
+        58
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.fUgkj43u3YqenHn0"
+    },
+    {
+      "_id": "avHy4IJWFFTOk9qm",
+      "flags": {},
+      "type": 0,
+      "text": " Pott",
+      "weight": 1,
+      "range": [
+        59,
+        59
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.avHy4IJWFFTOk9qm"
+    },
+    {
+      "_id": "CHVK369QK7G6gV7p",
+      "flags": {},
+      "type": 0,
+      "text": " Potter",
+      "weight": 1,
+      "range": [
+        60,
+        60
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.CHVK369QK7G6gV7p"
+    },
+    {
+      "_id": "VlCTPsJDylQsw8JR",
+      "flags": {},
+      "type": 0,
+      "text": " Redwine",
+      "weight": 1,
+      "range": [
+        61,
+        61
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.VlCTPsJDylQsw8JR"
+    },
+    {
+      "_id": "H6C4vekLRxLBCM82",
+      "flags": {},
+      "type": 0,
+      "text": " Roasterman",
+      "weight": 1,
+      "range": [
+        62,
+        62
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.H6C4vekLRxLBCM82"
+    },
+    {
+      "_id": "dV3eTwnt6q6mxamo",
+      "flags": {},
+      "type": 0,
+      "text": " Salt",
+      "weight": 1,
+      "range": [
+        63,
+        63
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.dV3eTwnt6q6mxamo"
+    },
+    {
+      "_id": "r088wKQGTshI7Fl1",
+      "flags": {},
+      "type": 0,
+      "text": " Salter",
+      "weight": 1,
+      "range": [
+        64,
+        64
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.r088wKQGTshI7Fl1"
+    },
+    {
+      "_id": "kux0DnmCCuuhQCzT",
+      "flags": {},
+      "type": 0,
+      "text": " Simms",
+      "weight": 1,
+      "range": [
+        65,
+        65
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.kux0DnmCCuuhQCzT"
+    },
+    {
+      "_id": "M6mKL94u0h6rUQXt",
+      "flags": {},
+      "type": 0,
+      "text": " Simmerman",
+      "weight": 1,
+      "range": [
+        66,
+        66
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.M6mKL94u0h6rUQXt"
+    },
+    {
+      "_id": "v5PXZ6EIRXVvFYZl",
+      "flags": {},
+      "type": 0,
+      "text": " Slaughter",
+      "weight": 1,
+      "range": [
+        67,
+        67
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.v5PXZ6EIRXVvFYZl"
+    },
+    {
+      "_id": "Ib5WSWFIzFFyhkfT",
+      "flags": {},
+      "type": 0,
+      "text": " Smoke",
+      "weight": 1,
+      "range": [
+        68,
+        68
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.Ib5WSWFIzFFyhkfT"
+    },
+    {
+      "_id": "bUAi3Uppy6Fb6VDQ",
+      "flags": {},
+      "type": 0,
+      "text": " Smoker",
+      "weight": 1,
+      "range": [
+        69,
+        69
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.bUAi3Uppy6Fb6VDQ"
+    },
+    {
+      "_id": "4aY9rXOXRiK6oBOS",
+      "flags": {},
+      "type": 0,
+      "text": " Vines",
+      "weight": 1,
+      "range": [
+        70,
+        70
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.4aY9rXOXRiK6oBOS"
+    },
+    {
+      "_id": "8PRfWqSsPmZpGugm",
+      "flags": {},
+      "type": 0,
+      "text": " Vintner",
+      "weight": 1,
+      "range": [
+        71,
+        71
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.8PRfWqSsPmZpGugm"
+    },
+    {
+      "_id": "K7s2B5pm6wEh0s5P",
+      "flags": {},
+      "type": 0,
+      "text": " Vinaker Winaker",
+      "weight": 1,
+      "range": [
+        72,
+        72
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.K7s2B5pm6wEh0s5P"
+    },
+    {
+      "_id": "ZOS05OKPXwlFQszG",
+      "flags": {},
+      "type": 0,
+      "text": " Wineman",
+      "weight": 1,
+      "range": [
+        73,
+        73
+      ],
+      "drawn": false,
+      "_key": "!tables.results!dt1tBotvJrZF1Wbn.ZOS05OKPXwlFQszG"
+    }
+  ],
+  "formula": "1d73",
+  "replacement": true,
+  "displayRoll": true,
+  "_id": "dt1tBotvJrZF1Wbn",
+  "ownership": {
+    "default": 0
+  },
+  "img": "icons/svg/d20-grey.svg",
+  "folder": null,
+  "sort": 0,
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "2.3.1",
+    "coreVersion": "11.311",
+    "createdTime": null,
+    "modifiedTime": 1696025042637,
+    "lastModifiedBy": "packsebuilder0000"
+  },
+  "_key": "!tables!dt1tBotvJrZF1Wbn"
+}

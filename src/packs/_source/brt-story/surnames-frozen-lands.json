@@ -1,0 +1,849 @@
+{
+  "name": "Surnames Frozen lands",
+  "flags": {
+    "better-rolltables": {
+      "table-type": "loot"
+    }
+  },
+  "description": "a list of surnames",
+  "results": [
+    {
+      "_id": "fp4ozJx2C4qzaLgc",
+      "flags": {},
+      "type": 0,
+      "text": "Biggs",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.fp4ozJx2C4qzaLgc"
+    },
+    {
+      "_id": "o2REiAWQoowoApLu",
+      "flags": {},
+      "type": 0,
+      "text": " Bigg",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.o2REiAWQoowoApLu"
+    },
+    {
+      "_id": "qmGJwuEwek4gU1s4",
+      "flags": {},
+      "type": 0,
+      "text": " Byggs",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.qmGJwuEwek4gU1s4"
+    },
+    {
+      "_id": "roj1Ngdy71ziWKn3",
+      "flags": {},
+      "type": 0,
+      "text": " Camp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.roj1Ngdy71ziWKn3"
+    },
+    {
+      "_id": "HTG7Xb4hzGTGiCJ0",
+      "flags": {},
+      "type": 0,
+      "text": " Campman",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.HTG7Xb4hzGTGiCJ0"
+    },
+    {
+      "_id": "jSF2BpZZlhSv6t45",
+      "flags": {},
+      "type": 0,
+      "text": " Coates",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.jSF2BpZZlhSv6t45"
+    },
+    {
+      "_id": "0EIYKGcqnzlAC3f0",
+      "flags": {},
+      "type": 0,
+      "text": " Frost",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.0EIYKGcqnzlAC3f0"
+    },
+    {
+      "_id": "56N25DqHX7XAyyWA",
+      "flags": {},
+      "type": 0,
+      "text": " Furrs",
+      "weight": 1,
+      "range": [
+        8,
+        8
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.56N25DqHX7XAyyWA"
+    },
+    {
+      "_id": "Y94SFWpIeqLAHIGU",
+      "flags": {},
+      "type": 0,
+      "text": " Furrman",
+      "weight": 1,
+      "range": [
+        9,
+        9
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.Y94SFWpIeqLAHIGU"
+    },
+    {
+      "_id": "Bvt8rrUKQnbtlj8V",
+      "flags": {},
+      "type": 0,
+      "text": " Graysky",
+      "weight": 1,
+      "range": [
+        10,
+        10
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.Bvt8rrUKQnbtlj8V"
+    },
+    {
+      "_id": "OEptqcmljrSCBnK8",
+      "flags": {},
+      "type": 0,
+      "text": " Whitesky",
+      "weight": 1,
+      "range": [
+        11,
+        11
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.OEptqcmljrSCBnK8"
+    },
+    {
+      "_id": "i1WyJfpIxTv06yDb",
+      "flags": {},
+      "type": 0,
+      "text": " Blacksky",
+      "weight": 1,
+      "range": [
+        12,
+        12
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.i1WyJfpIxTv06yDb"
+    },
+    {
+      "_id": "Wwx4lF31azMjjbRT",
+      "flags": {},
+      "type": 0,
+      "text": " Grey",
+      "weight": 1,
+      "range": [
+        13,
+        13
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.Wwx4lF31azMjjbRT"
+    },
+    {
+      "_id": "PsWIocdenC2KiuzT",
+      "flags": {},
+      "type": 0,
+      "text": " Gray",
+      "weight": 1,
+      "range": [
+        14,
+        14
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.PsWIocdenC2KiuzT"
+    },
+    {
+      "_id": "wDjChdCXagIbgV45",
+      "flags": {},
+      "type": 0,
+      "text": " Hardy",
+      "weight": 1,
+      "range": [
+        15,
+        15
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.wDjChdCXagIbgV45"
+    },
+    {
+      "_id": "KlcYkkUTIYE6NwbU",
+      "flags": {},
+      "type": 0,
+      "text": " Hardison",
+      "weight": 1,
+      "range": [
+        16,
+        16
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.KlcYkkUTIYE6NwbU"
+    },
+    {
+      "_id": "2cpCeREBaLZlewBo",
+      "flags": {},
+      "type": 0,
+      "text": " Hardland",
+      "weight": 1,
+      "range": [
+        17,
+        17
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.2cpCeREBaLZlewBo"
+    },
+    {
+      "_id": "MC6JfpDuAowrPhsP",
+      "flags": {},
+      "type": 0,
+      "text": " Harland",
+      "weight": 1,
+      "range": [
+        18,
+        18
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.MC6JfpDuAowrPhsP"
+    },
+    {
+      "_id": "AvCWpNAdF4bmzgRT",
+      "flags": {},
+      "type": 0,
+      "text": " Hills",
+      "weight": 1,
+      "range": [
+        19,
+        19
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.AvCWpNAdF4bmzgRT"
+    },
+    {
+      "_id": "80jeDVToJIzlgt9t",
+      "flags": {},
+      "type": 0,
+      "text": " Hill",
+      "weight": 1,
+      "range": [
+        20,
+        20
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.80jeDVToJIzlgt9t"
+    },
+    {
+      "_id": "1cDOsCXh3lM3oRmT",
+      "flags": {},
+      "type": 0,
+      "text": " Hylls",
+      "weight": 1,
+      "range": [
+        21,
+        21
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.1cDOsCXh3lM3oRmT"
+    },
+    {
+      "_id": "JA9gmPpiN3J9pRhB",
+      "flags": {},
+      "type": 0,
+      "text": " Hunter",
+      "weight": 1,
+      "range": [
+        22,
+        22
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.JA9gmPpiN3J9pRhB"
+    },
+    {
+      "_id": "OZstX3PH2BJZgNPB",
+      "flags": {},
+      "type": 0,
+      "text": " Huntsman",
+      "weight": 1,
+      "range": [
+        23,
+        23
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.OZstX3PH2BJZgNPB"
+    },
+    {
+      "_id": "FReniaRg2xiQhPp9",
+      "flags": {},
+      "type": 0,
+      "text": " Ice",
+      "weight": 1,
+      "range": [
+        24,
+        24
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.FReniaRg2xiQhPp9"
+    },
+    {
+      "_id": "eaTac3FOsqBzsc9m",
+      "flags": {},
+      "type": 0,
+      "text": " Iceland",
+      "weight": 1,
+      "range": [
+        25,
+        25
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.eaTac3FOsqBzsc9m"
+    },
+    {
+      "_id": "EPjCmIux4FN9yQRO",
+      "flags": {},
+      "type": 0,
+      "text": " Icewind",
+      "weight": 1,
+      "range": [
+        26,
+        26
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.EPjCmIux4FN9yQRO"
+    },
+    {
+      "_id": "fhuv1z01SaeZsnCo",
+      "flags": {},
+      "type": 0,
+      "text": " Icecutter",
+      "weight": 1,
+      "range": [
+        27,
+        27
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.fhuv1z01SaeZsnCo"
+    },
+    {
+      "_id": "JJNZfzHvEHzzcTEN",
+      "flags": {},
+      "type": 0,
+      "text": " Yceland",
+      "weight": 1,
+      "range": [
+        28,
+        28
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.JJNZfzHvEHzzcTEN"
+    },
+    {
+      "_id": "lHdBt03gYnjO9QKC",
+      "flags": {},
+      "type": 0,
+      "text": " Ycewind",
+      "weight": 1,
+      "range": [
+        29,
+        29
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.lHdBt03gYnjO9QKC"
+    },
+    {
+      "_id": "9cA8t3hSSk62iORL",
+      "flags": {},
+      "type": 0,
+      "text": " Ycecutter",
+      "weight": 1,
+      "range": [
+        30,
+        30
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.9cA8t3hSSk62iORL"
+    },
+    {
+      "_id": "q9U16MRQsA7EHY1u",
+      "flags": {},
+      "type": 0,
+      "text": " Longnight",
+      "weight": 1,
+      "range": [
+        31,
+        31
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.q9U16MRQsA7EHY1u"
+    },
+    {
+      "_id": "UIbdAAVKDjMRWOe7",
+      "flags": {},
+      "type": 0,
+      "text": " Longdark",
+      "weight": 1,
+      "range": [
+        32,
+        32
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.UIbdAAVKDjMRWOe7"
+    },
+    {
+      "_id": "sI9i13TpDfHjGEej",
+      "flags": {},
+      "type": 0,
+      "text": " Moon",
+      "weight": 1,
+      "range": [
+        33,
+        33
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.sI9i13TpDfHjGEej"
+    },
+    {
+      "_id": "jG4TAZlLaIFIIN5u",
+      "flags": {},
+      "type": 0,
+      "text": " Wintermoon",
+      "weight": 1,
+      "range": [
+        34,
+        34
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.jG4TAZlLaIFIIN5u"
+    },
+    {
+      "_id": "qX7byJxwSQlv1BTb",
+      "flags": {},
+      "type": 0,
+      "text": " North",
+      "weight": 1,
+      "range": [
+        35,
+        35
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.qX7byJxwSQlv1BTb"
+    },
+    {
+      "_id": "dvJfZYvrRKWB4XXB",
+      "flags": {},
+      "type": 0,
+      "text": " Northman",
+      "weight": 1,
+      "range": [
+        36,
+        36
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.dvJfZYvrRKWB4XXB"
+    },
+    {
+      "_id": "TxmbCvWrM0blbLGc",
+      "flags": {},
+      "type": 0,
+      "text": " Norman",
+      "weight": 1,
+      "range": [
+        37,
+        37
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.TxmbCvWrM0blbLGc"
+    },
+    {
+      "_id": "Qgc9fnmLCegYUln1",
+      "flags": {},
+      "type": 0,
+      "text": " Northland",
+      "weight": 1,
+      "range": [
+        38,
+        38
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.Qgc9fnmLCegYUln1"
+    },
+    {
+      "_id": "EKHgI3fUkHf0n1sq",
+      "flags": {},
+      "type": 0,
+      "text": " Norland",
+      "weight": 1,
+      "range": [
+        39,
+        39
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.EKHgI3fUkHf0n1sq"
+    },
+    {
+      "_id": "s47ZF3sWYKdUafbx",
+      "flags": {},
+      "type": 0,
+      "text": " Pix",
+      "weight": 1,
+      "range": [
+        40,
+        40
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.s47ZF3sWYKdUafbx"
+    },
+    {
+      "_id": "7h62UBrzNtlpQiWi",
+      "flags": {},
+      "type": 0,
+      "text": " Pickman",
+      "weight": 1,
+      "range": [
+        41,
+        41
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.7h62UBrzNtlpQiWi"
+    },
+    {
+      "_id": "PeH6xFMpG95i830k",
+      "flags": {},
+      "type": 0,
+      "text": " Pickes",
+      "weight": 1,
+      "range": [
+        42,
+        42
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.PeH6xFMpG95i830k"
+    },
+    {
+      "_id": "XYPLqF7kY5NTNTu0",
+      "flags": {},
+      "type": 0,
+      "text": " Pyckes",
+      "weight": 1,
+      "range": [
+        43,
+        43
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.XYPLqF7kY5NTNTu0"
+    },
+    {
+      "_id": "O7gXJcVJWnmhLdWX",
+      "flags": {},
+      "type": 0,
+      "text": " Seales",
+      "weight": 1,
+      "range": [
+        44,
+        44
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.O7gXJcVJWnmhLdWX"
+    },
+    {
+      "_id": "fHpiH4k8760WBT7v",
+      "flags": {},
+      "type": 0,
+      "text": " Seals",
+      "weight": 1,
+      "range": [
+        45,
+        45
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.fHpiH4k8760WBT7v"
+    },
+    {
+      "_id": "RyQ3nnWul1ZQbgLX",
+      "flags": {},
+      "type": 0,
+      "text": " Silver",
+      "weight": 1,
+      "range": [
+        46,
+        46
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.RyQ3nnWul1ZQbgLX"
+    },
+    {
+      "_id": "UGKMTCOE8ad8N18K",
+      "flags": {},
+      "type": 0,
+      "text": " Silvermoon",
+      "weight": 1,
+      "range": [
+        47,
+        47
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.UGKMTCOE8ad8N18K"
+    },
+    {
+      "_id": "CBGwy9Ln8w4yErhJ",
+      "flags": {},
+      "type": 0,
+      "text": " Sylver",
+      "weight": 1,
+      "range": [
+        48,
+        48
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.CBGwy9Ln8w4yErhJ"
+    },
+    {
+      "_id": "n3yYfr1zG7SMCuxE",
+      "flags": {},
+      "type": 0,
+      "text": " Snow",
+      "weight": 1,
+      "range": [
+        49,
+        49
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.n3yYfr1zG7SMCuxE"
+    },
+    {
+      "_id": "FwKucYl8MYyQuezo",
+      "flags": {},
+      "type": 0,
+      "text": " Snowes",
+      "weight": 1,
+      "range": [
+        50,
+        50
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.FwKucYl8MYyQuezo"
+    },
+    {
+      "_id": "wM6fCiYwDyS4mVbO",
+      "flags": {},
+      "type": 0,
+      "text": " Star",
+      "weight": 1,
+      "range": [
+        51,
+        51
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.wM6fCiYwDyS4mVbO"
+    },
+    {
+      "_id": "07MK7W7w4bw8EnQm",
+      "flags": {},
+      "type": 0,
+      "text": " Starr",
+      "weight": 1,
+      "range": [
+        52,
+        52
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.07MK7W7w4bw8EnQm"
+    },
+    {
+      "_id": "VHLfFihWIJpRADo3",
+      "flags": {},
+      "type": 0,
+      "text": " Northstar",
+      "weight": 1,
+      "range": [
+        53,
+        53
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.VHLfFihWIJpRADo3"
+    },
+    {
+      "_id": "JleMoNA4VJ0BZxlu",
+      "flags": {},
+      "type": 0,
+      "text": " Stone",
+      "weight": 1,
+      "range": [
+        54,
+        54
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.JleMoNA4VJ0BZxlu"
+    },
+    {
+      "_id": "xUpYuUh8ZWPNHv4U",
+      "flags": {},
+      "type": 0,
+      "text": " Stoneman",
+      "weight": 1,
+      "range": [
+        55,
+        55
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.xUpYuUh8ZWPNHv4U"
+    },
+    {
+      "_id": "msTM2oKey7DmanEB",
+      "flags": {},
+      "type": 0,
+      "text": " Strider",
+      "weight": 1,
+      "range": [
+        56,
+        56
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.msTM2oKey7DmanEB"
+    },
+    {
+      "_id": "AEzYHR3p1Ef5n56U",
+      "flags": {},
+      "type": 0,
+      "text": " Stryder",
+      "weight": 1,
+      "range": [
+        57,
+        57
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.AEzYHR3p1Ef5n56U"
+    },
+    {
+      "_id": "irEqsDUurpX2xsWU",
+      "flags": {},
+      "type": 0,
+      "text": " Walker",
+      "weight": 1,
+      "range": [
+        58,
+        58
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.irEqsDUurpX2xsWU"
+    },
+    {
+      "_id": "Qk16iA86Ku3TUpAz",
+      "flags": {},
+      "type": 0,
+      "text": " White",
+      "weight": 1,
+      "range": [
+        59,
+        59
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.Qk16iA86Ku3TUpAz"
+    },
+    {
+      "_id": "7SK0AjUW5J7E3aav",
+      "flags": {},
+      "type": 0,
+      "text": " Whyte",
+      "weight": 1,
+      "range": [
+        60,
+        60
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.7SK0AjUW5J7E3aav"
+    },
+    {
+      "_id": "wkVTJ2ijrddiy7ou",
+      "flags": {},
+      "type": 0,
+      "text": " Winter",
+      "weight": 1,
+      "range": [
+        61,
+        61
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.wkVTJ2ijrddiy7ou"
+    },
+    {
+      "_id": "sYIllGPWM8ddOouu",
+      "flags": {},
+      "type": 0,
+      "text": " Winters",
+      "weight": 1,
+      "range": [
+        62,
+        62
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.sYIllGPWM8ddOouu"
+    },
+    {
+      "_id": "1rNzeHWPB5uvw0Lw",
+      "flags": {},
+      "type": 0,
+      "text": " Wynters",
+      "weight": 1,
+      "range": [
+        63,
+        63
+      ],
+      "drawn": false,
+      "_key": "!tables.results!C1T4A5PmebKQj3w8.1rNzeHWPB5uvw0Lw"
+    }
+  ],
+  "formula": "1d63",
+  "replacement": true,
+  "displayRoll": true,
+  "_id": "C1T4A5PmebKQj3w8",
+  "ownership": {
+    "default": 0
+  },
+  "img": "icons/svg/d20-grey.svg",
+  "folder": null,
+  "sort": 0,
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "2.3.1",
+    "coreVersion": "11.311",
+    "createdTime": null,
+    "modifiedTime": 1696025043079,
+    "lastModifiedBy": "packsebuilder0000"
+  },
+  "_key": "!tables!C1T4A5PmebKQj3w8"
+}

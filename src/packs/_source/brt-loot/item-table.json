@@ -1,0 +1,131 @@
+{
+  "name": "Item Table",
+  "permission": {
+    "default": 0,
+    "9rRGGI8f6sVuXlQQ": 3
+  },
+  "flags": {
+    "better-rolltables": {
+      "table-type": "loot",
+      "table-currency-string": "",
+      "loot-actor-name": "",
+      "loot-amount-key": "1"
+    }
+  },
+  "description": "This example table shows some ways we can configure items to be selected",
+  "results": [
+    {
+      "_id": "3VU7SVR3zj5nhUxc",
+      "flags": {
+        "better-rolltables": {
+          "brt-result-formula": {
+            "formula": ""
+          }
+        }
+      },
+      "type": 0,
+      "text": "Agate @price[4d4] @quantity[1d4] @weight[0.1]",
+      "img": "systems/dnd5e/icons/spells/rock-royal-2.jpg",
+      "resultId": "",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_key": "!tables.results!keA0Xp8pDcOTbbEX.3VU7SVR3zj5nhUxc"
+    },
+    {
+      "_id": "WpkhE4fIS2t4eSGr",
+      "flags": {
+        "better-rolltables": {
+          "brt-result-formula": {
+            "formula": ""
+          }
+        }
+      },
+      "type": 0,
+      "text": "Herb @price[25] @quantity[1d6]",
+      "img": "systems/dnd5e/icons/items/inventory/herb.jpg",
+      "resultId": "",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_key": "!tables.results!keA0Xp8pDcOTbbEX.WpkhE4fIS2t4eSGr"
+    },
+    {
+      "_id": "RDxmpoCjdj7vNLZt",
+      "flags": {
+        "better-rolltables": {
+          "brt-result-formula": {
+            "formula": "1d4"
+          }
+        }
+      },
+      "type": 2,
+      "text": "Alchemist's supplies",
+      "img": "systems/dnd5e/icons/items/inventory/herbalism-kit.jpg",
+      "collection": "dnd5e.items",
+      "resultId": "SztwZhbhZeCqyAes",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_key": "!tables.results!keA0Xp8pDcOTbbEX.RDxmpoCjdj7vNLZt"
+    },
+    {
+      "_id": "f5qbiCWXIyEeAMBB",
+      "flags": {
+        "better-rolltables": {
+          "brt-result-formula": {
+            "formula": "1d20"
+          }
+        }
+      },
+      "type": 2,
+      "text": "Arrow +1",
+      "img": "systems/dnd5e/icons/skills/arrow_07.jpg",
+      "collection": "dnd5e.items",
+      "resultId": "tEWhsb2lYF4uvF0z",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_key": "!tables.results!keA0Xp8pDcOTbbEX.f5qbiCWXIyEeAMBB"
+    },
+    {
+      "_id": "qwtUFN6h3dGJBB4N",
+      "flags": {
+        "better-rolltables": {
+          "brt-result-formula": {
+            "formula": "1"
+          }
+        }
+      },
+      "type": 2,
+      "text": "Potions Table",
+      "img": "icons/svg/d20-black.svg",
+      "collection": "better-rolltables.brt-loot",
+      "resultId": "OwTWG9O2FjqmgHZ3",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_key": "!tables.results!keA0Xp8pDcOTbbEX.qwtUFN6h3dGJBB4N"
+    }
+  ],
+  "formula": "1d5",
+  "replacement": true,
+  "displayRoll": true,
+  "_id": "keA0Xp8pDcOTbbEX",
+  "_key": "!tables!keA0Xp8pDcOTbbEX"
+}

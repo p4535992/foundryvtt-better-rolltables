@@ -1,0 +1,13 @@
+{
+  "_id": "cbRWiUnHpH0aDN32",
+  "name": "Human Male NPC Generator",
+  "permission": {
+    "default": 0,
+    "9rRGGI8f6sVuXlQQ": 3
+  },
+  "folder": "",
+  "flags": {},
+  "content": "<p>#definition</p>\n<p>@Compendium[better-rolltables.brt-story.B6oXhKONjSMBPmKB]{Human Male Names} AS {name}</p>\n<p>[[14+4d6]] AS {age}</p>\n<p>@Compendium[better-rolltables.brt-story.DWWhFdnbLyuydgNp]{NPC Physical Traits}&nbsp;AS {trait}</p>\n<p>@Compendium[better-rolltables.brt-story.zIOBrxDOh7fCz2u2]{NPC Jobs}&nbsp;AS {job}</p>\n<p>@Compendium[better-rolltables.brt-story.kVPnAOJHIRbfcvP6]{NPC Catchphrases} AS {catchphrase}</p>\n<p>#story</p>\n<p><strong>{name}</strong> is a Human Male. {name} is {age} years old and {trait}</p>\n<p>He is a {job}</p>\n<p>#storyGM</p>\n<p>{name} catchphrase is: {catchphrase}</p>\n<p>&nbsp;</p>",
+  "pages": [],
+  "_key": "!journal!cbRWiUnHpH0aDN32"
+}

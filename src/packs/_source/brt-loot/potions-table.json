@@ -1,0 +1,133 @@
+{
+  "name": "Potions Table",
+  "permission": {
+    "default": 0,
+    "9rRGGI8f6sVuXlQQ": 3
+  },
+  "flags": {
+    "better-rolltables": {
+      "table-type": "loot",
+      "table-currency-string": "",
+      "loot-actor-name": "Potion Shop",
+      "loot-amount-key": "1"
+    }
+  },
+  "description": "",
+  "results": [
+    {
+      "_id": "zNBb1obmwlc6IiXx",
+      "flags": {
+        "better-rolltables": {
+          "brt-result-formula": {
+            "formula": "1d3"
+          }
+        }
+      },
+      "type": 2,
+      "text": "Potion of Healing",
+      "img": "systems/dnd5e/icons/items/potions/minor-red.jpg",
+      "collection": "dnd5e.items",
+      "resultId": "ytlsBjYsZ7OBSEBs",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_key": "!tables.results!OwTWG9O2FjqmgHZ3.zNBb1obmwlc6IiXx"
+    },
+    {
+      "_id": "tdaxYoB1l1f0rC0G",
+      "flags": {
+        "better-rolltables": {
+          "brt-result-formula": {
+            "formula": "1"
+          }
+        }
+      },
+      "type": 2,
+      "text": "Potion of Water Breathing",
+      "img": "systems/dnd5e/icons/items/potions/unique-4.jpg",
+      "collection": "dnd5e.items",
+      "resultId": "CAZMwFBWp9VC0ZCg",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_key": "!tables.results!OwTWG9O2FjqmgHZ3.tdaxYoB1l1f0rC0G"
+    },
+    {
+      "_id": "BIzGAjZYsARhIfhn",
+      "flags": {
+        "better-rolltables": {
+          "brt-result-formula": {
+            "formula": "1d2"
+          }
+        }
+      },
+      "type": 2,
+      "text": "Potion of Poison",
+      "img": "systems/dnd5e/icons/items/potions/unique-7.jpg",
+      "collection": "dnd5e.items",
+      "resultId": "qBSEGJyHxdKIlBfj",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_key": "!tables.results!OwTWG9O2FjqmgHZ3.BIzGAjZYsARhIfhn"
+    },
+    {
+      "_id": "v21AAVFGAi4y2aBQ",
+      "flags": {
+        "better-rolltables": {
+          "brt-result-formula": {
+            "formula": "1"
+          }
+        }
+      },
+      "type": 2,
+      "text": "Potion of Climbing",
+      "img": "systems/dnd5e/icons/items/potions/unique-8.jpg",
+      "collection": "dnd5e.items",
+      "resultId": "aMnWi1WXWpxRHq4r",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_key": "!tables.results!OwTWG9O2FjqmgHZ3.v21AAVFGAi4y2aBQ"
+    },
+    {
+      "_id": "L6yvcr1JurphldiM",
+      "flags": {
+        "better-rolltables": {
+          "brt-result-formula": {
+            "formula": "1"
+          }
+        }
+      },
+      "type": 2,
+      "text": "Potion of Animal Friendship",
+      "img": "systems/dnd5e/icons/items/potions/unique-4.jpg",
+      "collection": "dnd5e.items",
+      "resultId": "nXWevqtV6p484N59",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_key": "!tables.results!OwTWG9O2FjqmgHZ3.L6yvcr1JurphldiM"
+    }
+  ],
+  "formula": "1d5",
+  "replacement": true,
+  "displayRoll": true,
+  "_id": "OwTWG9O2FjqmgHZ3",
+  "_key": "!tables!OwTWG9O2FjqmgHZ3"
+}

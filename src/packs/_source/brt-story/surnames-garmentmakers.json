@@ -1,0 +1,784 @@
+{
+  "name": "Surnames Garmentmakers",
+  "flags": {
+    "better-rolltables": {
+      "table-type": "loot"
+    }
+  },
+  "description": "a list of surnames",
+  "results": [
+    {
+      "_id": "C4tkvZj8Jhr1S0J4",
+      "flags": {},
+      "type": 0,
+      "text": "Bobbin",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.C4tkvZj8Jhr1S0J4"
+    },
+    {
+      "_id": "Vtl6I96XFPETe2h9",
+      "flags": {},
+      "type": 0,
+      "text": " Bolt",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.Vtl6I96XFPETe2h9"
+    },
+    {
+      "_id": "B7TrJ018j3TBrNwJ",
+      "flags": {},
+      "type": 0,
+      "text": " Bolte",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.B7TrJ018j3TBrNwJ"
+    },
+    {
+      "_id": "jVIMym0rTxlDwWf8",
+      "flags": {},
+      "type": 0,
+      "text": " Bolter",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.jVIMym0rTxlDwWf8"
+    },
+    {
+      "_id": "TyexThItSDHKE3rK",
+      "flags": {},
+      "type": 0,
+      "text": " Button",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.TyexThItSDHKE3rK"
+    },
+    {
+      "_id": "XzUFJO9NI3qve36o",
+      "flags": {},
+      "type": 0,
+      "text": " Buttonworth",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.XzUFJO9NI3qve36o"
+    },
+    {
+      "_id": "4hphGARBq4EsOrhF",
+      "flags": {},
+      "type": 0,
+      "text": " Capers",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.4hphGARBq4EsOrhF"
+    },
+    {
+      "_id": "nR38KWgMQKwiOJFs",
+      "flags": {},
+      "type": 0,
+      "text": " Coates",
+      "weight": 1,
+      "range": [
+        8,
+        8
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.nR38KWgMQKwiOJFs"
+    },
+    {
+      "_id": "pkcYgVbAmtmjr3ri",
+      "flags": {},
+      "type": 0,
+      "text": " Cotton",
+      "weight": 1,
+      "range": [
+        9,
+        9
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.pkcYgVbAmtmjr3ri"
+    },
+    {
+      "_id": "vmNYXK24nI2g6z9H",
+      "flags": {},
+      "type": 0,
+      "text": " Dyer",
+      "weight": 1,
+      "range": [
+        10,
+        10
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.vmNYXK24nI2g6z9H"
+    },
+    {
+      "_id": "X06CwslGoogp5RMJ",
+      "flags": {},
+      "type": 0,
+      "text": " Dye",
+      "weight": 1,
+      "range": [
+        11,
+        11
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.X06CwslGoogp5RMJ"
+    },
+    {
+      "_id": "6baxoPR7ARrLlcfR",
+      "flags": {},
+      "type": 0,
+      "text": " Dyeworth",
+      "weight": 1,
+      "range": [
+        12,
+        12
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.6baxoPR7ARrLlcfR"
+    },
+    {
+      "_id": "xE9W547z66EjIjcw",
+      "flags": {},
+      "type": 0,
+      "text": " Dyerson",
+      "weight": 1,
+      "range": [
+        13,
+        13
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.xE9W547z66EjIjcw"
+    },
+    {
+      "_id": "GdnmB5qcOcxDQHKd",
+      "flags": {},
+      "type": 0,
+      "text": " Dyson",
+      "weight": 1,
+      "range": [
+        14,
+        14
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.GdnmB5qcOcxDQHKd"
+    },
+    {
+      "_id": "skMzhB6YBfhVnhYZ",
+      "flags": {},
+      "type": 0,
+      "text": " Felter",
+      "weight": 1,
+      "range": [
+        15,
+        15
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.skMzhB6YBfhVnhYZ"
+    },
+    {
+      "_id": "ghX9qtoEGdcwSD6B",
+      "flags": {},
+      "type": 0,
+      "text": " Felterman",
+      "weight": 1,
+      "range": [
+        16,
+        16
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.ghX9qtoEGdcwSD6B"
+    },
+    {
+      "_id": "EZy7W7t9oqQuUmn1",
+      "flags": {},
+      "type": 0,
+      "text": " Glover",
+      "weight": 1,
+      "range": [
+        17,
+        17
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.EZy7W7t9oqQuUmn1"
+    },
+    {
+      "_id": "kbrTyT53n0rpf8zS",
+      "flags": {},
+      "type": 0,
+      "text": " Hatter",
+      "weight": 1,
+      "range": [
+        18,
+        18
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.kbrTyT53n0rpf8zS"
+    },
+    {
+      "_id": "6phbBkJAgjeRNw7H",
+      "flags": {},
+      "type": 0,
+      "text": " Hatty",
+      "weight": 1,
+      "range": [
+        19,
+        19
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.6phbBkJAgjeRNw7H"
+    },
+    {
+      "_id": "54Qz5ufYrJAl2wLw",
+      "flags": {},
+      "type": 0,
+      "text": " Hattiman",
+      "weight": 1,
+      "range": [
+        20,
+        20
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.54Qz5ufYrJAl2wLw"
+    },
+    {
+      "_id": "Fdt1UDaB69ic5TGA",
+      "flags": {},
+      "type": 0,
+      "text": " Hatson",
+      "weight": 1,
+      "range": [
+        21,
+        21
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.Fdt1UDaB69ic5TGA"
+    },
+    {
+      "_id": "NvGNW0DGH9kij0rW",
+      "flags": {},
+      "type": 0,
+      "text": " Hemmings",
+      "weight": 1,
+      "range": [
+        22,
+        22
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.NvGNW0DGH9kij0rW"
+    },
+    {
+      "_id": "M0YKR6PHiCdB9lfa",
+      "flags": {},
+      "type": 0,
+      "text": " Hemings",
+      "weight": 1,
+      "range": [
+        23,
+        23
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.M0YKR6PHiCdB9lfa"
+    },
+    {
+      "_id": "5t39aAG3aJAKp1x7",
+      "flags": {},
+      "type": 0,
+      "text": " Hemson",
+      "weight": 1,
+      "range": [
+        24,
+        24
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.5t39aAG3aJAKp1x7"
+    },
+    {
+      "_id": "ZvHlJAPq3g4APwMy",
+      "flags": {},
+      "type": 0,
+      "text": " Hyde",
+      "weight": 1,
+      "range": [
+        25,
+        25
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.ZvHlJAPq3g4APwMy"
+    },
+    {
+      "_id": "8llTwEQ0ocw6pOWL",
+      "flags": {},
+      "type": 0,
+      "text": " Hides",
+      "weight": 1,
+      "range": [
+        26,
+        26
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.8llTwEQ0ocw6pOWL"
+    },
+    {
+      "_id": "rwjRMKhJIrLKam1y",
+      "flags": {},
+      "type": 0,
+      "text": " Hydes",
+      "weight": 1,
+      "range": [
+        27,
+        27
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.rwjRMKhJIrLKam1y"
+    },
+    {
+      "_id": "vZQfjlcyTgiYi010",
+      "flags": {},
+      "type": 0,
+      "text": " Leathers",
+      "weight": 1,
+      "range": [
+        28,
+        28
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.vZQfjlcyTgiYi010"
+    },
+    {
+      "_id": "uN4K5AnrhyuUJ4EP",
+      "flags": {},
+      "type": 0,
+      "text": " Lethers",
+      "weight": 1,
+      "range": [
+        29,
+        29
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.uN4K5AnrhyuUJ4EP"
+    },
+    {
+      "_id": "IpsbqPO9i0lojZ5l",
+      "flags": {},
+      "type": 0,
+      "text": " Mercer",
+      "weight": 1,
+      "range": [
+        30,
+        30
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.IpsbqPO9i0lojZ5l"
+    },
+    {
+      "_id": "rrUl9grPJI08RDmB",
+      "flags": {},
+      "type": 0,
+      "text": " Needleman",
+      "weight": 1,
+      "range": [
+        31,
+        31
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.rrUl9grPJI08RDmB"
+    },
+    {
+      "_id": "sw89vb1w7OswjarQ",
+      "flags": {},
+      "type": 0,
+      "text": " Needler",
+      "weight": 1,
+      "range": [
+        32,
+        32
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.sw89vb1w7OswjarQ"
+    },
+    {
+      "_id": "LDhUlJMBIWLYHaUc",
+      "flags": {},
+      "type": 0,
+      "text": " Needleworth",
+      "weight": 1,
+      "range": [
+        33,
+        33
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.LDhUlJMBIWLYHaUc"
+    },
+    {
+      "_id": "ATcfOTHSlPCRJQ8r",
+      "flags": {},
+      "type": 0,
+      "text": " Seams",
+      "weight": 1,
+      "range": [
+        34,
+        34
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.ATcfOTHSlPCRJQ8r"
+    },
+    {
+      "_id": "YjvLYjwpI26DJOZU",
+      "flags": {},
+      "type": 0,
+      "text": " Seems",
+      "weight": 1,
+      "range": [
+        35,
+        35
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.YjvLYjwpI26DJOZU"
+    },
+    {
+      "_id": "3JmtFXNALGD1tMxo",
+      "flags": {},
+      "type": 0,
+      "text": " Seemworth",
+      "weight": 1,
+      "range": [
+        36,
+        36
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.3JmtFXNALGD1tMxo"
+    },
+    {
+      "_id": "RInERoafKSTk89rt",
+      "flags": {},
+      "type": 0,
+      "text": " Shearer",
+      "weight": 1,
+      "range": [
+        37,
+        37
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.RInERoafKSTk89rt"
+    },
+    {
+      "_id": "0X4KNzRBMPQDLBTC",
+      "flags": {},
+      "type": 0,
+      "text": " Sheerer",
+      "weight": 1,
+      "range": [
+        38,
+        38
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.0X4KNzRBMPQDLBTC"
+    },
+    {
+      "_id": "l3iwcoJWpSwby3If",
+      "flags": {},
+      "type": 0,
+      "text": " Shears",
+      "weight": 1,
+      "range": [
+        39,
+        39
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.l3iwcoJWpSwby3If"
+    },
+    {
+      "_id": "5p7VuCAtsfCcWmQT",
+      "flags": {},
+      "type": 0,
+      "text": " Sheers",
+      "weight": 1,
+      "range": [
+        40,
+        40
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.5p7VuCAtsfCcWmQT"
+    },
+    {
+      "_id": "CqhTYB0N8e9wB7TY",
+      "flags": {},
+      "type": 0,
+      "text": " Shoemaker",
+      "weight": 1,
+      "range": [
+        41,
+        41
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.CqhTYB0N8e9wB7TY"
+    },
+    {
+      "_id": "uZXqESSus7bVAe0e",
+      "flags": {},
+      "type": 0,
+      "text": " Stitches",
+      "weight": 1,
+      "range": [
+        42,
+        42
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.uZXqESSus7bVAe0e"
+    },
+    {
+      "_id": "xQwWupMxktRXvYyq",
+      "flags": {},
+      "type": 0,
+      "text": " Stitchworth",
+      "weight": 1,
+      "range": [
+        43,
+        43
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.xQwWupMxktRXvYyq"
+    },
+    {
+      "_id": "glGBGzgUEKpV7Ht7",
+      "flags": {},
+      "type": 0,
+      "text": " Tailor",
+      "weight": 1,
+      "range": [
+        44,
+        44
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.glGBGzgUEKpV7Ht7"
+    },
+    {
+      "_id": "tjc8ncHF4pLMWaQY",
+      "flags": {},
+      "type": 0,
+      "text": " Taylor",
+      "weight": 1,
+      "range": [
+        45,
+        45
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.tjc8ncHF4pLMWaQY"
+    },
+    {
+      "_id": "MbPjiQvbLrHswAs3",
+      "flags": {},
+      "type": 0,
+      "text": " Tanner",
+      "weight": 1,
+      "range": [
+        46,
+        46
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.MbPjiQvbLrHswAs3"
+    },
+    {
+      "_id": "kyCNonT2XdFNOc0o",
+      "flags": {},
+      "type": 0,
+      "text": " Tannerman",
+      "weight": 1,
+      "range": [
+        47,
+        47
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.kyCNonT2XdFNOc0o"
+    },
+    {
+      "_id": "MmOwgELjv3I4azYy",
+      "flags": {},
+      "type": 0,
+      "text": " Thredd",
+      "weight": 1,
+      "range": [
+        48,
+        48
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.MmOwgELjv3I4azYy"
+    },
+    {
+      "_id": "Z6jMCBxdEYSav644",
+      "flags": {},
+      "type": 0,
+      "text": " Threddler",
+      "weight": 1,
+      "range": [
+        49,
+        49
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.Z6jMCBxdEYSav644"
+    },
+    {
+      "_id": "4MWfcx7YbVNiTO1i",
+      "flags": {},
+      "type": 0,
+      "text": " Threddman",
+      "weight": 1,
+      "range": [
+        50,
+        50
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.4MWfcx7YbVNiTO1i"
+    },
+    {
+      "_id": "TMH4s6k9TifnesM9",
+      "flags": {},
+      "type": 0,
+      "text": " Threddaker",
+      "weight": 1,
+      "range": [
+        51,
+        51
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.TMH4s6k9TifnesM9"
+    },
+    {
+      "_id": "vRqQjg1JP7cH043I",
+      "flags": {},
+      "type": 0,
+      "text": " Weaver",
+      "weight": 1,
+      "range": [
+        52,
+        52
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.vRqQjg1JP7cH043I"
+    },
+    {
+      "_id": "mWwlSsAeBUFDTuUw",
+      "flags": {},
+      "type": 0,
+      "text": " Weever",
+      "weight": 1,
+      "range": [
+        53,
+        53
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.mWwlSsAeBUFDTuUw"
+    },
+    {
+      "_id": "2BgBFy2ugwIzCKpI",
+      "flags": {},
+      "type": 0,
+      "text": " Wool",
+      "weight": 1,
+      "range": [
+        54,
+        54
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.2BgBFy2ugwIzCKpI"
+    },
+    {
+      "_id": "y05mnpqhXrvyBuNH",
+      "flags": {},
+      "type": 0,
+      "text": " Woolworth",
+      "weight": 1,
+      "range": [
+        55,
+        55
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.y05mnpqhXrvyBuNH"
+    },
+    {
+      "_id": "lfwt96c67yBXP2FG",
+      "flags": {},
+      "type": 0,
+      "text": " Yardly",
+      "weight": 1,
+      "range": [
+        56,
+        56
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.lfwt96c67yBXP2FG"
+    },
+    {
+      "_id": "Yt5deUWjRe4PTlkx",
+      "flags": {},
+      "type": 0,
+      "text": " Yardley",
+      "weight": 1,
+      "range": [
+        57,
+        57
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.Yt5deUWjRe4PTlkx"
+    },
+    {
+      "_id": "ExmxXYromjhIJ9TK",
+      "flags": {},
+      "type": 0,
+      "text": " Yards",
+      "weight": 1,
+      "range": [
+        58,
+        58
+      ],
+      "drawn": false,
+      "_key": "!tables.results!QItftogWjAz4CnPH.ExmxXYromjhIJ9TK"
+    }
+  ],
+  "formula": "1d58",
+  "replacement": true,
+  "displayRoll": true,
+  "_id": "QItftogWjAz4CnPH",
+  "ownership": {
+    "default": 0
+  },
+  "img": "icons/svg/d20-grey.svg",
+  "folder": null,
+  "sort": 0,
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "2.3.1",
+    "coreVersion": "11.311",
+    "createdTime": null,
+    "modifiedTime": 1696025043562,
+    "lastModifiedBy": "packsebuilder0000"
+  },
+  "_key": "!tables!QItftogWjAz4CnPH"
+}
