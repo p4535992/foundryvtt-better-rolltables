@@ -1,6 +1,6 @@
 import { CONSTANTS } from "../../constants/constants.js";
 import Logger from "../../lib/Logger.js";
-import { getCompendiumCollectionAsync } from "../../lib/lib.js";
+import { RetrieveHelpers } from "../../lib/retrieve-helpers.js";
 
 export class BRTBetterHelpers {
   /**
@@ -113,7 +113,7 @@ export class BRTBetterHelpers {
     if (!findDocument) {
       if (result.type === CONST.TABLE_RESULT_TYPES.COMPENDIUM) {
         // Compendium.world.prodottifiniti.Item.cGvOfBMe8XQjL8ra
-        let compendium = await getCompendiumCollectionAsync(result.documentCollection, true, false);
+        let compendium = await RetrieveHelpers.getCompendiumCollectionAsync(result.documentCollection, true, false);
         if (!compendium) {
           if (throwError) {
             throw Logger.error(`Compendium ${result.documentCollection} was not found`);

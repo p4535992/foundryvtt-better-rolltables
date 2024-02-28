@@ -4,8 +4,8 @@ import { CONSTANTS } from "../../constants/constants";
 import SETTINGS from "../../constants/settings";
 import { BRTBetterHelpers } from "../../tables/better/brt-helper";
 import { BRTUtils } from "../../core/utils";
-import { getCompendiumCollectionAsync, i18n, isRealNumber } from "../../lib/lib";
 import Logger from "../../lib/Logger";
+import { RetrieveHelpers } from "../../lib/retrieve-helpers";
 
 export class RollTableToActorHelpers {
   static async retrieveItemsDataFromRollTableResult(table, options = {}) {
@@ -151,13 +151,13 @@ export class RollTableToActorHelpers {
         if (!document) {
           const collection =
             game.collections.get(r.documentCollection) ??
-            (await getCompendiumCollectionAsync(r.documentCollection, true, false));
+            (await RetrieveHelpers.getCompendiumCollectionAsync(r.documentCollection, true, false));
           document = (await collection?.get(r.documentId)) ?? (await collection?.getDocument(r.documentId));
         }
       } else {
         const collection =
           game.collections.get(r.documentCollection) ??
-          (await getCompendiumCollectionAsync(r.documentCollection, true, false));
+          (await RetrieveHelpers.getCompendiumCollectionAsync(r.documentCollection, true, false));
         document = (await collection?.get(r.documentId)) ?? (await collection?.getDocument(r.documentId));
       }
       if (document instanceof Item) {

@@ -3,12 +3,13 @@ import { BetterResults } from "./core/brt-table-results.js";
 import { BRTUtils } from "./core/utils.js";
 import API from "./API.js";
 import { CONSTANTS } from "./constants/constants.js";
-import { getCompendiumCollectionAsync, isEmptyObject, isRealBoolean, isRealBooleanOrElseNull } from "./lib/lib.js";
+import { isEmptyObject, isRealBoolean, isRealBooleanOrElseNull } from "./lib/lib.js";
 import { HarvestChatCard } from "./tables/harvest/harvest-chat-card.js";
 import { StoryChatCard } from "./tables/story/story-chat-card.js";
 import { BetterChatCard } from "./tables/better/brt-chat-card.js";
 import { BetterRollTable } from "./core/brt-table.js";
 import Logger from "./lib/Logger.js";
+import { RetrieveHelpers } from "./lib/retrieve-helpers.js";
 
 export class BetterTables {
   constructor() {
@@ -161,7 +162,7 @@ export class BetterTables {
   // async updateSpellCache(pack) {
   //   if (game.user.isGM) {
   //     const defaultPack = game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SPELL_COMPENDIUM_KEY),
-  //       spellCompendium = await getCompendiumCollectionAsync(defaultPack);
+  //       spellCompendium = await RetrieveHelpers.getCompendiumCollectionAsync(defaultPack);
 
   //     if ((!pack && spellCompendium) || pack === defaultPack) {
   //       const spellCompendiumIndex = await spellCompendium.getIndex({
@@ -377,7 +378,7 @@ export class BetterTables {
         } else {
           let rolltable;
           if (pack && id) {
-            const myPack = await getCompendiumCollectionAsync(pack, true, false);
+            const myPack = await RetrieveHelpers.getCompendiumCollectionAsync(pack, true, false);
             rolltable = await myPack?.getDocument(id);
           } else {
             rolltable = game.tables.get(id);
@@ -417,7 +418,7 @@ export class BetterTables {
       // Open link
       let document;
       if (pack && id) {
-        const myPack = await getCompendiumCollectionAsync(pack, true, false);
+        const myPack = await RetrieveHelpers.getCompendiumCollectionAsync(pack, true, false);
         document = await myPack?.getDocument(id);
       } else {
         document = game.tables.get(id);
@@ -497,7 +498,7 @@ export class BetterTables {
         .find("a.content-link[data-pack]")
         .each(async (index, link) => {
           const packName = $(link).data("pack");
-          const myPack = await getCompendiumCollectionAsync(packName, true, false);
+          const myPack = await RetrieveHelpers.getCompendiumCollectionAsync(packName, true, false);
           const pack = myPack;
           if (!pack) {
             return;
@@ -589,7 +590,7 @@ export class BetterTables {
         .find("a.content-link[data-pack]")
         .each(async (index, link) => {
           const packName = $(link).data("pack");
-          const myPack = await getCompendiumCollectionAsync(packName, true, false);
+          const myPack = await RetrieveHelpers.getCompendiumCollectionAsync(packName, true, false);
           const pack = myPack;
           if (!pack) {
             return;

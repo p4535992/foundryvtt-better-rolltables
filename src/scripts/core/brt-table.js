@@ -1,5 +1,5 @@
 import { CONSTANTS } from "../constants/constants.js";
-import { getCompendiumCollectionAsync, isRealNumber } from "../lib/lib.js";
+import { isRealNumber } from "../lib/lib.js";
 import { BRTBetterHelpers } from "../tables/better/brt-helper.js";
 import { BRTUtils } from "./utils.js";
 import { LootChatCard } from "../tables/loot/loot-chat-card.js";
@@ -7,6 +7,7 @@ import { StoryChatCard } from "../tables/story/story-chat-card.js";
 import { HarvestChatCard } from "../tables/harvest/harvest-chat-card.js";
 import { BetterChatCard } from "../tables/better/brt-chat-card.js";
 import Logger from "../lib/Logger.js";
+import { RetrieveHelpers } from "../lib/retrieve-helpers.js";
 
 export class BetterRollTable {
   // extends RollTable {
@@ -489,7 +490,7 @@ export class BetterRollTable {
         let documentName;
         if (result.type === CONST.TABLE_RESULT_TYPES.DOCUMENT) documentName = result.documentCollection;
         else if (result.type === CONST.TABLE_RESULT_TYPES.COMPENDIUM) {
-          pack = await getCompendiumCollectionAsync(result.documentCollection, false, false);
+          pack = await RetrieveHelpers.getCompendiumCollectionAsync(result.documentCollection, false, false);
           documentName = pack?.documentName;
         }
         if (documentName === "RollTable") {

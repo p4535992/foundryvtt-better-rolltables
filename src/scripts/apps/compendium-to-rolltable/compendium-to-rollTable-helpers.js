@@ -1,6 +1,6 @@
 import { CONSTANTS } from "../../constants/constants";
 import Logger from "../../lib/Logger";
-import { getCompendiumCollectionAsync } from "../../lib/lib";
+import { RetrieveHelpers } from "../../lib/retrieve-helpers";
 import { CompendiumToRollTableDialog } from "./compendium-to-rollTable-dialog";
 import { CompendiumToRollTableSpecialHarvestDialog } from "./compendium-to-rollTable-dialog-special-harvest-";
 
@@ -16,7 +16,7 @@ export class CompendiumToRollTableHelpers {
   static async compendiumToRollTableWithDialog(compendiumName, { weightPredicate = null } = {}) {
     let allCompendiums = [];
     if (compendiumName) {
-      const myPack = await getCompendiumCollectionAsync(compendiumName, true, false);
+      const myPack = await RetrieveHelpers.getCompendiumCollectionAsync(compendiumName, true, false);
       if (!myPack) {
         Logger.warn(`No compendium found with id '${compendiumName}'`, true);
         return;
@@ -40,7 +40,7 @@ export class CompendiumToRollTableHelpers {
       Logger.warn(`You must activate the module 'harvester'`, true);
       return;
     }
-    const myPack = await getCompendiumCollectionAsync("harvester.harvest", false, false);
+    const myPack = await RetrieveHelpers.getCompendiumCollectionAsync("harvester.harvest", false, false);
     let allCompendiums = [myPack];
     let itemTypes = await game.documentTypes.Item.sort();
     const documents = new CompendiumToRollTableSpecialHarvestDialog(
@@ -52,7 +52,7 @@ export class CompendiumToRollTableHelpers {
   }
 
   static async compendiumToRollTable(compendiumName, tableName, { weightPredicate = null } = {}) {
-    const myPack = await getCompendiumCollectionAsync(compendiumName, true, false);
+    const myPack = await RetrieveHelpers.getCompendiumCollectionAsync(compendiumName, true, false);
     const compendium = myPack;
     if (!compendium) {
       Logger.warn(

@@ -1,6 +1,6 @@
 import { CONSTANTS } from "../../constants/constants.js";
 import { BRTBetterHelpers } from "../../tables/better/brt-helper.js";
-import { getSubstring, log } from "../../lib/lib.js";
+import { getSubstring } from "../../lib/lib.js";
 import { CompendiumToRollTableDialog } from "./compendium-to-rollTable-dialog.js";
 import Logger from "../../lib/Logger.js";
 

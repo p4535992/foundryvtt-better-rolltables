@@ -1,8 +1,9 @@
 import { BRTBetterHelpers } from "../tables/better/brt-helper";
 import { CONSTANTS } from "../constants/constants";
-import { getCompendiumCollectionAsync, isRealBoolean, isRealBooleanOrElseNull, isRealNumber } from "../lib/lib";
+import { isRealBoolean, isRealBooleanOrElseNull, isRealNumber } from "../lib/lib";
 import SETTINGS from "../constants/settings";
 import Logger from "../lib/Logger";
+import { RetrieveHelpers } from "../lib/retrieve-helpers";
 
 export class BRTUtils {
   static addRollModeToChatData(chatData, rollMode) {
@@ -33,7 +34,7 @@ export class BRTUtils {
    * @returns {Item}
    */
   static async findInCompendiumByName(compendiumName, entityName) {
-    const myPack = await getCompendiumCollectionAsync(compendiumName, true, false);
+    const myPack = await RetrieveHelpers.getCompendiumCollectionAsync(compendiumName, true, false);
     const compendium = myPack;
     if (compendium) {
       const entry = compendium.index.getName(entityName);
@@ -63,7 +64,7 @@ export class BRTUtils {
   }
 
   static async findInCompendiumById(compendiumName, entityId) {
-    const myPack = await getCompendiumCollectionAsync(compendiumName, false, false);
+    const myPack = await RetrieveHelpers.getCompendiumCollectionAsync(compendiumName, false, false);
     return await myPack?.getDocument(entityId);
   }
 
@@ -95,7 +96,7 @@ export class BRTUtils {
    * @returns {object} item from compendium
    */
   static async getRandomItemFromCompendium(compendium) {
-    const myPack = await getCompendiumCollectionAsync(compendium, true, false);
+    const myPack = await RetrieveHelpers.getCompendiumCollectionAsync(compendium, true, false);
     const pack = myPack;
     if (!pack) {
       return;
