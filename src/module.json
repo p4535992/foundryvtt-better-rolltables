@@ -53,38 +53,68 @@
       "name": "brt-loot",
       "label": "BRT - Loot Tables",
       "system": "dnd5e",
-      "path": "packs/loot-tables",
+      "path": "packs/brt-loot",
       "type": "RollTable",
-      "private": false,
-      "flags": {},
-      "module": "better-rolltables"
+      "ownership": {
+        "PLAYER": "NONE",
+        "TRUSTED": "NONE",
+        "ASSISTANT": "OWNER"
+      },
+      "module": "better-rolltables",
+      "flags": {}
     },
     {
       "name": "brt-story",
       "label": "BRT - Story Tables",
-      "path": "packs/story-tables",
+      "path": "packs/brt-story",
       "type": "RollTable",
-      "private": false,
-      "flags": {},
-      "module": "better-rolltables"
+      "ownership": {
+        "PLAYER": "NONE",
+        "TRUSTED": "NONE",
+        "ASSISTANT": "OWNER"
+      },
+      "module": "better-rolltables",
+      "flags": {}
     },
     {
       "name": "brt-gen",
       "label": "BRT - Story Generators",
-      "path": "packs/story-generators",
+      "path": "packs/brt-gen",
       "type": "JournalEntry",
-      "private": false,
-      "flags": {},
-      "module": "better-rolltables"
+      "ownership": {
+        "PLAYER": "NONE",
+        "TRUSTED": "NONE",
+        "ASSISTANT": "OWNER"
+      },
+      "module": "better-rolltables",
+      "flags": {}
     },
     {
       "name": "brt-harvest-harvester",
       "label": "BRT - Harvest Tables (Harvester Module Integration)",
-      "path": "packs/harvest-harvester-tables",
+      "path": "packs/brt-harvest-harvester",
       "type": "RollTable",
-      "private": false,
-      "flags": {},
-      "module": "better-rolltables"
+      "ownership": {
+        "PLAYER": "NONE",
+        "TRUSTED": "NONE",
+        "ASSISTANT": "OWNER"
+      },
+      "module": "better-rolltables",
+      "system": "dnd5e",
+      "flags": {}
+    }
+  ],
+  "packFolders": [
+    {
+      "name": "D&D SRD Content",
+      "sorting": "m",
+      "color": "#7d160c",
+      "packs": [
+        "brt-loot",
+        "brt-story",
+        "brt-gen",
+        "brt-harvest-harvester"
+      ]
     }
   ],
   "languages": [
