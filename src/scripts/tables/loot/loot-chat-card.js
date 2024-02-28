@@ -2,7 +2,6 @@ import { CONSTANTS } from "../../constants/constants.js";
 import { BRTUtils } from "../../core/utils.js";
 import { BRTBetterHelpers } from "../better/brt-helper.js";
 import { RollTableToActorHelpers } from "../../apps/rolltable-to-actor/rolltable-to-actor-helpers.js";
-import { i18n } from "../../lib/lib.js";
 import Logger from "../../lib/Logger.js";
 
 /**
@@ -290,7 +289,7 @@ export class LootChatCard {
       rollHTML: rollHTML,
       tableData: table,
       htmlDescription: htmlDescription,
-      // gmTitleLabel: i18n(`${CONSTANTS.MODULE_ID}.label.tableTextGmTitleLabel`),
+      // gmTitleLabel: Logger.i18n(`${CONSTANTS.MODULE_ID}.label.tableTextGmTitleLabel`),
       itemsData: this.itemsData,
       currency: this.currencyData,
       compendium: table.pack,
@@ -352,7 +351,7 @@ export class LootChatCard {
       rollHTML: rollHTML,
       tableData: table,
       htmlDescription: htmlDescription,
-      gmTitleLabel: i18n(`${CONSTANTS.MODULE_ID}.label.tableTextGmTitleLabel`),
+      gmTitleLabel: Logger.i18n(`${CONSTANTS.MODULE_ID}.label.tableTextGmTitleLabel`),
       itemsData: this.itemsDataGM,
       currency: this.currencyData,
       compendium: table.pack,

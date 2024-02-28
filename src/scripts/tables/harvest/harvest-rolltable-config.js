@@ -3,7 +3,6 @@ import { CONSTANTS } from "../../constants/constants";
 import { BRTBetterHelpers } from "../better/brt-helper";
 import { RichResultEdit } from "../../core/brt-result-editor";
 import { BetterRollTableBetterConfig } from "../better/brt-rolltable-config";
-import { i18n } from "../../lib/lib";
 import Logger from "../../lib/Logger";
 
 /**
@@ -79,7 +78,10 @@ export class BetterRollTableHarvestConfig extends RollTableConfig {
     brtData.usePercentage = this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.GENERIC_USE_PERCENTAGE);
     brtData.tableType = CONSTANTS.TABLE_TYPE_HARVEST;
     brtData.textType =
-      i18n(`${CONSTANTS.MODULE_ID}.${"TypePrefixLabel"}`) + " " + i18n(`${CONSTANTS.MODULE_ID}.${"TypeHarvest"}`) + "";
+      Logger.i18n(`${CONSTANTS.MODULE_ID}.${"TypePrefixLabel"}`) +
+      " " +
+      Logger.i18n(`${CONSTANTS.MODULE_ID}.${"TypeHarvest"}`) +
+      "";
 
     brtData = foundry.utils.mergeObject(brtData, duplicate(this.document.flags));
     brtData.disabled = !this.isEditable;

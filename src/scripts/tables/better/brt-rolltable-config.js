@@ -1,6 +1,5 @@
 import API from "../../API.js";
 import { CONSTANTS } from "../../constants/constants.js";
-import { i18n } from "../../lib/lib.js";
 import { BRTBetterHelpers } from "./brt-helper.js";
 import { RichResultEdit } from "../../core/brt-result-editor.js";
 import Logger from "../../lib/Logger.js";
@@ -78,7 +77,10 @@ export class BetterRollTableBetterConfig extends RollTableConfig {
     brtData.usePercentage = this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.GENERIC_USE_PERCENTAGE);
     brtData.tableType = CONSTANTS.TABLE_TYPE_BETTER;
     brtData.textType =
-      i18n(`${CONSTANTS.MODULE_ID}.${"TypePrefixLabel"}`) + " " + i18n(`${CONSTANTS.MODULE_ID}.${"TypeLabel"}`) + "";
+      Logger.i18n(`${CONSTANTS.MODULE_ID}.${"TypePrefixLabel"}`) +
+      " " +
+      Logger.i18n(`${CONSTANTS.MODULE_ID}.${"TypeLabel"}`) +
+      "";
 
     brtData = foundry.utils.mergeObject(brtData, duplicate(this.document.flags));
     brtData.disabled = !this.isEditable;

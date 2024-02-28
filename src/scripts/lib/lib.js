@@ -1,32 +1,6 @@
 import { CONSTANTS } from "../constants/constants";
 import Logger from "./Logger";
 
-// ================================
-// Logger utility
-// ================================
-
-export const i18n = (key) => {
-  return game.i18n.localize(key)?.trim();
-};
-
-export const i18nFormat = (key, data = {}) => {
-  return game.i18n.format(key, data)?.trim();
-};
-
-// export const setDebugLevel = (debugText): void => {
-//   debugEnabled = { none: 0, warn: 1, debug: 2, all: 3 }[debugText] || 0;
-//   // 0 = none, warnings = 1, debug = 2, all = 3
-//   if (debugEnabled >= 3) CONFIG.debug.hooks = true;
-// };
-
-export function dialogWarning(message, icon = "fas fa-exclamation-triangle") {
-  return `<p class="${CONSTANTS.MODULE_ID}-dialog">
-        <i style="font-size:3rem;" class="${icon}"></i><br><br>
-        <strong style="font-size:1.2rem;">${CONSTANTS.MODULE_ID}</strong>
-        <br><br>${message}
-    </p>`;
-}
-
 // =========================================================================================
 
 export function isEmptyObject(obj) {

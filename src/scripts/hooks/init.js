@@ -9,7 +9,7 @@ import SETTINGS from "../constants/settings.js";
 import { BetterRollTableLootConfig } from "../tables/loot/loot-rolltable-config.js";
 import { BetterRollTableStoryConfig } from "../tables/story/story-rolltable-config.js";
 import { BetterRollTableHarvestConfig } from "../tables/harvest/harvest-rolltable-config.js";
-import { i18n, i18nFormat, isEmptyObject } from "../lib/lib.js";
+import { isEmptyObject } from "../lib/lib.js";
 
 /**
  * @module BetterRollTables.BetterRolltableHooks

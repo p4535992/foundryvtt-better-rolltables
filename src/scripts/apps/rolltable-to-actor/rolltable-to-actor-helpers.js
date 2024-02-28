@@ -51,7 +51,7 @@ export class RollTableToActorHelpers {
       })
       .join(", ");
     const actorNames = controlledActors.map((a) => a.name).join(", ");
-    const infoStr = RollTableToActorHelpers._stringInject(i18n(`${CONSTANTS.MODULE_ID}.label.importSuccess`), [
+    const infoStr = RollTableToActorHelpers._stringInject(Logger.i18n(`${CONSTANTS.MODULE_ID}.label.importSuccess`), [
       itemNames,
       actorNames,
     ]);
@@ -105,7 +105,7 @@ export class RollTableToActorHelpers {
       })
       .join(", ");
     const actorNames = controlledActors.map((a) => a.name).join(", ");
-    const infoStr = RollTableToActorHelpers._stringInject(i18n(`${CONSTANTS.MODULE_ID}.label.importSuccess`), [
+    const infoStr = RollTableToActorHelpers._stringInject(Logger.i18n(`${CONSTANTS.MODULE_ID}.label.importSuccess`), [
       itemNames,
       actorNames,
     ]);

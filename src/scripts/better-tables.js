@@ -3,13 +3,7 @@ import { BetterResults } from "./core/brt-table-results.js";
 import { BRTUtils } from "./core/utils.js";
 import API from "./API.js";
 import { CONSTANTS } from "./constants/constants.js";
-import {
-  getCompendiumCollectionAsync,
-  i18n,
-  isEmptyObject,
-  isRealBoolean,
-  isRealBooleanOrElseNull,
-} from "./lib/lib.js";
+import { getCompendiumCollectionAsync, isEmptyObject, isRealBoolean, isRealBooleanOrElseNull } from "./lib/lib.js";
 import { HarvestChatCard } from "./tables/harvest/harvest-chat-card.js";
 import { StoryChatCard } from "./tables/story/story-chat-card.js";
 import { BetterChatCard } from "./tables/better/brt-chat-card.js";
@@ -212,7 +206,7 @@ export class BetterTables {
   static async enhanceCompendiumContextMenu(html, options) {
     if (game.user.isGM) {
       options.push({
-        name: i18n(`${CONSTANTS.MODULE_ID}.api.msg.generateRolltableFromCompendium`),
+        name: Logger.i18n(`${CONSTANTS.MODULE_ID}.api.msg.generateRolltableFromCompendium`),
         icon: '<i class="fas fa-th-list"></i>',
         callback: (li) => {
           API.createRolltableFromCompendium(li.data("pack"));
@@ -220,7 +214,7 @@ export class BetterTables {
       });
 
       options.push({
-        name: i18n(`${CONSTANTS.MODULE_ID}.api.msg.generateRolltableFromCompendiumWithFilters`),
+        name: Logger.i18n(`${CONSTANTS.MODULE_ID}.api.msg.generateRolltableFromCompendiumWithFilters`),
         icon: '<i class="fa-solid fa-arrows-split-up-and-left"></i>',
         callback: (li) => {
           API.compendiumToRollTableWithDialog(li.data("pack"));
@@ -229,7 +223,7 @@ export class BetterTables {
 
       if (game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.ADD_ROLL_IN_COMPENDIUM_CONTEXTMENU)) {
         options.push({
-          name: i18n(`${CONSTANTS.MODULE_ID}.api.msg.rollCompendiumAsRolltable`),
+          name: Logger.i18n(`${CONSTANTS.MODULE_ID}.api.msg.rollCompendiumAsRolltable`),
           icon: '<i class="fa-solid fa-dice"></i>',
           callback: (li) => {
             API.rollCompendiumAsRolltable(li.data("pack"));

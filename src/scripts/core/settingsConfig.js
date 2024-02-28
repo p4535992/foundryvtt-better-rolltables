@@ -1,6 +1,5 @@
 import { CONSTANTS } from "../constants/constants.js";
 import Logger from "../lib/Logger.js";
-import { i18n } from "../lib/lib.js";
 import { GROUP_DEFAULT, GROUP_LOOT, GROUP_TAGS, GROUP_UI } from "../settings.js";
 
 /**
@@ -30,7 +29,7 @@ export class BetterRolltableSettingsConfig extends FormApplication {
   /** @override */
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
-      title: i18n(`${CONSTANTS.MODULE_ID}.Settings.Module.AdvancedSettings.Title`),
+      title: Logger.i18n(`${CONSTANTS.MODULE_ID}.Settings.Module.AdvancedSettings.Title`),
       id: "betterrolltables-settings",
       template: `${CONSTANTS.PATH}/templates/config/settings.hbs`,
       width: 650,
@@ -62,8 +61,8 @@ export class BetterRolltableSettingsConfig extends FormApplication {
 
       // Update setting data
       const s = duplicate(setting);
-      s.name = i18n(s.name);
-      s.hint = i18n(s.hint);
+      s.name = Logger.i18n(s.name);
+      s.hint = Logger.i18n(s.hint);
       s.value = game.settings.get(s.namespace, s.key);
       s.type = setting.type instanceof Function ? setting.type.name : "String";
       s.isCheckbox = setting.type === Boolean;
@@ -147,32 +146,32 @@ export class BetterRolltableSettingsConfig extends FormApplication {
       tabs: [
         {
           name: GROUP_DEFAULT,
-          description: i18n(`${CONSTANTS.MODULE_ID}.Settings.Module.AdvancedSettings.Menu.Base.Description`),
-          i18nName: i18n(`${CONSTANTS.MODULE_ID}.Settings.Module.AdvancedSettings.Menu.Base.Title`),
+          description: Logger.i18n(`${CONSTANTS.MODULE_ID}.Settings.Module.AdvancedSettings.Menu.Base.Description`),
+          i18nName: Logger.i18n(`${CONSTANTS.MODULE_ID}.Settings.Module.AdvancedSettings.Menu.Base.Title`),
           class: "fas fa-table",
           menus: [],
           settings: [],
         },
         {
           name: GROUP_UI,
-          description: i18n(`${CONSTANTS.MODULE_ID}.Settings.Module.AdvancedSettings.Menu.UI.Description`),
-          i18nName: i18n(`${CONSTANTS.MODULE_ID}.Settings.Module.AdvancedSettings.Menu.UI.Title`),
+          description: Logger.i18n(`${CONSTANTS.MODULE_ID}.Settings.Module.AdvancedSettings.Menu.UI.Description`),
+          i18nName: Logger.i18n(`${CONSTANTS.MODULE_ID}.Settings.Module.AdvancedSettings.Menu.UI.Title`),
           class: "fas fa-cog",
           menus: [],
           settings: [],
         },
         {
           name: GROUP_LOOT,
-          description: i18n(`${CONSTANTS.MODULE_ID}.Settings.Module.AdvancedSettings.Menu.Loot.Description`),
-          i18nName: i18n(`${CONSTANTS.MODULE_ID}.Settings.Module.AdvancedSettings.Menu.Loot.Title`),
+          description: Logger.i18n(`${CONSTANTS.MODULE_ID}.Settings.Module.AdvancedSettings.Menu.Loot.Description`),
+          i18nName: Logger.i18n(`${CONSTANTS.MODULE_ID}.Settings.Module.AdvancedSettings.Menu.Loot.Title`),
           class: "fas fa-cog",
           menus: [],
           settings: [],
         },
         {
           name: GROUP_TAGS,
-          description: i18n(`${CONSTANTS.MODULE_ID}.Settings.Module.AdvancedSettings.Menu.Tags.Description`),
-          i18nName: i18n(`${CONSTANTS.MODULE_ID}.Settings.Module.AdvancedSettings.Menu.Tags.Title`),
+          description: Logger.i18n(`${CONSTANTS.MODULE_ID}.Settings.Module.AdvancedSettings.Menu.Tags.Description`),
+          i18nName: Logger.i18n(`${CONSTANTS.MODULE_ID}.Settings.Module.AdvancedSettings.Menu.Tags.Title`),
           class: "fas fa-tags",
           menus: [],
           settings: [],
