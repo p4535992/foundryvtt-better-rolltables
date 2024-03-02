@@ -101,7 +101,7 @@ export class RetrieveHelpers {
       return targetTmp;
     }
     // if (RetrieveHelpers.stringIsUuid(targetTmp)) {
-    //   targetTmp = fromUuid(targetTmp);
+    //     targetTmp = fromUuidSync(targetTmp);
     // } else {
     if (game.packs.get(targetTmp)) {
       targetTmp = game.packs.get(targetTmp);
@@ -149,16 +149,16 @@ export class RetrieveHelpers {
     if (targetTmp instanceof CompendiumCollection) {
       return targetTmp;
     }
-    if (RetrieveHelpers.stringIsUuid(targetTmp)) {
-      targetTmp = await fromUuid(targetTmp);
-    } else {
-      if (game.packs.get(targetTmp)) {
-        targetTmp = game.packs.get(targetTmp);
-      }
-      if (!ignoreName && game.packs.getName(targetTmp)) {
-        targetTmp = game.packs.getName(targetTmp);
-      }
+    // if (RetrieveHelpers.stringIsUuid(targetTmp)) {
+    //   targetTmp = await fromUuid(targetTmp);
+    // } else {
+    if (game.packs.get(targetTmp)) {
+      targetTmp = game.packs.get(targetTmp);
     }
+    if (!ignoreName && game.packs.getName(targetTmp)) {
+      targetTmp = game.packs.getName(targetTmp);
+    }
+    // }
     if (!targetTmp) {
       if (ignoreError) {
         Logger.warn(`CompendiumCollection is not found`, false, targetTmp);

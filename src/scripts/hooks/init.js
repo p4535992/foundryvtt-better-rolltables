@@ -2,7 +2,6 @@ import API from "../API.js";
 import { CONSTANTS } from "../constants/constants.js";
 import { BetterTables } from "../better-tables.js";
 import { BRTUtils } from "../core/utils.js";
-import { setApi } from "../../module.js";
 import { registerSettings } from "../settings.js";
 import { BetterRollTableBetterConfig } from "../tables/better/brt-rolltable-config.js";
 import SETTINGS from "../constants/settings.js";
@@ -31,8 +30,7 @@ class BetterRolltableHooks {
   // }
 
   static foundrySetup() {
-    // game.modules.get("better-rolltables").api
-    setApi(API);
+    game.modules.get(CONSTANTS.MODULE_ID).api = API;
 
     // For retrocompatibility only...
     // game.betterTables

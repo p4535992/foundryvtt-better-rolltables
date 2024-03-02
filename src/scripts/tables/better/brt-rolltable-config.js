@@ -197,19 +197,19 @@ export class BetterRollTableBetterConfig extends RollTableConfig {
 
   /* -------------------------------------------- */
 
-  //   /**
-  //    * Handle deleting a TableResult from the RollTable document
-  //    * @param {MouseEvent} event        The originating click event
-  //    * @returns {Promise<TableResult>}   The deleted TableResult document
-  //    * @private
-  //    */
-  //   async _onDeleteResult(event) {
-  //     event.preventDefault();
-  //     await this._onSubmit(event);
-  //     const li = event.currentTarget.closest(".table-result");
-  //     const result = this.object.results.get(li.dataset.resultId);
-  //     return result.delete();
-  //   }
+  /**
+   * Handle deleting a TableResult from the RollTable document
+   * @param {MouseEvent} event        The originating click event
+   * @returns {Promise<TableResult>}   The deleted TableResult document
+   * @private
+   */
+  async _onDeleteResult(event) {
+    event.preventDefault();
+    await this._onSubmit(event);
+    const li = event.currentTarget.closest(".table-result");
+    const result = this.object.results.get(li.dataset.resultId);
+    return result.delete();
+  }
 
   /* -------------------------------------------- */
 

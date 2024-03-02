@@ -106,7 +106,7 @@
   ],
   "packFolders": [
     {
-      "name": "D&D SRD Content",
+      "name": "BRT - Better RollTables",
       "sorting": "m",
       "color": "#7d160c",
       "packs": ["brt-loot", "brt-story", "brt-gen", "brt-harvest-harvester"]

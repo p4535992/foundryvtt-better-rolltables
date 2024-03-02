@@ -29,23 +29,6 @@ export function registerSocket() {
   betterRolltablesSocket.register("invokeBetterTableRollArr", (...args) => API.invokeBetterTableRollArr(...args));
 
   // Basic
-  setSocket(betterRolltablesSocket);
+  game.modules.get(CONSTANTS.MODULE_ID).socket = betterRolltablesSocket;
   return betterRolltablesSocket;
-}
-
-/**
- * Initialization helper, to set Socket.
- * @param socket to set to game module.
- */
-export function setSocket(socket) {
-  const data = game.modules.get(CONSTANTS.MODULE_ID);
-  data.socket = socket;
-}
-/*
- * Returns the set socket.
- * @returns Socket from games module.
- */
-export function getSocket() {
-  const data = game.modules.get(CONSTANTS.MODULE_ID);
-  return data.socket;
 }
