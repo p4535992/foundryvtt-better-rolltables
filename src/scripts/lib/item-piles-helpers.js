@@ -126,9 +126,181 @@ export default class ItemPilesHelpers {
     { removeExistingActorItems = false, skipVaultLogging = false, interactionId = false } = {}
   ) {
     const itemsData = game.itempiles.API.addItems(actorOrToken, itemsToAdd, {
-      mergeSimilarItems: true,
+      mergeSimilarItems: true, // NOT SUPPORTED ANYMORE FROM ITEM PILES TO REMOVE IN THE FUTURE
     });
     Logger.debug(`addItems | Added ${itemsToAdd.length} items to ${targetedToken.name}`, itemsData);
     return itemsData;
+  }
+
+  /*
+    if (!canvas.tokens.controlled.length) return;
+    for (const selected_token of canvas.tokens.controlled) {
+    await game.itempiles.API.rollItemTable("MY_TABLE_NAME_HERE", {
+        timesToRoll: "1d4+1",
+        targetActor: selected_token.actor,
+        removeExistingActorItems: false
+    });
+    }
+    await game.itempiles.API.turnTokensIntoItemPiles(canvas.tokens.controlled);
+  */
+
+  /**
+   * Roll a table with item piles
+   * @href https://fantasycomputer.works/FoundryVTT-ItemPiles/#/sample-macros?id=populate-loot-via-table
+   * @returns {Promise<array>}  An array of objects, each containing the item that was added or updated, and the quantity that was added
+   */
+  static async populateLootViaTable({
+    table = "",
+    timesToRoll = "1",
+    resetTable = true,
+    normalizeTable = false,
+    displayChat = false,
+    rollData = {},
+    customCategory = false,
+    targetActor = false,
+    removeExistingActorItems = false,
+  } = {}) {
+    let items = await ItemPilesHelpers.rollTable({
+      tableUuid: table,
+      formula: timesToRoll,
+      normalize: normalizeTable,
+      resetTable,
+      displayChat,
+      rollData,
+      customCategory,
+    });
+
+    if (targetActor) {
+      items = await ItemPilesHelpers.addItems(targetActor, itemsToAdd, { removeExistingActorItems });
+    }
+
+    return items;
+  }
+
+  /**
+   * @href https://github.com/fantasycalendar/FoundryVTT-ItemPiles/blob/master/src/helpers/pile-utilities.js#L1885
+   * @param tableUuid
+   * @param formula
+   * @param resetTable
+   * @param normalize
+   * @param displayChat
+   * @param rollData
+   * @param customCategory
+   * @returns {Promise<[object]>}
+   */
+  static async rollTable({
+    tableUuid,
+    formula = "1",
+    resetTable = true,
+    normalize = false,
+    displayChat = false,
+    rollData = {},
+    customCategory = false,
+  } = {}) {
+    const rolledItems = [];
+
+    const table = await fromUuid(tableUuid);
+
+    if (!tableUuid.startsWith("Compendium")) {
+      if (resetTable) {
+        await table.reset();
+      }
+
+      if (normalize) {
+        await table.update({
+          results: table.results.map((result) => ({
+            _id: result.id,
+            weight: result.range[1] - (result.range[0] - 1),
+          })),
+        });
+        await table.normalize();
+      }
+    }
+
+    const roll = new Roll(formula.toString(), rollData).evaluate({ async: false });
+    if (roll.total <= 0) {
+      return [];
+    }
+
+    // START MOD 4535992
+    /* 
+    let results;
+    if (game.modules.get("better-rolltables")?.active) {
+      results = (await game.betterTables.roll(table)).itemsData.map((result) => {
+        return {
+          documentCollection: result.documentCollection,
+          documentId: result.documentId,
+          text: result.text || result.name,
+          img: result.img,
+          quantity: 1,
+        };
+      });
+    } else {
+      results = (await table.drawMany(roll.total, { displayChat, recursive: true })).results;
+    }
+    */
+    const options = { displayChat: false, recursive: true };
+    const brtTable = new BetterRollTable(tableEntity, options);
+    await brtTable.initialize();
+    const resultBrt = await brtTable.betterRoll();
+    const results = resultBrt?.results;
+    // END MOD 4535992
+
+    for (const rollData of results) {
+      let rolledQuantity = rollData?.quantity ?? 1;
+
+      let item;
+      if (rollData.documentCollection === "Item") {
+        item = game.items.get(rollData.documentId);
+      } else {
+        const compendium = game.packs.get(rollData.documentCollection);
+        if (compendium) {
+          item = await compendium.getDocument(rollData.documentId);
+        }
+      }
+
+      if (item instanceof RollTable) {
+        Logger.error(`It shouldn't never go here something go wrong with the code please contact the brt developer`);
+        rolledItems.push(
+          ...(await ItemPilesHelpers.rollTable({ tableUuid: item.uuid, resetTable, normalize, displayChat }))
+        );
+      } else if (item instanceof Item) {
+        const quantity = Math.max(Utilities.getItemQuantity(item) * rolledQuantity, 1);
+        rolledItems.push({
+          ...rollData,
+          item,
+          quantity,
+        });
+      }
+    }
+
+    const items = [];
+
+    rolledItems.forEach((newItem) => {
+      const existingItem = items.find((item) => item.documentId === newItem.documentId);
+      if (existingItem) {
+        existingItem.quantity += Math.max(newItem.quantity, 1);
+      } else {
+        setProperty(newItem, CONSTANTS.FLAGS.ITEM, getProperty(newItem.item, CONSTANTS.FLAGS.ITEM));
+        if (
+          game.itempiles.API.QUANTITY_FOR_PRICE_ATTRIBUTE &&
+          !getProperty(newItem, game.itempiles.API.QUANTITY_FOR_PRICE_ATTRIBUTE)
+        ) {
+          setProperty(
+            newItem,
+            game.itempiles.API.QUANTITY_FOR_PRICE_ATTRIBUTE,
+            Utilities.getItemQuantity(newItem.item)
+          );
+        }
+        if (customCategory) {
+          setProperty(newItem, CONSTANTS.FLAGS.CUSTOM_CATEGORY, customCategory);
+        }
+        items.push({
+          ...newItem,
+        });
+      }
+    });
+
+    return items;
   }
 }
