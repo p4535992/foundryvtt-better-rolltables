@@ -79,6 +79,8 @@ const API = {
    *
    * @param {RollTable} tableEntity
    * @param {Object} options
+   * @param {Roll|string} [options.roll] An optional pre-configured Roll instance which defines the dice roll to use
+   * @param {boolean} [options.recursive=true] Allow drawing recursively from inner RollTable results
    * @param {boolean} [options.displayChat=true] Whether to automatically display the results in chat
    * @param {('blindroll'|'gmroll'|'selfroll')} [options.rollMode=null] The chat roll mode to use when displaying the result
    * @param {string|number} [options.rollsAmount=1]  The rolls amount value
@@ -190,6 +192,8 @@ const API = {
    * @param {RollTable} tableEntity
    * @param {TokenDocument} token
    * @param {Object} options
+   * @param {Roll|string} [options.roll] An optional pre-configured Roll instance which defines the dice roll to use
+   * @param {boolean} [options.recursive=true] Allow drawing recursively from inner RollTable results
    * @param {boolean} [options.displayChat=true] Whether to automatically display the results in chat
    * @param {('blindroll'|'gmroll'|'selfroll')} [options.rollMode=null] The chat roll mode to use when displaying the result
    * @param {string|number} [options.rollsAmount=1]  The rolls amount value
@@ -212,6 +216,8 @@ const API = {
    *
    * @param {RollTable} tableEntity
    * @param {Object} options
+   * @param {Roll|string} [options.roll] An optional pre-configured Roll instance which defines the dice roll to use
+   * @param {boolean} [options.recursive=true] Allow drawing recursively from inner RollTable results
    * @param {boolean} [options.displayChat=true] Whether to automatically display the results in chat
    * @param {('blindroll'|'gmroll'|'selfroll')} [options.rollMode=null] The chat roll mode to use when displaying the result
    * @param {string|number} [options.rollsAmount=1]  The rolls amount value
@@ -234,6 +240,8 @@ const API = {
    *
    * @param {RollTable} tableEntity
    * @param {Object} options
+   * @param {Roll|string} [options.roll] An optional pre-configured Roll instance which defines the dice roll to use
+   * @param {boolean} [options.recursive=true] Allow drawing recursively from inner RollTable results
    * @param {boolean} [options.displayChat=true] Whether to automatically display the results in chat
    * @param {('blindroll'|'gmroll'|'selfroll')} [options.rollMode=null] The chat roll mode to use when displaying the result
    * @param {string|number} [options.rollsAmount=1]  The rolls amount value
@@ -256,6 +264,8 @@ const API = {
    *
    * @param {RollTable} tableEntity
    * @param {Object} options
+   * @param {Roll|string} [options.roll] An optional pre-configured Roll instance which defines the dice roll to use
+   * @param {boolean} [options.recursive=true] Allow drawing recursively from inner RollTable results
    * @param {boolean} [options.displayChat=true] Whether to automatically display the results in chat
    * @param {('blindroll'|'gmroll'|'selfroll')} [options.rollMode=null] The chat roll mode to use when displaying the result
    * @param {string|number} [options.rollsAmount=1]  The rolls amount value
@@ -282,6 +292,8 @@ const API = {
    *
    * @param {RollTable} tableEntity
    * @param {Object} options
+   * @param {Roll|string} [options.roll] An optional pre-configured Roll instance which defines the dice roll to use
+   * @param {boolean} [options.recursive=true] Allow drawing recursively from inner RollTable results
    * @param {boolean} [options.displayChat=true] Whether to automatically display the results in chat
    * @param {('blindroll'|'gmroll'|'selfroll')} [options.rollMode=null] The chat roll mode to use when displaying the result
    * @param {string|number} [options.rollsAmount=1]  The rolls amount value
@@ -304,6 +316,8 @@ const API = {
    *
    * @param {RollTable} tableEntity
    * @param {Object} options
+   * @param {Roll|string} [options.roll] An optional pre-configured Roll instance which defines the dice roll to use
+   * @param {boolean} [options.recursive=true] Allow drawing recursively from inner RollTable results
    * @param {boolean} [options.displayChat=true] Whether to automatically display the results in chat
    * @param {('blindroll'|'gmroll'|'selfroll')} [options.rollMode=null] The chat roll mode to use when displaying the result
    * @param {string|number} [options.rollsAmount=1]  The rolls amount value
@@ -326,6 +340,8 @@ const API = {
    *
    * @param {RollTable} tableEntity
    * @param {Object} options
+   * @param {Roll|string} [options.roll] An optional pre-configured Roll instance which defines the dice roll to use
+   * @param {boolean} [options.recursive=true] Allow drawing recursively from inner RollTable results
    * @param {boolean} [options.displayChat=true] Whether to automatically display the results in chat
    * @param {('blindroll'|'gmroll'|'selfroll')} [options.rollMode=null] The chat roll mode to use when displaying the result
    * @param {string|number} [options.rollsAmount=1]  The rolls amount value
@@ -496,6 +512,8 @@ const API = {
    *
    * @param {RollTable} tableEntity
    * @param {Object} options
+   * @param {Roll|string} [options.roll] An optional pre-configured Roll instance which defines the dice roll to use
+   * @param {boolean} [options.recursive=true] Allow drawing recursively from inner RollTable results
    * @param {boolean} [options.displayChat=true] Whether to automatically display the results in chat
    * @param {('blindroll'|'gmroll'|'selfroll')} [options.rollMode=null] The chat roll mode to use when displaying the result
    * @param {string|number} [options.rollsAmount=1]  The rolls amount value

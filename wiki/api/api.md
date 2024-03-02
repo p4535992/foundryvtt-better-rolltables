@@ -44,7 +44,9 @@ Roll a table as a Better table with options and get
 |--------------------------|-------------------------|---------|--------------------------------------------------------|
 | tableEntity              | `RollTable`             |         | tableEntity rolltable to generate content from         |
 | options                  | `object`                |         | OPTIONAL: Options to pass to the function                        |
-| [options.displayChat]    | `boolean`               |  true   | Whether to automatically display the results in chat
+| [options.roll]           | `Roll or string`        |  null   | An optional pre-configured Roll instance which defines the dice roll to use |
+| [options.recursive]      | `boolean`               |  true   | Allow drawing recursively from inner RollTable results |
+| [options.displayChat]    | `boolean`               |  true   | Whether to automatically display the results in chat |
 | [options.rollMode]       | `string`                |  null   | Type of rollMode for the chat card: 'blindroll'|'gmroll'|'selfroll' |
 | [options.rollsAmount]    | `string or number`      |   1     | The rolls amount value  |
 | [options.dc]             | `string or number`      |  null   | The dc value (only for Harvest type rolltable) |
@@ -85,7 +87,9 @@ Roll a table as a Better table in chat with options
 |--------------------------|-------------------------|---------|--------------------------------------------------------|
 | tableEntity              | `RollTable`             |         | tableEntity rolltable to generate content from         |
 | options                  | `object`                |         | OPTIONAL: Options to pass to the function                        |
-| [options.displayChat]    | `boolean`               |  true   | Whether to automatically display the results in chat
+| [options.roll]           | `Roll or string`        |  null   | An optional pre-configured Roll instance which defines the dice roll to use |
+| [options.recursive]      | `boolean`               |  true   | Allow drawing recursively from inner RollTable results |
+| [options.displayChat]    | `boolean`               |  true   | Whether to automatically display the results in chat |
 | [options.rollMode]       | `string`                |  null   | Type of rollMode for the chat card: 'blindroll'|'gmroll'|'selfroll' |
 | [options.rollsAmount]    | `string or number`      |   1     | The rolls amount value  |
 | [options.dc]             | `string or number`      |  null   | The dc value (only for Harvest type rolltable) |
@@ -232,7 +236,9 @@ Generate a loot
 |--------------------------|-------------------------|---------|--------------------------------------------------------|
 | tableEntity              | `RollTable`             |         | tableEntity rolltable to generate content from         |
 | options                  | `object`                |         | OPTIONAL: Options to pass to the function                        |
-| [options.displayChat]    | `boolean`               |  true   | Whether to automatically display the results in chat
+| [options.roll]           | `Roll or string`        |  null   | An optional pre-configured Roll instance which defines the dice roll to use |
+| [options.recursive]      | `boolean`               |  true   | Allow drawing recursively from inner RollTable results |
+| [options.displayChat]    | `boolean`               |  true   | Whether to automatically display the results in chat |
 | [options.rollMode]       | `string`                |  null   | Type of rollMode for the chat card: 'blindroll'|'gmroll'|'selfroll' |
 | [options.rollsAmount]    | `string or number`      |   1     | The rolls amount value  |
 | [options.dc]             | `string or number`      |  null   | The dc value (only for Harvest type rolltable) |
@@ -264,7 +270,9 @@ Generate a chat loot
 |--------------------------|-------------------------|---------|--------------------------------------------------------|
 | tableEntity              | `RollTable`             |         | tableEntity rolltable to generate content from         |
 | options                  | `object`                |         | OPTIONAL: Options to pass to the function                        |
-| [options.displayChat]    | `boolean`               |  true   | Whether to automatically display the results in chat
+| [options.roll]           | `Roll or string`        |  null   | An optional pre-configured Roll instance which defines the dice roll to use |
+| [options.recursive]      | `boolean`               |  true   | Allow drawing recursively from inner RollTable results |
+| [options.displayChat]    | `boolean`               |  true   | Whether to automatically display the results in chat |
 | [options.rollMode]       | `string`                |  null   | Type of rollMode for the chat card: 'blindroll'|'gmroll'|'selfroll' |
 | [options.rollsAmount]    | `string or number`      |   1     | The rolls amount value  |
 | [options.dc]             | `string or number`      |  null   | The dc value (only for Harvest type rolltable) |
@@ -296,7 +304,9 @@ Add loot to selcted token ( or the one passed as a argument)
 | tableEntity              | `RollTable`             |         | tableEntity rolltable to generate content from         |
 | token                    | `TokenDocument`         |         | OPTIONAL: is either a token or an array of tokens (like `canvas.tokens.controlled`).  |
 | options                  | `object`                |         | OPTIONAL: Options to pass to the function              |
-| [options.displayChat]    | `boolean`               |  true   | Whether to automatically display the results in chat
+| [options.roll]           | `Roll or string`        |  null   | An optional pre-configured Roll instance which defines the dice roll to use |
+| [options.recursive]      | `boolean`               |  true   | Allow drawing recursively from inner RollTable results |
+| [options.displayChat]    | `boolean`               |  true   | Whether to automatically display the results in chat |
 | [options.rollMode]       | `string`                |  null   | Type of rollMode for the chat card: 'blindroll'|'gmroll'|'selfroll' |
 | [options.rollsAmount]    | `string or number`      |   1     | The rolls amount value  |
 | [options.dc]             | `string or number`      |  null   | The dc value (only for Harvest type rolltable) |

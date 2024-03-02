@@ -415,6 +415,9 @@ export class BetterRollTable {
         results = [resultTmp];
       }
     } else {
+      if (this.options.roll) {
+        roll = this.options.roll instanceof Roll ? this.options.roll : Roll.create(this.options.roll);
+      }
       // Reference the provided roll formula
       roll = roll instanceof Roll ? roll : Roll.create(this.table.formula);
 
@@ -682,10 +685,10 @@ export class BetterRollTable {
       : this.options?.customRoll ?? this.options?.rollsAmount;
 
     this.mainRoll = undefined;
-    // TODO add this setting to the API ???
+    // TODO add this setting to the API ??? (DONE ?)
     const firstResults = {
-      roll: null,
-      recursive: true,
+      roll: this.options.roll,
+      recursive: this.options.recursive,
       displayChat: this.options.displayChat,
       _depth: 0,
     };

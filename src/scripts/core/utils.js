@@ -136,6 +136,8 @@ export class BRTUtils {
    *
    * @param {RollTable} tableEntity
    * @param {Object} options
+   * @param {Roll|string} [options.roll] An optional pre-configured Roll instance which defines the dice roll to use
+   * @param {boolean} [options.recursive=true] Allow drawing recursively from inner RollTable results
    * @param {boolean} [options.displayChat=true] Whether to automatically display the results in chat
    * @param {number} options.rollsAmount
    * @param {number} options.dc
@@ -269,6 +271,12 @@ export class BRTUtils {
 
     newOptions.usePercentage = isRealBoolean(usePercentage) ? (String(usePercentage) === "true" ? true : false) : false;
 
+    newOptions.recursive = isRealBoolean(options.recursive)
+      ? String(options.recursive) === "true"
+        ? true
+        : false
+      : true;
+    newOptions.roll = options.roll ? options.roll : null;
     return newOptions;
   }
 

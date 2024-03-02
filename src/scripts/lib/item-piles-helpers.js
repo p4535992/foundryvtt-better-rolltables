@@ -1,6 +1,12 @@
+import { BetterRollTable } from "../core/brt-table";
 import Logger from "./Logger";
+import { RetrieveHelpers } from "./retrieve-helpers";
 
 export default class ItemPilesHelpers {
+  static FLAGS = {
+    ITEM: `flags.item-piles.item`,
+    CUSTOM_CATEGORY: `flags.item-piles.item.customCategory`,
+  };
   // ===================
   // CURRENCIES HELPERS
   // ===================
@@ -127,6 +133,9 @@ export default class ItemPilesHelpers {
   ) {
     const itemsData = game.itempiles.API.addItems(actorOrToken, itemsToAdd, {
       mergeSimilarItems: true, // NOT SUPPORTED ANYMORE FROM ITEM PILES TO REMOVE IN THE FUTURE
+      removeExistingActorItems: removeExistingActorItems,
+      skipVaultLogging: skipVaultLogging,
+      interactionId: interactionId,
     });
     Logger.debug(`addItems | Added ${itemsToAdd.length} items to ${targetedToken.name}`, itemsData);
     return itemsData;
@@ -178,28 +187,52 @@ export default class ItemPilesHelpers {
   }
 
   /**
-   * @href https://github.com/fantasycalendar/FoundryVTT-ItemPiles/blob/master/src/helpers/pile-utilities.js#L1885
-   * @param tableUuid
-   * @param formula
-   * @param resetTable
-   * @param normalize
-   * @param displayChat
-   * @param rollData
-   * @param customCategory
-   * @returns {Promise<[object]>}
+   * @returns {Promise<array>}  An array of objects, each containing the item that was added or updated, and the quantity that was added
    */
-  static async rollTable({
-    tableUuid,
-    formula = "1",
-    resetTable = true,
-    normalize = false,
-    displayChat = false,
-    rollData = {},
-    customCategory = false,
-  } = {}) {
+  static async retrieveItemsDataFromRollTable(table, options) {
+    return await ItemPilesHelpers.rollTable(table, options);
+  }
+
+  //   /**
+  //    * @href https://github.com/fantasycalendar/FoundryVTT-ItemPiles/blob/master/src/helpers/pile-utilities.js#L1885
+  //    * @param tableUuid
+  //    * @param formula
+  //    * @param resetTable
+  //    * @param normalize
+  //    * @param displayChat
+  //    * @param rollData
+  //    * @param customCategory
+  //    * @returns {Promise<[object]>}
+  //    */
+  //   static async rollTable({
+  //     tableUuid,
+  //     formula = "1",
+  //     resetTable = true,
+  //     normalize = false,
+  //     displayChat = false,
+  //     rollData = {},
+  //     customCategory = false,
+  //   } = {}) {
+  /**
+   * @href https://github.com/fantasycalendar/FoundryVTT-ItemPiles/blob/master/src/helpers/pile-utilities.js#L1885
+   * @param {RollTable|string} tableUuid
+   * @param {Object} options
+   * @returns {Promise<ItemData[]>} Item Data
+   */
+  static async rollTable(tableUuid, options) {
+    const table = await fromUuid(tableUuid);
+
+    const formula = table.formula;
+    const resetTable = true;
+    const normalize = false;
+    const displayChat = options.displayChat;
+    const rollData = options.roll;
+    const customCategory = false;
+    const recursive = options.recursive;
+
     const rolledItems = [];
 
-    const table = await fromUuid(tableUuid);
+    //const table = await fromUuid(tableUuid);
 
     if (!tableUuid.startsWith("Compendium")) {
       if (resetTable) {
@@ -239,7 +272,6 @@ export default class ItemPilesHelpers {
       results = (await table.drawMany(roll.total, { displayChat, recursive: true })).results;
     }
     */
-    const options = { displayChat: false, recursive: true };
     const brtTable = new BetterRollTable(tableEntity, options);
     await brtTable.initialize();
     const resultBrt = await brtTable.betterRoll();
@@ -265,7 +297,7 @@ export default class ItemPilesHelpers {
           ...(await ItemPilesHelpers.rollTable({ tableUuid: item.uuid, resetTable, normalize, displayChat }))
         );
       } else if (item instanceof Item) {
-        const quantity = Math.max(Utilities.getItemQuantity(item) * rolledQuantity, 1);
+        const quantity = Math.max(ItemPilesHelpers.getItemQuantity(item) * rolledQuantity, 1);
         rolledItems.push({
           ...rollData,
           item,
@@ -281,7 +313,7 @@ export default class ItemPilesHelpers {
       if (existingItem) {
         existingItem.quantity += Math.max(newItem.quantity, 1);
       } else {
-        setProperty(newItem, CONSTANTS.FLAGS.ITEM, getProperty(newItem.item, CONSTANTS.FLAGS.ITEM));
+        setProperty(newItem, ItemPilesHelpers.FLAGS.ITEM, getProperty(newItem.item, ItemPilesHelpers.FLAGS.ITEM));
         if (
           game.itempiles.API.QUANTITY_FOR_PRICE_ATTRIBUTE &&
           !getProperty(newItem, game.itempiles.API.QUANTITY_FOR_PRICE_ATTRIBUTE)
@@ -289,11 +321,11 @@ export default class ItemPilesHelpers {
           setProperty(
             newItem,
             game.itempiles.API.QUANTITY_FOR_PRICE_ATTRIBUTE,
-            Utilities.getItemQuantity(newItem.item)
+            ItemPilesHelpers.getItemQuantity(newItem.item)
           );
         }
         if (customCategory) {
-          setProperty(newItem, CONSTANTS.FLAGS.CUSTOM_CATEGORY, customCategory);
+          setProperty(newItem, ItemPilesHelpers.FLAGS.CUSTOM_CATEGORY, customCategory);
         }
         items.push({
           ...newItem,
@@ -302,5 +334,16 @@ export default class ItemPilesHelpers {
     });
 
     return items;
+  }
+
+  /**
+   * Returns a given item's quantity
+   *
+   * @param {Item/Object} item
+   * @returns {number}
+   */
+  static getItemQuantity(item) {
+    const itemData = item instanceof Item ? item.toObject() : item;
+    return Number(getProperty(itemData, game.itempiles.API.ITEM_QUANTITY_ATTRIBUTE) ?? 0);
   }
 }
