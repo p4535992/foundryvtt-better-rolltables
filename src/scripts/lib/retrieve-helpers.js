@@ -893,4 +893,102 @@ export class RetrieveHelpers {
     // }
     return targetTmp;
   }
+
+  static getRollTableSync(target, ignoreError = false, ignoreName = true) {
+    let targetTmp = target;
+    if (!targetTmp) {
+      throw Logger.error(`RollTable is undefined`, true, targetTmp);
+    }
+    if (targetTmp instanceof RollTable) {
+      return targetTmp;
+    }
+    // This is just a patch for compatibility with others modules
+    if (targetTmp.document) {
+      targetTmp = targetTmp.document;
+    }
+    if (targetTmp.uuid) {
+      targetTmp = targetTmp.uuid;
+    }
+
+    if (targetTmp instanceof RollTable) {
+      return targetTmp;
+    }
+    if (RetrieveHelpers.stringIsUuid(targetTmp)) {
+      targetTmp = fromUuidSync(targetTmp);
+    } else {
+      if (game.tables.get(targetTmp)) {
+        targetTmp = game.tables.get(targetTmp);
+      }
+      if (!ignoreName && game.tables.getName(targetTmp)) {
+        targetTmp = game.tables.getName(targetTmp);
+      }
+    }
+    if (!targetTmp) {
+      if (ignoreError) {
+        Logger.warn(`RollTable is not found`, false, targetTmp);
+        return;
+      } else {
+        throw Logger.error(`RollTable is not found`, true, targetTmp);
+      }
+    }
+    // Type checking
+    // if (!(targetTmp instanceof RollTable)) {
+    //   if (ignoreError) {
+    //     Logger.warn(`Invalid RollTable`, false, targetTmp);
+    //     return;
+    //   } else {
+    //     throw Logger.error(`Invalid RollTable`, true, targetTmp);
+    //   }
+    // }
+    return targetTmp;
+  }
+
+  static async getRollTableAsync(target, ignoreError = false, ignoreName = true) {
+    let targetTmp = target;
+    if (!targetTmp) {
+      throw Logger.error(`RollTable is undefined`, true, targetTmp);
+    }
+    if (targetTmp instanceof RollTable) {
+      return targetTmp;
+    }
+    // This is just a patch for compatibility with others modules
+    if (targetTmp.document) {
+      targetTmp = targetTmp.document;
+    }
+    if (targetTmp.uuid) {
+      targetTmp = targetTmp.uuid;
+    }
+
+    if (targetTmp instanceof RollTable) {
+      return targetTmp;
+    }
+    if (RetrieveHelpers.stringIsUuid(targetTmp)) {
+      targetTmp = await fromUuid(targetTmp);
+    } else {
+      if (game.tables.get(targetTmp)) {
+        targetTmp = game.tables.get(targetTmp);
+      }
+      if (!ignoreName && game.tables.getName(targetTmp)) {
+        targetTmp = game.tables.getName(targetTmp);
+      }
+    }
+    if (!targetTmp) {
+      if (ignoreError) {
+        Logger.warn(`RollTable is not found`, false, targetTmp);
+        return;
+      } else {
+        throw Logger.error(`RollTable is not found`, true, targetTmp);
+      }
+    }
+    // Type checking
+    if (!(targetTmp instanceof RollTable)) {
+      if (ignoreError) {
+        Logger.warn(`Invalid RollTable`, false, targetTmp);
+        return;
+      } else {
+        throw Logger.error(`Invalid RollTable`, true, targetTmp);
+      }
+    }
+    return targetTmp;
+  }
 }

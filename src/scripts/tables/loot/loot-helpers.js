@@ -7,6 +7,7 @@ import { BRTUtils } from "../../core/utils";
 import { BetterRollTable } from "../../core/brt-table";
 import SETTINGS from "../../constants/settings";
 import Logger from "../../lib/Logger";
+import ItemPilesHelpers from "../../lib/item-piles-helpers";
 
 export class BRTLootHelpers {
   /**
@@ -26,7 +27,7 @@ export class BRTLootHelpers {
     }
 
     Logger.info("Loot generation started.", true);
-
+    /*
     const brtTable = new BetterRollTable(tableEntity, options);
     await brtTable.initialize();
 
@@ -46,7 +47,16 @@ export class BRTLootHelpers {
       await RollTableToActorHelpers.addItemsToTokenOld(token, betterResults, stackSame, isTokenActor, itemLimit);
       Logger.info(`Loot generation ended on token '${token.name}'`, true);
     }
+    */
+    for (const token of tokenstack) {
+      Logger.info(`Loot generation started on token '${token.name}'`, true);
+      await ItemPilesHelpers.populateLootViaTable(token, tableEntity, options);
 
+      const currencyString = tableEntity.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.LOOT_CURRENCY_STRING_KEY);
+      const currencyData = ItemPilesHelpers.generateCurrenciesStringFromString(currencyString);
+      await ItemPilesHelpers.addCurrencies(token, currencyData);
+      Logger.info(`Loot generation ended on token '${token.name}'`, true);
+    }
     Logger.info("Loot generation complete.", true);
     return;
   }
@@ -120,7 +130,7 @@ export class BRTLootHelpers {
   }
 
   /**
-   *
+   * @deprecated not used anymore
    * @param {Token|Actor} token
    * @param {Object} currencyData
    * @param {Boolean} is the token passed as the token actor instead?

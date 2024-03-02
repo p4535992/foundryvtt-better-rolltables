@@ -4,26 +4,34 @@ import { BRTUtils } from "./utils.js";
 import { BetterRollTable } from "./brt-table.js";
 import { isEmptyObject } from "../lib/lib.js";
 import Logger from "../lib/Logger.js";
+import ItemPilesHelpers from "../lib/item-piles-helpers.js";
 
 export class BetterResults {
   constructor(tableResults) {
     this.results = [];
-    this.currencyData = { cp: 0, ep: 0, gp: 0, pp: 0, sp: 0 };
+    this.currencyData = {}; // cp: 0, ep: 0, gp: 0, pp: 0, sp: 0 };
     this.tableResults = tableResults;
   }
 
   async buildResults(table) {
     const currencyString = table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.LOOT_CURRENCY_STRING_KEY);
+    this.currencyData = await ItemPilesHelpers.getCurrenciesFromString(currencyString);
+    // START PATCH 2024-03-02
+    /*
     this.currencyData = await this._generateCurrency(currencyString);
-
     for (let i = 0; i < this.tableResults?.length; i++) {
+
       const betterResults = await this._parseResult(this.tableResults[i]);
       // if a inner table is rolled, the result returned is undefined but the array this.tableResult is extended with the new results
-
       for (const r of betterResults) {
         this.results.push(r);
       }
     }
+    */
+    for (const r of this.tableResults) {
+      this.results.push(r);
+    }
+    // END PATCH 2024-03-02
     return this.results;
   }
 
@@ -31,6 +39,11 @@ export class BetterResults {
     return this.currencyData;
   }
 
+  /**
+   * @deprecated not used anymore there is a method on the loot helpers now ?
+   * @param {*} result
+   * @returns
+   */
   async _parseResult(result) {
     let betterResults = [];
     if (result.type === CONST.TABLE_RESULT_TYPES.TEXT) {
@@ -53,7 +66,6 @@ export class BetterResults {
           // matches[1] is undefined in case we are matching [tablename]
           // if we are matching @command[string] then matches[2] is the command and [3] is the arg inside []
           // Logger.log(`match 0: ${matches[0]}, 1: ${matches[1]}, 2: ${matches[2]}, 3: ${matches[3]}`);
-
           if (matches[1] !== undefined && matches[1].trim() !== "") {
             textString = matches[1];
           }
@@ -145,7 +157,7 @@ export class BetterResults {
   }
 
   /**
-   *
+   * @deprecated not used anymore there is a method on the loot helpers now ?
    * @param {String} tableText
    * @returns
    */
@@ -172,7 +184,7 @@ export class BetterResults {
   }
 
   /**
-   *
+   * @deprecated not used anymore there is a method on the loot helpers now ?
    * @param {string} tableText
    * @returns
    */
@@ -188,7 +200,7 @@ export class BetterResults {
 
   /**
    * Check given string and parse it against a regex to generate currency array
-   *
+   * @deprecated not used anymore there is a method on the loot helpers now ?
    * @param {String} currencyString
    *
    * @returns
