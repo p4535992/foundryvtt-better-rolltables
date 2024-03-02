@@ -18,15 +18,20 @@ export class BetterResults {
     // START PATCH 2024-03-02
     // this.currencyData = await this._generateCurrency(currencyString);
     const currencyString = table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.LOOT_CURRENCY_STRING_KEY);
-    this.currencyData = await ItemPilesHelpers.getCurrenciesFromString(currencyString);
+    this.currencyData = await ItemPilesHelpers.getCurrenciesSimpleFromString(currencyString);
     // END PATCH 2024-03-02
     // START PATCH 2024-03-02
+    /*
     for (let i = 0; i < this.tableResults?.length; i++) {
       const betterResults = await this._parseResult(this.tableResults[i]);
       // if a inner table is rolled, the result returned is undefined but the array this.tableResult is extended with the new results
       for (const r of betterResults) {
         this.results.push(r);
       }
+    }
+    */
+    for (const r of this.tableResults) {
+      this.results.push(r);
     }
     // END PATCH 2024-03-02
     return this.results;

@@ -145,7 +145,7 @@ export class RollTableToActorHelpers {
   static async resultsToItemsData(results) {
     const itemsData = [];
     for (const r of results) {
-      const itemTmp = RollTableToActorHelpers.resultToItemData(r);
+      const itemTmp = await RollTableToActorHelpers.resultToItemData(r);
       if (itemTmp) {
         itemsData.push(itemTmp);
       }
@@ -556,12 +556,20 @@ export class RollTableToActorHelpers {
       );
     }
 
-    let itemData = {};
     let existingItem = undefined;
 
     let docUuid = getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`);
     if (docUuid) {
       existingItem = await fromUuid(docUuid);
+    }
+
+    if (result.documentCollection === "Item") {
+      existingItem = game.items.get(result.documentId);
+    } else {
+      const compendium = game.packs.get(result.documentCollection);
+      if (compendium) {
+        existingItem = await compendium.getDocument(result.documentId);
+      }
     }
 
     // Try first to load item from compendium
@@ -580,7 +588,7 @@ export class RollTableToActorHelpers {
       return null;
     }
 
-    itemData = duplicate(existingItem);
+    let itemData = duplicate(existingItem);
 
     if (customResultName) {
       itemData.name = customResultName;
@@ -589,7 +597,9 @@ export class RollTableToActorHelpers {
       itemData.img = customResultImg;
     }
 
-    itemData.type = CONSTANTS.ITEM_LOOT_TYPE;
+    // if(!itemData.type) {
+    //   itemData.type = CONSTANTS.ITEM_LOOT_TYPE;
+    // }
 
     const itemConversions = {
       Actor: {

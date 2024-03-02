@@ -19,12 +19,18 @@ export default class ItemPilesHelpers {
    *
    * @returns {Array<object>}                                 An array of object containing the data and quantity for each currency
    */
-  static getCurrenciesFromString(currenciesS) {
+  static getCurrenciesSimpleFromString(currenciesS) {
     const c = ItemPilesHelpers.generateCurrenciesStringFromString(currenciesS);
     if (!c) {
       return "";
     }
-    return game.itempiles.API.getCurrenciesFromString(c).currencies;
+    const arr = game.itempiles.API.getCurrenciesFromString(c);
+    const currencies = {};
+    for (const cc of arr) {
+      const abbreviation = cc.abbreviation.toLowerCase().replace("{#}", "").trim();
+      currencies[abbreviation] = (cc.roll ? cc.roll.total : cc.quantity) ?? 0;
+    }
+    return currencies;
   }
 
   /**
@@ -273,12 +279,13 @@ export default class ItemPilesHelpers {
         items = await this._addItems(targetActor, itemsToAdd, userId, { removeExistingActorItems });
     }
     */
-    let items = await ItemPilesHelpers.rollTable(table, newOptions);
+    let itemsToAdd = await ItemPilesHelpers.rollTable(table, newOptions);
+    let items = [];
     // END MOD 4535992
 
     if (targetActor) {
       items = await ItemPilesHelpers.addItems(targetActor, itemsToAdd, {
-        removeExistingActorItems: removeExistingActorItems,
+        removeExistingActorItems: options.removeExistingActorItems,
       });
     }
 
@@ -333,7 +340,7 @@ export default class ItemPilesHelpers {
 
     //const table = await fromUuid(tableUuid);
 
-    if (!tableUuid.startsWith("Compendium")) {
+    if (!table.uuid.startsWith("Compendium")) {
       if (resetTable) {
         await table.reset();
       }
@@ -370,15 +377,16 @@ export default class ItemPilesHelpers {
       results = (await table.drawMany(roll.total, { displayChat, recursive: true })).results;
     }
     */
-    const brtTable = new BetterRollTable(tableEntity, options);
+    const brtTable = new BetterRollTable(table, options);
     await brtTable.initialize();
     const resultBrt = await brtTable.betterRoll();
     const results = resultBrt?.results;
     // END MOD 4535992
 
     for (const rollData of results) {
-      let rolledQuantity = rollData?.quantity ?? 1;
-
+      let rolledQuantity = rollData?.quantity ?? 1; // TODO WHY THIS ?
+      // START MOD 4535992
+      /*
       let item;
       if (rollData.documentCollection === "Item") {
         item = game.items.get(rollData.documentId);
@@ -388,7 +396,6 @@ export default class ItemPilesHelpers {
           item = await compendium.getDocument(rollData.documentId);
         }
       }
-
       if (item instanceof RollTable) {
         Logger.error(
           `'item instanceof RollTable', It shouldn't never go here something go wrong with the code please contact the brt developer`
@@ -398,22 +405,30 @@ export default class ItemPilesHelpers {
         );
       } else if (item instanceof Item) {
         const quantity = Math.max(ItemPilesHelpers.getItemQuantity(item) * rolledQuantity, 1);
-        const itemTmp = RollTableToActorHelpers.resultToItemData(rollData);
-        // START MOD 4535992
-        /*
         rolledItems.push({
           ...rollData,
           item,
           quantity,
         });
-        */
+      }
+      */
+      const itemTmp = await RollTableToActorHelpers.resultToItemData(rollData);
+      if (item instanceof RollTable) {
+        Logger.error(
+          `'item instanceof RollTable', It shouldn't never go here something go wrong with the code please contact the brt developer`
+        );
+        rolledItems.push(
+          ...(await ItemPilesHelpers.rollTable({ tableUuid: item.uuid, resetTable, normalize, displayChat }))
+        );
+      } else {
+        const quantity = Math.max(ItemPilesHelpers.getItemQuantity(itemTmp) * rolledQuantity, 1);
         rolledItems.push({
           ...rollData,
           itemTmp,
           quantity,
         });
-        // END MOD 4535992
       }
+      // END MOD 4535992
     }
 
     const items = [];
