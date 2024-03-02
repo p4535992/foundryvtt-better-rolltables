@@ -15,13 +15,16 @@ export default class ItemPilesHelpers {
   /**
    * Turns a string of currencies into an array containing the data and quantities for each currency
    *
-   * @param {string} currencies                               A string of currencies to convert (eg, "5gp 25sp")
+   * @param {string} currenciesS                               A string of currencies to convert (eg, "5gp 25sp")
    *
    * @returns {Array<object>}                                 An array of object containing the data and quantity for each currency
    */
-  static getCurrenciesFromString(currencies) {
-    const c = ItemPilesHelpers.generateCurrenciesStringFromString(currencies);
-    return game.itempiles.API.getPriceFromString(c).currencies;
+  static getCurrenciesFromString(currenciesS) {
+    const c = ItemPilesHelpers.generateCurrenciesStringFromString(currenciesS);
+    if (!c) {
+      return "";
+    }
+    return game.itempiles.API.getCurrenciesFromString(c).currencies;
   }
 
   /**

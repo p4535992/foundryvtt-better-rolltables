@@ -70,7 +70,10 @@ export class RetrieveHelpers {
   }
 
   static stringIsUuid(inId) {
-    return typeof inId === "string" && (inId.match(/\./g) || []).length && !inId.endsWith(".");
+    const valid = typeof inId === "string" && (inId.match(/\./g) || []).length && !inId.endsWith(".");
+    if (valid) {
+      return !!fromUuidSync(inId);
+    }
   }
 
   static getUuid(target) {
@@ -915,14 +918,12 @@ export class RetrieveHelpers {
     }
     if (RetrieveHelpers.stringIsUuid(targetTmp)) {
       targetTmp = fromUuidSync(targetTmp);
-    } else {
-      if (game.tables.get(targetTmp)) {
-        targetTmp = game.tables.get(targetTmp);
-      }
-      if (!ignoreName && game.tables.getName(targetTmp)) {
-        targetTmp = game.tables.getName(targetTmp);
-      }
+    } else if (game.tables.get(targetTmp)) {
+      targetTmp = game.tables.get(targetTmp);
+    } else if (!ignoreName && game.tables.getName(targetTmp)) {
+      targetTmp = game.tables.getName(targetTmp);
     }
+
     if (!targetTmp) {
       if (ignoreError) {
         Logger.warn(`RollTable is not found`, false, targetTmp);
@@ -964,14 +965,12 @@ export class RetrieveHelpers {
     }
     if (RetrieveHelpers.stringIsUuid(targetTmp)) {
       targetTmp = await fromUuid(targetTmp);
-    } else {
-      if (game.tables.get(targetTmp)) {
-        targetTmp = game.tables.get(targetTmp);
-      }
-      if (!ignoreName && game.tables.getName(targetTmp)) {
-        targetTmp = game.tables.getName(targetTmp);
-      }
+    } else if (game.tables.get(targetTmp)) {
+      targetTmp = game.tables.get(targetTmp);
+    } else if (!ignoreName && game.tables.getName(targetTmp)) {
+      targetTmp = game.tables.getName(targetTmp);
     }
+
     if (!targetTmp) {
       if (ignoreError) {
         Logger.warn(`RollTable is not found`, false, targetTmp);

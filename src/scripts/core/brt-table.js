@@ -498,7 +498,7 @@ export class BetterRollTable {
         }
         if (documentName === "RollTable") {
           const id = result.documentId;
-          const innerTable = pack ? await pack.getDocument(id) : game.tables.get(id);
+          const innerTable = pack ? await pack.getDocument(id) : RetrieveHelpers.getRollTableSync(id, true);
           if (innerTable) {
             const innerOptions = this.options;
             const brtInnerTable = new BetterRollTable(innerTable, innerOptions);
@@ -818,7 +818,7 @@ export class BetterRollTable {
 
         let innerTable;
         if (entry.type === CONST.TABLE_RESULT_TYPES.DOCUMENT && entry.documentCollection === "RollTable") {
-          innerTable = game.tables.get(entry.documentId);
+          innerTable = RetrieveHelpers.getRollTableSync(entry.documentId, true);
         } else if (entry.type === CONST.TABLE_RESULT_TYPES.COMPENDIUM) {
           const entityInCompendium = await BRTUtils.findInCompendiumByName(entry.documentCollection, entry.text);
           if (entityInCompendium !== undefined && entityInCompendium.documentName === "RollTable") {

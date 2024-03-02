@@ -283,7 +283,7 @@ export class BRTUtils {
   // TODO to remove itemData parameter ?
   static async addToItemData(itemsData, itemEntity, itemData = {}, isHidden = false) {
     const existingItem = itemsData.find((i) => i.item.id === itemEntity.id);
-    const quantity = game.itempiles.API.ITEM_QUANTITY_ATTRIBUTE; // getProperty(itemData, SETTINGS.QUANTITY_PROPERTY_PATH) || 1;
+    const quantity = getProperty(itemData, game.itempiles.API.ITEM_QUANTITY_ATTRIBUTE); // getProperty(itemData, SETTINGS.QUANTITY_PROPERTY_PATH) || 1;
     // const weight = getProperty(itemData, SETTINGS.WEIGHT_PROPERTY_PATH) || 0;
 
     if (existingItem) {

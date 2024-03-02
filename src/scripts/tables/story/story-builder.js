@@ -3,6 +3,7 @@ import { BRTUtils } from "../../core/utils.js";
 import { CONSTANTS } from "../../constants/constants.js";
 import { BetterRollTable } from "../../core/brt-table.js";
 import Logger from "../../lib/Logger.js";
+import { RetrieveHelpers } from "../../lib/retrieve-helpers.js";
 
 export class StoryBuilder {
   constructor(tableEntity) {
@@ -172,7 +173,7 @@ export class StoryBuilder {
       if (compendiumName) {
         table = await BRTUtils.findInCompendiumById(compendiumName, tableId);
       } else {
-        table = game.tables.get(tableId);
+        table = RetrieveHelpers.getRollTableSync(tableId, true);
       }
 
       if (!table) {

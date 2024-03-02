@@ -256,7 +256,7 @@ export class BetterTables {
    * @param {String} rolltableId ID of the rolltable to roll
    */
   static async menuCallBackRollTable(rolltableId) {
-    const rolltable = game.tables.get(rolltableId);
+    const rolltable = RetrieveHelpers.getRollTableSync(rolltableId);
     await API.betterTableRoll(rolltable);
   }
 
@@ -381,7 +381,7 @@ export class BetterTables {
             const myPack = await RetrieveHelpers.getCompendiumCollectionAsync(pack, true, false);
             rolltable = await myPack?.getDocument(id);
           } else {
-            rolltable = game.tables.get(id);
+            rolltable = RetrieveHelpers.getRollTableSync(id, true);
           }
           if (rolltable) {
             cardContent = await BetterTables.prepareCardData(rolltable);
@@ -421,7 +421,7 @@ export class BetterTables {
         const myPack = await RetrieveHelpers.getCompendiumCollectionAsync(pack, true, false);
         document = await myPack?.getDocument(id);
       } else {
-        document = game.tables.get(id);
+        document = RetrieveHelpers.getRollTableSync(id, true);
       }
       if (document) {
         const openLink = $(
@@ -481,7 +481,7 @@ export class BetterTables {
         .find("a.content-link[data-entity='RollTable']")
         .each((index, link) => {
           const id = $(link).data("id");
-          const rolltable = game.tables.get(id);
+          const rolltable = RetrieveHelpers.getRollTableSync(id);
 
           const rollNode = $(
             `<a class="better-rolltables-roll-table-roll-link" title="${game.i18n.localize(
@@ -573,7 +573,7 @@ export class BetterTables {
         .find("a.content-link[data-uuid^='RollTable']")
         .each((index, link) => {
           const id = $(link).data("id");
-          const rolltable = game.tables.get(id);
+          const rolltable = RetrieveHelpers.getRollTableSync(id);
 
           const rollNode = $(
             `<a class="better-rolltables-roll-table-roll-link" title="${game.i18n.localize(

@@ -5,6 +5,7 @@ import { BetterRollTable } from "./brt-table.js";
 import { isEmptyObject } from "../lib/lib.js";
 import Logger from "../lib/Logger.js";
 import ItemPilesHelpers from "../lib/item-piles-helpers.js";
+import { RetrieveHelpers } from "../lib/retrieve-helpers.js";
 
 export class BetterResults {
   constructor(tableResults) {
@@ -14,22 +15,18 @@ export class BetterResults {
   }
 
   async buildResults(table) {
+    // START PATCH 2024-03-02
+    // this.currencyData = await this._generateCurrency(currencyString);
     const currencyString = table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.LOOT_CURRENCY_STRING_KEY);
     this.currencyData = await ItemPilesHelpers.getCurrenciesFromString(currencyString);
+    // END PATCH 2024-03-02
     // START PATCH 2024-03-02
-    /*
-    this.currencyData = await this._generateCurrency(currencyString);
     for (let i = 0; i < this.tableResults?.length; i++) {
-
       const betterResults = await this._parseResult(this.tableResults[i]);
       // if a inner table is rolled, the result returned is undefined but the array this.tableResult is extended with the new results
       for (const r of betterResults) {
         this.results.push(r);
       }
-    }
-    */
-    for (const r of this.tableResults) {
-      this.results.push(r);
     }
     // END PATCH 2024-03-02
     return this.results;
@@ -81,7 +78,7 @@ export class BetterResults {
             if (tableCompendiumName) {
               table = await BRTUtils.findInCompendiumByName(tableCompendiumName, tableName);
             } else {
-              table = game.tables.getName(tableName);
+              table = RetrieveHelpers.getRollTableSync(tableName, true, false);
             }
 
             if (!table) {
