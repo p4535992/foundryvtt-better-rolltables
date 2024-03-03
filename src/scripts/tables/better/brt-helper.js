@@ -342,6 +342,8 @@ export class BRTBetterHelpers {
         // }
         isUpdate = true;
       }
+      // TODO DISABLED FOR NOW WE USE THE LOGIC 1:1 INSTEAD N:1 FOR NOW
+      /*
       if (result.quantity && !currentCustomQuantity) {
         setProperty(
           result,
@@ -359,6 +361,7 @@ export class BRTBetterHelpers {
         // }
         isUpdate = true;
       }
+      */
       if (result.documentCollection === "JournalEntry") {
         if (result.uuid) {
           result.isJournal = true;

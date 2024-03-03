@@ -1,6 +1,7 @@
 import { RollTableToActorHelpers } from "../apps/rolltable-to-actor/rolltable-to-actor-helpers";
 import { BetterRollTable } from "../core/brt-table";
 import Logger from "./Logger";
+import { isRealNumber } from "./lib";
 import { RetrieveHelpers } from "./retrieve-helpers";
 
 export default class ItemPilesHelpers {
@@ -36,7 +37,7 @@ export default class ItemPilesHelpers {
   /**
    * Turns a string of currencies into an array containing the data and quantities for each currency
    *
-   * @param {string} currencies                               A string of currencies to convert (eg, "5gp 25sp")
+   * @param {string|object} currencies                               A string of currencies to convert (eg, "5gp 25sp")
    *
    * @returns {string}                                 A string of currencies to convert (eg, "5gp 25sp")
    */
@@ -44,19 +45,36 @@ export default class ItemPilesHelpers {
     if (!currenciesS) {
       return "";
     }
-    let currenciesSTmp = currenciesS;
-    // Convert old brt format 100*1d6[gp],4d4+4[sp] to 100*1d6gp 4d4+4sp
-    currenciesSTmp = currenciesSTmp.replaceAll("[", "");
-    currenciesSTmp = currenciesSTmp.replaceAll("]", "");
-    currenciesSTmp = currenciesSTmp.replaceAll(",", " ");
-    // Convert old harvester [[/r 5d6]]{Copper} and [[/r 1d6*100]]{Electrum}[[/r 2d6*10]]{Gold}
-    currenciesSTmp = currenciesSTmp.replaceAll(/{Copper}/gi, "cp");
-    currenciesSTmp = currenciesSTmp.replaceAll(/{Silver}/gi, "sp");
-    currenciesSTmp = currenciesSTmp.replaceAll(/{Electrum}/gi, "ep");
-    currenciesSTmp = currenciesSTmp.replaceAll(/{Gold}/gi, "gp");
-    currenciesSTmp = currenciesSTmp.replaceAll(/{Platinum}/gi, "pp");
-    currenciesSTmp = currenciesSTmp.replaceAll("/r", "");
-    return currenciesSTmp;
+
+    if (typeof currenciesS === "string" || currenciesS instanceof String) {
+      let currenciesSTmp = currenciesS;
+      // Convert old brt format 100*1d6[gp],4d4+4[sp] to 100*1d6gp 4d4+4sp
+      currenciesSTmp = currenciesSTmp.replaceAll("[", "");
+      currenciesSTmp = currenciesSTmp.replaceAll("]", "");
+      currenciesSTmp = currenciesSTmp.replaceAll(",", " ");
+      // Convert old harvester [[/r 5d6]]{Copper} and [[/r 1d6*100]]{Electrum}[[/r 2d6*10]]{Gold}
+      currenciesSTmp = currenciesSTmp.replaceAll(/{Copper}/gi, "cp");
+      currenciesSTmp = currenciesSTmp.replaceAll(/{Silver}/gi, "sp");
+      currenciesSTmp = currenciesSTmp.replaceAll(/{Electrum}/gi, "ep");
+      currenciesSTmp = currenciesSTmp.replaceAll(/{Gold}/gi, "gp");
+      currenciesSTmp = currenciesSTmp.replaceAll(/{Platinum}/gi, "pp");
+      currenciesSTmp = currenciesSTmp.replaceAll("/r", "");
+      return currenciesSTmp.trim();
+    }
+    // Convert old brt currency data {gp: 3, cp: 2}
+    else if (
+      (typeof currenciesS === "object" || currenciesS instanceof Object) &&
+      Object.keys(currenciesS)?.length > 0
+    ) {
+      let currenciesSTmp = "";
+      for (const currencyKey of Object.keys(currenciesS)) {
+        currenciesSTmp = currenciesSTmp + " " + currenciesS[currencyKey] + currencyKey;
+      }
+      return currenciesSTmp.trim();
+    } else {
+      Logger.error(`Cannot parse this currencies`, currenciesS);
+      return "";
+    }
   }
 
   /**
@@ -159,8 +177,8 @@ export default class ItemPilesHelpers {
     Logger.debug("hasEnoughCurrencies | Currencies:", currencies);
     if (typeof currencies === "string" || currencies instanceof String) {
       Logger.debug("hasEnoughCurrencies | Currencies string for Item Piles:" + currencies);
-      const currencyData = game.itempiles.API.getPaymentData(currencies, { target: actorOrToken });
-      return currencyData.canBuy;
+      const currencyInfo = game.itempiles.API.getPaymentData(currencies, { target: actorOrToken });
+      return currencyInfo.canBuy;
     } else {
       // TODO waiting for item piles to fix this const currencyS = game.itempiles.API.getStringFromCurrencies(currencies);
       const currenciesForItemPiles = [];
@@ -174,8 +192,8 @@ export default class ItemPilesHelpers {
       Logger.debug("hasEnoughCurrencies | Currencies for Item Piles:", currenciesForItemPiles);
       const currenciesForItemPilesS = currenciesForItemPiles.join(" ");
       Logger.debug("hasEnoughCurrencies | Currencies string for Item Piles:" + currenciesForItemPilesS);
-      const currencyData = game.itempiles.API.getPaymentData(currenciesForItemPilesS, { target: actorOrToken });
-      return currencyData.canBuy;
+      const currencyInfo = game.itempiles.API.getPaymentData(currenciesForItemPilesS, { target: actorOrToken });
+      return currencyInfo.canBuy;
     }
   }
 
@@ -200,7 +218,7 @@ export default class ItemPilesHelpers {
     itemsToAdd,
     { removeExistingActorItems = false, skipVaultLogging = false, interactionId = false, mergeSimilarItems = true } = {}
   ) {
-    const itemsData = game.itempiles.API.addItems(actorOrToken, itemsToAdd, {
+    const itemsData = await game.itempiles.API.addItems(actorOrToken, itemsToAdd, {
       mergeSimilarItems: mergeSimilarItems, // NOT SUPPORTED ANYMORE FROM ITEM PILES TO REMOVE IN THE FUTURE
       removeExistingActorItems: removeExistingActorItems,
       skipVaultLogging: skipVaultLogging,
@@ -210,30 +228,50 @@ export default class ItemPilesHelpers {
     return itemsData;
   }
 
-  /*
-    if (!canvas.tokens.controlled.length) return;
-    for (const selected_token of canvas.tokens.controlled) {
-    await game.itempiles.API.rollItemTable("MY_TABLE_NAME_HERE", {
-        timesToRoll: "1d4+1",
-        targetActor: selected_token.actor,
-        removeExistingActorItems: false
-    });
-    }
-    await game.itempiles.API.turnTokensIntoItemPiles(canvas.tokens.controlled);
-  */
-
   /**
    * Rolls on a table of items and collates them to be able to be added to actors and such
    * @href https://fantasycomputer.works/FoundryVTT-ItemPiles/#/sample-macros?id=populate-loot-via-table
    * @param {string/Actor/Token}                                  The name, ID, UUID, or the actor itself, or an array of such
    * @param {TableResult[]} tableResults                          The tables results
+   * @param {object} options                                      Options to pass to the function
+   * @param {string/number} [options.timesToRoll="1"]             The number of times to roll on the tables, which can be a roll formula
+   * @param {boolean} [options.resetTable=true]                   Whether to reset the table before rolling it
+   * @param {boolean} [options.normalizeTable=true]               Whether to normalize the table before rolling it
+   * @param {boolean} [options.displayChat=false]                 Whether to display the rolls to the chat
+   * @param {object} [options.rollData={}]                        Data to inject into the roll formula
+   * @param {Actor/string/boolean} [options.targetActor=false]    The target actor to add the items to, or the UUID of an actor
+   * @param {boolean} [options.removeExistingActorItems=false]    Whether to clear the target actor's items before adding the ones rolled
+   * @param {boolean/string} [options.customCategory=false]       Whether to apply a custom category to the items rolled
+   *
    * @returns {Promise<Array<Item>>}                              An array of object containing the item data and their quantity
    */
-  static async populateActorOrTokenViaTableResults(targetActor, tableResults) {
-    const items = ItemPilesHelpers._convertResultsToStackedItems(tableResults);
+  static async populateActorOrTokenViaTableResults(targetActor, tableResults, options = {}) {
+    const newOptions = foundry.utils.mergeObject(
+      {
+        formula: "",
+        timesToRoll: "1",
+        resetTable: true,
+        normalizeTable: false,
+        displayChat: false,
+        rollData: {},
+        targetActor: false,
+        removeExistingActorItems: false,
+        customCategory: false,
+      },
+      options
+    );
+
+    // TODO Why did wasp do this ??
+    // if (newOptions.resetTable && table.uuid.startsWith("Compendium")) {
+    //   newOptions.resetTable = false;
+    // }
+    const tableResultsStacked = ItemPilesHelpers.stackTableResults(tableResults);
+
+    const itemsToAdd = await ItemPilesHelpers._convertResultsToStackedItems(tableResults);
+    let items = [];
     if (targetActor) {
       items = await ItemPilesHelpers.addItems(targetActor, itemsToAdd, {
-        removeExistingActorItems: options.removeExistingActorItems,
+        removeExistingActorItems: newOptions.removeExistingActorItems,
       });
     }
 
@@ -303,7 +341,7 @@ export default class ItemPilesHelpers {
 
     if (targetActor) {
       items = await ItemPilesHelpers.addItems(targetActor, itemsToAdd, {
-        removeExistingActorItems: options.removeExistingActorItems,
+        removeExistingActorItems: newOptions.removeExistingActorItems,
       });
     }
 
@@ -334,7 +372,9 @@ export default class ItemPilesHelpers {
     const customCategory = !!options.customCategory; // false
     const recursive = !!options.recursive; // true
 
-    const rolledItems = [];
+    if (!options.formula) {
+      options.formula = table.formula;
+    }
 
     //const table = await fromUuid(tableUuid);
 
@@ -381,6 +421,7 @@ export default class ItemPilesHelpers {
     const results = resultBrt?.results;
     // END MOD 4535992
 
+    // const rolledItems = [];
     // for (const rollData of results) {
     //   let rolledQuantity = rollData?.quantity ?? 1;
     //   // START MOD 4535992
@@ -432,8 +473,8 @@ export default class ItemPilesHelpers {
     // const items = [];
     // rolledItems.forEach((newItem) => {
     //   // MOD 4535992
-    //   existingItem = items.find((item) => ItemPilesHelpers.findSimilarItem(item, newItem));
-    //   //  existingItem = items.find((item) => item.documentId === newItem.documentId);
+    //   const existingItem = ItemPilesHelpers.findSimilarItem(items, newItem);
+    //   //  const existingItem = items.find((item) => item.documentId === newItem.documentId);
     //   if (existingItem) {
     //     existingItem.quantity += Math.max(newItem.quantity, 1);
     //   } else {
@@ -464,15 +505,24 @@ export default class ItemPilesHelpers {
     // });
 
     // return itemsRetrieved;
-    const itemsRetrieved = ItemPilesHelpers._convertResultsToStackedItems(results);
+    const itemsRetrieved = await ItemPilesHelpers._convertResultsToStackedItems(results, options);
     return itemsRetrieved;
   }
 
-  static async _convertResultsToStackedItems(results) {
+  static async _convertResultsToStackedItems(results, options = {}) {
+    // const formula = options.formula;
+    const resetTable = !!options.resetTable; // true;
+    const normalize = !!options.normalize; // false;
+    const displayChat = options.displayChat;
+    const rollData = options.roll;
+    const customCategory = !!options.customCategory; // false
+    const recursive = !!options.recursive; // true
+
+    const rolledItems = [];
     for (const rollData of results) {
-      let rolledQuantity = rollData?.quantity ?? 1;
       // START MOD 4535992
       /*
+        let rolledQuantity = rollData?.quantity ?? 1;
         let item;
         if (rollData.documentCollection === "Item") {
           item = game.items.get(rollData.documentId);
@@ -498,13 +548,21 @@ export default class ItemPilesHelpers {
           });
         }
         */
+      // TODO find a better way for do this, BRT already manage the one quantity behaviour
+      // let rolledQuantity = rollData?.quantity ?? 1;
+      let rolledQuantity = 1;
       const itemTmp = await RollTableToActorHelpers.resultToItemData(rollData);
       if (itemTmp instanceof RollTable) {
         Logger.error(
           `'itemTmp instanceof RollTable', It shouldn't never go here something go wrong with the code please contact the brt developer`
         );
         rolledItems.push(
-          ...(await ItemPilesHelpers.rollTable({ tableUuid: itemTmp.uuid, resetTable, normalize, displayChat }))
+          ...(await ItemPilesHelpers.rollTable({
+            tableUuid: itemTmp.uuid,
+            resetTable: resetTable,
+            normalize: normalize,
+            displayChat: displayChat,
+          }))
         );
       } else {
         const quantity = Math.max(ItemPilesHelpers.getItemQuantity(itemTmp) * rolledQuantity, 1);
@@ -520,8 +578,8 @@ export default class ItemPilesHelpers {
     const items = [];
     rolledItems.forEach((newItem) => {
       // MOD 4535992
-      existingItem = items.find((item) => ItemPilesHelpers.findSimilarItem(item, newItem));
-      //  existingItem = items.find((item) => item.documentId === newItem.documentId);
+      const existingItem = ItemPilesHelpers.findSimilarItem(items, newItem);
+      //  const existingItem = items.find((item) => item.documentId === newItem.documentId);
       if (existingItem) {
         existingItem.quantity += Math.max(newItem.quantity, 1);
       } else {
@@ -643,5 +701,30 @@ export default class ItemPilesHelpers {
     return game.itempiles.API.findSimilarItem(itemsToSearch, itemToFind, {
       returnOne: returnOne,
     });
+  }
+
+  // ==============================
+  // ADDITIONAL HELPER
+  // =============================
+
+  static stackTableResults(rolledResult) {
+    const resultsStacked = [];
+    rolledResult.forEach((newResult) => {
+      // MOD 4535992
+      //const existingItem = resultsStacked.find((item) => ItemPilesHelpers.findSimilarItem(item, newResult));
+      const existingItem = resultsStacked.find((r) => r.documentId === newResult.documentId);
+      if (existingItem) {
+        existingItem.quantity += Math.max(newResult.quantity, 1);
+      } else {
+        if (!isRealNumber(newResult.quantity)) {
+          newResult.quantity = 1;
+        }
+        resultsStacked.push({
+          ...newResult,
+        });
+      }
+    });
+
+    return resultsStacked;
   }
 }

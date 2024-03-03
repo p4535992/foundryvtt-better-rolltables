@@ -31,9 +31,14 @@ export class BetterResults {
     }
     */
     for (const r of this.tableResults) {
-      this.results.push(r);
+      const betterResult = await BRTBetterHelpers.updateTableResult(r);
+      this.results.push(betterResult.result);
     }
     // END PATCH 2024-03-02
+    return this.results;
+  }
+
+  getResults() {
     return this.results;
   }
 
@@ -176,7 +181,7 @@ export class BetterResults {
 
   /**
    * Add given currency to existing currency
-   *
+   * @deprecated not used anymore there is a method on the loot helpers now ?
    * @param {array} currencyData
    */
   _addCurrency(currencyData) {

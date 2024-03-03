@@ -225,13 +225,13 @@ export class RollTableToActorHelpers {
     // TODO
     const itemConversions = {
       Actor: {
-        text: customResultName ? `${customResultName} Portrait` : `${result.text} Portrait`,
-        img: customResultImg || existingItem?.img || "icons/svg/mystery-man.svg",
+        text: `${r.text} Portrait`,
+        img: document?.img || "icons/svg/mystery-man.svg",
         price: new Roll("1d20 + 10").roll({ async: false }).total || 1,
       },
       Scene: {
-        text: customResultName ? `Map of ${customResultName}` : `Map of ${existingItem?.name}`,
-        img: customResultImg || existingItem?.thumb || "icons/svg/direction.svg",
+        text: `Map of ${document?.name}`,
+        img: document?.thumb || "icons/svg/direction.svg",
         price: new Roll("1d20 + 10").roll({ async: false }).total || 1,
       },
     };
@@ -269,6 +269,8 @@ export class RollTableToActorHelpers {
         );
       }
       // Set up custom quantity (ty item piles)
+      // TODO DISABLED FOR NOW WE USE THE LOGIC 1:1 INSTEAD N:1 FOR NOW
+      /*
       if (!getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_QUANTITY}`)) {
         setProperty(
           r,
@@ -282,6 +284,7 @@ export class RollTableToActorHelpers {
           getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_QUANTITY}`)
         );
       }
+      */
       // Merge flags brt to item data
       if (!getProperty(itemTmp, `flags.${CONSTANTS.MODULE_ID}`)) {
         setProperty(itemTmp, `flags.${CONSTANTS.MODULE_ID}`, {});

@@ -77,7 +77,7 @@ export class BRTLootHelpers {
 
     const br = new BetterResults(results);
     const betterResults = await br.buildResults(tableEntity);
-    // const currencyData = br.getCurrencyData();
+    const currencyData = br.getCurrencyData();
     /*
     const isTokenActor = brtTable.options?.isTokenActor;
     const stackSame = brtTable.options?.stackSame;
@@ -87,9 +87,9 @@ export class BRTLootHelpers {
     await RollTableToActorHelpers.addItemsToActorOld(actor, betterResults, stackSame, itemLimit);
     */
     const actor = await BRTLootHelpers.createActor(tableEntity);
-    const currencyString = tableEntity.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.LOOT_CURRENCY_STRING_KEY);
-    const currencyDataForItemPiles = ItemPilesHelpers.generateCurrenciesStringFromString(currencyString);
-    const currencyData = ItemPilesHelpers.retrieveCurrenciesSimpleFromString(currencyDataForItemPiles);
+    // const currencyString = tableEntity.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.LOOT_CURRENCY_STRING_KEY);
+    const currencyDataForItemPiles = ItemPilesHelpers.generateCurrenciesStringFromString(currencyData);
+
     await ItemPilesHelpers.addCurrencies(actor, currencyDataForItemPiles);
     await ItemPilesHelpers.populateActorOrTokenViaTableResults(actor, results);
 
@@ -116,66 +116,62 @@ export class BRTLootHelpers {
 
     const br = new BetterResults(results);
     const betterResults = await br.buildResults(tableEntity);
-    // const currencyData = br.getCurrencyData();
-
-    const currencyString = tableEntity.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.LOOT_CURRENCY_STRING_KEY);
-    const currencyDataForItemPiles = ItemPilesHelpers.generateCurrenciesStringFromString(currencyString);
-    const currencyData = ItemPilesHelpers.retrieveCurrenciesSimpleFromString(currencyDataForItemPiles);
+    const currencyData = br.getCurrencyData();
 
     const lootChatCard = new LootChatCard(betterResults, currencyData, rollMode, roll);
 
     await lootChatCard.createChatCard(tableEntity);
   }
 
-  /**
-   * @deprecated to remove we use item piles now
-   * @param {*} actor
-   * @param {*} lootCurrency
-   */
-  static async addCurrenciesToActor(actor, lootCurrency) {
-    const currencyData = duplicate(actor.system.currency);
-    // const lootCurrency = this.currencyData;
+  // /**
+  //  * @deprecated to remove we use item piles now
+  //  * @param {*} actor
+  //  * @param {*} lootCurrency
+  //  */
+  // static async addCurrenciesToActor(actor, lootCurrency) {
+  //   const currencyData = duplicate(actor.system.currency);
+  //   // const lootCurrency = this.currencyData;
 
-    for (const key in lootCurrency) {
-      if (Object.getOwnPropertyDescriptor(currencyData, key)) {
-        const amount = Number(currencyData[key].value || 0) + Number(lootCurrency[key]);
-        currencyData[key] = amount.toString();
-      }
-    }
-    await actor.update({ "system.currency": currencyData });
-  }
+  //   for (const key in lootCurrency) {
+  //     if (Object.getOwnPropertyDescriptor(currencyData, key)) {
+  //       const amount = Number(currencyData[key].value || 0) + Number(lootCurrency[key]);
+  //       currencyData[key] = amount.toString();
+  //     }
+  //   }
+  //   await actor.update({ "system.currency": currencyData });
+  // }
 
-  /**
-   * @deprecated not used anymore
-   * @param {Token|Actor} token
-   * @param {Object} currencyData
-   * @param {Boolean} is the token passed as the token actor instead?
-   */
-  static async addCurrenciesToToken(token, lootCurrency, isTokenActor = false) {
-    // needed for base key set in the event that a token has no currency properties
-    const currencyDataInitial = { cp: 0, ep: 0, gp: 0, pp: 0, sp: 0 };
-    let currencyData = currencyDataInitial;
+  // /**
+  //  * @deprecated not used anymore
+  //  * @param {Token|Actor} token
+  //  * @param {Object} currencyData
+  //  * @param {Boolean} is the token passed as the token actor instead?
+  //  */
+  // static async addCurrenciesToToken(token, lootCurrency, isTokenActor = false) {
+  //   // needed for base key set in the event that a token has no currency properties
+  //   const currencyDataInitial = { cp: 0, ep: 0, gp: 0, pp: 0, sp: 0 };
+  //   let currencyData = currencyDataInitial;
 
-    if (isTokenActor) {
-      currencyData = duplicate(token.system.currency);
-    } else if (token.actor.system.currency) {
-      currencyData = duplicate(token.actor.system.currency);
-    }
+  //   if (isTokenActor) {
+  //     currencyData = duplicate(token.system.currency);
+  //   } else if (token.actor.system.currency) {
+  //     currencyData = duplicate(token.actor.system.currency);
+  //   }
 
-    // const lootCurrency = currencyData;
+  //   // const lootCurrency = currencyData;
 
-    for (const key in currencyDataInitial) {
-      const amount = Number(currencyData[key] || 0) + Number(lootCurrency[key] || 0);
-      currencyData[key] = amount;
-    }
+  //   for (const key in currencyDataInitial) {
+  //     const amount = Number(currencyData[key] || 0) + Number(lootCurrency[key] || 0);
+  //     currencyData[key] = amount;
+  //   }
 
-    if (isTokenActor) {
-      // @type {Actor}
-      return await token.update({ "system.currency": currencyData });
-    } else {
-      return await token.actor.update({ "system.currency": currencyData });
-    }
-  }
+  //   if (isTokenActor) {
+  //     // @type {Actor}
+  //     return await token.update({ "system.currency": currencyData });
+  //   } else {
+  //     return await token.actor.update({ "system.currency": currencyData });
+  //   }
+  // }
 
   static async createActor(table, overrideName = undefined) {
     const actorName = overrideName || table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.LOOT_ACTOR_NAME_KEY);
