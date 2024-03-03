@@ -182,6 +182,14 @@ export class RollTableToActorHelpers {
         return null;
       }
     }
+    // if (result.documentCollection === "Item") {
+    //   existingItem = game.items.get(result.documentId);
+    // } else {
+    //   const compendium = game.packs.get(result.documentCollection);
+    //   if (compendium) {
+    //     existingItem = await compendium.getDocument(result.documentId);
+    //   }
+    // }
     // NOTE: The formulaAmount calculation is already done on the betterRoll Method
     if (getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`)) {
       document = await fromUuid(getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`));
@@ -197,10 +205,48 @@ export class RollTableToActorHelpers {
         (await RetrieveHelpers.getCompendiumCollectionAsync(r.documentCollection, true, false));
       document = (await collection?.get(r.documentId)) ?? (await collection?.getDocument(r.documentId));
     }
+
+    // Maybe i can remove these double checks...
+    // Try first to load item from compendium
+    if (!document && r.collection) {
+      document = await BRTUtils.getItemFromCompendium(r);
+    }
+    // Try first to load item from item list
+    if (!document) {
+      // if an item with this name exist we load that item data, otherwise we create a new one
+      document = game.items.getName(r.text);
+    }
+
+    if (!document) {
+      Logger.error(`Cannot find document for result`, false, r);
+      return null;
+    }
+
+    // TODO
+    const itemConversions = {
+      Actor: {
+        text: customResultName ? `${customResultName} Portrait` : `${result.text} Portrait`,
+        img: customResultImg || existingItem?.img || "icons/svg/mystery-man.svg",
+        price: new Roll("1d20 + 10").roll({ async: false }).total || 1,
+      },
+      Scene: {
+        text: customResultName ? `Map of ${customResultName}` : `Map of ${existingItem?.name}`,
+        img: customResultImg || existingItem?.thumb || "icons/svg/direction.svg",
+        price: new Roll("1d20 + 10").roll({ async: false }).total || 1,
+      },
+    };
+
+    if (!document instanceof Item) {
+      // const defaultType = Item.TYPES[0]; // TODO add on item piles default item type like actor
+      Logger.error(`You cannot create itemData from this result`, r);
+      return null;
+    }
+
     if (document instanceof Item) {
       const itemTmp = document.toObject();
       itemTmp.uuid = document.uuid;
       // Update with custom name if present
+      // Set up custom name
       setProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_NAME}`, itemTmp.name);
       if (!getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`)) {
         setProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`, itemTmp.name);
@@ -211,6 +257,7 @@ export class RollTableToActorHelpers {
           getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`)
         );
       }
+      // Set up custom icon
       setProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_ICON}`, itemTmp.img);
       if (!getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`)) {
         setProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`, itemTmp.img);
@@ -219,6 +266,20 @@ export class RollTableToActorHelpers {
           itemTmp,
           `img`,
           getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`)
+        );
+      }
+      // Set up custom quantity (ty item piles)
+      if (!getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_QUANTITY}`)) {
+        setProperty(
+          r,
+          `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_QUANTITY}`,
+          ItemPilesHelpers.getItemQuantity(itemTmp)
+        );
+      } else {
+        setProperty(
+          itemTmp,
+          `quantity`,
+          getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_QUANTITY}`)
         );
       }
       // Merge flags brt to item data
@@ -554,6 +615,7 @@ export class RollTableToActorHelpers {
    * @returns
    */
   static async buildItemData(result) {
+    /*
     // PATCH 2023-10-04
     let customResultName = undefined;
     let customResultImg = undefined;
@@ -612,9 +674,9 @@ export class RollTableToActorHelpers {
       itemData.img = customResultImg;
     }
 
-    // if(!itemData.type) {
-    //   itemData.type = CONSTANTS.ITEM_LOOT_TYPE;
-    // }
+    if(!itemData.type) {
+       itemData.type = CONSTANTS.ITEM_LOOT_TYPE;
+    }
 
     const itemConversions = {
       Actor: {
@@ -630,7 +692,7 @@ export class RollTableToActorHelpers {
     };
 
     const convert = itemConversions[existingItem?.documentName] ?? false;
-    /** Create item from text since the item does not exist */
+    //  Create item from text since the item does not exist
     const createNewItem = !existingItem || convert;
 
     if (createNewItem) {
@@ -656,7 +718,8 @@ export class RollTableToActorHelpers {
     if (!itemData) {
       return;
     }
-    // itemData = await RollTableToActorHelpers.preItemCreationDataManipulation(itemData);
+    */
+    const itemData = RollTableToActorHelpers.resultToItemData(result);
     return itemData;
   }
 

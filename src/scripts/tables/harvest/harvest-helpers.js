@@ -78,8 +78,10 @@ export class BRTHarvestHelpers {
     const results = resultsBrt?.results;
     const br = new BetterResults(results);
     const betterResults = await br.buildResults(tableEntity);
+
     const actor = await BRTHarvestHelpers.createActor(tableEntity);
-    await RollTableToActorHelpers.addItemsToActorOld(actor, betterResults, stackSame, itemLimit);
+    // await RollTableToActorHelpers.addItemsToActorOld(actor, betterResults, stackSame, itemLimit);
+    await ItemPilesHelpers.populateActorOrTokenViaTableResults(actor, results);
 
     if (game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.ALWAYS_SHOW_GENERATED_HARVEST_AS_MESSAGE)) {
       if (isRealBoolean(options.displayChat)) {
@@ -100,10 +102,11 @@ export class BRTHarvestHelpers {
 
     const rollMode = brtTable.rollMode;
     const roll = brtTable.mainRoll;
-
     const results = resultsBrt?.results;
+
     const br = new BetterResults(results);
     const betterResults = await br.buildResults(tableEntity);
+
     const harvestChatCard = new HarvestChatCard(betterResults, rollMode, roll);
 
     await harvestChatCard.createChatCard(tableEntity);

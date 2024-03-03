@@ -161,9 +161,14 @@ export class BetterRollTable {
     for (let i = 0; i < draw.results.length; i++) {
       const r = draw.results[i];
 
-      let formulaAmount =
-        getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RESULTS_FORMULA_KEY_FORMULA}`) || "";
-
+      let formulaAmount = "";
+      if (hasProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_QUANTITY}`)) {
+        formulaAmount =
+          getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_QUANTITY}`) || "";
+      } else {
+        formulaAmount =
+          getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RESULTS_FORMULA_KEY_FORMULA}`) || "";
+      }
       if (r.type === CONST.TABLE_RESULT_TYPES.TEXT) {
         formulaAmount = "";
       }
@@ -481,8 +486,14 @@ export class BetterRollTable {
     if (recursive) {
       let inner = [];
       for (let result of results) {
-        let formulaAmount =
-          getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RESULTS_FORMULA_KEY_FORMULA}`) || "";
+        let formulaAmount = "";
+        if (hasProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_QUANTITY}`)) {
+          formulaAmount =
+            getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_QUANTITY}`) || "";
+        } else {
+          formulaAmount =
+            getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RESULTS_FORMULA_KEY_FORMULA}`) || "";
+        }
 
         if (result.type === CONST.TABLE_RESULT_TYPES.TEXT) {
           formulaAmount = "";
@@ -808,8 +819,14 @@ export class BetterRollTable {
       }
 
       for (const entry of draw.results) {
-        let formulaAmount =
-          getProperty(entry, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RESULTS_FORMULA_KEY_FORMULA}`) || "";
+        let formulaAmount = "";
+        if (hasProperty(entry, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_QUANTITY}`)) {
+          formulaAmount =
+            getProperty(entry, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_QUANTITY}`) || "";
+        } else {
+          formulaAmount =
+            getProperty(entry, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RESULTS_FORMULA_KEY_FORMULA}`) || "";
+        }
 
         if (entry.type === CONST.TABLE_RESULT_TYPES.TEXT) {
           formulaAmount = "";
@@ -894,17 +911,18 @@ export class BetterRollTable {
         }
       }
 
-      if (
-        getProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`) &&
-        getProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`) !== r.icon
-      ) {
-        // setProperty(
-        //   rTmp,
-        //   `icon`,
-        //   getProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`)
-        // );
-        // setProperty(rTmp,`flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`, rTmp.icon);
-      }
+      // REMOVED 2024-03-03
+      // if (
+      //   getProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`) &&
+      //   getProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`) !== r.icon
+      // ) {
+      //   // setProperty(
+      //   //   rTmp,
+      //   //   `icon`,
+      //   //   getProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`)
+      //   // );
+      //   // setProperty(rTmp,`flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`, rTmp.icon);
+      // }
 
       resultsTmp.push(rTmp);
     }

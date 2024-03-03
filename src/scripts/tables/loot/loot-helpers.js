@@ -53,8 +53,8 @@ export class BRTLootHelpers {
       await ItemPilesHelpers.populateActorOrTokenViaTable(token, tableEntity, options);
 
       const currencyString = tableEntity.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.LOOT_CURRENCY_STRING_KEY);
-      const currencyData = ItemPilesHelpers.generateCurrenciesStringFromString(currencyString);
-      await ItemPilesHelpers.addCurrencies(token, currencyData);
+      const currencyDataForItemPiles = ItemPilesHelpers.generateCurrenciesStringFromString(currencyString);
+      await ItemPilesHelpers.addCurrencies(token, currencyDataForItemPiles);
       Logger.info(`Loot generation ended on token '${token.name}'`, true);
     }
     Logger.info("Loot generation complete.", true);
@@ -73,19 +73,25 @@ export class BRTLootHelpers {
 
     const rollMode = brtTable.rollMode;
     const roll = brtTable.mainRoll;
+    const results = resultsBrt?.results;
 
+    const br = new BetterResults(results);
+    const betterResults = await br.buildResults(tableEntity);
+    // const currencyData = br.getCurrencyData();
+    /*
     const isTokenActor = brtTable.options?.isTokenActor;
     const stackSame = brtTable.options?.stackSame;
     const itemLimit = brtTable.options?.itemLimit;
-
-    const results = resultsBrt?.results;
-    const br = new BetterResults(results);
-    const betterResults = await br.buildResults(tableEntity);
-    const currencyData = br.getCurrencyData();
-
     const actor = await BRTLootHelpers.createActor(tableEntity);
     await BRTLootHelpers.addCurrenciesToActor(actor, currencyData);
     await RollTableToActorHelpers.addItemsToActorOld(actor, betterResults, stackSame, itemLimit);
+    */
+    const actor = await BRTLootHelpers.createActor(tableEntity);
+    const currencyString = tableEntity.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.LOOT_CURRENCY_STRING_KEY);
+    const currencyDataForItemPiles = ItemPilesHelpers.generateCurrenciesStringFromString(currencyString);
+    const currencyData = ItemPilesHelpers.retrieveCurrenciesSimpleFromString(currencyDataForItemPiles);
+    await ItemPilesHelpers.addCurrencies(actor, currencyDataForItemPiles);
+    await ItemPilesHelpers.populateActorOrTokenViaTableResults(actor, results);
 
     if (game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.ALWAYS_SHOW_GENERATED_LOOT_AS_MESSAGE)) {
       if (isRealBoolean(options.displayChat)) {
@@ -106,16 +112,26 @@ export class BRTLootHelpers {
 
     const rollMode = brtTable.rollMode;
     const roll = brtTable.mainRoll;
-
     const results = resultsBrt?.results;
+
     const br = new BetterResults(results);
     const betterResults = await br.buildResults(tableEntity);
-    const currencyData = br.getCurrencyData();
+    // const currencyData = br.getCurrencyData();
+
+    const currencyString = tableEntity.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.LOOT_CURRENCY_STRING_KEY);
+    const currencyDataForItemPiles = ItemPilesHelpers.generateCurrenciesStringFromString(currencyString);
+    const currencyData = ItemPilesHelpers.retrieveCurrenciesSimpleFromString(currencyDataForItemPiles);
+
     const lootChatCard = new LootChatCard(betterResults, currencyData, rollMode, roll);
 
     await lootChatCard.createChatCard(tableEntity);
   }
 
+  /**
+   * @deprecated to remove we use item piles now
+   * @param {*} actor
+   * @param {*} lootCurrency
+   */
   static async addCurrenciesToActor(actor, lootCurrency) {
     const currencyData = duplicate(actor.system.currency);
     // const lootCurrency = this.currencyData;

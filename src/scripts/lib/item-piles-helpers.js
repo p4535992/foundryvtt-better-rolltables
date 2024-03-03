@@ -19,7 +19,7 @@ export default class ItemPilesHelpers {
    *
    * @returns {Array<object>}                                 An array of object containing the data and quantity for each currency
    */
-  static getCurrenciesSimpleFromString(currenciesS) {
+  static retrieveCurrenciesSimpleFromString(currenciesS) {
     const c = ItemPilesHelpers.generateCurrenciesStringFromString(currenciesS);
     if (!c) {
       return "";
@@ -226,6 +226,24 @@ export default class ItemPilesHelpers {
    * Rolls on a table of items and collates them to be able to be added to actors and such
    * @href https://fantasycomputer.works/FoundryVTT-ItemPiles/#/sample-macros?id=populate-loot-via-table
    * @param {string/Actor/Token}                                  The name, ID, UUID, or the actor itself, or an array of such
+   * @param {TableResult[]} tableResults                          The tables results
+   * @returns {Promise<Array<Item>>}                              An array of object containing the item data and their quantity
+   */
+  static async populateActorOrTokenViaTableResults(targetActor, tableResults) {
+    const items = ItemPilesHelpers._convertResultsToStackedItems(tableResults);
+    if (targetActor) {
+      items = await ItemPilesHelpers.addItems(targetActor, itemsToAdd, {
+        removeExistingActorItems: options.removeExistingActorItems,
+      });
+    }
+
+    return items;
+  }
+
+  /**
+   * Rolls on a table of items and collates them to be able to be added to actors and such
+   * @href https://fantasycomputer.works/FoundryVTT-ItemPiles/#/sample-macros?id=populate-loot-via-table
+   * @param {string/Actor/Token}                                  The name, ID, UUID, or the actor itself, or an array of such
    * @param {string/RollTable} tableReference                     The name, ID, UUID, or the table itself, or an array of such
    * @param {object} options                                      Options to pass to the function
    * @param {string/number} [options.timesToRoll="1"]             The number of times to roll on the tables, which can be a roll formula
@@ -363,35 +381,123 @@ export default class ItemPilesHelpers {
     const results = resultBrt?.results;
     // END MOD 4535992
 
+    // for (const rollData of results) {
+    //   let rolledQuantity = rollData?.quantity ?? 1;
+    //   // START MOD 4535992
+    //   /*
+    //   let item;
+    //   if (rollData.documentCollection === "Item") {
+    //     item = game.items.get(rollData.documentId);
+    //   } else {
+    //     const compendium = game.packs.get(rollData.documentCollection);
+    //     if (compendium) {
+    //       item = await compendium.getDocument(rollData.documentId);
+    //     }
+    //   }
+    //   if (item instanceof RollTable) {
+    //     Logger.error(
+    //       `'item instanceof RollTable', It shouldn't never go here something go wrong with the code please contact the brt developer`
+    //     );
+    //     rolledItems.push(
+    //       ...(await ItemPilesHelpers.rollTable({ tableUuid: item.uuid, resetTable, normalize, displayChat }))
+    //     );
+    //   } else if (item instanceof Item) {
+    //     const quantity = Math.max(ItemPilesHelpers.getItemQuantity(item) * rolledQuantity, 1);
+    //     rolledItems.push({
+    //       ...rollData,
+    //       item,
+    //       quantity,
+    //     });
+    //   }
+    //   */
+    //   const itemTmp = await RollTableToActorHelpers.resultToItemData(rollData);
+    //   if (itemTmp instanceof RollTable) {
+    //     Logger.error(
+    //       `'itemTmp instanceof RollTable', It shouldn't never go here something go wrong with the code please contact the brt developer`
+    //     );
+    //     rolledItems.push(
+    //       ...(await ItemPilesHelpers.rollTable({ tableUuid: itemTmp.uuid, resetTable, normalize, displayChat }))
+    //     );
+    //   } else {
+    //     const quantity = Math.max(ItemPilesHelpers.getItemQuantity(itemTmp) * rolledQuantity, 1);
+    //     rolledItems.push({
+    //       ...rollData,
+    //       item: itemTmp,
+    //       quantity: quantity,
+    //     });
+    //   }
+    //   // END MOD 4535992
+    // }
+
+    // const items = [];
+    // rolledItems.forEach((newItem) => {
+    //   // MOD 4535992
+    //   existingItem = items.find((item) => ItemPilesHelpers.findSimilarItem(item, newItem));
+    //   //  existingItem = items.find((item) => item.documentId === newItem.documentId);
+    //   if (existingItem) {
+    //     existingItem.quantity += Math.max(newItem.quantity, 1);
+    //   } else {
+    //     setProperty(newItem, ItemPilesHelpers.FLAGS.ITEM, getProperty(newItem.item, ItemPilesHelpers.FLAGS.ITEM));
+    //     if (
+    //       game.itempiles.API.QUANTITY_FOR_PRICE_ATTRIBUTE &&
+    //       !getProperty(newItem, game.itempiles.API.QUANTITY_FOR_PRICE_ATTRIBUTE)
+    //     ) {
+    //       setProperty(
+    //         newItem,
+    //         game.itempiles.API.QUANTITY_FOR_PRICE_ATTRIBUTE,
+    //         ItemPilesHelpers.getItemQuantity(newItem.item)
+    //       );
+    //     }
+    //     if (customCategory) {
+    //       setProperty(newItem, ItemPilesHelpers.FLAGS.CUSTOM_CATEGORY, customCategory);
+    //     }
+    //     items.push({
+    //       ...newItem,
+    //     });
+    //   }
+    // });
+
+    // const itemsRetrieved = items.map((item) => {
+    //   const itemData = item.item instanceof Item ? item.item.toObject() : item.item;
+    //   const actualItem = itemData; // item.item.toObject();
+    //   return ItemPilesHelpers.setItemQuantity(actualItem, item.quantity);
+    // });
+
+    // return itemsRetrieved;
+    const itemsRetrieved = ItemPilesHelpers._convertResultsToStackedItems(results);
+    return itemsRetrieved;
+  }
+
+  static async _convertResultsToStackedItems(results) {
     for (const rollData of results) {
       let rolledQuantity = rollData?.quantity ?? 1;
       // START MOD 4535992
       /*
-      let item;
-      if (rollData.documentCollection === "Item") {
-        item = game.items.get(rollData.documentId);
-      } else {
-        const compendium = game.packs.get(rollData.documentCollection);
-        if (compendium) {
-          item = await compendium.getDocument(rollData.documentId);
+        let item;
+        if (rollData.documentCollection === "Item") {
+          item = game.items.get(rollData.documentId);
+        } else {
+          const compendium = game.packs.get(rollData.documentCollection);
+          if (compendium) {
+            item = await compendium.getDocument(rollData.documentId);
+          }
         }
-      }
-      if (item instanceof RollTable) {
-        Logger.error(
-          `'item instanceof RollTable', It shouldn't never go here something go wrong with the code please contact the brt developer`
-        );
-        rolledItems.push(
-          ...(await ItemPilesHelpers.rollTable({ tableUuid: item.uuid, resetTable, normalize, displayChat }))
-        );
-      } else if (item instanceof Item) {
-        const quantity = Math.max(ItemPilesHelpers.getItemQuantity(item) * rolledQuantity, 1);
-        rolledItems.push({
-          ...rollData,
-          item,
-          quantity,
-        });
-      }
-      */
+        if (item instanceof RollTable) {
+          Logger.error(
+            `'item instanceof RollTable', It shouldn't never go here something go wrong with the code please contact the brt developer`
+          );
+          rolledItems.push(
+            ...(await ItemPilesHelpers.rollTable({ tableUuid: item.uuid, resetTable, normalize, displayChat }))
+          );
+        } else if (item instanceof Item) {
+          const quantity = Math.max(ItemPilesHelpers.getItemQuantity(item) * rolledQuantity, 1);
+          rolledItems.push({
+            ...rollData,
+            item,
+            quantity,
+          });
+        }
+        */
       const itemTmp = await RollTableToActorHelpers.resultToItemData(rollData);
       if (itemTmp instanceof RollTable) {
         Logger.error(

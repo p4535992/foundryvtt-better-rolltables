@@ -225,6 +225,19 @@ export class BRTBetterHelpers {
         result,
         `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`
       );
+      const currentOriginalQuantity = getProperty(
+        result,
+        `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_QUANTITY}`
+      );
+      const currentCustomQuantity = getProperty(
+        result,
+        `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_QUANTITY}`
+      );
+
+      const currentCustomQuantityOLD = getProperty(
+        result,
+        `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RESULTS_FORMULA_KEY_FORMULA}`
+      );
 
       if (result.uuid && (!currentUuid || currentUuid !== result.uuid)) {
         setProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`, result.uuid);
@@ -294,6 +307,55 @@ export class BRTBetterHelpers {
         //   );
         // } else {
         //   await result.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON, result.img);
+        // }
+        isUpdate = true;
+      }
+
+      // Little patch for old value
+      if (currentCustomQuantityOLD && !currentCustomQuantity) {
+        setProperty(
+          result,
+          `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_QUANTITY}`,
+          currentCustomQuantityOLD
+        );
+      }
+
+      if (
+        result.quantity &&
+        currentOriginalQuantity !== result.quantity &&
+        currentCustomQuantity &&
+        currentCustomQuantity !== result.quantity
+      ) {
+        setProperty(
+          result,
+          `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_QUANTITY}`,
+          result.quantity
+        );
+        // if (noFlag) {
+        //   setProperty(
+        //     result,
+        //     `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_QUANTITY}`,
+        //     result.quantity
+        //   );
+        // } else {
+        //   await result.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_QUANTITY, result.quantity);
+        // }
+        isUpdate = true;
+      }
+      if (result.quantity && !currentCustomQuantity) {
+        setProperty(
+          result,
+          `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_QUANTITY}`,
+          result.quantity
+        );
+        // if (noFlag) {
+        //   setProperty(
+        //     result,
+        //     `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_QUANTITY}`,
+        //     result.quantity
+        //   );
+        // } else {
+        //   await result.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_QUANTITY, result.quantity);
         // }
         isUpdate = true;
       }

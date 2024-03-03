@@ -28,6 +28,12 @@ export const CONSTANTS = {
     GENERIC_RESULT_PERCENTAGE_HIGH_VALUE: "brt-percentage-high-value",
     GENERIC_RESULT_JOURNAL_PAGE_UUID: "brt-result-journal-page-uuid",
 
+    GENERIC_RESULT_CUSTOM_QUANTITY: "brt-result-custom-quantity",
+    GENERIC_RESULT_ORIGINAL_QUANTITY: "brt-result-original-quantity",
+    // TODO
+    // GENERIC_RESULT_CUSTOM_PRICE: "brt-result-custom-price",
+    // GENERIC_RESULT_ORIGINAL_PRICE: "brt-result-original-price",
+
     LOOT_CURRENCY_STRING_KEY: "table-currency-string",
     LOOT_AMOUNT_KEY: "loot-amount-key",
     LOOT_ACTOR_NAME_KEY: "loot-actor-name",
@@ -39,8 +45,9 @@ export const CONSTANTS = {
     HARVEST_SOURCE_VALUE_KEY: "brt-source-value",
     HARVEST_ACTOR_NAME_KEY: "loot-actor-name",
 
-    /** @deprecated used on the old html view */
-    RESULTS_FORMULA_KEY: "brt-result-formula",
+    // /** @deprecated used on the old html view */
+    // RESULTS_FORMULA_KEY: "brt-result-formula",
+    /** @deprecated it should be replaced in favor of GENERIC_RESULT_CUSTOM_QUANTITY */
     RESULTS_FORMULA_KEY_FORMULA: "brt-result-formula.formula",
     HIDDEN_TABLE: "brt-hidden-table",
   },

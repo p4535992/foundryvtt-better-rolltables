@@ -49,6 +49,14 @@ export class BetterChatCard {
 
       let isResultHidden = false;
       if (getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_HIDDEN_TABLE}`)) {
+        if (
+          !getProperty(
+            result,
+            `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_SHOW_HIDDEN_RESULT_ON_CHAT}`
+          )
+        ) {
+          continue;
+        }
         // customResultNameHidden = CONSTANTS.DEFAULT_HIDDEN_RESULT_TEXT;
         // customResultImgHidden = CONSTANTS.DEFAULT_HIDDEN_RESULT_IMAGE;
         isResultHidden = true;

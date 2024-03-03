@@ -3,6 +3,7 @@ import { BRTBetterHelpers } from "../../tables/better/brt-helper.js";
 import { getSubstring } from "../../lib/lib.js";
 import { CompendiumToRollTableDialog } from "./compendium-to-rollTable-dialog.js";
 import Logger from "../../lib/Logger.js";
+import ItemPilesHelpers from "../../lib/item-piles-helpers.js";
 
 /**
  * @href https://gist.github.com/crazycalya/0cd20cd12b1a344d21302a794cb229ff
@@ -160,8 +161,11 @@ export class CompendiumToRollTableSpecialHarvestDialog {
               [`${CONSTANTS.FLAGS.HARVEST_SOURCE_VALUE_KEY}`]: sourceValue ?? "",
               [`${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`]: es.uuid ?? "",
               [`${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`]: newName ?? "",
+              [`${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`]: "",
+              [`${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_QUANTITY}`]: String(num) ?? "1",
               [`${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_NAME}`]: e.name ?? "",
               [`${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_ICON}`]: e.img ?? "",
+              [`${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_QUANTITY}`]: ItemPilesHelpers.getItemQuantity(e) ?? 1,
             },
           },
         };
