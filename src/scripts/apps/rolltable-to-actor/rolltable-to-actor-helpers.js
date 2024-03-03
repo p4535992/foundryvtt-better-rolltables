@@ -613,7 +613,7 @@ export class RollTableToActorHelpers {
   }
 
   /**
-   *
+   * @deprecated we use instead RollTableToActorHelpers.resultToItemData(result)
    * @param {TableResult} result
    * @returns
    */

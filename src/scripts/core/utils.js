@@ -280,15 +280,14 @@ export class BRTUtils {
     return newOptions;
   }
 
-  // TODO to remove itemData parameter ?
   static async addToItemData(itemsData, itemEntity, itemData = {}, isHidden = false) {
     const existingItem = itemsData.find((i) => i.item.id === itemEntity.id);
     const quantity = getProperty(itemData, game.itempiles.API.ITEM_QUANTITY_ATTRIBUTE); // getProperty(itemData, SETTINGS.QUANTITY_PROPERTY_PATH) || 1;
     // const weight = getProperty(itemData, SETTINGS.WEIGHT_PROPERTY_PATH) || 0;
 
     if (existingItem) {
-      existingItem.quantity = +existingItem.quantity + +quantity;
-      // existingItem.weight = +existingItem.weight + +weight;
+      existingItem.quantity = existingItem.quantity + quantity;
+      // existingItem.weight = existingItem.weight +weight;
     } else {
       // we will scale down the font size if an item name is too long
       const fontSize = Math.max(60, 100 - Math.max(0, (itemEntity.name || itemEntity.text).length - 27) * 2);

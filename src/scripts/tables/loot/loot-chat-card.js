@@ -30,6 +30,7 @@ export class LootChatCard {
   }
 
   async findOrCreateItems() {
+    // TODO maybe is better to loop on already stucked results ?
     for (const result of this.betterResults) {
       let customResultName = undefined;
       let customResultImg = undefined;
