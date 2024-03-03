@@ -206,7 +206,7 @@ export default class ItemPilesHelpers {
       skipVaultLogging: skipVaultLogging,
       interactionId: interactionId,
     });
-    Logger.debug(`addItems | Added ${itemsToAdd.length} items to ${targetedToken.name}`, itemsData);
+    Logger.debug(`addItems | Added ${itemsToAdd.length} items to ${actorOrToken.name}`, itemsData);
     return itemsData;
   }
 
@@ -299,26 +299,6 @@ export default class ItemPilesHelpers {
     return await ItemPilesHelpers.rollTable(table, options);
   }
 
-  //   /**
-  //    * @href https://github.com/fantasycalendar/FoundryVTT-ItemPiles/blob/master/src/helpers/pile-utilities.js#L1885
-  //    * @param tableUuid
-  //    * @param formula
-  //    * @param resetTable
-  //    * @param normalize
-  //    * @param displayChat
-  //    * @param rollData
-  //    * @param customCategory
-  //    * @returns {Promise<[object]>}
-  //    */
-  //   static async rollTable({
-  //     tableUuid,
-  //     formula = "1",
-  //     resetTable = true,
-  //     normalize = false,
-  //     displayChat = false,
-  //     rollData = {},
-  //     customCategory = false,
-  //   } = {}) {
   /**
    * @href https://github.com/fantasycalendar/FoundryVTT-ItemPiles/blob/master/src/helpers/pile-utilities.js#L1885
    * @param {RollTable|string} tableReference
@@ -413,26 +393,25 @@ export default class ItemPilesHelpers {
       }
       */
       const itemTmp = await RollTableToActorHelpers.resultToItemData(rollData);
-      if (item instanceof RollTable) {
+      if (itemTmp instanceof RollTable) {
         Logger.error(
-          `'item instanceof RollTable', It shouldn't never go here something go wrong with the code please contact the brt developer`
+          `'itemTmp instanceof RollTable', It shouldn't never go here something go wrong with the code please contact the brt developer`
         );
         rolledItems.push(
-          ...(await ItemPilesHelpers.rollTable({ tableUuid: item.uuid, resetTable, normalize, displayChat }))
+          ...(await ItemPilesHelpers.rollTable({ tableUuid: itemTmp.uuid, resetTable, normalize, displayChat }))
         );
       } else {
         const quantity = Math.max(ItemPilesHelpers.getItemQuantity(itemTmp) * rolledQuantity, 1);
         rolledItems.push({
           ...rollData,
-          itemTmp,
-          quantity,
+          item: itemTmp,
+          quantity: quantity,
         });
       }
       // END MOD 4535992
     }
 
     const items = [];
-
     rolledItems.forEach((newItem) => {
       const existingItem = items.find((item) => item.documentId === newItem.documentId);
       if (existingItem) {
@@ -458,7 +437,13 @@ export default class ItemPilesHelpers {
       }
     });
 
-    return items;
+    const itemsRetrieved = items.map((item) => {
+      const itemData = item.item instanceof Item ? item.item.toObject() : item.item;
+      const actualItem = itemData; // item.item.toObject();
+      return ItemPilesHelpers.setItemQuantity(actualItem, item.quantity);
+    });
+
+    return itemsRetrieved;
   }
 
   /**
@@ -473,6 +458,33 @@ export default class ItemPilesHelpers {
   }
 
   /**
+   * Returns whether an item has the quantity property
+   *
+   * @param {Item/Object} item
+   * @returns {Boolean}
+   */
+  static hasItemQuantity(item) {
+    const itemData = item instanceof Item ? item.toObject() : item;
+    return hasProperty(itemData, game.itempiles.API.ITEM_QUANTITY_ATTRIBUTE);
+  }
+
+  /**
+   * Returns a given item's quantity
+   *
+   * @param {Object} itemData
+   * @param {Number} quantity
+   * @param {Boolean} requiresExistingQuantity
+   * @returns {Object}
+   */
+  static setItemQuantity(item, quantity, requiresExistingQuantity = false) {
+    const itemData = item instanceof Item ? item.toObject() : item;
+    if (!requiresExistingQuantity || getItemTypesThatCanStack().has(itemData.type) || hasItemQuantity(itemData)) {
+      setProperty(itemData, game.itempiles.API.ITEM_QUANTITY_ATTRIBUTE, quantity);
+    }
+    return itemData;
+  }
+
+  /**
    * Returns a given item's cost/price
    *
    * @param {Item/Object} item
@@ -481,6 +493,33 @@ export default class ItemPilesHelpers {
   static getItemCost(item) {
     const itemData = item instanceof Item ? item.toObject() : item;
     return getProperty(itemData, game.itempiles.API.ITEM_PRICE_ATTRIBUTE) ?? 0;
+  }
+
+  /**
+   * Returns whether an item has the cost/price property
+   *
+   * @param {Item/Object} item
+   * @returns {Boolean}
+   */
+  static hasItemCost(item) {
+    const itemData = item instanceof Item ? item.toObject() : item;
+    return hasProperty(itemData, game.itempiles.API.ITEM_PRICE_ATTRIBUTE);
+  }
+
+  /**
+   * Returns a given item's cost/price
+   *
+   * @param {Object} itemData
+   * @param {Number} cost
+   * @param {Boolean} requiresExistingCost
+   * @returns {Object}
+   */
+  static setItemCost(item, cost, requiresExistingCost = false) {
+    const itemData = item instanceof Item ? item.toObject() : item;
+    if (!requiresExistingCost || hasItemCost(itemData)) {
+      setProperty(itemData, game.itempiles.API.ITEM_PRICE_ATTRIBUTE, cost);
+    }
+    return itemData;
   }
 
   /**
