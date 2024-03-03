@@ -225,12 +225,12 @@ export class RollTableToActorHelpers {
     // TODO
     const itemConversions = {
       Actor: {
-        text: `${r.text} Portrait`,
+        name: `${r.text} Portrait`,
         img: document?.img || "icons/svg/mystery-man.svg",
         price: new Roll("1d20 + 10").roll({ async: false }).total || 1,
       },
       Scene: {
-        text: `Map of ${document?.name}`,
+        name: `Map of ${document?.name}`,
         img: document?.thumb || "icons/svg/direction.svg",
         price: new Roll("1d20 + 10").roll({ async: false }).total || 1,
       },

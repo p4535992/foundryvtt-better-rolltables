@@ -1,3 +1,4 @@
+import { isEmptyObject } from "jquery";
 import { RollTableToActorHelpers } from "../apps/rolltable-to-actor/rolltable-to-actor-helpers";
 import { BetterRollTable } from "../core/brt-table";
 import Logger from "./Logger";
@@ -87,9 +88,14 @@ export default class ItemPilesHelpers {
   static async addCurrencies(actorOrToken, currencies) {
     Logger.debug("addCurrencies | Currencies:", currencies);
     if (typeof currencies === "string" || currencies instanceof String) {
-      Logger.debug("addCurrencies | Currencies string for Item Piles:" + currencies);
+      if (!currencies) {
+        return;
+      }
       await game.itempiles.API.addCurrencies(actorOrToken, currencies);
     } else {
+      if (isEmptyObject(currencies)) {
+        return;
+      }
       // TODO waiting for item piles to fix this const currencyS = game.itempiles.API.getStringFromCurrencies(currencies);
       const currenciesForItemPiles = [];
       for (const currency of currencies) {
@@ -117,9 +123,14 @@ export default class ItemPilesHelpers {
   static async removeCurrencies(actorOrToken, currencies) {
     Logger.debug("removeCurrencies | Currencies:", currencies);
     if (typeof currencies === "string" || currencies instanceof String) {
-      Logger.debug("removeCurrencies | Currencies string for Item Piles:" + currencies);
+      if (!currencies) {
+        return;
+      }
       await game.itempiles.API.removeCurrencies(actorOrToken, currencies);
     } else {
+      if (isEmptyObject(currencies)) {
+        return;
+      }
       // TODO waiting for item piles to fix this const currencyS = game.itempiles.API.getStringFromCurrencies(currencies);
       const currenciesForItemPiles = [];
       for (const currency of currencies) {
@@ -146,9 +157,14 @@ export default class ItemPilesHelpers {
   static async updateCurrencies(actorOrToken, currencies) {
     Logger.debug("updateCurrencies | Currencies:", currencies);
     if (typeof currencies === "string" || currencies instanceof String) {
-      Logger.debug("updateCurrencies | Currencies string for Item Piles:" + currencies);
+      if (!currencies) {
+        return;
+      }
       await game.itempiles.API.updateCurrencies(actorOrToken, currencies);
     } else {
+      if (isEmptyObject(currencies)) {
+        return;
+      }
       // TODO waiting for item piles to fix this const currencyS = game.itempiles.API.getStringFromCurrencies(currencies);
       const currenciesForItemPiles = [];
       for (const currency of currencies) {
@@ -176,10 +192,15 @@ export default class ItemPilesHelpers {
   static hasEnoughCurrencies(actorOrToken, currencies) {
     Logger.debug("hasEnoughCurrencies | Currencies:", currencies);
     if (typeof currencies === "string" || currencies instanceof String) {
-      Logger.debug("hasEnoughCurrencies | Currencies string for Item Piles:" + currencies);
+      if (!currencies) {
+        return;
+      }
       const currencyInfo = game.itempiles.API.getPaymentData(currencies, { target: actorOrToken });
       return currencyInfo.canBuy;
     } else {
+      if (isEmptyObject(currencies)) {
+        return;
+      }
       // TODO waiting for item piles to fix this const currencyS = game.itempiles.API.getStringFromCurrencies(currencies);
       const currenciesForItemPiles = [];
       for (const currency of currencies) {
@@ -265,7 +286,7 @@ export default class ItemPilesHelpers {
     // if (newOptions.resetTable && table.uuid.startsWith("Compendium")) {
     //   newOptions.resetTable = false;
     // }
-    const tableResultsStacked = ItemPilesHelpers.stackTableResults(tableResults);
+    // const tableResultsStacked = ItemPilesHelpers.stackTableResults(tableResults);
 
     const itemsToAdd = await ItemPilesHelpers._convertResultsToStackedItems(tableResults);
     let items = [];
@@ -552,6 +573,10 @@ export default class ItemPilesHelpers {
       // let rolledQuantity = rollData?.quantity ?? 1;
       let rolledQuantity = 1;
       const itemTmp = await RollTableToActorHelpers.resultToItemData(rollData);
+      if (!itemTmp) {
+        Logger.error(`The result '${rollData.name + "|" + rollData.documentId}' is not a valid link anymore`, true);
+        continue;
+      }
       if (itemTmp instanceof RollTable) {
         Logger.error(
           `'itemTmp instanceof RollTable', It shouldn't never go here something go wrong with the code please contact the brt developer`
@@ -644,7 +669,8 @@ export default class ItemPilesHelpers {
    */
   static setItemQuantity(item, quantity, requiresExistingQuantity = false) {
     const itemData = item instanceof Item ? item.toObject() : item;
-    if (!requiresExistingQuantity || getItemTypesThatCanStack().has(itemData.type) || hasItemQuantity(itemData)) {
+    // if (!requiresExistingQuantity || ItemPilesHelpers.getItemTypesThatCanStack().has(itemData.type) || ItemPilesHelpers.hasItemQuantity(itemData)) {
+    if (!requiresExistingQuantity || ItemPilesHelpers.hasItemQuantity(itemData)) {
       setProperty(itemData, game.itempiles.API.ITEM_QUANTITY_ATTRIBUTE, quantity);
     }
     return itemData;
@@ -682,7 +708,7 @@ export default class ItemPilesHelpers {
    */
   static setItemCost(item, cost, requiresExistingCost = false) {
     const itemData = item instanceof Item ? item.toObject() : item;
-    if (!requiresExistingCost || hasItemCost(itemData)) {
+    if (!requiresExistingCost || ItemPilesHelpers.hasItemCost(itemData)) {
       setProperty(itemData, game.itempiles.API.ITEM_PRICE_ATTRIBUTE, cost);
     }
     return itemData;
