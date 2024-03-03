@@ -32,6 +32,29 @@ export class BetterResults {
     */
     for (const r of this.tableResults) {
       const betterResult = await BRTBetterHelpers.updateTableResult(r);
+      // Special cases
+      if (table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_BETTER) {
+        //
+      } else if (table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_LOOT) {
+        //
+        if (betterResult.result.isText) {
+          const currencyDataToAddS = betterResult.result.text;
+          const currencyDataToAdd = await ItemPilesHelpers.retrieveCurrenciesSimpleFromString(currencyDataToAddS);
+          for (const currencyKey of Object.keys(currencyDataToAdd)) {
+            if (this.currencyData[currencyKey]) {
+              this.currencyData[currencyKey] =
+                this.currencyData[currencyKey] +
+                (await BRTBetterHelpers.tryRoll(String(currencyDataToAdd[currencyKey])));
+            } else {
+              this.currencyData[currencyKey] = await BRTBetterHelpers.tryRoll(String(currencyDataToAdd[currencyKey]));
+            }
+          }
+        }
+      } else if (table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_STORY) {
+        //
+      } else if (table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_HARVEST) {
+        //
+      }
       this.results.push(betterResult.result);
     }
     // END PATCH 2024-03-02

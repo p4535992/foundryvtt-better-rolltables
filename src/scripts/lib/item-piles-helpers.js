@@ -60,6 +60,12 @@ export default class ItemPilesHelpers {
       currenciesSTmp = currenciesSTmp.replaceAll(/{Gold}/gi, "gp");
       currenciesSTmp = currenciesSTmp.replaceAll(/{Platinum}/gi, "pp");
       currenciesSTmp = currenciesSTmp.replaceAll("/r", "");
+      // Convert old brt loot currency formula {(2d8+1)*10[cp], 6d8+3 [sp]}
+      currenciesSTmp = currenciesSTmp.replaceAll("}", "");
+      currenciesSTmp = currenciesSTmp.replaceAll("{", "");
+      // Remove html code base
+      currenciesSTmp = currenciesSTmp.replaceAll("</p>", "");
+      currenciesSTmp = currenciesSTmp.replaceAll("<p>", "");
       return currenciesSTmp.trim();
     }
     // Convert old brt currency data {gp: 3, cp: 2}
