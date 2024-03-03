@@ -318,6 +318,7 @@ export class BRTBetterHelpers {
           `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_QUANTITY}`,
           currentCustomQuantityOLD
         );
+        setProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RESULTS_FORMULA_KEY_FORMULA}`, "");
       }
 
       if (

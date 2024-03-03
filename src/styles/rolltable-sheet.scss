@@ -322,6 +322,11 @@
             background-color: greenyellow;
           }
         }
+
+        > thead {
+          overflow-y: scroll;
+          display: block;
+        }
       }
     }
 

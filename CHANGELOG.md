@@ -2,6 +2,18 @@ TODO
 - Add confirm dialog on reset button ???
 - Add flags for cost/price like already done for the quantity is possible now with item piles support
 
+### 2.1.0 [BREAKING CHANGES]
+
+[BREAKING CHANGES] New major release, don't update giusot module before a session, take time to do some texting. I rewrote a lot of code, but the most important thing is that I now rely on the item piles module for more complex operations.
+
+- Try to Bug fix: https://github.com/p4535992/foundryvtt-better-rolltables/issues/28
+- Try to Bug fix: https://github.com/p4535992/foundryvtt-better-rolltables/issues/29
+- Try to bug fix: https://github.com/p4535992/foundryvtt-better-rolltables/issues/26
+- Add item-piles module as dependency and integrate in the core code of the module
+- Add feature: https://github.com/p4535992/foundryvtt-better-rolltables/issues/11
+- Can't replicate https://github.com/p4535992/foundryvtt-better-rolltables/issues/21
+- Can't replicate: https://github.com/p4535992/foundryvtt-better-rolltables/issues/25
+- Can't replicate: https://github.com/p4535992/foundryvtt-better-rolltables/issues/27
 
 ### 2.0.34
 
