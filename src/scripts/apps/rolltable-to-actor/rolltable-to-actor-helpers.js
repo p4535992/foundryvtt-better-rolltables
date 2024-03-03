@@ -38,7 +38,7 @@ export class RollTableToActorHelpers {
   }
 
   static async addRollTableItemsToActor(table, actor, options = {}) {
-    const itemsData = ItemPilesHelpers.populateLootViaTable(table, {
+    const itemsData = ItemPilesHelpers.populateActorOrTokenViaTable(table, {
       targetActor: actor,
       removeExistingActorItems: false,
     });
@@ -49,6 +49,7 @@ export class RollTableToActorHelpers {
     const actorWithItems = await RollTableToActorHelpers.addItemsToActor(actor, itemsData);
     */
     // Notify the user of items added
+    /*
     let itemNames = itemsData
       .map((i) => {
         const itemStackAttribute = game.itempiles.API.ITEM_QUANTITY_ATTRIBUTE; // game.settings.get(CONSTANTS.MODULE_ID, SETTINGS.QUANTITY_PROPERTY_PATH);
@@ -68,13 +69,15 @@ export class RollTableToActorHelpers {
       itemNames,
       actorNames,
     ]);
-    Logger.info(infoStr, true);
+    */
+    Logger.info(Logger.i18n(`${CONSTANTS.MODULE_ID}.label.importSuccess`), true);
     const items = itemsData;
     return items;
   }
 
   /**
    * Add rolltable results to actor
+   * @deprecated to remove we use item piles now
    * @param {Token} token
    * @param {TableResult[]} results
    * @param {boolean} stackSame
@@ -103,6 +106,7 @@ export class RollTableToActorHelpers {
     }
 
     // Notify the user of items added
+    /*
     let itemNames = itemsData
       .map((i) => {
         const itemStackAttribute = game.itempiles.API.ITEM_QUANTITY_ATTRIBUTE; // game.settings.get(CONSTANTS.MODULE_ID, SETTINGS.QUANTITY_PROPERTY_PATH);
@@ -123,10 +127,18 @@ export class RollTableToActorHelpers {
       actorNames,
     ]);
     Logger.info(infoStr, true);
+    */
+    Logger.info(Logger.i18n(`${CONSTANTS.MODULE_ID}.label.importSuccess`), true);
     const items = itemsData;
     return items;
   }
 
+  /**
+   * @deprecated to remove we use item piles now
+   * @param {*} str
+   * @param {*} arr
+   * @returns
+   */
   static _stringInject(str, arr) {
     if (typeof str !== "string" || !(arr instanceof Array)) {
       return false;
@@ -224,24 +236,27 @@ export class RollTableToActorHelpers {
 
   /**
    * Preemptively stacks all items in the itemsData, if possible
+   * @deprecated remain for the special case of the harvester module harvester
    * @param itemsData
    * @return {*[]|*}
    */
   static preStackItems(itemsData) {
-    return RollTableToActorHelpers._preStackItemsImpl(itemsData, false, false); //, false);
+    return RollTableToActorHelpers._preStackItemsImpl(itemsData, false, false, false);
   }
 
   /**
    * Preemptively stacks all items in the itemsData, if possible
+   * @deprecated remain for the special case of the harvester module harvester
    * @param itemsData
    * @return {*[]|*}
    */
   static preStackItemsSpecialHarvester(itemsData) {
-    return RollTableToActorHelpers._preStackItemsImpl(itemsData, false, true); // true);
+    return RollTableToActorHelpers._preStackItemsImpl(itemsData, false, true, true);
   }
 
   /**
    * Preemptively stacks all items in the itemsData, if possible
+   * @deprecated remain for the special case of the harvester module harvester
    * @param itemsData
    * @return {*[]|*}
    */
@@ -429,7 +444,7 @@ export class RollTableToActorHelpers {
   }
 
   /**
-   * @deprecated
+   * @deprecated very old method
    * @param {token} token
    * @param {TableResult[]} results
    * @param {boolean} stackSame

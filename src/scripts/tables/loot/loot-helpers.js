@@ -25,8 +25,8 @@ export class BRTLootHelpers {
     } else {
       tokenstack = token ? (token.constructor === Array ? token : [token]) : canvas.tokens.controlled;
     }
-
     Logger.info("Loot generation started.", true);
+
     /*
     const brtTable = new BetterRollTable(tableEntity, options);
     await brtTable.initialize();
@@ -50,7 +50,7 @@ export class BRTLootHelpers {
     */
     for (const token of tokenstack) {
       Logger.info(`Loot generation started on token '${token.name}'`, true);
-      await ItemPilesHelpers.populateLootViaTable(token, tableEntity, options);
+      await ItemPilesHelpers.populateActorOrTokenViaTable(token, tableEntity, options);
 
       const currencyString = tableEntity.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.LOOT_CURRENCY_STRING_KEY);
       const currencyData = ItemPilesHelpers.generateCurrenciesStringFromString(currencyString);

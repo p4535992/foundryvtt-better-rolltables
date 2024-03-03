@@ -7,6 +7,7 @@ import { BRTUtils } from "../../core/utils";
 import { BetterRollTable } from "../../core/brt-table";
 import SETTINGS from "../../constants/settings";
 import Logger from "../../lib/Logger";
+import ItemPilesHelpers from "../../lib/item-piles-helpers";
 
 export class BRTHarvestHelpers {
   /**
@@ -24,16 +25,15 @@ export class BRTHarvestHelpers {
     } else {
       tokenstack = token ? (token.constructor === Array ? token : [token]) : canvas.tokens.controlled;
     }
-
     Logger.info("Harvest generation started.");
 
+    /*
     const brtTable = new BetterRollTable(tableEntity, options);
     await brtTable.initialize();
 
     const isTokenActor = brtTable.options?.isTokenActor;
     const stackSame = brtTable.options?.stackSame;
     const itemLimit = brtTable.options?.itemLimit;
-
     for (const token of tokenstack) {
       Logger.info(`Harvest generation started on token '${token.name}'`, true);
       const resultsBrt = await brtTable.betterRoll();
@@ -44,7 +44,16 @@ export class BRTHarvestHelpers {
       await RollTableToActorHelpers.addItemsToTokenOld(token, betterResults, stackSame, isTokenActor, itemLimit);
       Logger.info(`Harvest generation started on token '${token.name}'`, true);
     }
+    */
+    for (const token of tokenstack) {
+      Logger.info(`Harvest generation started on token '${token.name}'`, true);
+      await ItemPilesHelpers.populateActorOrTokenViaTable(token, tableEntity, options);
 
+      const currencyString = tableEntity.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.LOOT_CURRENCY_STRING_KEY);
+      const currencyData = ItemPilesHelpers.generateCurrenciesStringFromString(currencyString);
+      await ItemPilesHelpers.addCurrencies(token, currencyData);
+      Logger.info(`Harvest generation ended on token '${token.name}'`, true);
+    }
     Logger.info("Harvest generation complete.");
     return;
   }

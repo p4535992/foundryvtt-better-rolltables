@@ -239,7 +239,7 @@ export default class ItemPilesHelpers {
    *
    * @returns {Promise<Array<Item>>}                              An array of object containing the item data and their quantity
    */
-  static async populateLootViaTable(targetActor, tableReference, options = {}) {
+  static async populateActorOrTokenViaTable(targetActor, tableReference, options = {}) {
     const table = await RetrieveHelpers.getRollTableAsync(tableReference);
     const newOptions = foundry.utils.mergeObject(
       {
@@ -364,7 +364,7 @@ export default class ItemPilesHelpers {
     // END MOD 4535992
 
     for (const rollData of results) {
-      let rolledQuantity = rollData?.quantity ?? 1; // TODO WHY THIS ?
+      let rolledQuantity = rollData?.quantity ?? 1;
       // START MOD 4535992
       /*
       let item;
@@ -413,7 +413,9 @@ export default class ItemPilesHelpers {
 
     const items = [];
     rolledItems.forEach((newItem) => {
-      const existingItem = items.find((item) => item.documentId === newItem.documentId);
+      // MOD 4535992
+      existingItem = items.find((item) => ItemPilesHelpers.findSimilarItem(item, newItem));
+      //  existingItem = items.find((item) => item.documentId === newItem.documentId);
       if (existingItem) {
         existingItem.quantity += Math.max(newItem.quantity, 1);
       } else {
