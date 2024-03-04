@@ -569,7 +569,7 @@ export class BetterRollTable {
 
     if (this.table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_HARVEST) {
       // Filter by dc
-      if (dc && parseInt(dc) > 0) {
+      if (isRealNumber(dc) && parseInt(dc) > 0) {
         resultsUpdate = resultsUpdate.filter((r) => {
           return getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_DC_VALUE_KEY}`) <= parseInt(dc);
         });

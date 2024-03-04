@@ -2,6 +2,10 @@ TODO
 - Add confirm dialog on reset button ???
 - Add flags for cost/price like already done for the quantity is possible now with item piles support
 
+### 2.1.1
+
+- Little fix on check for dc with negative numbers
+
 ### 2.1.0 [BREAKING CHANGES]
 
 [BREAKING CHANGES] New major release, don't update the module just before a session, take time to do some testing. I rewrote a lot of code, but the most important thing is that I now rely on the item piles module for more complex operations.
