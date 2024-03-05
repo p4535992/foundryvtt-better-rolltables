@@ -1,18 +1,37 @@
 {
   "env": {
     "browser": true,
-    "es2022": true,
+    "es6": true,
     "node": true,
     "jquery": true
   },
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
+  ],
   "parserOptions": {
     "requireConfigFile": false,
+    "ecmaVersion": 2018,
     "sourceType": "module"
   },
-  "plugins": [
-    "jsdoc"
+  "ignorePatterns": [
+    "dist/"
   ],
   "rules": {
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ],
+    "no-console": "off",
+    "no-plusplus": [
+      "error",
+      {
+        "allowForLoopAfterthoughts": true
+      }
+    ],
     "array-bracket-spacing": ["warn", "never"],
     "array-callback-return": "warn",
     "arrow-spacing": "warn",
@@ -23,7 +42,7 @@
     "default-param-last": "warn",
     "dot-location": ["warn", "property"],
     "eol-last": ["error", "always"],
-    "eqeqeq": ["warn", "smart"],
+    "eqeqeq": "error",
     "func-call-spacing": "warn",
     "func-names": ["warn", "never"],
     "getter-return": "warn",
@@ -86,7 +105,12 @@
     "no-unreachable-loop": "warn",
     "no-unsafe-negation": ["warn", {"enforceForOrderingRelations":  true}],
     "no-unsafe-optional-chaining": ["warn", {"disallowArithmeticOperators":  true}],
-    "no-unused-expressions": "warn",
+    "no-unused-expressions": [
+      "error",
+      {
+          "allowShortCircuit": true
+      }
+    ],
     "no-useless-backreference": "warn",
     "no-useless-call": "warn",
     "no-useless-catch": "warn",
@@ -153,7 +177,15 @@
       "named": "never",
       "asyncArrow": "always"
     }],
-    "spaced-comment": "warn",
+    "spaced-comment": [
+      "error",
+      "always",
+      {
+        "markers": [
+          "/"
+        ]
+      }
+    ],
     "jsdoc/check-access": "warn",
     "jsdoc/check-alignment": "warn",
     "jsdoc/check-examples": "off",
@@ -196,6 +228,11 @@
     "jsdoc/require-yields-check": "warn",
     "jsdoc/valid-types": "off"
   },
+  "plugins": [
+    "jsdoc",
+    "prettier",
+    "@typescript-eslint"
+  ],
   "settings": {
     "jsdoc": {
       "preferredTypes": {
@@ -208,5 +245,11 @@
         "augments": "extends"
       }
     }
+  },
+  "parser": "@typescript-eslint/parser",
+  "globals": {
+    "Hooks": true,
+    "game": true
   }
 }
+
