@@ -10,7 +10,9 @@
     "plugin:@typescript-eslint/recommended",
     "prettier"
   ],
+  "parser": "@babel/eslint-parser",
   "parserOptions": {
+    "requireConfigFile": false,
     "ecmaVersion": 2018,
     "sourceType": "module"
   },
@@ -18,17 +20,7 @@
     "dist/"
   ],
   "rules": {
-    "prettier/prettier": [
-      "error",
-      {
-        "trailingComma": "none",
-        "semi": true,
-        "tabWidth": 2,
-        "singleQuote": false,
-        "bracketSpacing": true,
-        "jsxBracketSameLine": true
-      }
-    ],
+    "prettier/prettier": "error",
     "no-console": "off",
     "no-plusplus": [
       "error",
@@ -149,7 +141,7 @@
     }],
     "comma-spacing": "warn",
     "dot-notation": "warn",
-    "indent": ["warn", 2, {"SwitchCase": 1}],
+    "indent": ["warn", 4, {"SwitchCase": 1}],
     "key-spacing": "warn",
     "keyword-spacing": ["warn", {"overrides": {"catch": {"before": true, "after": false}}}],
     "max-len": ["warn", {
@@ -189,6 +181,34 @@
           "/"
         ]
       }
+    ],
+    "@typescript-eslint/ban-ts-comment": "error",
+    "@typescript-eslint/ban-types": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "error",
+    "@typescript-eslint/lines-between-class-members": [
+        "error",
+        "always",
+        {
+            "exceptAfterSingleLine": true
+        }
+    ],
+    "@typescript-eslint/prefer-namespace-keyword": "off",
+    "@typescript-eslint/no-empty-function": "off",
+    "@typescript-eslint/no-explicit-any": "error",
+    "@typescript-eslint/no-namespace": [
+        "error",
+        {
+            "allowDeclarations": true
+        }
+    ],
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/no-unsafe-declaration-merging": "off",
+    "@typescript-eslint/no-unused-vars": "off",
+    "@typescript-eslint/array-type": [
+        "error",
+        {
+            "default": "array"
+        }
     ],
     "jsdoc/check-access": "warn",
     "jsdoc/check-alignment": "warn",
@@ -250,7 +270,14 @@
       }
     }
   },
-  "parser": "@typescript-eslint/parser",
+  "overrides": [
+    {
+        "files": "tests/**/*",
+        "rules": {
+            "global-require": "off"
+        }
+    }
+  ],
   "globals": {
     "Hooks": true,
     "game": true
