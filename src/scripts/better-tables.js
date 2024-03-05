@@ -277,7 +277,13 @@ export class BetterTables {
     }
 
     static async _renderMessage(message) {
-        const dataMessageLoot = getProperty(message, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.LOOT}`);
+        const dataMessageLoot = getProperty(message, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.LOOT}`) || {};
+        if (!dataMessageLoot.compendium) {
+            dataMessageLoot.compendium = "";
+        }
+        if (!dataMessageLoot.id) {
+            dataMessageLoot.id = "";
+        }
         const cardHtml = await renderTemplate(
             `modules/${CONSTANTS.MODULE_ID}/templates/card/loot-chat-card.hbs`,
             dataMessageLoot, //message.flags.betterTables.loot

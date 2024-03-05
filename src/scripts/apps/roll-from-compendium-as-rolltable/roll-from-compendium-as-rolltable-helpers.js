@@ -23,6 +23,7 @@ export class RollFromCompendiumAsRollTableHelpers {
         // prepare card data
         const fontSize = Math.max(60, 100 - Math.max(0, item.name.length - 27) * 2);
         const chatCardData = {
+            id: "",
             compendium: compendium,
             itemsData: [{ item: item, quantity: 1, fontSize: fontSize, type: 2 }],
         };
