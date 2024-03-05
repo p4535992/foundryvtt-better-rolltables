@@ -32,6 +32,7 @@
             "files": "*.hbs",
             "options": {
                 "requirePragma": false,
+                "parser": "angular",
                 "htmlWhitespaceSensitivity": "ignore"
             }
         }
