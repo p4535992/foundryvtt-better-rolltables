@@ -1,182 +1,182 @@
 {
-    "id": "better-rolltables",
-    "title": "Better Roll Tables",
-    "description": "Adding functionality to roll tables, especially to roll treasure and magic items",
-    "version": "2.1.1",
-    "authors": [
-        {
-            "name": "Ultrakorne",
-            "url": "https://github.com/ultrakorne/",
-            "discord": "Ultrakorne#6240",
-            "flags": {}
-        },
-        {
-            "name": "Daniel Böttner",
-            "url": "https://github.com/DanielBoettner/",
-            "discord": "JackPrince#0494",
-            "flags": {}
-        },
-        {
-            "name": "Daimakaicho",
-            "url": "https://github.com/Daimakaicho",
-            "flags": {}
-        },
-        {
-            "name": "elizeuangelo",
-            "url": "https://github.com/elizeuangelo",
-            "flags": {}
-        },
-        {
-            "name": "sasquach45932",
-            "url": "https://github.com/sasquach45932",
-            "flags": {}
-        },
-        {
-            "name": "p4535992",
-            "url": "https://github.com/p4535992",
-            "discord": "",
-            "twitter": "",
-            "patreon": "",
-            "github": "p4535992",
-            "ko-fi": "",
-            "reddit": "",
-            "email": ""
-        }
-    ],
-    "type": "module",
-    "socket": true,
-    "scripts": [],
-    "esmodules": ["module.js"],
-    "styles": ["styles/brt.css"],
-    "packs": [
-        {
-            "name": "brt-loot",
-            "label": "BRT - Loot Tables",
-            "path": "packs/brt-loot",
-            "type": "RollTable",
-            "ownership": {
-                "PLAYER": "NONE",
-                "TRUSTED": "NONE",
-                "ASSISTANT": "OWNER"
-            },
-            "module": "better-rolltables",
-            "system": "dnd5e",
-            "flags": {}
-        },
-        {
-            "name": "brt-story",
-            "label": "BRT - Story Tables",
-            "path": "packs/brt-story",
-            "type": "RollTable",
-            "ownership": {
-                "PLAYER": "NONE",
-                "TRUSTED": "NONE",
-                "ASSISTANT": "OWNER"
-            },
-            "module": "better-rolltables",
-            "flags": {}
-        },
-        {
-            "name": "brt-gen",
-            "label": "BRT - Story Generators",
-            "path": "packs/brt-gen",
-            "type": "JournalEntry",
-            "ownership": {
-                "PLAYER": "NONE",
-                "TRUSTED": "NONE",
-                "ASSISTANT": "OWNER"
-            },
-            "module": "better-rolltables",
-            "flags": {}
-        },
-        {
-            "name": "brt-harvest-harvester",
-            "label": "BRT - Harvest Tables (Harvester Module Integration)",
-            "path": "packs/brt-harvest-harvester",
-            "type": "RollTable",
-            "ownership": {
-                "PLAYER": "NONE",
-                "TRUSTED": "NONE",
-                "ASSISTANT": "OWNER"
-            },
-            "module": "better-rolltables",
-            "system": "dnd5e",
-            "flags": {}
-        }
-    ],
-    "packFolders": [
-        {
-            "name": "BRT - Better RollTables",
-            "sorting": "m",
-            "color": "#7d160c",
-            "packs": ["brt-loot", "brt-story", "brt-gen", "brt-harvest-harvester"]
-        }
-    ],
-    "languages": [
-        {
-            "lang": "de",
-            "name": "Deutsch (German)",
-            "path": "languages/de.json",
-            "flags": {}
-        },
-        {
-            "lang": "en",
-            "name": "English",
-            "path": "languages/en.json",
-            "flags": {}
-        },
-        {
-            "lang": "ko",
-            "name": "Korean",
-            "path": "languages/ko.json",
-            "flags": {}
-        },
-        {
-            "lang": "pt-BR",
-            "name": "Português (Brasil)",
-            "path": "languages/pt-BR.json",
-            "flags": {}
-        },
-        {
-            "lang": "es-ES",
-            "name": "Castellano",
-            "path": "languages/es-ES.json",
-            "flags": {}
-        },
-        {
-            "lang": "fr",
-            "name": "Français",
-            "path": "languages/fr.json",
-            "flags": {}
-        }
-    ],
-    "compatibility": {
-        "minimum": 11,
-        "verified": 11,
-        "maximum": 11
+  "id": "better-rolltables",
+  "title": "Better Roll Tables",
+  "description": "Adding functionality to roll tables, especially to roll treasure and magic items",
+  "version": "2.1.1",
+  "authors": [
+    {
+      "name": "Ultrakorne",
+      "url": "https://github.com/ultrakorne/",
+      "discord": "Ultrakorne#6240",
+      "flags": {}
     },
-    "url": "https://github.com/p4535992/foundryvtt-better-rolltables",
-    "manifest": "https://github.com/p4535992/foundryvtt-better-rolltables/releases/download/2.1.1/module.json",
-    "download": "https://github.com/p4535992/foundryvtt-better-rolltables/releases/download/2.1.1/module.zip",
-    "readme": "https://github.com/p4535992/foundryvtt-better-rolltables/blob/master/README.md",
-    "changelog": "https://github.com/p4535992/foundryvtt-better-rolltables/blob/master/CHANGELOG.md",
-    "bugs": "https://github.com/p4535992/foundryvtt-better-rolltables/issues",
-    "allowBugReporter": true,
-    "manifestPlusVersion": "1.2.0",
-    "relationships": {
-        "systems": [],
-        "requires": [
-            {
-                "id": "socketlib",
-                "type": "module",
-                "manifest": "https://raw.githubusercontent.com/manuelVo/foundryvtt-socketlib/develop/module.json",
-                "compatibility": {}
-            },
-            {
-                "id": "item-piles",
-                "type": "module"
-            }
-        ],
-        "conflicts": []
+    {
+      "name": "Daniel Böttner",
+      "url": "https://github.com/DanielBoettner/",
+      "discord": "JackPrince#0494",
+      "flags": {}
+    },
+    {
+      "name": "Daimakaicho",
+      "url": "https://github.com/Daimakaicho",
+      "flags": {}
+    },
+    {
+      "name": "elizeuangelo",
+      "url": "https://github.com/elizeuangelo",
+      "flags": {}
+    },
+    {
+      "name": "sasquach45932",
+      "url": "https://github.com/sasquach45932",
+      "flags": {}
+    },
+    {
+      "name": "p4535992",
+      "url": "https://github.com/p4535992",
+      "discord": "",
+      "twitter": "",
+      "patreon": "",
+      "github": "p4535992",
+      "ko-fi": "",
+      "reddit": "",
+      "email": ""
     }
+  ],
+  "type": "module",
+  "socket": true,
+  "scripts": [],
+  "esmodules": ["module.js"],
+  "styles": ["styles/brt.css"],
+  "packs": [
+    {
+      "name": "brt-loot",
+      "label": "BRT - Loot Tables",
+      "path": "packs/brt-loot",
+      "type": "RollTable",
+      "ownership": {
+        "PLAYER": "NONE",
+        "TRUSTED": "NONE",
+        "ASSISTANT": "OWNER"
+      },
+      "module": "better-rolltables",
+      "system": "dnd5e",
+      "flags": {}
+    },
+    {
+      "name": "brt-story",
+      "label": "BRT - Story Tables",
+      "path": "packs/brt-story",
+      "type": "RollTable",
+      "ownership": {
+        "PLAYER": "NONE",
+        "TRUSTED": "NONE",
+        "ASSISTANT": "OWNER"
+      },
+      "module": "better-rolltables",
+      "flags": {}
+    },
+    {
+      "name": "brt-gen",
+      "label": "BRT - Story Generators",
+      "path": "packs/brt-gen",
+      "type": "JournalEntry",
+      "ownership": {
+        "PLAYER": "NONE",
+        "TRUSTED": "NONE",
+        "ASSISTANT": "OWNER"
+      },
+      "module": "better-rolltables",
+      "flags": {}
+    },
+    {
+      "name": "brt-harvest-harvester",
+      "label": "BRT - Harvest Tables (Harvester Module Integration)",
+      "path": "packs/brt-harvest-harvester",
+      "type": "RollTable",
+      "ownership": {
+        "PLAYER": "NONE",
+        "TRUSTED": "NONE",
+        "ASSISTANT": "OWNER"
+      },
+      "module": "better-rolltables",
+      "system": "dnd5e",
+      "flags": {}
+    }
+  ],
+  "packFolders": [
+    {
+      "name": "BRT - Better RollTables",
+      "sorting": "m",
+      "color": "#7d160c",
+      "packs": ["brt-loot", "brt-story", "brt-gen", "brt-harvest-harvester"]
+    }
+  ],
+  "languages": [
+    {
+      "lang": "de",
+      "name": "Deutsch (German)",
+      "path": "languages/de.json",
+      "flags": {}
+    },
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "languages/en.json",
+      "flags": {}
+    },
+    {
+      "lang": "ko",
+      "name": "Korean",
+      "path": "languages/ko.json",
+      "flags": {}
+    },
+    {
+      "lang": "pt-BR",
+      "name": "Português (Brasil)",
+      "path": "languages/pt-BR.json",
+      "flags": {}
+    },
+    {
+      "lang": "es-ES",
+      "name": "Castellano",
+      "path": "languages/es-ES.json",
+      "flags": {}
+    },
+    {
+      "lang": "fr",
+      "name": "Français",
+      "path": "languages/fr.json",
+      "flags": {}
+    }
+  ],
+  "compatibility": {
+    "minimum": 11,
+    "verified": 11,
+    "maximum": 11
+  },
+  "url": "https://github.com/p4535992/foundryvtt-better-rolltables",
+  "manifest": "https://github.com/p4535992/foundryvtt-better-rolltables/releases/download/2.1.1/module.json",
+  "download": "https://github.com/p4535992/foundryvtt-better-rolltables/releases/download/2.1.1/module.zip",
+  "readme": "https://github.com/p4535992/foundryvtt-better-rolltables/blob/master/README.md",
+  "changelog": "https://github.com/p4535992/foundryvtt-better-rolltables/blob/master/CHANGELOG.md",
+  "bugs": "https://github.com/p4535992/foundryvtt-better-rolltables/issues",
+  "allowBugReporter": true,
+  "manifestPlusVersion": "1.2.0",
+  "relationships": {
+    "systems": [],
+    "requires": [
+      {
+        "id": "socketlib",
+        "type": "module",
+        "manifest": "https://raw.githubusercontent.com/manuelVo/foundryvtt-socketlib/develop/module.json",
+        "compatibility": {}
+      },
+      {
+        "id": "item-piles",
+        "type": "module"
+      }
+    ],
+    "conflicts": []
+  }
 }
