@@ -2,6 +2,16 @@ TODO
 - Add confirm dialog on reset button ???
 - Add flags for cost/price like already done for the quantity is possible now with item piles support
 
+### 2.1.2
+
+- Big clean up
+- Remove the multisystem we leverage everything with item piles
+- Add inline roll for all brt types
+- Add inline roll for additional currency on loot table
+- Convert "Better Result" to a valid "TableResult" for use the toObject and getChatText methods
+- Rename old better table reslt uuid tu uuidDoc
+- Start a new documentation
+
 ### 2.1.1
 
 - Little fix on check for dc with negative numbers

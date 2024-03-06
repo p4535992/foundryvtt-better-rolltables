@@ -59,9 +59,9 @@ In the BRT Harvest Rolltable sheet, the "Source Reference" field is the one used
 
 ### Documentation
 
-At the moment no documentation is present, any help on this front is more than welcomed, the module is intuitive enough.
+At the moment the documentation is in progress, any help on this front is more than welcomed, the module is intuitive enough.
 
-* [**Wiki**](https://github.com/p4535992/foundryvtt-better-rolltables/blob/master/wiki/Home.md)
+[**Wiki**](./wiki/Home.md)
 
 ## FAQ
 

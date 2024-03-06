@@ -12,20 +12,20 @@ How to use [Better RollTables Macros](./old/API-for-macros-and-modules#how-to-ro
 
 ### Inline roll on table text result
 
-Every BRT table apply inline rollm on text table result with the prefix "roll/" so for example:
+![](./img/common_type_inline_data_roll.png)
 
-A text like this:
+Every BRT table apply inline roll on text table result with the prefix "roll/".
+
+As a example a text like this:
 
 ```
 /roll (1d4) +5
-
 ```
 
 is converted runtime in this
 
 ```
 Rolled: 7
-
 ```
 
 ## Better Tables
@@ -37,15 +37,24 @@ Rolled: 7
 
 ### Inline currency data roll on table text result
 
+![](./img/loot_type_inline_currency_data_roll.png)
+
 Every BRT Loot table apply inline roll for the currency data on text rable result. 
 
-**NOTE:** Every text table result in a type BRT Loot tables is treated as a currencyData formula and converted in a item piles supported formula
+**NOTE:** Every text table result in a type BRT Loot tables is treated as a currencyData formula and converted in a item piles supported formula.
 
-A text like this:
+This feature support many format from old and other modules here a list:
+
+- Old brt format: `100*1d6[gp],4d4+4[sp] to 100*1d6gp 4d4+4sp`
+- Harvester format: `[[/r 5d6]]{Copper} and [[/r 1d6*100]]{Electrum}[[/r 2d6*10]]`
+- Old brt loot currency formula: `{(2d8+1)*10[cp], 6d8+3 [sp]}`
+- Html code base with the editor: `<p>100*1d6[gp],4d4+4[sp]</p>`,`<p>[[/r 5d6]]{Copper} and [[/r 1d6*100]]{Electrum}[[/r 2d6*10]]</p>`, `<p>{(2d8+1)*10[cp], 6d8+3 [sp]}</p>`
+- Item Piles format **(The advisable format to use)**: `((2d8+1)*10)cp (6d8+3)sp`
+
+As a example a text like this:
 
 ```
 {(2d8+1)*10[cp], 2d8+1 [sp]}
-
 ```
 
 is converted runtime in this 
