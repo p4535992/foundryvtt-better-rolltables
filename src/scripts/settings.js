@@ -2,7 +2,7 @@ import { CONSTANTS } from "./constants/constants";
 import SETTINGS from "./constants/settings";
 import { BetterRolltableSettingsConfig } from "./core/settingsConfig";
 import Logger from "./lib/Logger";
-import { SYSTEMS } from "./systems";
+// import { SYSTEMS } from "./systems";
 
 export const WORLD = "world";
 export const GROUP_DEFAULT = "defaults";
@@ -36,10 +36,11 @@ export const GROUP_TAGS = "Tags";
 // }
 
 export function registerSettings() {
+    /*
     for (let [name, data] of Object.entries(SETTINGS.GET_DEFAULT())) {
         game.settings.register(CONSTANTS.MODULE_ID, name, data);
     }
-
+    
     let defaultSpellCompendium = SYSTEMS.DATA.DEFAULT_SPELL_COMPENDIUM;
     let defaultActorNpcType = SYSTEMS.DATA.DEFAULT_ACTOR_NPC_TYPE;
     let defaultLootSheet = SYSTEMS.DATA.DEFAULT_LOOT_SHEET;
@@ -49,7 +50,7 @@ export function registerSettings() {
     CONSTANTS.SPELL_LEVEL_PATH = SYSTEMS.DATA.SPELL_LEVEL_PATH;
     CONSTANTS.ITEM_LOOT_TYPE = SYSTEMS.DATA.ITEM_LOOT_TYPE;
     CONSTANTS.SCROLL_REGEX = SYSTEMS.DATA.SCROLL_REGEX;
-
+    */
     game.settings.registerMenu(CONSTANTS.MODULE_ID, "helpersOptions", {
         name: Logger.i18n("User Interface Integration"),
         label: Logger.i18n(`${CONSTANTS.MODULE_ID}.Settings.Module.AdvancedSettings.Title`),
@@ -94,15 +95,15 @@ export function registerSettings() {
     //   // choices: Object.values(CONFIG.Actor.sheetClasses.npc).map((s) => ({id: s.id, label: s.label}))
     // });
 
-    game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.SPELL_COMPENDIUM_KEY, {
-        name: Logger.i18n(`${CONSTANTS.MODULE_ID}.Settings.SpellCompendium.Title`),
-        hint: Logger.i18n(`${CONSTANTS.MODULE_ID}.Settings.SpellCompendium.Description`),
-        scope: WORLD,
-        group: GROUP_DEFAULT,
-        config: false,
-        default: defaultSpellCompendium,
-        type: String,
-    });
+    // game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.SPELL_COMPENDIUM_KEY, {
+    //     name: Logger.i18n(`${CONSTANTS.MODULE_ID}.Settings.SpellCompendium.Title`),
+    //     hint: Logger.i18n(`${CONSTANTS.MODULE_ID}.Settings.SpellCompendium.Description`),
+    //     scope: WORLD,
+    //     group: GROUP_DEFAULT,
+    //     config: false,
+    //     default: defaultSpellCompendium,
+    //     type: String,
+    // });
 
     /**
      * User Interface Integration
@@ -265,7 +266,7 @@ export function registerSettings() {
 //     type: Object,
 //   });
 // }
-
+/*
 export async function applyDefaultSettings() {
     const settings = SETTINGS.GET_SYSTEM_DEFAULTS();
     for (const [name, data] of Object.entries(settings)) {
@@ -331,3 +332,4 @@ export async function checkSystem() {
 
     return applyDefaultSettings();
 }
+*/

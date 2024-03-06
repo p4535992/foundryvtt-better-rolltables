@@ -1,4 +1,4 @@
-import { SYSTEMS } from "../systems";
+// import { SYSTEMS } from "../systems";
 
 const SETTINGS = {
     // Client settings
@@ -31,6 +31,7 @@ const SETTINGS = {
 
     // Style settings
 
+    /*
     // System Settings
     DEFAULT_ACTOR_NPC_TYPE: "systemDefaultActorNpcType",
     DEFAULT_LOOT_SHEET: "systemDefaultLootSheet",
@@ -47,7 +48,7 @@ const SETTINGS = {
     SYSTEM_FOUND: "systemFound",
     SYSTEM_NOT_FOUND_WARNING_SHOWN: "systemNotFoundWarningShown",
     SYSTEM_VERSION: "systemVersion",
-
+    
     GET_DEFAULT() {
         return foundry.utils.deepClone(SETTINGS.DEFAULTS());
     },
@@ -132,6 +133,7 @@ const SETTINGS = {
             default: SYSTEMS.DATA.MATCH_ATTRIBUTES_BLACKLIST,
         },
     }),
+    */
 };
 
 export default SETTINGS;

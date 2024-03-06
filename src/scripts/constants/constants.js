@@ -4,6 +4,8 @@ export const CONSTANTS = {
     MODULE_ID: "better-rolltables",
     PATH: "modules/better-rolltables",
     TYPES: ["none", "better", "loot", "harvest", "story"],
+    PRE_RESULT_TEXT_ROLL: "/roll",
+    PRE_RESULT_TEXT_ROLLED: "Rolled: ",
     FLAGS: {
         LOOT: "loot",
         BETTER: "better",
@@ -85,10 +87,10 @@ export const CONSTANTS = {
         DEFAULTS: SETTINGS.TAGS.DEFAULTS,
     },
     // this are setted on registerSettings
-    QUANTITY_PROPERTY_PATH: null,
-    WEIGHT_PROPERTY_PATH: null,
-    PRICE_PROPERTY_PATH: null,
-    SPELL_LEVEL_PATH: null,
-    ITEM_LOOT_TYPE: null,
-    SCROLL_REGEX: null,
+    // QUANTITY_PROPERTY_PATH: null,
+    // WEIGHT_PROPERTY_PATH: null,
+    // PRICE_PROPERTY_PATH: null,
+    // SPELL_LEVEL_PATH: null,
+    // ITEM_LOOT_TYPE: null,
+    // SCROLL_REGEX: null,
 };

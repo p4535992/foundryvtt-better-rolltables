@@ -67,7 +67,11 @@ export class BetterTables {
         const resultBrt = await brtTable.betterRoll();
 
         const results = resultBrt?.results;
-        return results;
+
+        const br = new BetterResults(results);
+        const betterResults = await br.buildResults(tableEntity);
+
+        return betterResults;
     }
 
     /**
@@ -81,6 +85,10 @@ export class BetterTables {
         const resultBrt = await brtTable.betterRoll();
 
         const results = resultBrt?.results;
+
+        const br = new BetterResults(results);
+        const betterResults = await br.buildResults(tableEntity);
+
         let rollMode = brtTable.rollMode;
         let roll = brtTable.mainRoll;
 

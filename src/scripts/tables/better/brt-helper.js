@@ -209,6 +209,7 @@ export class BRTBetterHelpers {
         result.isCompendium = result.type === CONST.TABLE_RESULT_TYPES.COMPENDIUM;
         result.img = result.icon || result.img || CONFIG.RollTable.resultIcon;
         result.text = TextEditor.decodeHTML(result.text);
+        result.html = result.text;
         const resultDoc = await BRTBetterHelpers.retrieveDocumentFromResultOnlyUuid(result, false);
         result.uuid = resultDoc?.uuid ?? "";
         // grab the formula

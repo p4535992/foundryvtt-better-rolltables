@@ -34,12 +34,24 @@ export class BetterResults {
             const betterResult = await BRTBetterHelpers.updateTableResult(r);
             // Special cases
             if (table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_BETTER) {
-                //
+                if (
+                    betterResult.result.isText &&
+                    betterResult.result.text?.startsWith(CONSTANTS.PRE_RESULT_TEXT_ROLL)
+                ) {
+                    betterResult.result.text =
+                        CONSTANTS.PRE_RESULT_TEXT_ROLLED + (await BRTBetterHelpers.tryRoll(betterResult.result.text));
+                }
             } else if (
                 table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_LOOT
             ) {
                 //
-                if (betterResult.result.isText) {
+                if (
+                    betterResult.result.isText &&
+                    betterResult.result.text?.startsWith(CONSTANTS.PRE_RESULT_TEXT_ROLL)
+                ) {
+                    betterResult.result.text =
+                        CONSTANTS.PRE_RESULT_TEXT_ROLLED + (await BRTBetterHelpers.tryRoll(betterResult.result.text));
+                } else if (betterResult.result.isText) {
                     const currencyDataToAddS = betterResult.result.text;
                     const currencyDataToAdd =
                         await ItemPilesHelpers.retrieveCurrenciesSimpleFromString(currencyDataToAddS);
@@ -58,11 +70,23 @@ export class BetterResults {
             } else if (
                 table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_STORY
             ) {
-                //
+                if (
+                    betterResult.result.isText &&
+                    betterResult.result.text?.startsWith(CONSTANTS.PRE_RESULT_TEXT_ROLL)
+                ) {
+                    betterResult.result.text =
+                        CONSTANTS.PRE_RESULT_TEXT_ROLLED + (await BRTBetterHelpers.tryRoll(betterResult.result.text));
+                }
             } else if (
                 table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_HARVEST
             ) {
-                //
+                if (
+                    betterResult.result.isText &&
+                    betterResult.result.text?.startsWith(CONSTANTS.PRE_RESULT_TEXT_ROLL)
+                ) {
+                    betterResult.result.text =
+                        CONSTANTS.PRE_RESULT_TEXT_ROLLED + (await BRTBetterHelpers.tryRoll(betterResult.result.text));
+                }
             }
             this.results.push(betterResult.result);
         }
