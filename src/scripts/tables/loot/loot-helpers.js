@@ -179,7 +179,7 @@ export class BRTLootHelpers {
         if (!actor) {
             actor = await Actor.create({
                 name: actorName || "New Loot",
-                type: game.settings.get(CONSTANTS.MODULE_ID, SETTINGS.DEFAULT_ACTOR_NPC_TYPE),
+                type: game.itempiles.API.ACTOR_CLASS_TYPE, // game.settings.get(CONSTANTS.MODULE_ID, SETTINGS.DEFAULT_ACTOR_NPC_TYPE),
                 img: `modules/${CONSTANTS.MODULE_ID}/assets/artwork/chest.webp`,
                 sort: 12000,
                 token: { actorLink: true },
