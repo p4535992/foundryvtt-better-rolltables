@@ -209,9 +209,16 @@ export class BRTBetterHelpers {
         result.isCompendium = result.type === CONST.TABLE_RESULT_TYPES.COMPENDIUM;
         result.img = result.icon || result.img || CONFIG.RollTable.resultIcon;
         result.text = TextEditor.decodeHTML(result.text);
+
+        result.innerText = result.text || "";
+        // Remove html code base
+        result.innerText = result.innerText.replaceAll("</p>", "");
+        result.innerText = result.innerText.replaceAll("<p>", "");
+        result.innerText = result.innerText.trim();
+
         result.html = result.text;
         const resultDoc = await BRTBetterHelpers.retrieveDocumentFromResultOnlyUuid(result, false);
-        result.uuid = resultDoc?.uuid ?? "";
+        result.uuidDoc = resultDoc?.uuid ?? "";
         // grab the formula
         // result.qtFormula = getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.}`;
         if (result.isDocument || result.isCompendium) {
@@ -249,12 +256,16 @@ export class BRTBetterHelpers {
                 `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RESULTS_FORMULA_KEY_FORMULA}`,
             );
 
-            if (result.uuid && (!currentUuid || currentUuid !== result.uuid)) {
-                setProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`, result.uuid);
+            if (result.uuidDoc && (!currentUuid || currentUuid !== result.uuidDoc)) {
+                setProperty(
+                    result,
+                    `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`,
+                    result.uuidDoc,
+                );
                 // if (noFlag) {
-                //   setProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`, result.uuid);
+                //   setProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`, result.uuidDoc);
                 // } else {
-                //   await result.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.GENERIC_RESULT_UUID, result.uuid);
+                //   await result.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.GENERIC_RESULT_UUID, result.uuidDoc);
                 // }
                 isUpdate = true;
             }
@@ -391,9 +402,9 @@ export class BRTBetterHelpers {
       }
       */
             if (result.documentCollection === "JournalEntry") {
-                if (result.uuid) {
+                if (result.uuidDoc) {
                     result.isJournal = true;
-                    const journalEntry = await fromUuid(result.uuid);
+                    const journalEntry = await fromUuid(result.uuidDoc);
                     if (journalEntry?.pages.size > 0) {
                         const sortedArray = journalEntry.pages.contents.sort((a, b) => a.sort - b.sort);
                         const journalPages = [];

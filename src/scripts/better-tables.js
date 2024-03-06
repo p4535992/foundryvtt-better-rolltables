@@ -99,9 +99,6 @@ export class BetterTables {
         }
 
         if (game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.USE_CONDENSED_BETTERROLL)) {
-            const br = new BetterResults(results);
-            const betterResults = await br.buildResults(tableEntity);
-
             if (
                 tableEntity.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_BETTER
             ) {
@@ -125,12 +122,12 @@ export class BetterTables {
                 const harvestChatCard = new HarvestChatCard(betterResults, rollMode, roll);
                 await harvestChatCard.createChatCard(tableEntity);
             } else {
-                await brtTable.createChatCard(results, rollMode, roll);
+                await brtTable.createChatCard(betterResults, rollMode, roll);
             }
         } else {
-            await brtTable.createChatCard(results, rollMode, roll);
+            await brtTable.createChatCard(betterResults, rollMode, roll);
         }
-        return results;
+        return betterResults;
     }
 
     /**

@@ -36,10 +36,13 @@ export class BetterResults {
             if (table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_BETTER) {
                 if (
                     betterResult.result.isText &&
-                    betterResult.result.text?.startsWith(CONSTANTS.PRE_RESULT_TEXT_ROLL)
+                    betterResult.result.innerText?.startsWith(CONSTANTS.PRE_RESULT_TEXT_ROLL)
                 ) {
                     betterResult.result.text =
-                        CONSTANTS.PRE_RESULT_TEXT_ROLLED + (await BRTBetterHelpers.tryRoll(betterResult.result.text));
+                        CONSTANTS.PRE_RESULT_TEXT_ROLLED +
+                        (await BRTBetterHelpers.tryRoll(
+                            betterResult.result.innerText?.replaceAll(CONSTANTS.PRE_RESULT_TEXT_ROLL, "").trim(),
+                        ));
                 }
             } else if (
                 table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_LOOT
@@ -47,10 +50,13 @@ export class BetterResults {
                 //
                 if (
                     betterResult.result.isText &&
-                    betterResult.result.text?.startsWith(CONSTANTS.PRE_RESULT_TEXT_ROLL)
+                    betterResult.result.innerText?.startsWith(CONSTANTS.PRE_RESULT_TEXT_ROLL)
                 ) {
                     betterResult.result.text =
-                        CONSTANTS.PRE_RESULT_TEXT_ROLLED + (await BRTBetterHelpers.tryRoll(betterResult.result.text));
+                        CONSTANTS.PRE_RESULT_TEXT_ROLLED +
+                        (await BRTBetterHelpers.tryRoll(
+                            betterResult.result.innerText?.replaceAll(CONSTANTS.PRE_RESULT_TEXT_ROLL, "").trim(),
+                        ));
                 } else if (betterResult.result.isText) {
                     const currencyDataToAddS = betterResult.result.text;
                     const currencyDataToAdd =
@@ -72,23 +78,33 @@ export class BetterResults {
             ) {
                 if (
                     betterResult.result.isText &&
-                    betterResult.result.text?.startsWith(CONSTANTS.PRE_RESULT_TEXT_ROLL)
+                    betterResult.result.innerText?.startsWith(CONSTANTS.PRE_RESULT_TEXT_ROLL)
                 ) {
                     betterResult.result.text =
-                        CONSTANTS.PRE_RESULT_TEXT_ROLLED + (await BRTBetterHelpers.tryRoll(betterResult.result.text));
+                        CONSTANTS.PRE_RESULT_TEXT_ROLLED +
+                        (await BRTBetterHelpers.tryRoll(
+                            betterResult.result.innerText?.replaceAll(CONSTANTS.PRE_RESULT_TEXT_ROLL, "").trim(),
+                        ));
                 }
             } else if (
                 table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_HARVEST
             ) {
                 if (
                     betterResult.result.isText &&
-                    betterResult.result.text?.startsWith(CONSTANTS.PRE_RESULT_TEXT_ROLL)
+                    betterResult.result.innerText?.startsWith(CONSTANTS.PRE_RESULT_TEXT_ROLL)
                 ) {
                     betterResult.result.text =
-                        CONSTANTS.PRE_RESULT_TEXT_ROLLED + (await BRTBetterHelpers.tryRoll(betterResult.result.text));
+                        CONSTANTS.PRE_RESULT_TEXT_ROLLED +
+                        (await BRTBetterHelpers.tryRoll(
+                            betterResult.result.innerText?.replaceAll(CONSTANTS.PRE_RESULT_TEXT_ROLL, "").trim(),
+                        ));
                 }
             }
-            this.results.push(betterResult.result);
+
+            delete betterResult.result.uuid;
+            delete betterResult.result._id;
+            const br = mergeObject(r, betterResult.result);
+            this.results.push(br);
         }
         // END PATCH 2024-03-02
         return this.results;
