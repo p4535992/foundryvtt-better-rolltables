@@ -576,6 +576,27 @@ const API = {
         }
     },
 
+    /**
+     * Rolls on a table of items and collates them to be able to be added to actors and such
+     * @href https://fantasycomputer.works/FoundryVTT-ItemPiles/#/sample-macros?id=populate-loot-via-table
+     * @param {string/Actor/Token}                                  The name, ID, UUID, or the actor itself, or an array of such
+     * @param {string/RollTable} tableReference                     The name, ID, UUID, or the table itself, or an array of such
+     * @param {object} options                                      Options to pass to the function
+     * @param {string/number} [options.timesToRoll="1"]             The number of times to roll on the tables, which can be a roll formula
+     * @param {boolean} [options.resetTable=true]                   Whether to reset the table before rolling it
+     * @param {boolean} [options.normalizeTable=true]               Whether to normalize the table before rolling it
+     * @param {boolean} [options.displayChat=false]                 Whether to display the rolls to the chat
+     * @param {object} [options.rollData={}]                        Data to inject into the roll formula
+     * @param {Actor/string/boolean} [options.targetActor=false]    The target actor to add the items to, or the UUID of an actor
+     * @param {boolean} [options.removeExistingActorItems=false]    Whether to clear the target actor's items before adding the ones rolled
+     * @param {boolean/string} [options.customCategory=false]       Whether to apply a custom category to the items rolled
+     *
+     * @returns {Promise<Array<Item>>}                              An array of object containing the item data and their quantity
+     */
+    async rollItemTable(targetActor, tableReference, options = {}) {
+        return await ItemPilesHelpers.rollItemTable(targetActor, tableReference, options);
+    },
+
     // ===============================
     // SOCKET UTILITY
     // ================================
