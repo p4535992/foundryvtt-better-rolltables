@@ -388,5 +388,8 @@ const itemsData = await game.modules.get("better-rolltables").api.retrieveItemsD
 });
 
 
+ game.modules.get("better-rolltables").api.convertTokensToItemPiles();
+
+ game.modules.get("better-rolltables").api.convertTokensToSingleItemPile();
 
 ```

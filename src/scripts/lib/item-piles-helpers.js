@@ -771,4 +771,136 @@ export default class ItemPilesHelpers {
 
         return resultsStacked;
     }
+
+    /**
+     * Converts the provided token to a item piles lootable sheet check out the documentation from the itempiles page
+     * @href https://fantasycomputer.works/FoundryVTT-ItemPiles/#/api?id=turntokensintoitempiles
+     * @href https://github.com/trioderegion/fvtt-macros/blob/master/honeybadger-macros/tokens/single-loot-pile.js#L77
+     * @param {Array<Token|TokenDocument} tokensTarget
+     * @param {object} options	object	Options to pass to the function
+     * @param {boolean} options.applyDefaultImage little utility for lazy people apply a default image
+     * @param {boolean} options.applyDefaultLight little utility for lazy people apply a default light
+     * @param {boolean} options.isSinglePile little utility it need 'warpgate' module installed and active for merge all the token items in one big item piles
+     * @param {boolean} options.deleteTokens only if singlePile is true it will delete all tokens
+     * @param {object} tokenSettings Overriding settings that will update the tokens settings
+     * @param {object} pileSettings Overriding settings to be put on the item piles’ settings - see pile flag defaults
+     * @returns {Promise<Array>} The uuids of the targets after they were turned into item piles
+     */
+    static async convertTokensToItemPiles(
+        tokensTarget,
+        options = {
+            applyDefaultLight: true,
+            untouchedImage: "",
+            isSinglePile: false,
+            deleteTokens: false,
+            addCurrency: false,
+        },
+        tokenSettings = { rotation: 0 },
+        pileSettings = {
+            openedImage: "",
+            emptyImage: "",
+            type: game.itempiles.pile_types.CONTAINER,
+            deleteWhenEmpty: false,
+            activePlayers: true,
+            closed: true,
+        },
+    ) {
+        const tokens = Array.isArray(tokensTarget) ? tokensTarget : [tokensTarget];
+        const token = tokens[0];
+        const { applyDefaultLight, untouchedImage, isSinglePile, deleteTokens } = options;
+
+        if (applyDefaultLight) {
+            let light = {
+                dim: 0.2,
+                bright: 0.2,
+                luminosity: 0,
+                alpha: 1,
+                color: "#ad8800",
+                coloration: 6,
+                animation: {
+                    // type:"sunburst",
+                    type: "radialrainbow",
+                    speed: 3,
+                    intensity: 10,
+                },
+            };
+            mergeObject(tokenSettings, { light: light });
+        }
+
+        if (game.modules.get("warpgate")?.active && isSinglePile) {
+            let activeEffectUpdates = token.actor.effects.reduce((acc, curr) => {
+                acc[curr.data.label] = warpgate.CONST.DELETE;
+                return acc;
+            }, {});
+
+            let updates = {
+                token: {
+                    "texture.src": untouchedImage ? untouchedImage : token.img,
+                    name: `Pile of ${token.name}`,
+                },
+                actor: {
+                    // system: { currency: token.actor?.system?.currency ?? { gp: 0, sp: 0, cp: 0 } },
+                    name: `Pile of ${token.name}`,
+                },
+                embedded: {
+                    ActiveEffect: activeEffectUpdates ? activeEffectUpdates : null,
+                    Item: {},
+                },
+            };
+
+            //map the update data
+            const singlePile = tokens.reduce((acc, tok) => {
+                if (tok.id === token.id) {
+                    return acc;
+                }
+                // get their items
+                const items = tok.actor.items.reduce((acc, item) => {
+                    if (ItemPilesHelpers._shouldBeLoot(item)) {
+                        acc[randomID()] = item.toObject();
+                    }
+                    return acc;
+                }, {});
+
+                foundry.utils.mergeObject(acc.embedded.Item, items);
+                return acc;
+            }, updates);
+
+            if (deleteTokens) {
+                const toDelete = tokens.filter((t) => t.id !== token.id).map((t) => t.id);
+                await canvas.scene.deleteEmbeddedDocuments("Token", toDelete);
+            }
+
+            await warpgate.mutate(
+                token.document,
+                singlePile,
+                {},
+                { permanent: true, comparisonKeys: { ActiveEffect: "label", Item: "id" } },
+            );
+
+            const newTargets = await game.itempiles.API.turnTokensIntoItemPiles([token], {
+                pileSettings: pileSettings,
+                tokenSettings: tokenSettings,
+            });
+            return newTargets;
+        } else if (isSinglePile) {
+            Logger.warn(`You select the "single pile" feature but the module 'warpgate' is not installed`, true);
+            return [];
+        } else {
+            const newTargets = await game.itempiles.API.turnTokensIntoItemPiles(tokens, {
+                pileSettings: pileSettings,
+                tokenSettings: tokenSettings,
+            });
+            return newTargets;
+        }
+    }
+
+    /**
+     * It is recommended to add the following filter to Item Pile's default filter: system.weaponType | natural. Which will filter out the natural weapons found on many creatures. Alternatively, define the `shouldBeLoot` filter function
+     * @param {Item5e} item
+     * @returns {boolean}
+     */
+    static _shouldBeLoot(item) {
+        // TODO
+        return game.itempiles.API.canItemStack(item);
+    }
 }

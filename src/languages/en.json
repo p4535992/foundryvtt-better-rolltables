@@ -159,7 +159,7 @@
                     "Description": "Default Tags to be assigned to tables. This could be useful if you work on alot of tables."
                 }
             },
-            "debug":{
+            "debug": {
                 "name": "Enable debugging",
                 "hint": "Prints debug messages to the console"
             }

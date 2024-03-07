@@ -15,6 +15,7 @@ import { betterRolltablesSocket } from "./socket.js";
 import { isRealBoolean } from "./lib/lib.js";
 import { BetterRollTable } from "./core/brt-table.js";
 import Logger from "./lib/Logger.js";
+import ItemPilesHelpers from "./lib/item-piles-helpers.js";
 
 /**
  * Create a new API class and export it as default
@@ -502,6 +503,77 @@ const API = {
             options,
         );
         return itemsDataToReturn ?? [];
+    },
+
+    /**
+     * Converts the provided token to a item piles lootable sheet check out the documentation from the itempiles page
+     * @href https://fantasycomputer.works/FoundryVTT-ItemPiles/#/api?id=turntokensintoitempiles
+     * @href https://github.com/trioderegion/fvtt-macros/blob/master/honeybadger-macros/tokens/single-loot-pile.js#L77
+     * @param {Array<Token|TokenDocument} actorOrTokenTarget
+     * @param {object} options	object	Options to pass to the function
+     * @param {boolean} options.applyDefaultImage little utility for lazy people apply a default image
+     * @param {boolean} options.applyDefaultLight little utility for lazy people apply a default light
+     * @param {boolean} options.isSinglePile little utility it need 'warpgate' module installed and active for merge all the token items in one big item piles
+     * @param {boolean} options.deleteTokens only if singlePile is true it will delete all tokens
+     * @param {object} tokenSettings Overriding settings that will update the tokens settings
+     * @param {object} pileSettings Overriding settings to be put on the item piles’ settings - see pile flag defaults
+     * @returns {Promise<Array>} The uuids of the targets after they were turned into item piles
+     */
+    async convertTokensToItemPiles(
+        tokens,
+        options = {
+            applyDefaultLight: true,
+            untouchedImage: "",
+            isSinglePile: false,
+            deleteTokens: false,
+            addCurrency: false,
+        },
+        tokenSettings = { rotation: 0 },
+        pileSettings = {
+            openedImage: "",
+            emptyImage: "",
+            type: game.itempiles.pile_types.CONTAINER,
+            deleteWhenEmpty: false,
+            activePlayers: true,
+            closed: true,
+        },
+    ) {
+        let tokensTmp = tokens || [];
+        if (tokensTmp?.length <= 0) {
+            tokensTmp = canvas.tokens.controlled;
+        }
+        if (tokensTmp?.length > 0) {
+            return await ItemPilesHelpers.convertTokensToItemPiles(tokensTmp, options, tokenSettings, pileSettings);
+        } else {
+            Logger.warn(`No tokens are selected`, true);
+        }
+    },
+
+    /**
+     * Converts the provided token to a item piles lootable sheet check out the documentation from the itempiles page
+     * @href https://fantasycomputer.works/FoundryVTT-ItemPiles/#/api?id=turntokensintoitempiles
+     * @href https://github.com/trioderegion/fvtt-macros/blob/master/honeybadger-macros/tokens/single-loot-pile.js#L77
+     * @param {Array<Token|TokenDocument} actorOrTokenTarget
+     * @param {boolean} deleteTokens only if singlePile is true it will delete all tokens
+     * @returns {Promise<Array>} The uuids of the targets after they were turned into item piles
+     */
+    async convertTokensToSingleItemPile(tokens, deleteTokens = false) {
+        let tokensTmp = tokens || [];
+        if (tokensTmp?.length <= 0) {
+            tokensTmp = canvas.tokens.controlled;
+        }
+        if (tokensTmp?.length > 0) {
+            const options = {
+                applyDefaultLight: true,
+                untouchedImage: "",
+                isSinglePile: true,
+                deleteTokens: deleteTokens,
+                addCurrency: false,
+            };
+            return await ItemPilesHelpers.convertTokensToItemPiles(tokensTmp, options);
+        } else {
+            Logger.warn(`No tokens are selected`, true);
+        }
     },
 
     // ===============================
