@@ -1,8 +1,6 @@
-import { isEmptyObject } from "jquery";
 import { RollTableToActorHelpers } from "../apps/rolltable-to-actor/rolltable-to-actor-helpers";
 import { BetterRollTable } from "../core/brt-table";
 import Logger from "./Logger";
-import { isRealNumber } from "./lib";
 import { RetrieveHelpers } from "./retrieve-helpers";
 
 export default class ItemPilesHelpers {
@@ -99,7 +97,7 @@ export default class ItemPilesHelpers {
             }
             await game.itempiles.API.addCurrencies(actorOrToken, currencies);
         } else {
-            if (isEmptyObject(currencies)) {
+            if (ItemPilesHelpers._isEmptyObject(currencies)) {
                 return;
             }
             // TODO waiting for item piles to fix this const currencyS = game.itempiles.API.getStringFromCurrencies(currencies);
@@ -134,7 +132,7 @@ export default class ItemPilesHelpers {
             }
             await game.itempiles.API.removeCurrencies(actorOrToken, currencies);
         } else {
-            if (isEmptyObject(currencies)) {
+            if (ItemPilesHelpers._isEmptyObject(currencies)) {
                 return;
             }
             // TODO waiting for item piles to fix this const currencyS = game.itempiles.API.getStringFromCurrencies(currencies);
@@ -168,7 +166,7 @@ export default class ItemPilesHelpers {
             }
             await game.itempiles.API.updateCurrencies(actorOrToken, currencies);
         } else {
-            if (isEmptyObject(currencies)) {
+            if (ItemPilesHelpers._isEmptyObject(currencies)) {
                 return;
             }
             // TODO waiting for item piles to fix this const currencyS = game.itempiles.API.getStringFromCurrencies(currencies);
@@ -204,7 +202,7 @@ export default class ItemPilesHelpers {
             const currencyInfo = game.itempiles.API.getPaymentData(currencies, { target: actorOrToken });
             return currencyInfo.canBuy;
         } else {
-            if (isEmptyObject(currencies)) {
+            if (ItemPilesHelpers._isEmptyObject(currencies)) {
                 return;
             }
             // TODO waiting for item piles to fix this const currencyS = game.itempiles.API.getStringFromCurrencies(currencies);
@@ -793,7 +791,7 @@ export default class ItemPilesHelpers {
             if (existingItem) {
                 existingItem.quantity += Math.max(newResult.quantity, 1);
             } else {
-                if (!isRealNumber(newResult.quantity)) {
+                if (!ItemPilesHelpers._isRealNumber(newResult.quantity)) {
                     newResult.quantity = 1;
                 }
                 resultsStacked.push({
@@ -927,6 +925,10 @@ export default class ItemPilesHelpers {
         }
     }
 
+    // ======================================
+    // PRIVATE METHODS
+    // ========================================
+
     /**
      * It is recommended to add the following filter to Item Pile's default filter: system.weaponType | natural. Which will filter out the natural weapons found on many creatures. Alternatively, define the `shouldBeLoot` filter function
      * @param {Item5e} item
@@ -935,5 +937,30 @@ export default class ItemPilesHelpers {
     static _shouldBeLoot(item) {
         // TODO
         return game.itempiles.API.canItemStack(item);
+    }
+
+    static _isEmptyObject(obj) {
+        // because Object.keys(new Date()).length === 0;
+        // we have to do some additional check
+        if (obj === null || obj === undefined) {
+            return true;
+        }
+        if (ItemPilesHelpers._isRealNumber(obj)) {
+            return false;
+        }
+        if (obj instanceof Object && Object.keys(obj).length === 0) {
+            return true;
+        }
+        if (obj instanceof Array && obj.length === 0) {
+            return true;
+        }
+        if (obj && Object.keys(obj).length === 0) {
+            return true;
+        }
+        return false;
+    }
+
+    static _isRealNumber(inNumber) {
+        return !isNaN(inNumber) && typeof inNumber === "number" && isFinite(inNumber);
     }
 }
