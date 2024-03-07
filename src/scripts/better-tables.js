@@ -92,10 +92,8 @@ export class BetterTables {
         let rollMode = brtTable.rollMode;
         let roll = brtTable.mainRoll;
 
-        if (isRealBoolean(options.displayChat)) {
-            if (!options.displayChat) {
-                return;
-            }
+        if (isRealBoolean(options.displayChat) && !options.displayChat) {
+            return betterResults;
         }
 
         if (game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.USE_CONDENSED_BETTERROLL)) {
