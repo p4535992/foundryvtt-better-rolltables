@@ -9,6 +9,7 @@ import { BetterRollTableLootConfig } from "../tables/loot/loot-rolltable-config.
 import { BetterRollTableStoryConfig } from "../tables/story/story-rolltable-config.js";
 import { BetterRollTableHarvestConfig } from "../tables/harvest/harvest-rolltable-config.js";
 import { isEmptyObject } from "../lib/lib.js";
+import CompendiumsHelpers from "../lib/compendiums-helpers.js";
 
 /**
  * @module BetterRollTables.BetterRolltableHooks
@@ -149,6 +150,7 @@ class BetterRolltableHooks {
         });
 
         // await API.updateSpellCache();
+        CompendiumsHelpers.initializeCompendiumCache();
     }
 
     static foundryInit() {

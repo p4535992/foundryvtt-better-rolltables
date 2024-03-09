@@ -43,6 +43,7 @@ export class BetterResults {
                         (await BRTBetterHelpers.tryRoll(
                             betterResult.result.innerText?.replaceAll(CONSTANTS.PRE_RESULT_TEXT_ROLL, "").trim(),
                         ));
+                    betterResult.result.html = betterResult.result.text;
                 }
             } else if (
                 table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_LOOT
@@ -57,6 +58,7 @@ export class BetterResults {
                         (await BRTBetterHelpers.tryRoll(
                             betterResult.result.innerText?.replaceAll(CONSTANTS.PRE_RESULT_TEXT_ROLL, "").trim(),
                         ));
+                    betterResult.result.html = betterResult.result.text;
                 } else if (betterResult.result.isText) {
                     const currencyDataToAddS = betterResult.result.text;
                     const currencyDataToAdd =
@@ -85,6 +87,7 @@ export class BetterResults {
                         (await BRTBetterHelpers.tryRoll(
                             betterResult.result.innerText?.replaceAll(CONSTANTS.PRE_RESULT_TEXT_ROLL, "").trim(),
                         ));
+                    betterResult.result.html = betterResult.result.text;
                 }
             } else if (
                 table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_HARVEST
@@ -98,6 +101,7 @@ export class BetterResults {
                         (await BRTBetterHelpers.tryRoll(
                             betterResult.result.innerText?.replaceAll(CONSTANTS.PRE_RESULT_TEXT_ROLL, "").trim(),
                         ));
+                    betterResult.result.html = betterResult.result.text;
                 }
             }
 

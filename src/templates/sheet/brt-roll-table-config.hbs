@@ -272,12 +272,12 @@
                 {{#each results as |result i|}}
 
                 {{#if result.isText}}
-                <tr class="table-result flexrow {{#if result.drawn}}drawn{{/if}}" data-result-id="{{result._id}}">
+                <tr class="table-result flexrow {{#if result.drawn}}drawn{{/if}}" data-result-id="{{result._id}}" data-result-uuid="{{result.uuid}}">
                 {{else if result.isDocument}}
-                <tr class="table-result flexrow {{#if result.drawn}}drawn{{/if}}" data-result-id="{{result._id}}" data-result-uuid="{{result.uuidDoc}}"
+                <tr class="table-result flexrow {{#if result.drawn}}drawn{{/if}}" data-result-id="{{result._id}}" data-result-uuid="{{result.uuid}}" data-result-uuiddoc="{{result.uuidDoc}}"
                     {{#brt-isEmpty result.uuidDoc}} style="background: lightcoral;"{{/brt-isEmpty}}>
                 {{else if result.isCompendium}}
-                <tr class="table-result flexrow {{#if result.drawn}}drawn{{/if}}" data-result-id="{{result._id}}" data-result-uuid="{{result.uuidDoc}}"
+                <tr class="table-result flexrow {{#if result.drawn}}drawn{{/if}}" data-result-id="{{result._id}}" data-result-uuid="{{result.uuid}}" data-result-uuiddoc="{{result.uuidDoc}}"
                     {{#brt-isEmpty result.uuidDoc}} style="background: lightcoral;"{{/brt-isEmpty}}>
                 {{/if}}
 

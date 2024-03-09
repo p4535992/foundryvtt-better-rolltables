@@ -34,24 +34,28 @@ Hooks.once("setup", () => {
 /* When ready */
 /* ------------------------------------ */
 Hooks.once("ready", async () => {
-    // Do anything once the module is ready
-    // if (!game.modules.get('lib-wrapper')?.active && game.user?.isGM) {
-    //   let word = 'install and activate';
-    //   if (game.modules.get('lib-wrapper')) word = 'activate';
-    //   throw Logger.error(`Requires the 'libWrapper' module. Please ${word} it.`);
-    // }
-    if (!game.modules.get("socketlib")?.active && game.user?.isGM) {
-        let word = "install and activate";
-        if (game.modules.get("socketlib")) word = "activate";
-        throw Logger.error(`Requires the 'socketlib' module. Please ${word} it.`);
-    }
-    if (!game.modules.get("item-piles")?.active && game.user?.isGM) {
-        let word = "install and activate";
-        if (game.modules.get("item-piles")) word = "activate";
-        throw Logger.error(`Requires the 'item-piles' module. Please ${word} it.`);
-    }
-    //   ReadyHooks();
-    BetterRolltableHooks.foundryReady();
+    setTimeout(() => {
+        if (game.user.isGM) {
+            // Do anything once the module is ready
+            // if (!game.modules.get('lib-wrapper')?.active && game.user?.isGM) {
+            //   let word = 'install and activate';
+            //   if (game.modules.get('lib-wrapper')) word = 'activate';
+            //   throw Logger.error(`Requires the 'libWrapper' module. Please ${word} it.`);
+            // }
+            if (!game.modules.get("socketlib")?.active && game.user?.isGM) {
+                let word = "install and activate";
+                if (game.modules.get("socketlib")) word = "activate";
+                throw Logger.error(`Requires the 'socketlib' module. Please ${word} it.`);
+            }
+            if (!game.modules.get("item-piles")?.active && game.user?.isGM) {
+                let word = "install and activate";
+                if (game.modules.get("item-piles")) word = "activate";
+                throw Logger.error(`Requires the 'item-piles' module. Please ${word} it.`);
+            }
+        }
+        //   ReadyHooks();
+        BetterRolltableHooks.foundryReady();
+    }, 100);
 });
 
 /* ------------------------------------ */

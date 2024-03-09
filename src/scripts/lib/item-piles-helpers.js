@@ -463,20 +463,18 @@ export default class ItemPilesHelpers {
     if (roll.total <= 0) {
       return [];
     }
-    let results;
-    if (game.modules.get("better-rolltables")?.active) {
-      results = (await game.betterTables.roll(table)).itemsData.map((result) => {
-        return {
-          documentCollection: result.documentCollection,
-          documentId: result.documentId,
-          text: result.text || result.name,
-          img: result.img,
-          quantity: 1,
-        };
-      });
-    } else {
-      results = (await table.drawMany(roll.total, { displayChat, recursive: true })).results;
-    }
+    let results = [];
+	if (game.modules.get("better-rolltables")?.active) {
+		results = (await game.modules.get("better-rolltables").api.roll(table)).itemsData.map(result => ({
+			documentCollection: result.documentCollection,
+			documentId: result.documentId,
+			text: result.text || result.name,
+			img: result.img,
+			quantity: 1
+		}));
+	} else {
+		results = (await table.drawMany(roll.total, { displayChat, recursive: true })).results;
+	}
     */
         const brtTable = new BetterRollTable(table, options);
         await brtTable.initialize();

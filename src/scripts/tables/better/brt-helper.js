@@ -217,6 +217,8 @@ export class BRTBetterHelpers {
         result.innerText = result.innerText.trim();
 
         result.html = result.text;
+        result.textOriginal = result.text;
+        result.uuid = resultToUpdate.uuid ?? "";
         const resultDoc = await BRTBetterHelpers.retrieveDocumentFromResultOnlyUuid(result, false);
         result.uuidDoc = resultDoc?.uuid ?? "";
         // grab the formula
