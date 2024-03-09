@@ -30,7 +30,7 @@ Rolled: 7
 
 ### Customize images and names
 
-With BRT, it is possbile to customize the images and names of items without editing them directly on the compendiums, which is useful for those who want to make a merchant more customized or differentiate products by zone
+With BRT, it is possible to customize the images and names of items without editing them directly on the compendiums, which is useful for those who want to make a merchant more customized or differentiate products by zone
 
 ![](/wiki/img/common_customize_image_name.gif)
 

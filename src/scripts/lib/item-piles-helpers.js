@@ -4,10 +4,132 @@ import Logger from "./Logger";
 import { RetrieveHelpers } from "./retrieve-helpers";
 
 export default class ItemPilesHelpers {
+    static PILE_DEFAULTS = {
+        // Core settings
+        enabled: false,
+        type: "pile",
+        distance: 1,
+        macro: "",
+        deleteWhenEmpty: "default",
+        canStackItems: "yes",
+        canInspectItems: true,
+        displayItemTypes: false,
+        description: "",
+
+        // Overrides
+        overrideItemFilters: false,
+        overrideCurrencies: false,
+        overrideSecondaryCurrencies: false,
+        requiredItemProperties: [],
+
+        // Token settings
+        displayOne: false,
+        showItemName: false,
+        overrideSingleItemScale: false,
+        singleItemScale: 1.0,
+
+        // Sharing settings
+        shareItemsEnabled: false,
+        shareCurrenciesEnabled: true,
+        takeAllEnabled: false,
+        splitAllEnabled: true,
+        activePlayers: false,
+
+        // Container settings
+        closed: false,
+        locked: false,
+        closedImage: "",
+        closedImages: [],
+        emptyImage: "",
+        emptyImages: [],
+        openedImage: "",
+        openedImages: [],
+        lockedImage: "",
+        lockedImages: [],
+        closeSound: "",
+        closeSounds: [],
+        openSound: "",
+        openSounds: [],
+        lockedSound: "",
+        lockedSounds: [],
+        unlockedSound: "",
+        unlockedSounds: [],
+
+        // Merchant settings
+        merchantImage: "",
+        infiniteQuantity: false,
+        infiniteCurrencies: true,
+        purchaseOnly: false,
+        hideNewItems: false,
+        hideItemsWithZeroCost: false,
+        keepZeroQuantity: false,
+        onlyAcceptBasePrice: true,
+        displayQuantity: "yes",
+        buyPriceModifier: 1,
+        sellPriceModifier: 0.5,
+        itemTypePriceModifiers: [],
+        actorPriceModifiers: [],
+        tablesForPopulate: [],
+        merchantColumns: [],
+        hideTokenWhenClosed: false,
+        openTimes: {
+            enabled: false,
+            status: "open",
+            /*
+			auto = rely on simple calendar
+			open = always open
+			closed = always closed
+			 */
+            open: {
+                hour: 9,
+                minute: 0,
+            },
+            close: {
+                hour: 18,
+                minute: 0,
+            },
+        },
+        closedDays: [],
+        closedHolidays: [],
+        refreshItemsOnOpen: false,
+        refreshItemsDays: [],
+        refreshItemsHolidays: [],
+        logMerchantActivity: false,
+
+        // Vault settings
+        cols: 10,
+        rows: 5,
+        restrictVaultAccess: false,
+        vaultExpansion: false,
+        baseExpansionCols: 0,
+        baseExpansionRows: 0,
+        vaultAccess: [],
+        logVaultActions: false,
+        vaultLogType: "user_actor",
+    };
+
     static FLAGS = {
+        VERSION: `flags.item-piles.version`,
+        PILE: `flags.item-piles.data`,
         ITEM: `flags.item-piles.item`,
+        NO_VERSION: `flags.item-piles.-=version`,
+        NO_PILE: `flags.item-piles.-=data`,
+        NO_ITEM: `flags.item-piles.-=item`,
+        LOG: `flags.item-piles.log`,
+        SHARING: `flags.item-piles.sharing`,
+        PUBLIC_TRADE_ID: `flags.item-piles.publicTradeId`,
+        TRADE_USERS: `flags.item-piles.tradeUsers`,
+        TEMPORARY_ITEM: `flags.item-piles.temporary_item`,
         CUSTOM_CATEGORY: `flags.item-piles.item.customCategory`,
     };
+
+    static PILE_TYPES = {
+        PILE: "pile",
+        CONTAINER: "container",
+        MERCHANT: "merchant",
+        VAULT: "vault",
+    };
+
     // ===================
     // CURRENCIES HELPERS
     // ===================
@@ -923,9 +1045,115 @@ export default class ItemPilesHelpers {
         }
     }
 
+    /**
+     * Whether an item pile is a container. If it is not enabled, it is always false.
+     *
+     * @param {Token/TokenDocument} target
+     *
+     * @return {Promise<boolean>}
+     */
+    static async isValidItemPile(target, data = false) {
+        const targetActor = await RetrieveHelpers.getActorAsync(target);
+        const pileData = ItemPilesHelpers._getActorFlagData(targetActor, data);
+        return targetActor && pileData?.enabled;
+    }
+
+    /**
+     * Whether an item pile is a container. If it is not enabled, it is always false.
+     *
+     * @param {Token/TokenDocument} target
+     *
+     * @return {Promise<boolean>}
+     */
+    static async isRegularItemPile(target, data = false) {
+        const targetActor = await RetrieveHelpers.getActorAsync(target);
+        const pileData = ItemPilesHelpers._getActorFlagData(targetActor, data);
+        return targetActor && pileData?.enabled && pileData?.type === ItemPilesHelpers.PILE_TYPES.PILE;
+    }
+
+    /**
+     * Whether an item pile is a container. If it is not enabled, it is always false.
+     *
+     * @param {Token/TokenDocument} target
+     *
+     * @return {Promise<boolean>}
+     */
+    static async isItemPileContainer(target, data = false) {
+        const targetActor = await RetrieveHelpers.getActorAsync(target);
+        const pileData = ItemPilesHelpers._getActorFlagData(targetActor, data);
+        return pileData?.enabled && pileData?.type === ItemPilesHelpers.PILE_TYPES.CONTAINER;
+    }
+    /**
+     * Whether an item pile is a container. If it is not enabled, it is always false.
+     *
+     * @param {Token/TokenDocument} target
+     *
+     * @return {Promise<boolean>}
+     */
+    static async isItemPileLootable(target, data = false) {
+        const targetActor = await RetrieveHelpers.getActorAsync(target);
+        const pileData = ItemPilesHelpers._getActorFlagData(targetActor, data);
+        return (
+            targetActor &&
+            pileData?.enabled &&
+            (pileData?.type === ItemPilesHelpers.PILE_TYPES.PILE || pileData?.type === CONSTANTS.PILE_TYPES.CONTAINER)
+        );
+    }
+    /**
+     * Whether an item pile is a container. If it is not enabled, it is always false.
+     *
+     * @param {Token/TokenDocument} target
+     *
+     * @return {Promise<boolean>}
+     */
+    static async isItemPileVault(target, data = false) {
+        const targetActor = await RetrieveHelpers.getActorAsync(target);
+        const pileData = ItemPilesHelpers._getActorFlagData(targetActor, data);
+        return pileData?.enabled && pileData?.type === ItemPilesHelpers.PILE_TYPES.VAULT;
+    }
+    /**
+     * Whether an item pile is a container. If it is not enabled, it is always false.
+     *
+     * @param {Token/TokenDocument} target
+     *
+     * @return {Promise<boolean>}
+     */
+    static async isItemPileMerchant(target, data = false) {
+        const targetActor = await RetrieveHelpers.getActorAsync(target);
+        const pileData = ItemPilesHelpers._getActorFlagData(targetActor, data);
+        return pileData?.enabled && pileData?.type === ItemPilesHelpers.PILE_TYPES.MERCHANT;
+    }
+
     // ======================================
     // PRIVATE METHODS
     // ========================================
+
+    /**
+     *
+     * @param target
+     * @param data
+     * @returns {Object<CONSTANTS.PILE_DEFAULTS>}
+     */
+    static async _getActorFlagData(target, data = false) {
+        const defaults = foundry.utils.mergeObject(
+            { ...ItemPilesHelpers.PILE_DEFAULTS },
+            { ...(game.itempiles.API.PILE_DEFAULTS ?? {}) },
+        );
+        target = await RetrieveHelpers.getActorAsync(target);
+        if (target?.token) {
+            target = target.token;
+        }
+        return ItemPilesHelpers._getFlagData(target, ItemPilesHelpers.FLAGS.PILE, defaults, data);
+    }
+
+    static _getFlagData(inDocument, flag, defaults, existing = false) {
+        const defaultFlags = foundry.utils.deepClone(defaults);
+        let flags = foundry.utils.deepClone(existing || (getProperty(inDocument, flag) ?? {}));
+        if (flag === ItemPilesHelpers.FLAGS.PILE) {
+            flags = migrateFlagData(inDocument, flags);
+        }
+        return foundry.utils.mergeObject(defaultFlags, flags);
+    }
 
     /**
      * It is recommended to add the following filter to Item Pile's default filter: system.weaponType | natural. Which will filter out the natural weapons found on many creatures. Alternatively, define the `shouldBeLoot` filter function
