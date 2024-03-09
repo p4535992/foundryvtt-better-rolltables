@@ -383,6 +383,11 @@ export class BRTBetterHelpers {
                 // }
                 isUpdate = true;
             }
+
+            // Try to update the original result image
+            if (!result.img || result.img === CONFIG.RollTable.resultIcon) {
+                result.img = currentCustomIcon || resultDoc.img || CONFIG.RollTable.resultIcon;
+            }
             // TODO DISABLED FOR NOW WE USE THE LOGIC 1:1 INSTEAD N:1 FOR NOW
             /*
       if (result.quantity && !currentCustomQuantity) {

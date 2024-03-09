@@ -128,6 +128,12 @@ export class BetterRollTableStoryConfig extends RollTableConfig {
             this._onBetterRollTablesRoll.bind(this),
         );
 
+        // Edit a Image
+        // html.find("img[data-edit]").on("click", this._onEditImage.bind(this));
+        // html.querySelectorAll("img[data-edit]").forEach((el) =>
+        //     el.addEventListener("click", this._onEditImage.bind(this)),
+        // );
+
         // Edit a Result
         html.querySelectorAll("a.edit-result").forEach((el) =>
             el.addEventListener("click", this._onEditResult.bind(this)),
@@ -272,33 +278,49 @@ export class BetterRollTableStoryConfig extends RollTableConfig {
 
     /* -------------------------------------------- */
 
-    //   /**
-    //    * Handle changing the actor profile image by opening a FilePicker
-    //    * @param {Event} event
-    //    * @private
-    //    */
-    //   _onEditImage(event) {
-    //     const img = event.currentTarget;
-    //     const isHeader = img.dataset.edit === "img";
-    //     let current = this.document.img;
-    //     if ( !isHeader ) {
-    //       const li = img.closest(".table-result");
-    //       const result = this.document.results.get(li.dataset.resultId);
-    //       if (result.type !== CONST.TABLE_RESULT_TYPES.TEXT) return;
-    //       current = result.img;
-    //     }
-    //     const fp = new FilePicker({
-    //       type: "image",
-    //       current: current,
-    //       callback: path => {
-    //         img.src = path;
-    //         return this._onSubmit(event);
-    //       },
-    //       top: this.position.top + 40,
-    //       left: this.position.left + 10
-    //     });
-    //     return fp.browse();
-    //   }
+    /**
+     * Handle changing the actor profile image by opening a FilePicker
+     * @param {Event} event
+     * @private
+     */
+    _onEditImage(event) {
+        const img = event.currentTarget;
+        const isHeader = img.dataset.edit === "img";
+        let current = this.document.img;
+        if (!isHeader) {
+            const li = img.closest(".table-result");
+            const result = this.document.results.get(li.dataset.resultId);
+            // MOD 4535992 removed we want to customize the image
+            // if (result.type !== CONST.TABLE_RESULT_TYPES.TEXT) return;
+            current = result.img;
+        }
+        const fp = new FilePicker({
+            type: "image",
+            current: current,
+            callback: async (path) => {
+                // MOD 4535992 make async
+                img.src = path;
+                // START MOD 4535992 added we want to customize the image
+                const resultImage = img.closest(".result-image");
+                let resultImageInputs = resultImage.querySelectorAll("input");
+                let inputCustomIcon = resultImageInputs[0].value || "";
+                if (inputCustomIcon !== path) {
+                    resultImageInputs[0].value = path;
+                }
+                // const resultDocUuid = getProperty(
+                //     result,
+                //     `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`,
+                // );
+                // const resultDoc = await fromUuid(resultDocUuid);
+                // await result.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON, path);
+                // END MOD 4535992 added we want to customize the image
+                return this._onSubmit(event);
+            },
+            top: this.position.top + 40,
+            left: this.position.left + 10,
+        });
+        return fp.browse();
+    }
 
     /* -------------------------------------------- */
 
