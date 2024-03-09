@@ -8,7 +8,7 @@ How to use [Better RollTables Macros](./old/API-for-macros-and-modules#how-to-ro
 
 [FAQs](./old/FAQ.md)
 
-## Common Features
+## Common Features (These feature are present by default in all the BRT tables)
 
 ### Inline roll on table text result
 
@@ -27,6 +27,12 @@ is converted runtime in this
 ```
 Rolled: 7
 ```
+
+### Customize images and names
+
+With BRT, it is possbile to customize the images and names of items without editing them directly on the compendiums, which is useful for those who want to make a merchant more customized or differentiate products by zone
+
+![](/wiki/img/common_customize_image_name.gif)
 
 ## Better Tables
 
