@@ -1,6 +1,12 @@
 TODO 
 - Add confirm dialog on reset button ???
 - Add flags for cost/price like already done for the quantity is possible now with item piles support
+### 2.1.3
+
+- Add class compendium helpers
+- Fix retrieve uuid doc sometime fails
+- Fix customize image on rolltable
+- Fix customize name on rolltable
 
 ### 2.1.2
 

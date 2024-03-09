@@ -1,5 +1,6 @@
 import { CONSTANTS } from "../../constants/constants.js";
 import Logger from "../../lib/Logger.js";
+import CompendiumsHelpers from "../../lib/compendiums-helpers.js";
 import { RetrieveHelpers } from "../../lib/retrieve-helpers.js";
 
 export class BRTBetterHelpers {
@@ -127,11 +128,17 @@ export class BRTBetterHelpers {
                     }
                 }
                 if (onlyUuid) {
-                    findDocument = compendium?.contents.find((m) => m.id === `${result.documentId}`);
+                    //findDocument = compendium?.contents.find((m) => m.id === `${result.documentId}`);
+                    findDocument = CompendiumsHelpers.getDocumentCompendiumSync(compendium.metadata.id, {
+                        id: result.documentId,
+                    });
                 } else {
-                    findDocument = (await compendium?.getDocuments()).find((m) => m.id === `${result.documentId}`);
+                    // findDocument = (await compendium?.getDocuments()).find((m) => m.id === `${result.documentId}`);
+                    findDocument = await CompendiumsHelpers.getDocumentCompendiumAsync(compendium.metadata.id, {
+                        id: result.documentId,
+                    });
                 }
-                // let findDocument = compendium.contents.find((m) => m.id === `${result.documentId}`);
+
                 if (!findDocument) {
                     if (throwError) {
                         throw Logger.error(
