@@ -8,13 +8,15 @@ export class RetrieveHelpers {
      * @param {string} [options.documentId]
      * @param {("User"|"Folder"|"Actor"|"Item"|"Scene"|"Combat"|"JournalEntry"|"Macro"|"Playlist"|"RollTable"|"Cards"|"ChatMessage"|"Setting"|"FogExploration")} [options.collection]
      * @param {string} [options.documentPack]
+     * @param {boolean} [options.ignoreError=false]
      */
-    static retrieveUuid({ documentName, documentId, documentCollectionType, documentPack }) {
+    static retrieveUuid({ documentName, documentId, documentCollectionType, documentPack, ignoreError = false }) {
         let uuid = null;
         if (documentCollectionType || pack === "world") {
             const collection = game.collections.get(documentCollectionType);
             if (!collection) {
                 // DO NOTHING
+                Logger.warn(`Cannot retrieve collection for ${collection}`);
             } else {
                 // Get the original document, if the name still matches - take no action
                 const original = documentId ? collection.get(documentId) : null;
@@ -37,26 +39,30 @@ export class RetrieveHelpers {
             }
         }
         if (documentPack) {
-            const pack = documentPack;
-
-            // Get the original entry, if the name still matches - take no action
-            const original = documentId ? pack.index.get(documentId) : null;
-            if (original) {
-                if (documentName) {
-                    if (original.name !== documentName) {
-                        // DO NOTHING
+            const pack = RetrieveHelpers.getCompendiumCollectionSync(documentPack, ignoreError);
+            if (!pack) {
+                // DO NOTHING
+                Logger.warn(`Cannot retrieve pack for ${documentPack}`);
+            } else {
+                // Get the original entry, if the name still matches - take no action
+                const original = documentId ? pack.index.get(documentId) : null;
+                if (original) {
+                    if (documentName) {
+                        if (original.name !== documentName) {
+                            // DO NOTHING
+                        } else {
+                            return original.uuid;
+                        }
                     } else {
                         return original.uuid;
                     }
-                } else {
-                    return original.uuid;
                 }
-            }
 
-            // Otherwise, find the document by ID or name (ID preferred)
-            const doc = pack.index.find((i) => i._id === documentId || i.name === documentName) || null;
-            if (doc) {
-                return doc.uuid;
+                // Otherwise, find the document by ID or name (ID preferred)
+                const doc = pack.index.find((i) => i._id === documentId || i.name === documentName) || null;
+                if (doc) {
+                    return doc.uuid;
+                }
             }
         }
         return uuid;
@@ -124,14 +130,14 @@ export class RetrieveHelpers {
             }
         }
         // Type checking
-        // if (!(targetTmp instanceof CompendiumCollection)) {
-        //   if (ignoreError) {
-        //     Logger.warn(`Invalid CompendiumCollection`, false, targetTmp);
-        //     return;
-        //   } else {
-        //     throw Logger.error(`Invalid CompendiumCollection`, true, targetTmp);
-        //   }
-        // }
+        if (!(targetTmp instanceof CompendiumCollection)) {
+            if (ignoreError) {
+                Logger.warn(`Invalid CompendiumCollection`, false, targetTmp);
+                return;
+            } else {
+                throw Logger.error(`Invalid CompendiumCollection`, true, targetTmp);
+            }
+        }
         return targetTmp;
     }
 
