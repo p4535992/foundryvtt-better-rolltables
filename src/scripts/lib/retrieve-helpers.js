@@ -73,6 +73,8 @@ export class RetrieveHelpers {
         const valid = typeof inId === "string" && (inId.match(/\./g) || []).length && !inId.endsWith(".");
         if (valid) {
             return !!fromUuidSync(inId);
+        } else {
+            return false;
         }
     }
 

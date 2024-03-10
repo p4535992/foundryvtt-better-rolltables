@@ -2,6 +2,10 @@ TODO
 - Add confirm dialog on reset button ???
 - Add flags for cost/price like already done for the quantity is possible now with item piles support
 
+### 2.1.4
+
+- Little fix on method isUuid on retrieve helpers
+
 ### 2.1.3
 
 - Add class compendium helpers
