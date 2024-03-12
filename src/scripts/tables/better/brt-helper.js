@@ -211,7 +211,7 @@ export class BRTBetterHelpers {
     static async updateTableResult(resultToUpdate) {
         let isUpdate = false;
         // , noFlag = false
-        let result = resultToUpdate.toObject(false);
+        let result = resultToUpdate instanceof TableResult ? resultToUpdate.toObject(false) : resultToUpdate;
         result.isText = result.type === CONST.TABLE_RESULT_TYPES.TEXT;
         result.isDocument = result.type === CONST.TABLE_RESULT_TYPES.DOCUMENT;
         result.isCompendium = result.type === CONST.TABLE_RESULT_TYPES.COMPENDIUM;

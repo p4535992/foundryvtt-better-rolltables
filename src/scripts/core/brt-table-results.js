@@ -122,127 +122,127 @@ export class BetterResults {
         return this.currencyData;
     }
 
-    /**
-     * @deprecated not used anymore there is a method on the loot helpers now ?
-     * @param {*} result
-     * @returns
-     */
-    async _parseResult(result) {
-        let betterResults = [];
-        if (result.type === CONST.TABLE_RESULT_TYPES.TEXT) {
-            const textResults = result.text.split("|");
+    // /**
+    //  * @deprecated not used anymore there is a method on the loot helpers now ?
+    //  * @param {*} result
+    //  * @returns
+    //  */
+    // async _parseResult(result) {
+    //     let betterResults = [];
+    //     if (result.type === CONST.TABLE_RESULT_TYPES.TEXT) {
+    //         const textResults = result.text.split("|");
 
-            for (let t of textResults) {
-                // if the text is a currency, we process that first
-                t = await this._processTextAsCurrency(t);
-                t = await this._rollInlineDice(t);
+    //         for (let t of textResults) {
+    //             // if the text is a currency, we process that first
+    //             t = await this._processTextAsCurrency(t);
+    //             t = await this._rollInlineDice(t);
 
-                // eslint-disable-next-line no-useless-escape
-                const regex = /(\s*[^\[@]*)@*(\w+)*\[([\w.,*+-\/\(\)]+)\]/g;
-                let textString = t;
-                const commands = [];
-                let table;
-                const betterResult = mergeObject({}, result.toObject(false));
-                let matches;
+    //             // eslint-disable-next-line no-useless-escape
+    //             const regex = /(\s*[^\[@]*)@*(\w+)*\[([\w.,*+-\/\(\)]+)\]/g;
+    //             let textString = t;
+    //             const commands = [];
+    //             let table;
+    //             const betterResult = mergeObject({}, result.toObject(false));
+    //             let matches;
 
-                while ((matches = regex.exec(t)) !== null) {
-                    // matches[1] is undefined in case we are matching [tablename]
-                    // if we are matching @command[string] then matches[2] is the command and [3] is the arg inside []
-                    // Logger.log(`match 0: ${matches[0]}, 1: ${matches[1]}, 2: ${matches[2]}, 3: ${matches[3]}`);
-                    if (matches[1] !== undefined && matches[1].trim() !== "") {
-                        textString = matches[1];
-                    }
-                    // textString = matches[1] || textString; //the first match is the text outside [], a rollformula
-                    const commandName = matches[2];
-                    const innerTableName = matches[3];
+    //             while ((matches = regex.exec(t)) !== null) {
+    //                 // matches[1] is undefined in case we are matching [tablename]
+    //                 // if we are matching @command[string] then matches[2] is the command and [3] is the arg inside []
+    //                 // Logger.log(`match 0: ${matches[0]}, 1: ${matches[1]}, 2: ${matches[2]}, 3: ${matches[3]}`);
+    //                 if (matches[1] !== undefined && matches[1].trim() !== "") {
+    //                     textString = matches[1];
+    //                 }
+    //                 // textString = matches[1] || textString; //the first match is the text outside [], a rollformula
+    //                 const commandName = matches[2];
+    //                 const innerTableName = matches[3];
 
-                    if (!commandName && innerTableName) {
-                        const out = BRTUtils.separateIdComendiumName(innerTableName);
-                        const tableName = out.nameOrId;
-                        const tableCompendiumName = out.compendiumName;
+    //                 if (!commandName && innerTableName) {
+    //                     const out = BRTUtils.separateIdComendiumName(innerTableName);
+    //                     const tableName = out.nameOrId;
+    //                     const tableCompendiumName = out.compendiumName;
 
-                        if (tableCompendiumName) {
-                            table = await BRTUtils.findInCompendiumByName(tableCompendiumName, tableName);
-                        } else {
-                            table = RetrieveHelpers.getRollTableSync(tableName, true, false);
-                        }
+    //                     if (tableCompendiumName) {
+    //                         table = await BRTUtils.findInCompendiumByName(tableCompendiumName, tableName);
+    //                     } else {
+    //                         table = RetrieveHelpers.getRollTableSync(tableName, true, false);
+    //                     }
 
-                        if (!table) {
-                            msg = game.i18n.format(NotTableByNameInPack, {
-                                tableName: tableName,
-                                packName: tableCompendiumName,
-                            });
-                            Logger.warn(msg, true);
-                        }
-                        break;
-                    } else if (commandName) {
-                        commands.push({
-                            command: commandName.toLowerCase(),
-                            arg: matches[3],
-                        });
-                        if (commandName.toLowerCase() === "compendium") {
-                            betterResult.collection = matches[3];
-                        }
-                    }
-                }
+    //                     if (!table) {
+    //                         msg = game.i18n.format(NotTableByNameInPack, {
+    //                             tableName: tableName,
+    //                             packName: tableCompendiumName,
+    //                         });
+    //                         Logger.warn(msg, true);
+    //                     }
+    //                     break;
+    //                 } else if (commandName) {
+    //                     commands.push({
+    //                         command: commandName.toLowerCase(),
+    //                         arg: matches[3],
+    //                     });
+    //                     if (commandName.toLowerCase() === "compendium") {
+    //                         betterResult.collection = matches[3];
+    //                     }
+    //                 }
+    //             }
 
-                // if a table definition is found, the textString is the rollFormula to be rolled on that table
-                if (table) {
-                    const numberRolls = await BRTBetterHelpers.tryRoll(textString);
-                    const options = {
-                        rollsAmount: numberRolls,
-                    };
-                    const innerBrtTable = new BetterRollTable(table, options);
-                    await innerBrtTable.initialize();
-                    const innerResultsBrt = await innerBrtTable.betterRoll();
+    //             // if a table definition is found, the textString is the rollFormula to be rolled on that table
+    //             if (table) {
+    //                 const numberRolls = await BRTBetterHelpers.tryRoll(textString);
+    //                 const options = {
+    //                     rollsAmount: numberRolls,
+    //                 };
+    //                 const innerBrtTable = new BetterRollTable(table, options);
+    //                 await innerBrtTable.initialize();
+    //                 const innerResultsBrt = await innerBrtTable.betterRoll();
 
-                    const innerResults = innerResultsBrt?.results;
+    //                 const innerResults = innerResultsBrt?.results;
 
-                    // this.tableResults = this.tableResults.concat(innerResults);
-                    betterResults = betterResults.concat(innerResults);
-                } else if (textString) {
-                    // if no table definition is found, the textString is the item name
-                    Logger.log(`results text ${textString.trim()} and commands ${commands}`);
-                    betterResult.img =
-                        result.thumbnail ??
-                        result.img ??
-                        CONFIG.RollTable.resultIcon ??
-                        result.src ??
-                        `icons/svg/d20-black.svg`;
-                    betterResult.text = textString.trim();
-                    // if there is command, then it's not a pure text but a generated item
-                    if (!commands || commands.length === 0) {
-                        betterResult.type = CONST.TABLE_RESULT_TYPES.TEXT;
-                    }
-                    betterResult.commands = commands;
+    //                 // this.tableResults = this.tableResults.concat(innerResults);
+    //                 betterResults = betterResults.concat(innerResults);
+    //             } else if (textString) {
+    //                 // if no table definition is found, the textString is the item name
+    //                 Logger.log(`results text ${textString.trim()} and commands ${commands}`);
+    //                 betterResult.img =
+    //                     result.thumbnail ??
+    //                     result.img ??
+    //                     CONFIG.RollTable.resultIcon ??
+    //                     result.src ??
+    //                     `icons/svg/d20-black.svg`;
+    //                 betterResult.text = textString.trim();
+    //                 // if there is command, then it's not a pure text but a generated item
+    //                 if (!commands || commands.length === 0) {
+    //                     betterResult.type = CONST.TABLE_RESULT_TYPES.TEXT;
+    //                 }
+    //                 betterResult.commands = commands;
 
-                    // PATCH 2023-10-04
-                    if (isEmptyObject(betterResult.flags)) {
-                        betterResult.flags = {};
-                    }
-                    mergeObject(betterResult.flags, result.flags);
+    //                 // PATCH 2023-10-04
+    //                 if (isEmptyObject(betterResult.flags)) {
+    //                     betterResult.flags = {};
+    //                 }
+    //                 mergeObject(betterResult.flags, result.flags);
 
-                    betterResults.push(betterResult);
-                }
-            }
-        } else {
-            const betterResult = mergeObject({}, result.toObject(false));
-            betterResult.img =
-                result.thumbnail || result.img || CONFIG.RollTable.resultIcon || `icons/svg/d20-black.svg`;
-            betterResult.collection = result.documentCollection;
-            betterResult.text = result.text;
+    //                 betterResults.push(betterResult);
+    //             }
+    //         }
+    //     } else {
+    //         const betterResult = mergeObject({}, result.toObject(false));
+    //         betterResult.img =
+    //             result.thumbnail || result.img || CONFIG.RollTable.resultIcon || `icons/svg/d20-black.svg`;
+    //         betterResult.collection = result.documentCollection;
+    //         betterResult.text = result.text;
 
-            // PATCH 2023-10-04
-            if (isEmptyObject(betterResult.flags)) {
-                betterResult.flags = {};
-            }
-            mergeObject(betterResult.flags, result.flags);
+    //         // PATCH 2023-10-04
+    //         if (isEmptyObject(betterResult.flags)) {
+    //             betterResult.flags = {};
+    //         }
+    //         mergeObject(betterResult.flags, result.flags);
 
-            betterResults.push(betterResult);
-        }
+    //         betterResults.push(betterResult);
+    //     }
 
-        return betterResults;
-    }
+    //     return betterResults;
+    // }
 
     /**
      * @deprecated not used anymore there is a method on the loot helpers now ?

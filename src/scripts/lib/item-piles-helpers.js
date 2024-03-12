@@ -1,4 +1,5 @@
 import { RollTableToActorHelpers } from "../apps/rolltable-to-actor/rolltable-to-actor-helpers";
+import { CONSTANTS } from "../constants/constants";
 import { BetterRollTable } from "../core/brt-table";
 import Logger from "./Logger";
 import { RetrieveHelpers } from "./retrieve-helpers";
@@ -905,15 +906,24 @@ export default class ItemPilesHelpers {
     static stackTableResults(rolledResult) {
         const resultsStacked = [];
         rolledResult.forEach((newResult) => {
+            let isResultHidden =
+                getProperty(newResult, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_HIDDEN_TABLE}`) ||
+                false;
             // MOD 4535992
             //const existingItem = resultsStacked.find((item) => ItemPilesHelpers.findSimilarItem(item, newResult));
-            const existingItem = resultsStacked.find((r) => r.documentId === newResult.documentId);
+            const existingItem = resultsStacked.find((r) => {
+                // Merge by hidden property
+                let isResultHidden2 =
+                    getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_HIDDEN_TABLE}`) ||
+                    false;
+                return r.documentId === newResult.documentId && isResultHidden === isResultHidden2;
+            });
+            if (!ItemPilesHelpers._isRealNumber(newResult.quantity)) {
+                newResult.quantity = 1;
+            }
             if (existingItem) {
                 existingItem.quantity += Math.max(newResult.quantity, 1);
             } else {
-                if (!ItemPilesHelpers._isRealNumber(newResult.quantity)) {
-                    newResult.quantity = 1;
-                }
                 resultsStacked.push({
                     ...newResult,
                 });

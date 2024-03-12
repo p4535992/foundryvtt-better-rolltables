@@ -100,10 +100,16 @@ export class BetterRollTable {
         // return ChatMessage.implementation.create(messageData, messageOptions);
         // const rollHTML = this.table.displayRoll && roll ? await roll.render() : null;
         let betterResults = results.map((result) => {
-            const r = result.toObject(false);
-            r.text = result.getChatText();
-            r.icon = result.icon ?? result.img ?? result.src ?? `icons/svg/d20-highlight.svg`;
-            return r;
+            if (result instanceof TableResult) {
+                const r = result.toObject(false);
+                r.text = result.getChatText();
+                r.icon = result.icon ?? result.img ?? result.src ?? `icons/svg/d20-highlight.svg`;
+                return r;
+            } else {
+                const r = result;
+                r.icon = result.icon ?? result.img ?? result.src ?? `icons/svg/d20-highlight.svg`;
+                return r;
+            }
         });
 
         if (this.table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_BETTER) {
@@ -131,10 +137,16 @@ export class BetterRollTable {
                 // messageData.content = await renderTemplate(`modules/${CONSTANTS.MODULE_ID}/templates/card/better-chat-card.hbs`, {
                 description: await TextEditor.enrichHTML(this.table.description, { documents: true, async: true }),
                 results: results.map((result) => {
-                    const r = result.toObject(false);
-                    r.text = result.getChatText();
-                    r.icon = result.icon ?? result.img ?? result.src ?? `icons/svg/d20-highlight.svg`;
-                    return r;
+                    if (result instanceof TableResult) {
+                        const r = result.toObject(false);
+                        r.text = result.getChatText();
+                        r.icon = result.icon ?? result.img ?? result.src ?? `icons/svg/d20-highlight.svg`;
+                        return r;
+                    } else {
+                        const r = result;
+                        r.icon = result.icon ?? result.img ?? result.src ?? `icons/svg/d20-highlight.svg`;
+                        return r;
+                    }
                 }),
                 rollHTML: this.table.displayRoll && roll ? await roll.render() : null,
                 table: this.table,
