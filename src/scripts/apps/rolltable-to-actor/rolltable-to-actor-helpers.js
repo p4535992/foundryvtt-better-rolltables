@@ -307,7 +307,7 @@ export class RollTableToActorHelpers {
             // itemsData.push(itemTmp);
             return itemTmp;
         } else {
-            Logger.warn(`The Table Result is not a item`, false, r);
+            Logger.debug(`The Table Result is not a item`, false, r);
             return null;
         }
     }

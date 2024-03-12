@@ -384,6 +384,25 @@
 				</td>
 
                 <td class="result-brt-quantity-formula">
+					{{#if result.isStackable}}
+                        <input {{#brt-isEmpty result.flags.better-rolltables.brt-result-custom-quantity}} style="background: lightcoral;"{{/brt-isEmpty}} 
+                            class="result-better-rolltables-formula"
+                            type="text"
+                            name="results.{{i}}.flags.better-rolltables.brt-result-custom-quantity"
+                            value="{{result.flags.better-rolltables.brt-result-custom-quantity}}"
+                            placeholder="1"
+                            data-dtype="String"
+                        />
+                    {{else}}    
+                        <input class="result-better-rolltables-formula"
+                            type="hidden"
+                            name="results.{{i}}.flags.better-rolltables.brt-result-custom-quantity"
+                            value="{{result.flags.better-rolltables.brt-result-custom-quantity}}"
+                            placeholder="1"
+                            data-dtype="String"
+                        />
+                    {{/if}}
+                    <!--
 					{{#if result.isText}}
                         <input class="result-better-rolltables-formula"
                             type="hidden"
@@ -411,6 +430,7 @@
                             data-dtype="String"
                             />
 					{{/if}}
+                    -->
                 </td>
 
                 {{#if (eq @root.tableType "harvest")}}

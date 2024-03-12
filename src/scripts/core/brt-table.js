@@ -525,8 +525,9 @@ export class BetterRollTable {
 
                 let pack;
                 let documentName;
-                if (result.type === CONST.TABLE_RESULT_TYPES.DOCUMENT) documentName = result.documentCollection;
-                else if (result.type === CONST.TABLE_RESULT_TYPES.COMPENDIUM) {
+                if (result.type === CONST.TABLE_RESULT_TYPES.DOCUMENT) {
+                    documentName = result.documentCollection;
+                } else if (result.type === CONST.TABLE_RESULT_TYPES.COMPENDIUM) {
                     pack = await RetrieveHelpers.getCompendiumCollectionAsync(result.documentCollection, false, false);
                     documentName = pack?.documentName;
                 }
@@ -546,7 +547,9 @@ export class BetterRollTable {
                         });
                         inner = inner.concat(innerRoll.results);
                     }
-                } else inner.push(result);
+                } else {
+                    inner.push(result);
+                }
             }
             results = inner;
         }

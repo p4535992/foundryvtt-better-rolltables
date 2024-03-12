@@ -1046,114 +1046,126 @@ export default class ItemPilesHelpers {
     }
 
     /**
-     * Whether an item pile is a container. If it is not enabled, it is always false.
+     * Whether an item pile is locked. If it is not enabled or not a container, it is always false.
      *
      * @param {Token/TokenDocument} target
-     *
-     * @return {Promise<boolean>}
+     * @param {Object/boolean} [data=false] data existing flags data to use
+     * @return {boolean}
      */
-    static async isValidItemPile(target, data = false) {
-        const targetActor = await RetrieveHelpers.getActorAsync(target);
-        const pileData = ItemPilesHelpers._getActorFlagData(targetActor, data);
-        return targetActor && pileData?.enabled;
+    static isItemPileLocked(target, data = false) {
+        return game.itempiles.API.isItemPileLocked(target, data);
+    }
+
+    /**
+     * Whether an item pile is closed. If it is not enabled or not a container, it is always false.
+     *
+     * @param {Token/TokenDocument} target
+     * @param {Object/boolean} [data=false] data existing flags data to use
+     * @return {boolean}
+     */
+    static isItemPileClosed(target, data = false) {
+        return game.itempiles.API.isItemPileClosed(target, data);
+    }
+
+    /**
+     * Whether an item pile is a valid item pile. If it is not enabled, it is always false.
+     *
+     * @param {Token/TokenDocument} target
+     * @param {Object/boolean} [data=false] data existing flags data to use
+     * @return {boolean}
+     */
+    static isValidItemPile(target, data = false) {
+        return game.itempiles.API.isValidItemPile(target, data);
+    }
+
+    /**
+     * Whether an item pile is a regular item pile. If it is not enabled, it is always false.
+     *
+     * @param {Token/TokenDocument} target
+     * @param {Object/boolean} [data=false] data existing flags data to use
+     * @return {boolean}
+     */
+    static isRegularItemPile(target, data = false) {
+        return game.itempiles.API.isRegularItemPile(target, data);
     }
 
     /**
      * Whether an item pile is a container. If it is not enabled, it is always false.
      *
      * @param {Token/TokenDocument} target
-     *
-     * @return {Promise<boolean>}
+     * @param {Object/boolean} [data=false] data existing flags data to use
+     * @return {boolean}
      */
-    static async isRegularItemPile(target, data = false) {
-        const targetActor = await RetrieveHelpers.getActorAsync(target);
-        const pileData = ItemPilesHelpers._getActorFlagData(targetActor, data);
-        return targetActor && pileData?.enabled && pileData?.type === ItemPilesHelpers.PILE_TYPES.PILE;
+    static isItemPileContainer(target, data = false) {
+        return game.itempiles.API.isItemPileContainer(target, data);
     }
 
     /**
-     * Whether an item pile is a container. If it is not enabled, it is always false.
+     * Whether an item pile is a lootable. If it is not enabled, it is always false.
      *
      * @param {Token/TokenDocument} target
-     *
-     * @return {Promise<boolean>}
+     * @param {Object/boolean} [data=false] data existing flags data to use
+     * @return {boolean}
      */
-    static async isItemPileContainer(target, data = false) {
-        const targetActor = await RetrieveHelpers.getActorAsync(target);
-        const pileData = ItemPilesHelpers._getActorFlagData(targetActor, data);
-        return pileData?.enabled && pileData?.type === ItemPilesHelpers.PILE_TYPES.CONTAINER;
+    static isItemPileLootable(target, data = false) {
+        return game.itempiles.API.isItemPileLootable(target, data);
+    }
+
+    /**
+     * Whether an item pile is a vault. If it is not enabled, it is always false.
+     *
+     * @param {Token/TokenDocument} target
+     * @param {Object/boolean} [data=false] data existing flags data to use
+     * @return {boolean}
+     */
+    static isItemPileVault(target, data = false) {
+        return game.itempiles.API.isItemPileVault(target, data);
+    }
+
+    /**
+     * Whether an item pile is a merchant. If it is not enabled, it is always false.
+     *
+     * @param {Token/TokenDocument} target
+     * @param {Object/boolean} [data=false] data existing flags data to use
+     * @return {boolean}
+     */
+    static isItemPileMerchant(target, data = false) {
+        return game.itempiles.API.isItemPileMerchant(target, data);
+    }
+
+    /**
+     * Whether an item pile is a merchant. If it is not enabled, it is always false.
+     *
+     * @param {Token/TokenDocument} target
+     * @param {Object/boolean} [data=false] data existing flags data to use
+     * @return {boolean}
+     */
+    static isItemPileAuctioneer(target, data = false) {
+        return game.itempiles.API.isItemPileAuctioneer(target, data);
+    }
+
+    /**
+     * Whether an item pile is empty pile. If it is not enabled, it is always false.
+     *
+     * @param {Token/TokenDocument} target
+     * @return {boolean}
+     */
+    static isItemPileEmpty(target) {
+        return game.itempiles.API.isItemPileEmpty(target);
     }
     /**
-     * Whether an item pile is a container. If it is not enabled, it is always false.
+     * Whether an item pile is stackable. If it is not enabled, it is always false.
      *
-     * @param {Token/TokenDocument} target
-     *
-     * @return {Promise<boolean>}
+     * @param {Item} target
+     * @return {boolean}
      */
-    static async isItemPileLootable(target, data = false) {
-        const targetActor = await RetrieveHelpers.getActorAsync(target);
-        const pileData = ItemPilesHelpers._getActorFlagData(targetActor, data);
-        return (
-            targetActor &&
-            pileData?.enabled &&
-            (pileData?.type === ItemPilesHelpers.PILE_TYPES.PILE || pileData?.type === CONSTANTS.PILE_TYPES.CONTAINER)
-        );
-    }
-    /**
-     * Whether an item pile is a container. If it is not enabled, it is always false.
-     *
-     * @param {Token/TokenDocument} target
-     *
-     * @return {Promise<boolean>}
-     */
-    static async isItemPileVault(target, data = false) {
-        const targetActor = await RetrieveHelpers.getActorAsync(target);
-        const pileData = ItemPilesHelpers._getActorFlagData(targetActor, data);
-        return pileData?.enabled && pileData?.type === ItemPilesHelpers.PILE_TYPES.VAULT;
-    }
-    /**
-     * Whether an item pile is a container. If it is not enabled, it is always false.
-     *
-     * @param {Token/TokenDocument} target
-     *
-     * @return {Promise<boolean>}
-     */
-    static async isItemPileMerchant(target, data = false) {
-        const targetActor = await RetrieveHelpers.getActorAsync(target);
-        const pileData = ItemPilesHelpers._getActorFlagData(targetActor, data);
-        return pileData?.enabled && pileData?.type === ItemPilesHelpers.PILE_TYPES.MERCHANT;
+    static isItemStackable(target) {
+        return game.itempiles.API.canItemStack(target);
     }
 
     // ======================================
     // PRIVATE METHODS
     // ========================================
-
-    /**
-     *
-     * @param target
-     * @param data
-     * @returns {Object<CONSTANTS.PILE_DEFAULTS>}
-     */
-    static async _getActorFlagData(target, data = false) {
-        const defaults = foundry.utils.mergeObject(
-            { ...ItemPilesHelpers.PILE_DEFAULTS },
-            { ...(game.itempiles.API.PILE_DEFAULTS ?? {}) },
-        );
-        target = await RetrieveHelpers.getActorAsync(target);
-        if (target?.token) {
-            target = target.token;
-        }
-        return ItemPilesHelpers._getFlagData(target, ItemPilesHelpers.FLAGS.PILE, defaults, data);
-    }
-
-    static _getFlagData(inDocument, flag, defaults, existing = false) {
-        const defaultFlags = foundry.utils.deepClone(defaults);
-        let flags = foundry.utils.deepClone(existing || (getProperty(inDocument, flag) ?? {}));
-        if (flag === ItemPilesHelpers.FLAGS.PILE) {
-            flags = migrateFlagData(inDocument, flags);
-        }
-        return foundry.utils.mergeObject(defaultFlags, flags);
-    }
 
     /**
      * It is recommended to add the following filter to Item Pile's default filter: system.weaponType | natural. Which will filter out the natural weapons found on many creatures. Alternatively, define the `shouldBeLoot` filter function

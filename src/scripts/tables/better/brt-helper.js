@@ -1,6 +1,7 @@
 import { CONSTANTS } from "../../constants/constants.js";
 import Logger from "../../lib/Logger.js";
 import CompendiumsHelpers from "../../lib/compendiums-helpers.js";
+import ItemPilesHelpers from "../../lib/item-piles-helpers.js";
 import { RetrieveHelpers } from "../../lib/retrieve-helpers.js";
 
 export class BRTBetterHelpers {
@@ -199,7 +200,7 @@ export class BRTBetterHelpers {
             }
         }
         if (!findDocument) {
-            Logger.warn(
+            Logger.debug(
                 `The uuid can be retrieved only from result type '${CONST.TABLE_RESULT_TYPES.COMPENDIUM}' or '${CONST.TABLE_RESULT_TYPES.DOCUMENT}'`,
             );
             findDocument = null;
@@ -228,136 +229,50 @@ export class BRTBetterHelpers {
         result.uuid = resultToUpdate.uuid ?? "";
         const resultDoc = await BRTBetterHelpers.retrieveDocumentFromResultOnlyUuid(result, false);
         result.uuidDoc = resultDoc?.uuid ?? "";
+        result.isStackable = false;
+
         // grab the formula
         // result.qtFormula = getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.}`;
+        const currentUuid = getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`);
+        const currentOriginalName = getProperty(
+            result,
+            `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_NAME}`,
+        );
+        const currentCustomName = getProperty(
+            result,
+            `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`,
+        );
+        const currentOriginalIcon = getProperty(
+            result,
+            `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_ICON}`,
+        );
+        const currentCustomIcon = getProperty(
+            result,
+            `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`,
+        );
+        const currentOriginalQuantity = getProperty(
+            result,
+            `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_QUANTITY}`,
+        );
+        const currentCustomQuantity = getProperty(
+            result,
+            `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_QUANTITY}`,
+        );
+
+        const currentCustomQuantityOLD = getProperty(
+            result,
+            `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RESULTS_FORMULA_KEY_FORMULA}`,
+        );
+
         if (result.isDocument || result.isCompendium) {
-            const currentUuid = getProperty(
-                result,
-                `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`,
-            );
-            const currentOriginalName = getProperty(
-                result,
-                `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_NAME}`,
-            );
-            const currentCustomName = getProperty(
-                result,
-                `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`,
-            );
-            const currentOriginalIcon = getProperty(
-                result,
-                `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_ICON}`,
-            );
-            const currentCustomIcon = getProperty(
-                result,
-                `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`,
-            );
-            const currentOriginalQuantity = getProperty(
-                result,
-                `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_QUANTITY}`,
-            );
-            const currentCustomQuantity = getProperty(
-                result,
-                `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_QUANTITY}`,
-            );
-
-            const currentCustomQuantityOLD = getProperty(
-                result,
-                `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RESULTS_FORMULA_KEY_FORMULA}`,
-            );
-
             if (result.uuidDoc && (!currentUuid || currentUuid !== result.uuidDoc)) {
                 setProperty(
                     result,
                     `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`,
                     result.uuidDoc,
                 );
-                // if (noFlag) {
-                //   setProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`, result.uuidDoc);
-                // } else {
-                //   await result.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.GENERIC_RESULT_UUID, result.uuidDoc);
-                // }
                 isUpdate = true;
             }
-            if (
-                result.text &&
-                currentOriginalName !== result.text &&
-                currentCustomName &&
-                currentCustomName !== result.text
-            ) {
-                setProperty(
-                    result,
-                    `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_NAME}`,
-                    result.text,
-                );
-                // if (noFlag) {
-                //   setProperty(
-                //     result,
-                //     `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_NAME}`,
-                //     result.text
-                //   );
-                // } else {
-                //   await result.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_NAME, result.text);
-                // }
-                isUpdate = true;
-            }
-            if (result.text && !currentCustomName) {
-                setProperty(
-                    result,
-                    `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`,
-                    result.text,
-                );
-                // if (noFlag) {
-                //   setProperty(
-                //     result,
-                //     `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`,
-                //     result.text
-                //   );
-                // } else {
-                //   await result.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME, result.text);
-                // }
-                isUpdate = true;
-            }
-
-            if (
-                result.img &&
-                currentOriginalIcon !== result.img &&
-                currentCustomIcon &&
-                currentCustomIcon !== result.img
-            ) {
-                setProperty(
-                    result,
-                    `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_ICON}`,
-                    result.img,
-                );
-                // if (noFlag) {
-                //   setProperty(
-                //     result,
-                //     `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_ICON}`,
-                //     result.img
-                //   );
-                // } else {
-                //   await result.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_ICON, result.img);
-                // }
-                isUpdate = true;
-            }
-            if (result.img && !currentCustomIcon) {
-                setProperty(
-                    result,
-                    `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`,
-                    result.img,
-                );
-                // if (noFlag) {
-                //   setProperty(
-                //     result,
-                //     `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`,
-                //     result.img
-                //   );
-                // } else {
-                //   await result.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON, result.img);
-                // }
-                isUpdate = true;
-            }
-
             // Little patch for old value
             if (currentCustomQuantityOLD && !currentCustomQuantity) {
                 setProperty(
@@ -379,21 +294,7 @@ export class BRTBetterHelpers {
                     `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_QUANTITY}`,
                     result.quantity,
                 );
-                // if (noFlag) {
-                //   setProperty(
-                //     result,
-                //     `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_QUANTITY}`,
-                //     result.quantity
-                //   );
-                // } else {
-                //   await result.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_QUANTITY, result.quantity);
-                // }
                 isUpdate = true;
-            }
-
-            // Try to update the original result image
-            if (!result.img || result.img === CONFIG.RollTable.resultIcon) {
-                result.img = currentCustomIcon || resultDoc.img || CONFIG.RollTable.resultIcon;
             }
             // TODO DISABLED FOR NOW WE USE THE LOGIC 1:1 INSTEAD N:1 FOR NOW
             /*
@@ -438,7 +339,75 @@ export class BRTBetterHelpers {
                     }
                 }
             }
+
+            // Try to check if item is stackable
+            if (result.uuidDoc) {
+                let resultDocType = null;
+                if (resultDoc?.documentName) {
+                    resultDocType = resultDoc?.documentName;
+                } else if (resultDoc.pack && game.packs.get(resultDoc.pack)) {
+                    resultDocType = game.packs.get(resultDoc.pack)?.documentClass?.documentName;
+                } else if (resultDoc.documentCollection && game.packs.get(resultDoc.documentCollection)) {
+                    resultDocType = game.packs.get(resultDoc.documentCollection)?.documentClass?.documentName;
+                } else if (resultDoc.documentCollection) {
+                    resultDocType = resultDoc.documentCollection;
+                }
+
+                if (resultDocType === "Item") {
+                    //  && ItemPilesHelpers.isStackable(resultDoc)
+                    result.isStackable = true;
+                } else if (resultDocType === "Actor") {
+                    result.isStackable = true;
+                } else if (resultDocType === "RollTable") {
+                    result.isStackable = true;
+                }
+            }
         }
+
+        if (
+            result.text &&
+            currentOriginalName !== result.text &&
+            currentCustomName &&
+            currentCustomName !== result.text
+        ) {
+            setProperty(
+                result,
+                `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_NAME}`,
+                result.text,
+            );
+            isUpdate = true;
+        }
+        if (result.text && !currentCustomName) {
+            setProperty(
+                result,
+                `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`,
+                result.text,
+            );
+            isUpdate = true;
+        }
+
+        if (result.img && currentOriginalIcon !== result.img && currentCustomIcon && currentCustomIcon !== result.img) {
+            setProperty(
+                result,
+                `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_ICON}`,
+                result.img,
+            );
+            isUpdate = true;
+        }
+        if (result.img && !currentCustomIcon) {
+            setProperty(
+                result,
+                `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`,
+                result.img,
+            );
+            isUpdate = true;
+        }
+
+        // Try to update the original result image
+        if (!result.img || result.img === CONFIG.RollTable.resultIcon) {
+            result.img = currentCustomIcon || resultDoc?.img || CONFIG.RollTable.resultIcon;
+        }
+
         return {
             result: result,
             isUpdate: isUpdate,
