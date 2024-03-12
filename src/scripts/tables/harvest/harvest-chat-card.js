@@ -3,6 +3,7 @@ import { BRTUtils } from "../../core/utils.js";
 import { BRTBetterHelpers } from "../better/brt-helper.js";
 import { RollTableToActorHelpers } from "../../apps/rolltable-to-actor/rolltable-to-actor-helpers.js";
 import Logger from "../../lib/Logger.js";
+import ItemPilesHelpers from "../../lib/item-piles-helpers.js";
 
 /**
  * create a chat card based on the content of the object HarvestData
@@ -28,208 +29,179 @@ export class HarvestChatCard {
     }
 
     async findOrCreateItems() {
-        // TODO maybe is better to loop on already stucked results ?
-        for (const result of this.betterResults) {
-            let customResultName = undefined;
-            let customResultImg = undefined;
+        // we will scale down the font size if an item name is too long
+        // TODO transfer this property on the better result data ?
+        for (const result of ItemPilesHelpers.stackTableResults(this.betterResults)) {
+            this.numberOfDraws++;
+            const quantity = result.quantity;
+            let type = undefined;
+            if (result.isText) {
+                type = CONST.TABLE_RESULT_TYPES.TEXT;
+            } else if (result.pack) {
+                type = CONST.TABLE_RESULT_TYPES.COMPENDIUM;
+            } else {
+                type = CONST.TABLE_RESULT_TYPES.DOCUMENT;
+            }
+
             let customResultNameHidden = undefined;
             let customResultImgHidden = undefined;
-            if (getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`)) {
-                customResultName = getProperty(
-                    result,
-                    `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`,
-                );
-            }
-            if (getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`)) {
-                customResultImg = getProperty(
-                    result,
-                    `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`,
-                );
+
+            let customResultName = undefined;
+            if (hasProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`)) {
+                customResultName =
+                    getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`) ||
+                    "";
             }
 
+            let customResultImg = undefined;
+            if (hasProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`)) {
+                customResultImg =
+                    getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`) ||
+                    "";
+            }
             let isResultHidden = false;
-            if (getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_HIDDEN_TABLE}`)) {
-                if (
-                    !getProperty(
-                        result,
-                        `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_SHOW_HIDDEN_RESULT_ON_CHAT}`,
-                    )
-                ) {
-                    continue;
-                }
+            if (hasProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_HIDDEN_TABLE}`)) {
+                // if (
+                //     !getProperty(
+                //         result,
+                //         `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_SHOW_HIDDEN_RESULT_ON_CHAT}`,
+                //     )
+                // ) {
+                //     continue;
+                // }
                 // customResultNameHidden = CONSTANTS.DEFAULT_HIDDEN_RESULT_TEXT;
                 // customResultImgHidden = CONSTANTS.DEFAULT_HIDDEN_RESULT_IMAGE;
-                isResultHidden = true;
-            }
-
-            if (result.type === CONST.TABLE_RESULT_TYPES.TEXT) {
-                this.itemsDataGM = await BRTUtils.addToItemData(
-                    this.itemsDataGM,
-                    {
-                        id: result.text,
-                        text: result.text ?? result.name,
-                        img: result.icon ?? result.img ?? result.src ?? `icons/svg/d20-highlight.svg`,
-                        isText: true,
-                    },
-                    {},
-                    false,
-                );
-                if (
-                    !getProperty(
+                isResultHidden =
+                    getProperty(
                         result,
-                        `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_SHOW_HIDDEN_RESULT_ON_CHAT}`,
-                    ) &&
-                    getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_HIDDEN_TABLE}`)
-                ) {
-                    continue;
-                }
-                this.itemsData = await BRTUtils.addToItemData(
-                    this.itemsData,
-                    {
-                        id: result.text,
-                        text: customResultNameHidden ?? result.text ?? result.name,
-                        img:
-                            customResultImgHidden ??
-                            result.icon ??
-                            result.img ??
-                            result.src ??
-                            `icons/svg/d20-highlight.svg`,
-                        isText: true,
-                    },
-                    {},
-                    isResultHidden,
-                );
-                continue;
+                        `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_HIDDEN_TABLE}`,
+                    ) || false;
             }
-
-            this.numberOfDraws++;
-
-            /** we pass though the data, since we might have some data manipulation that changes an existing item, in that case even if it was initially
-             * existing or in a compendium we have to create a new one */
-            const itemData = await RollTableToActorHelpers.buildItemData(result);
-
-            if (!itemData) {
-                this.itemsDataGM = await BRTUtils.addToItemData(
-                    this.itemsDataGM,
-                    {
-                        id: result.text,
-                        text: result.text ?? result.name,
-                        img: result.icon ?? result.img ?? result.src ?? `icons/svg/d20-highlight.svg`,
-                        isText: true,
-                    },
-                    {},
-                    false,
-                );
-                if (
-                    !getProperty(
-                        result,
-                        `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_SHOW_HIDDEN_RESULT_ON_CHAT}`,
-                    ) &&
-                    getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_HIDDEN_TABLE}`)
-                ) {
-                    continue;
-                }
-                this.itemsData = await BRTUtils.addToItemData(
-                    this.itemsData,
-                    {
-                        id: result.text,
-                        text: customResultNameHidden ?? result.text ?? result.name,
-                        img:
-                            customResultImgHidden ??
-                            result.icon ??
-                            result.img ??
-                            result.src ??
-                            `icons/svg/d20-highlight.svg`,
-                        isText: true,
-                    },
-                    {},
-                    isResultHidden,
-                );
-                continue;
-            }
-
-            const itemEntityUuid = getProperty(
+            const entityUuid = getProperty(
                 result,
                 `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`,
             );
-            let itemEntity = await fromUuid(itemEntityUuid);
-            if (itemEntity) {
-                if (customResultName && customResultName !== itemEntity.name) {
-                    setProperty(itemEntity, `name`, customResultName);
-                }
-                if (customResultImg && customResultImg !== itemEntity.img) {
-                    setProperty(itemEntity, `img`, customResultImg);
-                }
+            const itemEntity = await fromUuid(entityUuid);
 
-                let isJournal = itemEntity instanceof JournalEntry;
-                let docJournalPageUuid = getProperty(
-                    result,
-                    `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_JOURNAL_PAGE_UUID}`,
-                );
-                if (isJournal && docJournalPageUuid) {
-                    itemEntity = await fromUuid(docJournalPageUuid);
-                }
-                this.itemsDataGM = await BRTUtils.addToItemData(this.itemsDataGM, itemEntity, itemData, false);
+            const fontSize = itemEntity
+                ? Math.max(60, 100 - Math.max(0, (customResultName || itemEntity.name || result.text).length - 27) * 2)
+                : Math.max(60, 100 - Math.max(0, (result.name || result.text).length - 27) * 2);
 
-                if (customResultNameHidden && customResultNameHidden !== itemEntity.name) {
-                    setProperty(itemEntity, `name`, customResultNameHidden);
-                }
-                if (customResultImgHidden && customResultImgHidden !== itemEntity.img) {
-                    setProperty(itemEntity, `img`, customResultImgHidden);
+            if (result.type === CONST.TABLE_RESULT_TYPES.TEXT || !itemEntity) {
+                Logger.debug(`Cannot find document with '${entityUuid}'`);
+                this.itemsDataGM.push({
+                    id: result.text,
+                    text: customResultName ?? result.text ?? result.name,
+                    img: customResultImg ?? result.icon ?? result.img ?? result.src ?? `icons/svg/d20-highlight.svg`,
+                    isText: true,
+                    documentName: result.documentName,
+                    compendiumName: result.pack,
+                    type: type,
+                    item: {},
+                    isHidden: false,
+                    quantity: quantity,
+                    // weight: weight,
+                    fontSize: fontSize,
+                });
+                if (
+                    !getProperty(
+                        result,
+                        `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_SHOW_HIDDEN_RESULT_ON_CHAT}`,
+                    ) &&
+                    getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_HIDDEN_TABLE}`)
+                ) {
+                    continue;
                 }
                 if (isResultHidden) {
-                    if (
-                        !getProperty(
-                            result,
-                            `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_SHOW_HIDDEN_RESULT_ON_CHAT}`,
-                        )
-                    ) {
-                        continue;
-                    }
-                    setProperty(
-                        itemEntity,
-                        `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_HIDDEN_TABLE}`,
-                        isResultHidden,
-                    );
+                    this.itemsData.push({
+                        id: result.text,
+                        text: customResultNameHidden ?? result.text ?? result.name,
+                        img:
+                            customResultImgHidden ??
+                            result.icon ??
+                            result.img ??
+                            result.src ??
+                            `icons/svg/d20-highlight.svg`,
+                        isText: true,
+                        documentName: result.documentName,
+                        compendiumName: result.pack,
+                        type: type,
+                        item: {
+                            isHidden: isResultHidden,
+                        },
+                        isHidden: isResultHidden,
+                        quantity: quantity,
+                        // weight: weight,
+                        fontSize: fontSize,
+                    });
+                } else {
+                    this.itemsData.push({
+                        id: result.text,
+                        text: customResultName ?? result.text ?? result.name,
+                        img:
+                            customResultImg ?? result.icon ?? result.img ?? result.src ?? `icons/svg/d20-highlight.svg`,
+                        isText: true,
+                        documentName: result.documentName,
+                        compendiumName: result.pack,
+                        type: type,
+                        item: {
+                            isHidden: isResultHidden,
+                        },
+                        isHidden: isResultHidden,
+                        quantity: quantity,
+                        // weight: weight,
+                        fontSize: fontSize,
+                    });
                 }
-
-                this.itemsData = await BRTUtils.addToItemData(this.itemsData, itemEntity, itemData, isResultHidden);
 
                 continue;
             }
 
             const itemFolder = await this.getBRTFolder();
             if (itemFolder) {
-                itemData.folder = itemFolder.id;
+                itemEntity.folder = itemFolder.id;
             } else {
-                Logger.warn(`No folder tables found with name 'Better RollTable | Harvest Items'`);
+                Logger.debug(`No folder tables found with name 'Better RollTable | Better Items'`);
             }
 
-            setProperty(itemData, "permission.default", CONST.DOCUMENT_PERMISSION_LEVELS.OBSERVER);
-            let newItem = await Item.create(itemData);
-            if (customResultName && customResultName !== newItem.name) {
-                setProperty(newItem, `name`, customResultName);
+            if (customResultName && customResultName !== itemEntity.name) {
+                setProperty(itemEntity, `name`, customResultName);
             }
-            if (customResultImg && customResultImg !== newItem.img) {
-                setProperty(newItem, `img`, customResultImg);
+            if (customResultImg && customResultImg !== itemEntity.img) {
+                setProperty(itemEntity, `img`, customResultImg);
             }
 
-            let isJournal = newItem instanceof JournalEntry;
+            let isJournal = itemEntity instanceof JournalEntry;
             let docJournalPageUuid = getProperty(
                 result,
                 `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_JOURNAL_PAGE_UUID}`,
             );
             if (isJournal && docJournalPageUuid) {
-                newItem = await fromUuid(docJournalPageUuid);
+                itemEntity = await fromUuid(docJournalPageUuid);
             }
-            this.itemsDataGM = await BRTUtils.addToItemData(this.itemsDataGM, newItem, itemData, false);
+            this.itemsDataGM.push({
+                id: result.text,
+                text: customResultName ?? result.text ?? result.name,
+                img: customResultImg ?? result.icon ?? result.img ?? result.src ?? `icons/svg/d20-highlight.svg`,
+                isText: false,
+                documentName: itemEntity.documentName,
+                compendiumName: itemEntity.pack,
+                type: type,
+                item: {
+                    id: itemEntity.id,
+                    _id: itemEntity.id,
+                    name: itemEntity.name,
+                    img: itemEntity.img ?? itemEntity.src ?? `icons/svg/d20-highlight.svg`,
+                    text: itemEntity.text ?? itemEntity.name ?? "",
+                    uuid: itemEntity?.uuid ?? "",
+                    isHidden: false,
+                },
+                isHidden: false,
+                quantity: quantity,
+                // weight: weight,
+                fontSize: fontSize,
+            });
 
-            if (customResultNameHidden && customResultNameHidden !== itemEntity.name) {
-                setProperty(itemEntity, `name`, customResultNameHidden);
-            }
-            if (customResultImgHidden && customResultImgHidden !== itemEntity.img) {
-                setProperty(itemEntity, `img`, customResultImgHidden);
-            }
             if (isResultHidden) {
                 if (
                     !getProperty(
@@ -239,14 +211,78 @@ export class HarvestChatCard {
                 ) {
                     continue;
                 }
-                setProperty(
-                    itemEntity,
-                    `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_HIDDEN_TABLE}`,
-                    isResultHidden,
-                );
             }
 
-            this.itemsData = await BRTUtils.addToItemData(this.itemsData, newItem, itemData, isResultHidden);
+            if (customResultNameHidden && customResultNameHidden !== itemEntity.name) {
+                setProperty(itemEntity, `name`, customResultNameHidden);
+            }
+            if (customResultImgHidden && customResultImgHidden !== itemEntity.img) {
+                setProperty(itemEntity, `img`, customResultImgHidden);
+            }
+            setProperty(
+                itemEntity,
+                `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_HIDDEN_TABLE}`,
+                isResultHidden,
+            );
+
+            if (isResultHidden) {
+                this.itemsData.push({
+                    id: result.text,
+                    text: customResultNameHidden ?? result.text ?? result.name,
+                    img:
+                        customResultImgHidden ??
+                        result.icon ??
+                        result.img ??
+                        result.src ??
+                        `icons/svg/d20-highlight.svg`,
+                    isText: false,
+                    documentName: itemEntity.documentName,
+                    compendiumName: itemEntity.pack,
+                    type: type,
+                    item: {
+                        id: itemEntity.id,
+                        _id: itemEntity.id,
+                        name: itemEntity.name,
+                        img: itemEntity.img ?? itemEntity.src ?? `icons/svg/d20-highlight.svg`,
+                        text: itemEntity.text ?? itemEntity.name ?? "",
+                        uuid: itemEntity?.uuid ?? "",
+                        isHidden: isResultHidden,
+                    },
+                    isHidden: isResultHidden,
+                    quantity: quantity,
+                    // weight: weight,
+                    fontSize: fontSize,
+                });
+            } else {
+                this.itemsData.push({
+                    id: result.text,
+                    text: customResultName ?? result.text ?? result.name,
+                    img: customResultImg ?? result.icon ?? result.img ?? result.src ?? `icons/svg/d20-highlight.svg`,
+                    isText: false,
+                    documentName: itemEntity.documentName,
+                    compendiumName: itemEntity.pack,
+                    type: type,
+                    item: {
+                        id: itemEntity.id,
+                        _id: itemEntity.id,
+                        name: itemEntity.name,
+                        img: itemEntity.img ?? itemEntity.src ?? `icons/svg/d20-highlight.svg`,
+                        text: itemEntity.text ?? itemEntity.name ?? "",
+                        uuid: itemEntity?.uuid ?? "",
+                        isHidden: isResultHidden,
+                    },
+                    isHidden: isResultHidden,
+                    quantity: quantity,
+                    // weight: weight,
+                    fontSize: fontSize,
+                });
+            }
+
+            /*
+            // TODO ???
+            setProperty(itemData, "permission.default", CONST.DOCUMENT_PERMISSION_LEVELS.OBSERVER);
+            let newItem = await Item.create(itemData);
+            */
         }
     }
 
@@ -278,7 +314,7 @@ export class HarvestChatCard {
             documents: true,
         });
 
-        const rollHTML = table.displayRoll && this.roll ? await this.roll.render() : null;
+        const rollHTML = null; // TODO ? table.displayRoll && this.roll ? await this.roll.render() : null;
 
         let flavorString;
         if (this.numberOfDraws > 1) {
@@ -339,7 +375,7 @@ export class HarvestChatCard {
             documents: true,
         });
 
-        const rollHTML = table.displayRoll && this.roll ? await this.roll.render() : null;
+        const rollHTML = null; // TODO ? table.displayRoll && this.roll ? await this.roll.render() : null;
 
         let flavorString;
         if (this.numberOfDraws > 1) {
@@ -409,10 +445,19 @@ export class HarvestChatCard {
             }
         } else {
             // IF IS GM
+            const isShowHiddenResultOnChat = getProperty(
+                table,
+                `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_SHOW_HIDDEN_RESULT_ON_CHAT}`,
+            );
             await this.findOrCreateItems();
-            const chatData = await this.prepareCharCart(table);
-            BRTUtils.addRollModeToChatData(chatData, this.rollMode);
-            ChatMessage.create(chatData);
+
+            if (this.itemsData?.length > 0) {
+                const chatData = await this.prepareCharCart(table);
+                if (!isShowHiddenResultOnChat) {
+                    BRTUtils.addRollModeToChatData(chatData, this.rollMode);
+                }
+                ChatMessage.create(chatData);
+            }
 
             if (this.atLeastOneRollIsHidden) {
                 const chatDataGM = await this.prepareCharCartGM(table);

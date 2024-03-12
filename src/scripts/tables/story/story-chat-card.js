@@ -27,7 +27,7 @@ export class StoryChatCard {
         // quickfix for textselection of stories
         story = '<div class="better-rolltables-story-text-selectable">' + story + "</div>";
 
-        const rollHTML = table.displayRoll && this.roll ? await this.roll.render() : null;
+        const rollHTML = null; // TODO ? table.displayRoll && this.roll ? await this.roll.render() : null;
 
         const chatData = {
             rollHTML: rollHTML,
