@@ -34,6 +34,12 @@ With BRT, it is possible to customize the images and names of items without edit
 
 ![](/wiki/img/common_customize_image_name.gif)
 
+### Inner Table + Customized Roll Amount for every rolltable + Quantity Handling
+
+So many combination so little time for a good documentation...
+
+![](/wiki/img/common_type_inner_tables_1.gif)
+
 ## Better Tables
 
 *Work in progress, any help is welcomed*
