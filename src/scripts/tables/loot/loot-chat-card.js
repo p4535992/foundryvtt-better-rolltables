@@ -37,12 +37,14 @@ export class LootChatCard {
             this.numberOfDraws++;
             const quantity = result.quantity;
             let type = undefined;
-            if (result.isText) {
+            if (result.isText || result.type === CONST.TABLE_RESULT_TYPES.TEXT) {
                 type = CONST.TABLE_RESULT_TYPES.TEXT;
-            } else if (result.pack) {
+            } else if (result.pack || result.type === CONST.TABLE_RESULT_TYPES.COMPENDIUM) {
                 type = CONST.TABLE_RESULT_TYPES.COMPENDIUM;
-            } else {
+            } else if (result.documentCollection || result.type === CONST.TABLE_RESULT_TYPES.DOCUMENT) {
                 type = CONST.TABLE_RESULT_TYPES.DOCUMENT;
+            } else {
+                throw Logger.error(`No vaid type is been found for this result`, true, result);
             }
 
             let customResultNameHidden = undefined;
@@ -99,7 +101,19 @@ export class LootChatCard {
                     documentName: result.documentName,
                     compendiumName: result.pack,
                     type: type,
-                    item: {},
+                    item: {
+                        id: result.id,
+                        _id: result.id,
+                        name: customResultName ?? result.text ?? result.name,
+                        img:
+                            customResultImg ?? result.icon ?? result.img ?? result.src ?? `icons/svg/d20-highlight.svg`,
+                        text: customResultName ?? result.text ?? result.name,
+                        uuid: "",
+                        isHidden: isResultHidden,
+                        quantity: quantity,
+                        // weight: weight,
+                        fontSize: fontSize,
+                    },
                     isHidden: false,
                     quantity: quantity,
                     // weight: weight,
@@ -129,7 +143,21 @@ export class LootChatCard {
                         compendiumName: result.pack,
                         type: type,
                         item: {
+                            id: result.id,
+                            _id: result.id,
+                            name: customResultNameHidden ?? result.text ?? result.name,
+                            img:
+                                customResultImgHidden ??
+                                result.icon ??
+                                result.img ??
+                                result.src ??
+                                `icons/svg/d20-highlight.svg`,
+                            text: customResultNameHidden ?? result.text ?? result.name,
+                            uuid: "",
                             isHidden: isResultHidden,
+                            quantity: quantity,
+                            // weight: weight,
+                            fontSize: fontSize,
                         },
                         isHidden: isResultHidden,
                         quantity: quantity,
@@ -147,7 +175,21 @@ export class LootChatCard {
                         compendiumName: result.pack,
                         type: type,
                         item: {
+                            id: result.id,
+                            _id: result.id,
+                            name: customResultName ?? result.text ?? result.name,
+                            img:
+                                customResultImg ??
+                                result.icon ??
+                                result.img ??
+                                result.src ??
+                                `icons/svg/d20-highlight.svg`,
+                            text: customResultName ?? result.text ?? result.name,
+                            uuid: "",
                             isHidden: isResultHidden,
+                            quantity: quantity,
+                            // weight: weight,
+                            fontSize: fontSize,
                         },
                         isHidden: isResultHidden,
                         quantity: quantity,
@@ -197,6 +239,9 @@ export class LootChatCard {
                     text: itemEntity.text ?? itemEntity.name ?? "",
                     uuid: itemEntity?.uuid ?? "",
                     isHidden: false,
+                    quantity: quantity,
+                    // weight: weight,
+                    fontSize: fontSize,
                 },
                 isHidden: false,
                 quantity: quantity,
@@ -249,6 +294,9 @@ export class LootChatCard {
                         text: itemEntity.text ?? itemEntity.name ?? "",
                         uuid: itemEntity?.uuid ?? "",
                         isHidden: isResultHidden,
+                        quantity: quantity,
+                        // weight: weight,
+                        fontSize: fontSize,
                     },
                     isHidden: isResultHidden,
                     quantity: quantity,
@@ -272,6 +320,9 @@ export class LootChatCard {
                         text: itemEntity.text ?? itemEntity.name ?? "",
                         uuid: itemEntity?.uuid ?? "",
                         isHidden: isResultHidden,
+                        quantity: quantity,
+                        // weight: weight,
+                        fontSize: fontSize,
                     },
                     isHidden: isResultHidden,
                     quantity: quantity,

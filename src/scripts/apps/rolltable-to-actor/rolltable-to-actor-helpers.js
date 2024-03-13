@@ -240,7 +240,7 @@ export class RollTableToActorHelpers {
 
         if ((!document) instanceof Item) {
             // const defaultType = Item.TYPES[0]; // TODO add on item piles default item type like actor
-            Logger.error(`You cannot create itemData from this result`, r);
+            Logger.debug(`You cannot create itemData from this result probably is not a item`, r);
             return null;
         }
 
@@ -551,59 +551,59 @@ export class RollTableToActorHelpers {
         return items;
     }
 
-    /**
-     * @deprecated not used anymore
-     * @param {TableResult} result representation
-     * @param {Actor} actor to which to add items to
-     * @param {boolean} stackSame if true add quantity to an existing item of same name in the current actor
-     * @param {number} customLimit
-     * @returns {Item} the create Item (foundry item)
-     */
-    static async _createItem(result, actor, stackSame = true, customLimit = 0) {
-        const newItemData = await RollTableToActorHelpers.buildItemData(result);
-        const priceAttribute = game.itempiles.API.ITEM_PRICE_ATTRIBUTE; // SETTINGS.PRICE_PROPERTY_PATH
-        const itemPrice = getProperty(newItemData, priceAttribute) || 0;
-        const embeddedItems = [...actor.getEmbeddedCollection("Item").values()];
-        const originalItem = embeddedItems.find(
-            (i) => i.name === newItemData.name && itemPrice === getProperty(i, priceAttribute),
-        );
+    // /**
+    //  * @deprecated not used anymore
+    //  * @param {TableResult} result representation
+    //  * @param {Actor} actor to which to add items to
+    //  * @param {boolean} stackSame if true add quantity to an existing item of same name in the current actor
+    //  * @param {number} customLimit
+    //  * @returns {Item} the create Item (foundry item)
+    //  */
+    // static async _createItem(result, actor, stackSame = true, customLimit = 0) {
+    //     const newItemData = await RollTableToActorHelpers.buildItemData(result);
+    //     const priceAttribute = game.itempiles.API.ITEM_PRICE_ATTRIBUTE; // SETTINGS.PRICE_PROPERTY_PATH
+    //     const itemPrice = getProperty(newItemData, priceAttribute) || 0;
+    //     const embeddedItems = [...actor.getEmbeddedCollection("Item").values()];
+    //     const originalItem = embeddedItems.find(
+    //         (i) => i.name === newItemData.name && itemPrice === getProperty(i, priceAttribute),
+    //     );
 
-        /** if the item is already owned by the actor (same name and same PRICE) */
-        if (originalItem && stackSame) {
-            /** add quantity to existing item */
+    //     /** if the item is already owned by the actor (same name and same PRICE) */
+    //     if (originalItem && stackSame) {
+    //         /** add quantity to existing item */
 
-            const stackAttribute = game.itempiles.API.ITEM_QUANTITY_ATTRIBUTE; // game.settings.get(CONSTANTS.MODULE_ID, SETTINGS.QUANTITY_PROPERTY_PATH);
-            const priceAttribute = game.itempiles.API.ITEM_PRICE_ATTRIBUTE; // game.settings.get(CONSTANTS.MODULE_ID, SETTINGS.PRICE_PROPERTY_PATH);
-            // const weightAttribute = game.settings.get(CONSTANTS.MODULE_ID, SETTINGS.WEIGHT_PROPERTY_PATH);
+    //         const stackAttribute = game.itempiles.API.ITEM_QUANTITY_ATTRIBUTE; // game.settings.get(CONSTANTS.MODULE_ID, SETTINGS.QUANTITY_PROPERTY_PATH);
+    //         const priceAttribute = game.itempiles.API.ITEM_PRICE_ATTRIBUTE; // game.settings.get(CONSTANTS.MODULE_ID, SETTINGS.PRICE_PROPERTY_PATH);
+    //         // const weightAttribute = game.settings.get(CONSTANTS.MODULE_ID, SETTINGS.WEIGHT_PROPERTY_PATH);
 
-            const newItemQty = getProperty(newItemData, stackAttribute) || 1;
-            const originalQty = getProperty(originalItem, stackAttribute) || 1;
-            const updateItem = { _id: originalItem.id };
-            const newQty = RollTableToActorHelpers._handleLimitedQuantity(newItemQty, originalQty, customLimit);
+    //         const newItemQty = getProperty(newItemData, stackAttribute) || 1;
+    //         const originalQty = getProperty(originalItem, stackAttribute) || 1;
+    //         const updateItem = { _id: originalItem.id };
+    //         const newQty = RollTableToActorHelpers._handleLimitedQuantity(newItemQty, originalQty, customLimit);
 
-            if (newQty != newItemQty) {
-                setProperty(updateItem, stackAttribute, newQty);
+    //         if (newQty != newItemQty) {
+    //             setProperty(updateItem, stackAttribute, newQty);
 
-                const newPriceValue =
-                    (getProperty(originalItem, priceAttribute)?.value ?? 0) +
-                    (getProperty(newItemData, priceAttribute)?.value ?? 0);
-                const newPrice = {
-                    denomination: getProperty(item, priceAttribute)?.denomination,
-                    value: newPriceValue,
-                };
-                setProperty(updateItem, `${priceAttribute}`, newPrice);
+    //             const newPriceValue =
+    //                 (getProperty(originalItem, priceAttribute)?.value ?? 0) +
+    //                 (getProperty(newItemData, priceAttribute)?.value ?? 0);
+    //             const newPrice = {
+    //                 denomination: getProperty(item, priceAttribute)?.denomination,
+    //                 value: newPriceValue,
+    //             };
+    //             setProperty(updateItem, `${priceAttribute}`, newPrice);
 
-                // const newWeight = getProperty(originalItem, weightAttribute) + (getProperty(newItemData, weightAttribute) ?? 1);
-                // setProperty(updateItem, `${weightAttribute}`, newWeight);
+    //             // const newWeight = getProperty(originalItem, weightAttribute) + (getProperty(newItemData, weightAttribute) ?? 1);
+    //             // setProperty(updateItem, `${weightAttribute}`, newWeight);
 
-                await actor.updateEmbeddedDocuments("Item", [updateItem]);
-            }
-            return actor.items.get(originalItem.id);
-        } else {
-            /** we create a new item if we don't own already */
-            return await actor.createEmbeddedDocuments("Item", [newItemData]);
-        }
-    }
+    //             await actor.updateEmbeddedDocuments("Item", [updateItem]);
+    //         }
+    //         return actor.items.get(originalItem.id);
+    //     } else {
+    //         /** we create a new item if we don't own already */
+    //         return await actor.createEmbeddedDocuments("Item", [newItemData]);
+    //     }
+    // }
 
     /**
      *
@@ -628,119 +628,119 @@ export class RollTableToActorHelpers {
         return newQty;
     }
 
-    /**
-     * @deprecated we use instead RollTableToActorHelpers.resultToItemData(result)
-     * @param {TableResult} result
-     * @returns
-     */
-    static async buildItemData(result) {
-        /*
-    // PATCH 2023-10-04
-    let customResultName = undefined;
-    let customResultImg = undefined;
-    if (getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`)) {
-      customResultName = getProperty(
-        result,
-        `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`
-      );
-    }
+    // /**
+    //  * @deprecated we use instead RollTableToActorHelpers.resultToItemData(result)
+    //  * @param {TableResult} result
+    //  * @returns
+    //  */
+    // static async buildItemData(result) {
+    //     /*
+    // // PATCH 2023-10-04
+    // let customResultName = undefined;
+    // let customResultImg = undefined;
+    // if (getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`)) {
+    //   customResultName = getProperty(
+    //     result,
+    //     `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`
+    //   );
+    // }
 
-    if (getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`)) {
-      customResultImg = getProperty(
-        result,
-        `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`
-      );
-    }
+    // if (getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`)) {
+    //   customResultImg = getProperty(
+    //     result,
+    //     `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`
+    //   );
+    // }
 
-    let existingItem = undefined;
+    // let existingItem = undefined;
 
-    let docUuid = getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`);
-    if (docUuid) {
-      existingItem = await fromUuid(docUuid);
-    }
+    // let docUuid = getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`);
+    // if (docUuid) {
+    //   existingItem = await fromUuid(docUuid);
+    // }
 
-    if (result.documentCollection === "Item") {
-      existingItem = game.items.get(result.documentId);
-    } else {
-      const compendium = game.packs.get(result.documentCollection);
-      if (compendium) {
-        existingItem = await compendium.getDocument(result.documentId);
-      }
-    }
+    // if (result.documentCollection === "Item") {
+    //   existingItem = game.items.get(result.documentId);
+    // } else {
+    //   const compendium = game.packs.get(result.documentCollection);
+    //   if (compendium) {
+    //     existingItem = await compendium.getDocument(result.documentId);
+    //   }
+    // }
 
-    // Try first to load item from compendium
-    if (!existingItem && result.collection) {
-      existingItem = await BRTUtils.getItemFromCompendium(result);
-    }
+    // // Try first to load item from compendium
+    // if (!existingItem && result.collection) {
+    //   existingItem = await BRTUtils.getItemFromCompendium(result);
+    // }
 
-    // Try first to load item from item list
-    if (!existingItem) {
-      // if an item with this name exist we load that item data, otherwise we create a new one
-      existingItem = game.items.getName(result.text);
-    }
+    // // Try first to load item from item list
+    // if (!existingItem) {
+    //   // if an item with this name exist we load that item data, otherwise we create a new one
+    //   existingItem = game.items.getName(result.text);
+    // }
 
-    if (!existingItem) {
-      Logger.error(`Cannot find document for result`, false, result);
-      return null;
-    }
+    // if (!existingItem) {
+    //   Logger.error(`Cannot find document for result`, false, result);
+    //   return null;
+    // }
 
-    let itemData = duplicate(existingItem);
+    // let itemData = duplicate(existingItem);
 
-    if (customResultName) {
-      itemData.name = customResultName;
-    }
-    if (customResultImg) {
-      itemData.img = customResultImg;
-    }
+    // if (customResultName) {
+    //   itemData.name = customResultName;
+    // }
+    // if (customResultImg) {
+    //   itemData.img = customResultImg;
+    // }
 
-    if(!itemData.type) {
-       itemData.type = CONSTANTS.ITEM_LOOT_TYPE;
-    }
+    // if(!itemData.type) {
+    //    itemData.type = CONSTANTS.ITEM_LOOT_TYPE;
+    // }
 
-    const itemConversions = {
-      Actor: {
-        text: customResultName ? `${customResultName} Portrait` : `${result.text} Portrait`,
-        img: customResultImg || existingItem?.img || "icons/svg/mystery-man.svg",
-        price: new Roll("1d20 + 10").roll({ async: false }).total || 1,
-      },
-      Scene: {
-        text: customResultName ? `Map of ${customResultName}` : `Map of ${existingItem?.name}`,
-        img: customResultImg || existingItem?.thumb || "icons/svg/direction.svg",
-        price: new Roll("1d20 + 10").roll({ async: false }).total || 1,
-      },
-    };
+    // const itemConversions = {
+    //   Actor: {
+    //     text: customResultName ? `${customResultName} Portrait` : `${result.text} Portrait`,
+    //     img: customResultImg || existingItem?.img || "icons/svg/mystery-man.svg",
+    //     price: new Roll("1d20 + 10").roll({ async: false }).total || 1,
+    //   },
+    //   Scene: {
+    //     text: customResultName ? `Map of ${customResultName}` : `Map of ${existingItem?.name}`,
+    //     img: customResultImg || existingItem?.thumb || "icons/svg/direction.svg",
+    //     price: new Roll("1d20 + 10").roll({ async: false }).total || 1,
+    //   },
+    // };
 
-    const convert = itemConversions[existingItem?.documentName] ?? false;
-    //  Create item from text since the item does not exist
-    const createNewItem = !existingItem || convert;
+    // const convert = itemConversions[existingItem?.documentName] ?? false;
+    // //  Create item from text since the item does not exist
+    // const createNewItem = !existingItem || convert;
 
-    if (createNewItem) {
-      const name = convert ? convert?.text : result.text;
-      const type = CONSTANTS.ITEM_LOOT_TYPE;
-      const img = convert ? convert?.img : result.img;
-      const price = convert ? convert?.price : result.price || 0;
+    // if (createNewItem) {
+    //   const name = convert ? convert?.text : result.text;
+    //   const type = CONSTANTS.ITEM_LOOT_TYPE;
+    //   const img = convert ? convert?.img : result.img;
+    //   const price = convert ? convert?.price : result.price || 0;
 
-      itemData = {
-        name: name,
-        type: type,
-        img: img, // "icons/svg/mystery-man.svg"
-        system: {
-          price: price,
-        },
-      };
-    }
+    //   itemData = {
+    //     name: name,
+    //     type: type,
+    //     img: img, // "icons/svg/mystery-man.svg"
+    //     system: {
+    //       price: price,
+    //     },
+    //   };
+    // }
 
-    if (Object.getOwnPropertyDescriptor(result, "commands") && result.commands) {
-      itemData = RollTableToActorHelpers._applyCommandToItemData(itemData, result.commands);
-    }
+    // if (Object.getOwnPropertyDescriptor(result, "commands") && result.commands) {
+    //   itemData = RollTableToActorHelpers._applyCommandToItemData(itemData, result.commands);
+    // }
 
-    if (!itemData) {
-      return;
-    }
-    */
-        const itemData = RollTableToActorHelpers.resultToItemData(result);
-        return itemData;
-    }
+    // if (!itemData) {
+    //   return;
+    // }
+    // */
+    //     const itemData = RollTableToActorHelpers.resultToItemData(result);
+    //     return itemData;
+    // }
 
     /**
      *

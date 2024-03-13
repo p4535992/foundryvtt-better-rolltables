@@ -1,6 +1,12 @@
 TODO 
 - Add confirm dialog on reset button ???
 - Add flags for cost/price like already done for the quantity is possible now with item piles support
+### 2.1.5
+
+- Rewrite everything on the chat card code
+- Add helper for stack results
+- Bug fix: https://github.com/p4535992/foundryvtt-better-rolltables/issues/30
+- Add check on result.drawn as disabled if uuid is broken
 
 ### 2.1.4
 

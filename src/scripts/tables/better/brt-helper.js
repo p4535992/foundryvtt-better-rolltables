@@ -361,6 +361,8 @@ export class BRTBetterHelpers {
                 } else if (resultDocType === "RollTable") {
                     result.isStackable = true;
                 }
+            } else {
+                result.drawn = true;
             }
         }
 

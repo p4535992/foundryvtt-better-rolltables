@@ -637,7 +637,7 @@ export default class ItemPilesHelpers {
         //   */
         //   const itemTmp = await RollTableToActorHelpers.resultToItemData(rollData);
         //   if (itemTmp instanceof RollTable) {
-        //     Logger.error(
+        //     Logger.debug(
         //       `'itemTmp instanceof RollTable', It shouldn't never go here something go wrong with the code please contact the brt developer`
         //     );
         //     rolledItems.push(
@@ -737,7 +737,7 @@ export default class ItemPilesHelpers {
             let rolledQuantity = 1;
             const itemTmp = await RollTableToActorHelpers.resultToItemData(rollData);
             if (!itemTmp) {
-                Logger.error(
+                Logger.debug(
                     `The result '${rollData.name + "|" + rollData.documentId}' is not a valid link anymore`,
                     true,
                 );
@@ -916,7 +916,9 @@ export default class ItemPilesHelpers {
                 let isResultHidden2 =
                     getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_HIDDEN_TABLE}`) ||
                     false;
-                return r.documentId === newResult.documentId && isResultHidden === isResultHidden2;
+                // MOD 4535992
+                // return r.documentId === newResult.documentId && isResultHidden === isResultHidden2;
+                return r._id === newResult._id && isResultHidden === isResultHidden2;
             });
             if (!ItemPilesHelpers._isRealNumber(newResult.quantity)) {
                 newResult.quantity = 1;
