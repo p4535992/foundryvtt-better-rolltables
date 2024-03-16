@@ -78,6 +78,28 @@ export class BRTBetterHelpers {
         }
     }
 
+    static async tryRollSync(rollFormula) {
+        try {
+            const qtFormula = String(rollFormula);
+            if (qtFormula == null || qtFormula === "" || qtFormula === "1") {
+                return 1;
+            } else {
+                try {
+                    const qt = new Roll(qtFormula).roll({ async: false }).total || 1;
+                    return qt;
+                } catch (e) {
+                    Logger.debug(e.message, false, e);
+                    const qtRoll = Roll.create(qtFormula);
+                    const qt = qtRoll.evaluate({ async: false }).total || 1;
+                    return qt;
+                }
+            }
+        } catch (e) {
+            Logger.error(e.message, false, e);
+            return 1;
+        }
+    }
+
     /**
      * we can provide a formula on how many times we roll on the table.
      * @returns {Number} how many times to roll on this table

@@ -82,6 +82,7 @@ export class BetterRollTableHarvestConfig extends RollTableConfig {
             );
         }
         brtData.usePercentage = this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.GENERIC_USE_PERCENTAGE);
+        brtData.useDynamicDc = this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.HARVEST_USE_DYNAMIC_DC);
         brtData.tableType = CONSTANTS.TABLE_TYPE_HARVEST;
         brtData.textType =
             Logger.i18n(`${CONSTANTS.MODULE_ID}.${"TypePrefixLabel"}`) +

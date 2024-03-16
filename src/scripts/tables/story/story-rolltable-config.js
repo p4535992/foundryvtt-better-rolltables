@@ -80,6 +80,7 @@ export class BetterRollTableStoryConfig extends RollTableConfig {
             );
         }
         brtData.usePercentage = this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.GENERIC_USE_PERCENTAGE);
+        brtData.useDynamicDc = false;
         brtData.tableType = CONSTANTS.TABLE_TYPE_STORY;
         brtData.textType =
             Logger.i18n(`${CONSTANTS.MODULE_ID}.${"TypePrefixLabel"}`) +

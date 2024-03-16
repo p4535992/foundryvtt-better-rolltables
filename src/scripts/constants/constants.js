@@ -42,10 +42,13 @@ export const CONSTANTS = {
 
         HARVEST: "harvest",
         HARVEST_AMOUNT_KEY: "loot-amount-key",
-        HARVEST_DC_VALUE_KEY: "brt-dc-value",
-        HARVEST_SKILL_VALUE_KEY: "brt-skill-value",
         HARVEST_SOURCE_VALUE_KEY: "brt-source-value",
         HARVEST_ACTOR_NAME_KEY: "loot-actor-name",
+        HARVEST_USE_DYNAMIC_DC: "brt-use-dynamic-dc",
+
+        HARVEST_DC_VALUE_KEY: "brt-dc-value",
+        HARVEST_SKILL_VALUE_KEY: "brt-skill-value",
+        HARVEST_RESULT_DYNAMIC_DC_VALUE: "brt-result-dynamic-dc-value",
 
         // /** @deprecated used on the old html view */
         // RESULTS_FORMULA_KEY: "brt-result-formula",

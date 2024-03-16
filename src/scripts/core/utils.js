@@ -283,6 +283,22 @@ export class BRTUtils {
                 : false
             : false;
 
+        let useDynamicDc = isRealBooleanOrElseNull(options?.useDynamicDc);
+        if (useDynamicDc === null) {
+            useDynamicDc = isRealBooleanOrElseNull(
+                getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_USE_DYNAMIC_DC}`),
+            );
+        }
+        if (useDynamicDc === null) {
+            useDynamicDc = undefined;
+        }
+
+        newOptions.useDynamicDc = isRealBoolean(useDynamicDc)
+            ? String(useDynamicDc) === "true"
+                ? true
+                : false
+            : false;
+
         newOptions.recursive = isRealBoolean(options.recursive)
             ? String(options.recursive) === "true"
                 ? true

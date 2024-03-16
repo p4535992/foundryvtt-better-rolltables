@@ -81,6 +81,13 @@
                         name="flags.better-rolltables.brt-skill-value"
                         value="{{data.flags.better-rolltables.brt-skill-value}}" />
                 </div>
+
+                <div class="form-group">
+                    <label>{{localize "better-rolltables.label.tableTextUseDynamicDc"}}</label>
+                    <input type="checkbox"
+                        name="flags.better-rolltables.brt-use-dynamic-dc"
+                        {{checked data.flags.better-rolltables.brt-use-dynamic-dc}} />
+                </div> 
             {{else}}
                 <input type="hidden"
                         placeholder="{{localize 'better-rolltables.CurrencyLootPlaceholder'}}"
@@ -230,12 +237,20 @@
                     </th>
 
                     {{#if (eq @root.tableType "harvest")}}
+
+                    {{#if @root.useDynamicDc}}
+                    <th class="result-brt-result-dynamic-dc-value" data-tooltip="{{localize 'better-rolltables.label.resultUseDynamicDcHeaderHint'}}" data-tooltip-direction="UP">
+                        <label>{{ localize "better-rolltables.label.useDynamicDc" }}</label>
+                    </th>
+                    {{else}}
                     <th class="result-brt-dc-value" data-tooltip="{{localize 'better-rolltables.label.resultDcHeaderHint'}}" data-tooltip-direction="UP">
                         <label>{{ localize "better-rolltables.label.dc" }}</label>
                     </th>
                     <th class="result-brt-skill-value" data-tooltip="{{localize 'better-rolltables.label.resultSkillHeaderHint'}}" data-tooltip-direction="UP">
                         <label>{{ localize "better-rolltables.label.skill" }}</label>
                     </th>
+                    {{/if}}
+
                     {{/if}}
 
                     {{#if @root.usePercentage}}
@@ -434,13 +449,25 @@
                 </td>
 
                 {{#if (eq @root.tableType "harvest")}}
+
+                    {{#if @root.useDynamicDc}}
+                    <td class="result-brt-result-dynamic-dc-value">
+                        <input {{#brt-isEmpty result.flags.better-rolltables.brt-result-dynamic-dc-value}} style="background: lightcoral;"{{/brt-isEmpty}} class="result-brt-result-dynamic-dc-value" type="text" name="results.{{i}}.flags.better-rolltables.brt-result-dynamic-dc-value" value="{{result.flags.better-rolltables.brt-result-dynamic-dc-value}}" placeholder="nat=1d20, arc=23" data-dtype="String"/>
+                    </td>
+                    <input class="result-brt-dc-value" type="hidden" name="results.{{i}}.flags.better-rolltables.brt-dc-value" value="{{result.flags.better-rolltables.brt-dc-value}}" placeholder="0" data-dtype="Number"/>
+                    <input class="result-brt-skill-value" type="hidden" name="results.{{i}}.flags.better-rolltables.brt-skill-value" value="{{result.flags.better-rolltables.brt-skill-value}}" placeholder="arc" />
+                    {{else}}
+                    <input class="result-brt-result-dynamic-dc-value" type="hidden" name="results.{{i}}.flags.better-rolltables.brt-result-dynamic-dc-value" value="{{result.flags.better-rolltables.brt-result-dynamic-dc-value}}" data-dtype="String"/>
                     <td class="result-brt-dc-value">
                         <input {{#brt-isEmpty result.flags.better-rolltables.brt-dc-value}} style="background: lightcoral;"{{/brt-isEmpty}} class="result-brt-dc-value" type="number" min="0" name="results.{{i}}.flags.better-rolltables.brt-dc-value" value="{{result.flags.better-rolltables.brt-dc-value}}" placeholder="0" data-dtype="Number"/>
                     </td>
                     <td class="result-brt-skill-value">
                         <input {{#brt-isEmpty result.flags.better-rolltables.brt-skill-value}} style="background: lightcoral;"{{/brt-isEmpty}} class="result-brt-skill-value" type="text" name="results.{{i}}.flags.better-rolltables.brt-skill-value" value="{{result.flags.better-rolltables.brt-skill-value}}" placeholder="arc" />
                     </td>
+                    {{/if}}
+
                 {{else}}
+                    <input class="result-brt-result-dynamic-dc-value" type="hidden" name="results.{{i}}.flags.better-rolltables.brt-result-dynamic-dc-value" value="{{result.flags.better-rolltables.brt-result-dynamic-dc-value}}" data-dtype="String"/>
                     <input class="result-brt-dc-value" type="hidden" name="results.{{i}}.flags.better-rolltables.brt-dc-value" value="{{result.flags.better-rolltables.brt-dc-value}}" placeholder="0" data-dtype="Number"/>
                     <input class="result-brt-skill-value" type="hidden" name="results.{{i}}.flags.better-rolltables.brt-skill-value" value="{{result.flags.better-rolltables.brt-skill-value}}" placeholder="arc" />
                 {{/if}}

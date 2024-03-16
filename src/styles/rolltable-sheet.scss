@@ -241,6 +241,7 @@
                         }
                         .result-better-rolltables-formula,
                         .result-brt-dc-value,
+                        .result-brt-result-dynamic-dc-value,
                         .result-brt-skill-value,
                         .result-brt-use-percentage-value {
                             width: 14%;
@@ -269,6 +270,7 @@
                     }
                     > .result-brt-quantity-formula,
                     > .result-brt-dc-value,
+                    > .result-brt-result-dynamic-dc-value,
                     > .result-brt-skill-value {
                         flex: 0 0 50px;
                         text-align: center;

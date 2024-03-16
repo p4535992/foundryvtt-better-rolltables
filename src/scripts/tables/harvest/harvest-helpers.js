@@ -8,6 +8,7 @@ import { BetterRollTable } from "../../core/brt-table";
 import SETTINGS from "../../constants/settings";
 import Logger from "../../lib/Logger";
 import ItemPilesHelpers from "../../lib/item-piles-helpers";
+import { isRealNumber, parseAsArray } from "../../lib/lib";
 
 export class BRTHarvestHelpers {
     /**
@@ -126,5 +127,30 @@ export class BRTHarvestHelpers {
         }
 
         return actor;
+    }
+
+    static calculateDynamicDcSync(dynamicDcValue, dc, skill) {
+        if (!isRealNumber(dc) || parseInt(dc) <= 0) {
+            return false;
+        }
+        const dynamicDcValues = parseAsArray(dynamicDcValue);
+        const mapDynamicDc = new Map();
+        for (const entry of dynamicDcValues) {
+            if (!entry || !entry.includes("=")) {
+                continue;
+            }
+            const ss = entry.split("=");
+            const skillEntry = ss[0];
+            const dcEntry = ss[1];
+            mapDynamicDc.set(skillEntry, BRTBetterHelpers.tryRollSync(dcEntry));
+        }
+        if (!mapDynamicDc.has(skill)) {
+            return false;
+        }
+        if (mapDynamicDc.get(skill) > parseInt(dc)) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }
