@@ -168,7 +168,7 @@ export class RollTableToActorHelpers {
     /**
      * Converts a result into a item data
      * @param {TableResult} r
-     * @return {Promise<{Object}>} item data
+     * @return {Promise<{ItemData}>} item data
      */
     static async resultToItemData(r) {
         let document = null;

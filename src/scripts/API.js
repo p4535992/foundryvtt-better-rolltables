@@ -605,6 +605,16 @@ const API = {
         return await ItemPilesHelpers.rollItemTable(targetActor, tableReference, options);
     },
 
+    /**
+     * Covert a Table Result Data to Item Data
+     * NOTE: text,actor and scene are treated in different ways...)
+     * @param {TableResult} tableResult Table result data to convert
+     * @return {Promise<{ItemData}>} item data retrieve fro the current Table result Data
+     */
+    async resultToItemData(tableResult) {
+        return await RollTableToActorHelpers.resultToItemData(tableResult);
+    },
+
     // ===============================
     // SOCKET UTILITY
     // ================================

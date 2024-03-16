@@ -1,5 +1,3 @@
-import { RollTableToActorHelpers } from "../apps/rolltable-to-actor/rolltable-to-actor-helpers";
-import { BetterRollTable } from "../core/brt-table";
 import Logger from "./Logger";
 import { RetrieveHelpers } from "./retrieve-helpers";
 
@@ -598,10 +596,8 @@ export default class ItemPilesHelpers {
             results = (await table.drawMany(roll.total, { displayChat, recursive: true })).results;
         }
         */
-        const brtTable = new BetterRollTable(table, options);
-        await brtTable.initialize();
-        const resultBrt = await brtTable.betterRoll();
-        const results = resultBrt?.results;
+        options.displayChat = false;
+        const results = await game.modules.get("better-rolltables").api.betterTableRoll(table, options);
         // END MOD 4535992
 
         // const rolledItems = [];
@@ -714,7 +710,7 @@ export default class ItemPilesHelpers {
             // TODO find a better way for do this, BRT already manage the one quantity behaviour
             // let rolledQuantity = rollData?.quantity ?? 1;
             let rolledQuantity = 1;
-            const itemTmp = await RollTableToActorHelpers.resultToItemData(rollData);
+            const itemTmp = await game.modules.get("better-rolltables").api.resultToItemData(rollData);
             if (!itemTmp) {
                 Logger.debug(
                     `The result '${rollData.name + "|" + rollData.documentId}' is not a valid link anymore`,

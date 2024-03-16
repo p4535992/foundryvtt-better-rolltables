@@ -1,6 +1,11 @@
 TODO 
 - Add confirm dialog on reset button ???
 - Add flags for cost/price like already done for the quantity is possible now with item piles support
+
+### 2.1.6
+
+- Add options `stackResultsWithBRTLogic` to stack table results if you want like item piles do under the hood
+
 ### 2.1.5
 
 - Rewrite everything on the chat card code
