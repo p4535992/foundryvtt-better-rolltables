@@ -129,10 +129,37 @@ export class BRTHarvestHelpers {
         return actor;
     }
 
+    /**
+     *
+     * @param {string} dynamicDcValue
+     * @param {number} dc
+     * @param {string} skill
+     * @returns {boolean}
+     */
     static calculateDynamicDcSync(dynamicDcValue, dc, skill) {
         if (!isRealNumber(dc) || parseInt(dc) <= 0) {
             return false;
         }
+        if (!skill) {
+            return false;
+        }
+        const mapDynamicDc = BRTHarvestHelpers.prepareMapDynamicDcSync(dynamicDcValue);
+        if (!mapDynamicDc.has(skill.trim())) {
+            return false;
+        }
+        if (mapDynamicDc.get(skill.trim()) <= parseInt(dc)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     *
+     * @param {string} dynamicDcValue
+     * @returns {Map<string,string>}
+     */
+    static prepareMapDynamicDcSync(dynamicDcValue) {
         const dynamicDcValues = parseAsArray(dynamicDcValue);
         const mapDynamicDc = new Map();
         for (const entry of dynamicDcValues) {
@@ -140,17 +167,24 @@ export class BRTHarvestHelpers {
                 continue;
             }
             const ss = entry.split("=");
-            const skillEntry = ss[0];
-            const dcEntry = ss[1];
+            const skillEntry = ss[0].trim();
+            const dcEntry = ss[1].trim();
             mapDynamicDc.set(skillEntry, BRTBetterHelpers.tryRollSync(dcEntry));
         }
-        if (!mapDynamicDc.has(skill)) {
-            return false;
+        return mapDynamicDc;
+    }
+
+    /**
+     *
+     * @param {string} dynamicDcValue
+     * @returns {string}
+     */
+    static prepareValueDynamicDcSync(dynamicDcValue) {
+        const mapDynamicDc = BRTHarvestHelpers.prepareMapDynamicDcSync(dynamicDcValue);
+        let asStrings = [];
+        for (let [key, value] of mapDynamicDc.entries()) {
+            asStrings.push(`${key}=${value}`);
         }
-        if (mapDynamicDc.get(skill) > parseInt(dc)) {
-            return false;
-        } else {
-            return true;
-        }
+        return asStrings.join(",").trim();
     }
 }

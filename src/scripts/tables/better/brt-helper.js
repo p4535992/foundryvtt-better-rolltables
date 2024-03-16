@@ -78,7 +78,7 @@ export class BRTBetterHelpers {
         }
     }
 
-    static async tryRollSync(rollFormula) {
+    static tryRollSync(rollFormula) {
         try {
             const qtFormula = String(rollFormula);
             if (qtFormula == null || qtFormula === "" || qtFormula === "1") {

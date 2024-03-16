@@ -239,9 +239,24 @@
                             width: 43%;
                             margin-left: 3px;
                         }
+                        .result-brt-result-dynamic-dc-value {
+                            width: 28%;
+                            margin-left: 3px;
+                            &::placeholder {
+                                font-size: 12px;
+                            }
+                            &::-webkit-input-placeholder {
+                                font-size: 12px;
+                            }
+                            &::-moz-placeholder {
+                                font-size: 12px;
+                            }
+                            &:-ms-input-placeholder {
+                                font-size: 12px;
+                            }
+                        }
                         .result-better-rolltables-formula,
                         .result-brt-dc-value,
-                        .result-brt-result-dynamic-dc-value,
                         .result-brt-skill-value,
                         .result-brt-use-percentage-value {
                             width: 14%;
@@ -268,9 +283,12 @@
                             margin-left: 3px;
                         }
                     }
+                    > .result-brt-result-dynamic-dc-value {
+                        flex: 0 0 150px;
+                        text-align: center;
+                    }
                     > .result-brt-quantity-formula,
                     > .result-brt-dc-value,
-                    > .result-brt-result-dynamic-dc-value,
                     > .result-brt-skill-value {
                         flex: 0 0 50px;
                         text-align: center;

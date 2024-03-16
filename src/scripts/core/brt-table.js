@@ -8,6 +8,7 @@ import { HarvestChatCard } from "../tables/harvest/harvest-chat-card.js";
 import { BetterChatCard } from "../tables/better/brt-chat-card.js";
 import Logger from "../lib/Logger.js";
 import { RetrieveHelpers } from "../lib/retrieve-helpers.js";
+import { BRTHarvestHelpers } from "../tables/harvest/harvest-helpers.js";
 
 export class BetterRollTable {
     // extends RollTable {
@@ -397,10 +398,36 @@ export class BetterRollTable {
             roll = Roll.create(`1d1000`);
 
             // Ensure that at least one non-drawn result remains
-            const available = this.table.results.filter((r) => !r.drawn);
+            let available = this.table.results.filter((r) => !r.drawn);
             if (!available.length) {
                 Logger.warn(game.i18n.localize("TABLE.NoAvailableResults"), true);
                 return { roll, results };
+            }
+
+            const useDynamicDcOnTable = getProperty(
+                this.table,
+                `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_USE_DYNAMIC_DC}`,
+            );
+            if (
+                useDynamicDcOnTable &&
+                this.table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_HARVEST
+            ) {
+                const availableTmp = [];
+                for (const a of available) {
+                    const dynamicDcFormula = getProperty(
+                        a,
+                        `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_RESULT_DYNAMIC_DC_VALUE}`,
+                    );
+                    const dynamicDcValue = BRTHarvestHelpers.prepareValueDynamicDcSync(dynamicDcFormula);
+                    const brtAvailable = foundry.utils.deepClone(a);
+                    setProperty(
+                        brtAvailable,
+                        `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_RESULT_DYNAMIC_DC_VALUE}`,
+                        dynamicDcValue,
+                    );
+                    availableTmp.push(brtAvailable);
+                }
+                available = availableTmp;
             }
 
             // Ensure that results are available within the minimum/maximum range
@@ -451,11 +478,38 @@ export class BetterRollTable {
             roll = roll instanceof Roll ? roll : Roll.create(this.table.formula);
 
             // Ensure that at least one non-drawn result remains
-            const available = this.table.results.filter((r) => !r.drawn);
+            let available = this.table.results.filter((r) => !r.drawn);
             if (!available.length) {
                 Logger.warn(game.i18n.localize("TABLE.NoAvailableResults"), true);
                 return { roll, results };
             }
+
+            const useDynamicDcOnTable = getProperty(
+                this.table,
+                `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_USE_DYNAMIC_DC}`,
+            );
+            if (
+                useDynamicDcOnTable &&
+                this.table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_HARVEST
+            ) {
+                const availableTmp = [];
+                for (const a of available) {
+                    const dynamicDcFormula = getProperty(
+                        a,
+                        `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_RESULT_DYNAMIC_DC_VALUE}`,
+                    );
+                    const dynamicDcValue = BRTHarvestHelpers.prepareValueDynamicDcSync(dynamicDcFormula);
+                    const brtAvailable = foundry.utils.deepClone(a);
+                    setProperty(
+                        brtAvailable,
+                        `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_RESULT_DYNAMIC_DC_VALUE}`,
+                        dynamicDcValue,
+                    );
+                    availableTmp.push(brtAvailable);
+                }
+                available = availableTmp;
+            }
+
             // Ensure that results are available within the minimum/maximum range
             const minRoll = (await roll.reroll({ minimize: true, async: true })).total;
             const maxRoll = (await roll.reroll({ maximize: true, async: true })).total;
@@ -611,23 +665,38 @@ export class BetterRollTable {
         }
 
         if (this.table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_HARVEST) {
-            // Filter by dc
-            if (isRealNumber(dc) && parseInt(dc) > 0) {
+            if (this.options.useDynamicDc) {
                 resultsUpdate = resultsUpdate.filter((r) => {
-                    return (
-                        getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_DC_VALUE_KEY}`) <=
-                        parseInt(dc)
+                    return BRTHarvestHelpers.calculateDynamicDcSync(
+                        getProperty(
+                            r,
+                            `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_RESULT_DYNAMIC_DC_VALUE}`,
+                        ),
+                        parseInt(dc),
+                        skill,
                     );
                 });
-            }
-            // Filter by skill
-            if (skill) {
-                resultsUpdate = resultsUpdate.filter((r) => {
-                    return (
-                        getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_SKILL_VALUE_KEY}`) ===
-                        skill
-                    );
-                });
+            } else {
+                // Filter by dc
+                if (isRealNumber(dc) && parseInt(dc) > 0) {
+                    resultsUpdate = resultsUpdate.filter((r) => {
+                        return (
+                            getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_DC_VALUE_KEY}`) <=
+                            parseInt(dc)
+                        );
+                    });
+                }
+                // Filter by skill
+                if (skill) {
+                    resultsUpdate = resultsUpdate.filter((r) => {
+                        return (
+                            getProperty(
+                                r,
+                                `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_SKILL_VALUE_KEY}`,
+                            ) === skill
+                        );
+                    });
+                }
             }
         }
 
