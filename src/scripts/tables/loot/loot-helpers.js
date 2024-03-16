@@ -40,8 +40,8 @@ export class BRTLootHelpers {
       const resultsBrt = await brtTable.betterRoll();
 
       const results = resultsBrt?.results;
-      const br = new BetterResults(results);
-      const betterResults = await br.buildResults(tableEntity);
+      const br = new BetterResults(tableEntity, results, options?.stackResultsWithBRTLogic);
+      const betterResults = await br.buildResults();
       const currencyData = br.getCurrencyData();
       await BRTLootHelpers.addCurrenciesToToken(token, currencyData, isTokenActor);
       await RollTableToActorHelpers.addItemsToTokenOld(token, betterResults, stackSame, isTokenActor, itemLimit);
@@ -75,8 +75,8 @@ export class BRTLootHelpers {
         const roll = brtTable.mainRoll;
         const results = resultsBrt?.results;
 
-        const br = new BetterResults(results);
-        const betterResults = await br.buildResults(tableEntity);
+        const br = new BetterResults(tableEntity, results, options?.stackResultsWithBRTLogic);
+        const betterResults = await br.buildResults();
         const currencyData = br.getCurrencyData();
         /*
     const isTokenActor = brtTable.options?.isTokenActor;
@@ -114,8 +114,8 @@ export class BRTLootHelpers {
         const roll = brtTable.mainRoll;
         const results = resultsBrt?.results;
 
-        const br = new BetterResults(results);
-        const betterResults = await br.buildResults(tableEntity);
+        const br = new BetterResults(tableEntity, results, options?.stackResultsWithBRTLogic);
+        const betterResults = await br.buildResults();
         const currencyData = br.getCurrencyData();
 
         const lootChatCard = new LootChatCard(betterResults, currencyData, rollMode, roll);

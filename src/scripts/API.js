@@ -68,8 +68,8 @@ const API = {
         let rollMode = options?.rollMode || brtTable.rollMode || null;
         let roll = options?.roll || brtTable.mainRoll || null;
 
-        const br = new BetterResults(results);
-        const betterResults = await br.buildResults(tableEntity);
+        const br = new BetterResults(tableEntity, results, options?.stackResultsWithBRTLogic);
+        const betterResults = await br.buildResults();
 
         const data = {};
         setProperty(data, `itemsData`, betterResults);
@@ -90,6 +90,7 @@ const API = {
      * @param {boolean} [options.distinct=false] if checked the same result is not selected more than once indifferently from the number of 'Amount Roll'
      * @param {boolean} [options.distinctKeepRolling=false] if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior
      * @param {boolean} [options.usePercentage=false] Use the % mechanism instead of the default formula+range behavior
+     * @param {boolean} [options.stackResultsWithBRTLogic=false] if enabled it will stack the table results are stacked with the BRT logic (check out the documentation for more details about the behavior), like the module item-piles a new 'quantity' property is been added to the tables results for check how much a item is stacked
      * @returns {Promise<TableResult[]>}
      */
     async betterTableRoll(tableEntity, options = {}) {
@@ -631,11 +632,11 @@ const API = {
             throw Logger.error("invokeGenericTableRollArr | inAttributes must be of type array");
         }
 
-        const [tableReferenceUuid, results, rollMode, roll] = inAttributes;
+        const [tableReferenceUuid, results, rollMode, roll, stackResultsWithBRTLogic] = inAttributes;
         const tableEntity = await fromUuid(tableReferenceUuid);
 
-        const br = new BetterResults(results);
-        const betterResults = await br.buildResults(tableEntity);
+        const br = new BetterResults(tableEntity, results, stackResultsWithBRTLogic);
+        const betterResults = await br.buildResults();
 
         if (tableEntity.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_BETTER) {
             const betterChatCard = new BetterChatCard(betterResults, rollMode, roll);

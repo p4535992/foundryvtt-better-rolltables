@@ -8,16 +8,18 @@ import ItemPilesHelpers from "../lib/item-piles-helpers.js";
 import { RetrieveHelpers } from "../lib/retrieve-helpers.js";
 
 export class BetterResults {
-    constructor(tableResults) {
+    constructor(table, tableResults, stackResults = false) {
         this.results = [];
         this.currencyData = {}; // cp: 0, ep: 0, gp: 0, pp: 0, sp: 0 };
+        this.table = table;
         this.tableResults = tableResults;
+        this.stackResults = stackResults;
     }
 
-    async buildResults(table) {
+    async buildResults() {
         // START PATCH 2024-03-02
         // this.currencyData = await this._generateCurrency(currencyString);
-        const currencyString = table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.LOOT_CURRENCY_STRING_KEY);
+        const currencyString = this.table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.LOOT_CURRENCY_STRING_KEY);
         this.currencyData = await ItemPilesHelpers.retrieveCurrenciesSimpleFromString(currencyString);
         // END PATCH 2024-03-02
         // START PATCH 2024-03-02
@@ -33,7 +35,9 @@ export class BetterResults {
         for (const r of this.tableResults) {
             const betterResult = await BRTBetterHelpers.updateTableResult(r);
             // Special cases
-            if (table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_BETTER) {
+            if (
+                this.table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_BETTER
+            ) {
                 if (
                     betterResult.result.isText &&
                     betterResult.result.innerText?.startsWith(CONSTANTS.PRE_RESULT_TEXT_ROLL)
@@ -46,7 +50,7 @@ export class BetterResults {
                     betterResult.result.html = betterResult.result.text;
                 }
             } else if (
-                table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_LOOT
+                this.table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_LOOT
             ) {
                 //
                 if (
@@ -76,7 +80,7 @@ export class BetterResults {
                     }
                 }
             } else if (
-                table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_STORY
+                this.table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_STORY
             ) {
                 if (
                     betterResult.result.isText &&
@@ -90,7 +94,7 @@ export class BetterResults {
                     betterResult.result.html = betterResult.result.text;
                 }
             } else if (
-                table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_HARVEST
+                this.table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_HARVEST
             ) {
                 if (
                     betterResult.result.isText &&
@@ -110,6 +114,7 @@ export class BetterResults {
             const br = mergeObject(r, betterResult.result);
             this.results.push(br);
         }
+
         // END PATCH 2024-03-02
         return this.results;
     }

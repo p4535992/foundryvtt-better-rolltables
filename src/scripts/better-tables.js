@@ -68,8 +68,8 @@ export class BetterTables {
 
         const results = resultBrt?.results;
 
-        const br = new BetterResults(results);
-        const betterResults = await br.buildResults(tableEntity);
+        const br = new BetterResults(tableEntity, results, options?.stackResultsWithBRTLogic);
+        const betterResults = await br.buildResults();
 
         return betterResults;
     }
@@ -86,8 +86,8 @@ export class BetterTables {
 
         const results = resultBrt?.results;
 
-        const br = new BetterResults(results);
-        const betterResults = await br.buildResults(tableEntity);
+        const br = new BetterResults(tableEntity, results, options?.stackResultsWithBRTLogic);
+        const betterResults = await br.buildResults();
 
         let rollMode = brtTable.rollMode;
         let roll = brtTable.mainRoll;
@@ -332,8 +332,8 @@ export class BetterTables {
         let rollMode = options?.rollMode || brtTable.rollMode || null;
         let roll = options?.roll || brtTable.mainRoll || null;
 
-        const br = new BetterResults(results);
-        const betterResults = await br.buildResults(tableEntity);
+        const br = new BetterResults(tableEntity, results, options?.stackResultsWithBRTLogic);
+        const betterResults = await br.buildResults();
 
         if (isRealBoolean(options.displayChat)) {
             if (!options.displayChat) {

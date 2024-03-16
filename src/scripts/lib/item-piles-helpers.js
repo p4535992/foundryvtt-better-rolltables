@@ -1,5 +1,4 @@
 import { RollTableToActorHelpers } from "../apps/rolltable-to-actor/rolltable-to-actor-helpers";
-import { CONSTANTS } from "../constants/constants";
 import { BetterRollTable } from "../core/brt-table";
 import Logger from "./Logger";
 import { RetrieveHelpers } from "./retrieve-helpers";
@@ -581,24 +580,24 @@ export default class ItemPilesHelpers {
         }
 
         // START MOD 4535992
-        /* 
-    const roll = new Roll(formula.toString(), rollData).evaluate({ async: false });
-    if (roll.total <= 0) {
-      return [];
-    }
-    let results = [];
-	if (game.modules.get("better-rolltables")?.active) {
-		results = (await game.modules.get("better-rolltables").api.roll(table)).itemsData.map(result => ({
-			documentCollection: result.documentCollection,
-			documentId: result.documentId,
-			text: result.text || result.name,
-			img: result.img,
-			quantity: 1
-		}));
-	} else {
-		results = (await table.drawMany(roll.total, { displayChat, recursive: true })).results;
-	}
-    */
+        /*
+        const roll = new Roll(formula.toString(), rollData).evaluate({ async: false });
+        if (roll.total <= 0) {
+        return [];
+        }
+        let results = [];
+        if (game.modules.get("better-rolltables")?.active) {
+            results = (await game.modules.get("better-rolltables").api.roll(table)).itemsData.map(result => ({
+                documentCollection: result.documentCollection,
+                documentId: result.documentId,
+                text: result.text || result.name,
+                img: result.img,
+                quantity: 1
+            }));
+        } else {
+            results = (await table.drawMany(roll.total, { displayChat, recursive: true })).results;
+        }
+        */
         const brtTable = new BetterRollTable(table, options);
         await brtTable.initialize();
         const resultBrt = await brtTable.betterRoll();
@@ -608,8 +607,6 @@ export default class ItemPilesHelpers {
         // const rolledItems = [];
         // for (const rollData of results) {
         //   let rolledQuantity = rollData?.quantity ?? 1;
-        //   // START MOD 4535992
-        //   /*
         //   let item;
         //   if (rollData.documentCollection === "Item") {
         //     item = game.items.get(rollData.documentId);
@@ -634,24 +631,6 @@ export default class ItemPilesHelpers {
         //       quantity,
         //     });
         //   }
-        //   */
-        //   const itemTmp = await RollTableToActorHelpers.resultToItemData(rollData);
-        //   if (itemTmp instanceof RollTable) {
-        //     Logger.debug(
-        //       `'itemTmp instanceof RollTable', It shouldn't never go here something go wrong with the code please contact the brt developer`
-        //     );
-        //     rolledItems.push(
-        //       ...(await ItemPilesHelpers.rollTable({ tableUuid: itemTmp.uuid, resetTable, normalize, displayChat }))
-        //     );
-        //   } else {
-        //     const quantity = Math.max(ItemPilesHelpers.getItemQuantity(itemTmp) * rolledQuantity, 1);
-        //     rolledItems.push({
-        //       ...rollData,
-        //       item: itemTmp,
-        //       quantity: quantity,
-        //     });
-        //   }
-        //   // END MOD 4535992
         // }
 
         // const items = [];
@@ -706,32 +685,32 @@ export default class ItemPilesHelpers {
         for (const rollData of results) {
             // START MOD 4535992
             /*
-        let rolledQuantity = rollData?.quantity ?? 1;
-        let item;
-        if (rollData.documentCollection === "Item") {
-          item = game.items.get(rollData.documentId);
-        } else {
-          const compendium = game.packs.get(rollData.documentCollection);
-          if (compendium) {
-            item = await compendium.getDocument(rollData.documentId);
-          }
-        }
-        if (item instanceof RollTable) {
-          Logger.error(
-            `'item instanceof RollTable', It shouldn't never go here something go wrong with the code please contact the brt developer`
-          );
-          rolledItems.push(
-            ...(await ItemPilesHelpers.rollTable({ tableUuid: item.uuid, resetTable, normalize, displayChat }))
-          );
-        } else if (item instanceof Item) {
-          const quantity = Math.max(ItemPilesHelpers.getItemQuantity(item) * rolledQuantity, 1);
-          rolledItems.push({
-            ...rollData,
-            item,
-            quantity,
-          });
-        }
-        */
+            let rolledQuantity = rollData?.quantity ?? 1;
+            let item;
+            if (rollData.documentCollection === "Item") {
+            item = game.items.get(rollData.documentId);
+            } else {
+            const compendium = game.packs.get(rollData.documentCollection);
+            if (compendium) {
+                item = await compendium.getDocument(rollData.documentId);
+            }
+            }
+            if (item instanceof RollTable) {
+            Logger.error(
+                `'item instanceof RollTable', It shouldn't never go here something go wrong with the code please contact the brt developer`
+            );
+            rolledItems.push(
+                ...(await ItemPilesHelpers.rollTable({ tableUuid: item.uuid, resetTable, normalize, displayChat }))
+            );
+            } else if (item instanceof Item) {
+            const quantity = Math.max(ItemPilesHelpers.getItemQuantity(item) * rolledQuantity, 1);
+            rolledItems.push({
+                ...rollData,
+                item,
+                quantity,
+            });
+            }
+            */
             // TODO find a better way for do this, BRT already manage the one quantity behaviour
             // let rolledQuantity = rollData?.quantity ?? 1;
             let rolledQuantity = 1;
@@ -906,19 +885,18 @@ export default class ItemPilesHelpers {
     static stackTableResults(rolledResult) {
         const resultsStacked = [];
         rolledResult.forEach((newResult) => {
-            let isResultHidden =
-                getProperty(newResult, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_HIDDEN_TABLE}`) ||
-                false;
+            let isResultHidden = getProperty(newResult, `flags.better-rolltables.brt-hidden-table`) || false;
             // MOD 4535992
             //const existingItem = resultsStacked.find((item) => ItemPilesHelpers.findSimilarItem(item, newResult));
             const existingItem = resultsStacked.find((r) => {
                 // Merge by hidden property
-                let isResultHidden2 =
-                    getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_HIDDEN_TABLE}`) ||
-                    false;
+                let isResultHidden2 = getProperty(r, `flags.better-rolltables.brt-hidden-table`) || false;
                 // MOD 4535992
-                // return r.documentId === newResult.documentId && isResultHidden === isResultHidden2;
-                return r._id === newResult._id && isResultHidden === isResultHidden2;
+                if (r.documentId && newResult.documentId) {
+                    return r.documentId === newResult.documentId && isResultHidden === isResultHidden2;
+                } else {
+                    return r._id === newResult._id && isResultHidden === isResultHidden2;
+                }
             });
             if (!ItemPilesHelpers._isRealNumber(newResult.quantity)) {
                 newResult.quantity = 1;

@@ -34,7 +34,7 @@ export class BetterChatCard {
         // TODO transfer this property on the better result data ?
         for (const result of ItemPilesHelpers.stackTableResults(this.betterResults)) {
             this.numberOfDraws++;
-            const quantity = result.quantity;
+            const quantity = result.quantity || 1;
             let type = undefined;
             if (result.isText || result.type === CONST.TABLE_RESULT_TYPES.TEXT) {
                 type = CONST.TABLE_RESULT_TYPES.TEXT;

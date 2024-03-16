@@ -39,8 +39,8 @@ export class BRTHarvestHelpers {
       const resultsBrt = await brtTable.betterRoll();
 
       const results = resultsBrt?.results;
-      const br = new BetterResults(results);
-      const betterResults = await br.buildResults(tableEntity);
+      const br = new BetterResults(tableEntity, results, options?.stackResultsWithBRTLogic);
+      const betterResults = await br.buildResults();
       await RollTableToActorHelpers.addItemsToTokenOld(token, betterResults, stackSame, isTokenActor, itemLimit);
       Logger.info(`Harvest generation started on token '${token.name}'`, true);
     }
@@ -76,8 +76,8 @@ export class BRTHarvestHelpers {
         const roll = brtTable.mainRoll;
 
         const results = resultsBrt?.results;
-        const br = new BetterResults(results);
-        const betterResults = await br.buildResults(tableEntity);
+        const br = new BetterResults(tableEntity, results, options?.stackResultsWithBRTLogic);
+        const betterResults = await br.buildResults();
 
         const actor = await BRTHarvestHelpers.createActor(tableEntity);
         // await RollTableToActorHelpers.addItemsToActorOld(actor, betterResults, stackSame, itemLimit);
@@ -104,8 +104,8 @@ export class BRTHarvestHelpers {
         const roll = brtTable.mainRoll;
         const results = resultsBrt?.results;
 
-        const br = new BetterResults(results);
-        const betterResults = await br.buildResults(tableEntity);
+        const br = new BetterResults(tableEntity, results, options?.stackResultsWithBRTLogic);
+        const betterResults = await br.buildResults();
 
         const harvestChatCard = new HarvestChatCard(betterResults, rollMode, roll);
 
