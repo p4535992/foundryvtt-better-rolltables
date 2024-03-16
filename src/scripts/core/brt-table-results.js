@@ -2,18 +2,18 @@ import { CONSTANTS } from "../constants/constants.js";
 import { BRTBetterHelpers } from "../tables/better/brt-helper.js";
 import { BRTUtils } from "./utils.js";
 import { BetterRollTable } from "./brt-table.js";
-import { isEmptyObject } from "../lib/lib.js";
+import { isEmptyObject, isRealBoolean } from "../lib/lib.js";
 import Logger from "../lib/Logger.js";
 import ItemPilesHelpers from "../lib/item-piles-helpers.js";
 import { RetrieveHelpers } from "../lib/retrieve-helpers.js";
 
 export class BetterResults {
-    constructor(table, tableResults, stackResults = false) {
+    constructor(table, tableResults, stackResults) {
         this.results = [];
         this.currencyData = {}; // cp: 0, ep: 0, gp: 0, pp: 0, sp: 0 };
         this.table = table;
         this.tableResults = tableResults;
-        this.stackResults = stackResults;
+        this.stackResults = isRealBoolean(stackResults) ? (String(stackResults) === "true" ? true : false) : false;
     }
 
     async buildResults() {
@@ -34,7 +34,9 @@ export class BetterResults {
     */
         for (const r of this.tableResults) {
             const betterResult = await BRTBetterHelpers.updateTableResult(r);
-            // Special cases
+            // ====================
+            // BETTER Special cases
+            // =====================
             if (
                 this.table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_BETTER
             ) {
@@ -49,7 +51,11 @@ export class BetterResults {
                         ));
                     betterResult.result.html = betterResult.result.text;
                 }
-            } else if (
+            }
+            // ====================
+            // LOOT Special cases
+            // =====================
+            else if (
                 this.table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_LOOT
             ) {
                 //
@@ -79,7 +85,11 @@ export class BetterResults {
                         }
                     }
                 }
-            } else if (
+            }
+            // ====================
+            // STORY Special cases
+            // =====================
+            else if (
                 this.table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_STORY
             ) {
                 if (
@@ -93,7 +103,11 @@ export class BetterResults {
                         ));
                     betterResult.result.html = betterResult.result.text;
                 }
-            } else if (
+            }
+            // ====================
+            // HARVEST Special cases
+            // =====================
+            else if (
                 this.table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_HARVEST
             ) {
                 if (
@@ -109,10 +123,16 @@ export class BetterResults {
                 }
             }
 
+            // Little trick to merge my data with the standard table result object of foundry
             delete betterResult.result.uuid;
             delete betterResult.result._id;
             const br = mergeObject(r, betterResult.result);
             this.results.push(br);
+        }
+
+        // Option to stack results
+        if (this.stackResults) {
+            this.results = ItemPilesHelpers.stackTableResults(this.results);
         }
 
         // END PATCH 2024-03-02

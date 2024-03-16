@@ -90,7 +90,7 @@ const API = {
      * @param {boolean} [options.distinct=false] if checked the same result is not selected more than once indifferently from the number of 'Amount Roll'
      * @param {boolean} [options.distinctKeepRolling=false] if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior
      * @param {boolean} [options.usePercentage=false] Use the % mechanism instead of the default formula+range behavior
-     * @param {boolean} [options.stackResultsWithBRTLogic=false] if enabled it will stack the table results are stacked with the BRT logic (check out the documentation for more details about the behavior), like the module item-piles a new 'quantity' property is been added to the tables results for check how much a item is stacked
+     * @param {boolean} [options.stackResultsWithBRTLogic=false] if enabled the table results are stacked with the BRT logic like the module item-piles a new 'quantity' property is been added to the table result data to check how much the single result is been stacked
      * @returns {Promise<TableResult[]>}
      */
     async betterTableRoll(tableEntity, options = {}) {
@@ -204,6 +204,7 @@ const API = {
      * @param {boolean} [options.distinct=false] if checked the same result is not selected more than once indifferently from the number of 'Amount Roll'
      * @param {boolean} [options.distinctKeepRolling=false] if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior
      * @param {boolean} [options.usePercentage=false] Use the % mechanism instead of the default formula+range behavior
+     * @param {boolean} [options.stackResultsWithBRTLogic=false] if enabled the table results are stacked with the BRT logic like the module item-piles a new 'quantity' property is been added to the table result data to check how much the single result is been stacked
      * @returns {Promise<void>}
      */
     async addLootToSelectedToken(tableEntity, token = null, options = {}) {
@@ -228,6 +229,7 @@ const API = {
      * @param {boolean} [options.distinct=false] if checked the same result is not selected more than once indifferently from the number of 'Amount Roll'
      * @param {boolean} [options.distinctKeepRolling=false] if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior
      * @param {boolean} [options.usePercentage=false] Use the % mechanism instead of the default formula+range behavior
+     * @param {boolean} [options.stackResultsWithBRTLogic=false] if enabled the table results are stacked with the BRT logic like the module item-piles a new 'quantity' property is been added to the table result data to check how much the single result is been stacked
      * @returns {Promise<void>}
      */
     async generateLoot(tableEntity, options = {}) {
@@ -252,6 +254,7 @@ const API = {
      * @param {boolean} [options.distinct=false] if checked the same result is not selected more than once indifferently from the number of 'Amount Roll'
      * @param {boolean} [options.distinctKeepRolling=false] if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior
      * @param {boolean} [options.usePercentage=false] Use the % mechanism instead of the default formula+range behavior
+     * @param {boolean} [options.stackResultsWithBRTLogic=false] if enabled the table results are stacked with the BRT logic like the module item-piles a new 'quantity' property is been added to the table result data to check how much the single result is been stacked
      * @returns {Promise<void>}
      */
     async generateLootOnSelectedToken(tableEntity, options = {}) {
@@ -276,6 +279,7 @@ const API = {
      * @param {boolean} [options.distinct=false] if checked the same result is not selected more than once indifferently from the number of 'Amount Roll'
      * @param {boolean} [options.distinctKeepRolling=false] if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior
      * @param {boolean} [options.usePercentage=false] Use the % mechanism instead of the default formula+range behavior
+     * @param {boolean} [options.stackResultsWithBRTLogic=false] if enabled the table results are stacked with the BRT logic like the module item-piles a new 'quantity' property is been added to the table result data to check how much the single result is been stacked
      * @returns {Promise<void>}
      */
     async generateChatLoot(tableEntity, options = {}) {
@@ -304,6 +308,7 @@ const API = {
      * @param {boolean} [options.distinct=false] if checked the same result is not selected more than once indifferently from the number of 'Amount Roll'
      * @param {boolean} [options.distinctKeepRolling=false] if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior
      * @param {boolean} [options.usePercentage=false] Use the % mechanism instead of the default formula+range behavior
+     * @param {boolean} [options.stackResultsWithBRTLogic=false] if enabled the table results are stacked with the BRT logic like the module item-piles a new 'quantity' property is been added to the table result data to check how much the single result is been stacked
      * @returns {Promise<void>}
      */
     async generateHarvest(tableEntity, options = {}) {
@@ -328,6 +333,7 @@ const API = {
      * @param {boolean} [options.distinct=false] if checked the same result is not selected more than once indifferently from the number of 'Amount Roll'
      * @param {boolean} [options.distinctKeepRolling=false] if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior
      * @param {boolean} [options.usePercentage=false] Use the % mechanism instead of the default formula+range behavior
+     * @param {boolean} [options.stackResultsWithBRTLogic=false] if enabled the table results are stacked with the BRT logic like the module item-piles a new 'quantity' property is been added to the table result data to check how much the single result is been stacked
      * @returns {Promise<void>}
      */
     async generateHarvestOnSelectedToken(tableEntity, options = {}) {
@@ -352,6 +358,7 @@ const API = {
      * @param {boolean} [options.distinct=false] if checked the same result is not selected more than once indifferently from the number of 'Amount Roll'
      * @param {boolean} [options.distinctKeepRolling=false] if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior
      * @param {boolean} [options.usePercentage=false] Use the % mechanism instead of the default formula+range behavior
+     * @param {boolean} [options.stackResultsWithBRTLogic=false] if enabled the table results are stacked with the BRT logic like the module item-piles a new 'quantity' property is been added to the table result data to check how much the single result is been stacked
      * @returns {Promise<void>}
      */
     async generateChatHarvest(tableEntity, options = {}) {
@@ -616,6 +623,7 @@ const API = {
      * @param {boolean} [options.distinct=false] if checked the same result is not selected more than once indifferently from the number of 'Amount Roll'
      * @param {boolean} [options.distinctKeepRolling=false] if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior
      * @param {boolean} [options.usePercentage=false] Use the % mechanism instead of the default formula+range behavior
+     * @param {boolean} [options.stackResultsWithBRTLogic=false] if enabled the table results are stacked with the BRT logic like the module item-piles a new 'quantity' property is been added to the table result data to check how much the single result is been stacked
      * @returns {Promise<TableResult[]>}
      */
     async invokeBetterTableRollArr(...inAttributes) {
@@ -635,7 +643,7 @@ const API = {
         const [tableReferenceUuid, results, rollMode, roll, stackResultsWithBRTLogic] = inAttributes;
         const tableEntity = await fromUuid(tableReferenceUuid);
 
-        const br = new BetterResults(tableEntity, results, stackResultsWithBRTLogic);
+        const br = new BetterResults(tableEntity, results, stackResultsWithBRTLogic); // NOTE: Stack is always false here
         const betterResults = await br.buildResults();
 
         if (tableEntity.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_BETTER) {

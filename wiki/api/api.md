@@ -54,6 +54,7 @@ Roll a table as a Better table with options and get
 | [options.distinct]       | `boolean`               |  false  | if checked the same result is not selected more than once indifferently from the number of 'Amount Roll' |
 | [options.distinctKeepRolling]  | `boolean`         |  false  | if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior |
 | [options.usePercentage]    | `boolean`             |  false   | Use the % mechanism instead of the default formula+range behavior |
+| [options.stackResultsWithBRTLogic] | `boolean`     |  false   |  if enabled the table results are stacked with the BRT logic like the module item-piles a new 'quantity' property is been added to the table result data to check how much the single result is been stacked |
 
 **Example**:
 
@@ -97,6 +98,7 @@ Roll a table as a Better table in chat with options
 | [options.distinct]       | `boolean`               |  false  | if checked the same result is not selected more than once indifferently from the number of 'Amount Roll' |
 | [options.distinctKeepRolling]  | `boolean`         |  false  | if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior |
 | [options.usePercentage]    | `boolean`             |  false   | Use the % mechanism instead of the default formula+range behavior |
+| [options.stackResultsWithBRTLogic] | `boolean`     |  false   |  if enabled the table results are stacked with the BRT logic like the module item-piles a new 'quantity' property is been added to the table result data to check how much the single result is been stacked |
 
 **Example**:
 
@@ -246,6 +248,7 @@ Generate a loot
 | [options.distinct]       | `boolean`               |  false  | if checked the same result is not selected more than once indifferently from the number of 'Amount Roll' |
 | [options.distinctKeepRolling]  | `boolean`         |  false  | if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior |
 | [options.usePercentage]    | `boolean`             |  false   | Use the % mechanism instead of the default formula+range behavior |
+| [options.stackResultsWithBRTLogic] | `boolean`     |  false   |  if enabled the table results are stacked with the BRT logic like the module item-piles a new 'quantity' property is been added to the table result data to check how much the single result is been stacked |
 
 **Example**:
 
@@ -280,6 +283,7 @@ Generate a chat loot
 | [options.distinct]       | `boolean`               |  false  | if checked the same result is not selected more than once indifferently from the number of 'Amount Roll' |
 | [options.distinctKeepRolling]  | `boolean`         |  false  | if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior |
 | [options.usePercentage]    | `boolean`             |  false   | Use the % mechanism instead of the default formula+range behavior |
+| [options.stackResultsWithBRTLogic] | `boolean`     |  false   |  if enabled the table results are stacked with the BRT logic like the module item-piles a new 'quantity' property is been added to the table result data to check how much the single result is been stacked |
 
 **Example**:
 
@@ -314,6 +318,7 @@ Add loot to selcted token ( or the one passed as a argument)
 | [options.distinct]       | `boolean`               |  false  | if checked the same result is not selected more than once indifferently from the number of 'Amount Roll' |
 | [options.distinctKeepRolling]  | `boolean`         |  false  | if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior |
 | [options.usePercentage]    | `boolean`             |  false   | Use the % mechanism instead of the default formula+range behavior |
+| [options.stackResultsWithBRTLogic] | `boolean`     |  false   |  if enabled the table results are stacked with the BRT logic like the module item-piles a new 'quantity' property is been added to the table result data to check how much the single result is been stacked |
 
 **Example**:
 
@@ -360,7 +365,7 @@ WHEN I WILL FIND THE TIME...
 ```
 let tableHarvester = game.tables.getName("Better Harvester | Aarakocra RollTable");
 game.modules.get("better-rolltables").api.retrieveItemsDataFromRollTableResultSpecialHarvester({
-   table: tableHarvester, 
+   table: tableHarvester,
    options: {
       rollMode: "gmroll",
       dc: 10,
@@ -370,7 +375,7 @@ game.modules.get("better-rolltables").api.retrieveItemsDataFromRollTableResultSp
 
 
 const returnArr = await game.modules.get("better-rolltables").api.retrieveItemsDataFromRollTableResultSpecialHarvester({
-    table: tableHarvester, 
+    table: tableHarvester,
     options: {
     rollMode: "gmroll",
     dc: dcValue,
@@ -379,7 +384,7 @@ const returnArr = await game.modules.get("better-rolltables").api.retrieveItemsD
 });
 
 const itemsData = await game.modules.get("better-rolltables").api.retrieveItemsDataFromRollTableResult({
-    table: tableHarvester, 
+    table: tableHarvester,
     options: {
         rollMode: "gmroll",
         dc: dcValue,

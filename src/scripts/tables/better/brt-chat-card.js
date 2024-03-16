@@ -488,6 +488,7 @@ export class BetterChatCard {
                     this.betterResults,
                     this.rollMode,
                     this.roll,
+                    false,
                 );
             } else {
                 await this.findOrCreateItems();

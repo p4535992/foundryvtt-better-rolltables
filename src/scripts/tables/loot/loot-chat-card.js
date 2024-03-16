@@ -491,6 +491,7 @@ export class LootChatCard {
                     this.betterResults,
                     this.rollMode,
                     this.roll,
+                    false,
                 );
             } else {
                 await this.findOrCreateItems();
