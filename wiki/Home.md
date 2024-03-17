@@ -10,6 +10,8 @@ How to use [Better RollTables Macros](./old/API-for-macros-and-modules#how-to-ro
 
 ## Common Features (These feature are present by default in all the BRT tables)
 
+*Work in progress, any help is welcomed*
+
 ### Inline roll on table text result
 
 ![](./img/common_type_inline_data_roll.png)
@@ -46,6 +48,7 @@ So many combination so little time for a good documentation...
 
 ## Loot Tables
 
+*Work in progress, any help is welcomed*
 
 ### Inline currency data roll on table text result
 
@@ -80,6 +83,14 @@ is converted runtime in this
 ## Harvest Tables
 
 *Work in progress, any help is welcomed*
+
+### Dynamic DC Feature
+
+It will let you to set multiple and random check at once for dc checks e.g. 'nat=1d20, arc=23'
+
+![](/wiki/img/harvest_type_dynamicdc_feature_2.png)
+![](/wiki/img/harvest_type_dynamicdc_feature_1.png)
+
 
 ## Story Tables
 
