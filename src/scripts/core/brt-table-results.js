@@ -162,7 +162,7 @@ export class BetterResults {
     //             t = await this._processTextAsCurrency(t);
     //             t = await this._rollInlineDice(t);
 
-    //             // eslint-disable-next-line no-useless-escape
+    //
     //             const regex = /(\s*[^\[@]*)@*(\w+)*\[([\w.,*+-\/\(\)]+)\]/g;
     //             let textString = t;
     //             const commands = [];

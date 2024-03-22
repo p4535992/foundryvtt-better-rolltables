@@ -16,7 +16,7 @@ export class BRTUtils {
             case "blindroll":
                 chatData.blind = true;
             // no break needed, if so please change this comment ?
-            // eslint-disable-next-line no-fallthrough
+
             case "gmroll":
                 chatData.whisper = [game.users.find((u) => u.isGM).id];
                 break;

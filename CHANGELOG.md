@@ -2,6 +2,10 @@ TODO
 - Add confirm dialog on reset button ???
 - Add flags for cost/price like already done for the quantity is possible now with item piles support
 
+### 2.1.8
+
+- Bug fix: https://github.com/p4535992/foundryvtt-better-rolltables/issues/32
+
 ### 2.1.7
 
 - Add Dynamic DC feature with OR conditions

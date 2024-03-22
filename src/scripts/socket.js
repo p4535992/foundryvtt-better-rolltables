@@ -7,8 +7,7 @@ export function registerSocket() {
     if (betterRolltablesSocket) {
         return betterRolltablesSocket;
     }
-    //@ts-ignore
-    // eslint-disable-next-line no-undef
+
     betterRolltablesSocket = socketlib.registerModule(CONSTANTS.MODULE_ID);
     /**
      * Automated EvocationsVariant sockets

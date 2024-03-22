@@ -94,6 +94,11 @@ export class BetterRollTableStoryConfig extends RollTableConfig {
         // TODO
         // brtData.enrichedDescription = await TextEditor.enrichHTML(context.data.description, { async: true });
 
+        this.canRoll = this.document.ownership[game.user.id]
+            ? this.document.ownership[game.user.id] === CONST.DOCUMENT_PERMISSION_LEVELS.OWNER ||
+              this.document.ownership[game.user.id] === CONST.DOCUMENT_PERMISSION_LEVELS.OBSERVER
+            : this.isEditable;
+
         return brtData;
     }
 
@@ -107,10 +112,23 @@ export class BetterRollTableStoryConfig extends RollTableConfig {
     activateListeners(jq) {
         super.activateListeners(jq);
 
-        // The below options require an editable sheet
-        if (!this.isEditable) return;
-
         const html = jq[0];
+
+        if (this.canRoll) {
+            // html.querySelector(".better-rolltables-roll-story").addEventListener(
+            //     "click",
+            //     this._onBetterRollTablesRoll.bind(this),
+            // );
+            html.querySelectorAll(".better-rolltables-roll-story").forEach((el) => {
+                el.disabled = false;
+                el.addEventListener("click", this._onBetterRollTablesRoll.bind(this));
+            });
+        }
+
+        // The below options require an editable sheet
+        if (!this.isEditable) {
+            return;
+        }
 
         // Save the sheet on refresh of the table
         // html
@@ -122,11 +140,6 @@ export class BetterRollTableStoryConfig extends RollTableConfig {
 
         html.querySelectorAll(".rich-edit-result").forEach((el) =>
             el.addEventListener("click", this._openRichEditor.bind(this)),
-        );
-
-        html.querySelector(".better-rolltables-roll-story").addEventListener(
-            "click",
-            this._onBetterRollTablesRoll.bind(this),
         );
 
         // Edit a Image
