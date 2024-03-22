@@ -634,7 +634,7 @@ export class BetterRollTable {
     getResultsForRoll(value) {
         // return this.table.results.filter((r) => !r.drawn && Number.between(value, ...r.range));
         let dc = this.options.dc || undefined;
-        let skill = this.options.skill || undefined;
+        let skills = this.options.skills || undefined;
 
         //  let resultsUpdate = this.table.results.filter((r) => !r.drawn && Number.between(value, ...r.range));
         // START PATCH USE PERCENTAGE
@@ -687,13 +687,10 @@ export class BetterRollTable {
                     });
                 }
                 // Filter by skill
-                if (skill) {
+                if (skills?.length > 0) {
                     resultsUpdate = resultsUpdate.filter((r) => {
-                        return (
-                            getProperty(
-                                r,
-                                `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_SKILL_VALUE_KEY}`,
-                            ) === skill
+                        return skills.includes(
+                            getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_SKILL_VALUE_KEY}`),
                         );
                     });
                 }
@@ -846,6 +843,9 @@ export class BetterRollTable {
                 }
             }
             resultsTmp.push(rTmp);
+        }
+        if (resultsTmp.length === 0) {
+            Logger.warn(`No results are be drawn with this table and with these options`, true);
         }
 
         this.results = resultsTmp;

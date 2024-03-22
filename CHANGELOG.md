@@ -6,6 +6,7 @@ TODO
 
 - Bug fix: https://github.com/p4535992/foundryvtt-better-rolltables/issues/32
 - Bug fix: https://github.com/p4535992/foundryvtt-better-rolltables/issues/33
+- Add new feature multiple skill denomination on harvest tables
 
 ### 2.1.7
 

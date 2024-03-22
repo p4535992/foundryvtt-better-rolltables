@@ -84,6 +84,12 @@ is converted runtime in this
 
 *Work in progress, any help is welcomed*
 
+### Multiple Skill denomination allowed
+
+Usually you put a single skill denomination like "nat" or "arc" , but now if there is a "," in the skill string. , it will be treated as an array of skills for example "nat,arc" implies that the roll result will be compared as both a nat (nat) and arcane (arc) roll.
+
+This is very useful with the feature "Dynamic DC Feature" for create very elaborate rolltable.
+
 ### Dynamic DC Feature
 
 It will let you to set multiple and random check at once for dc checks e.g. 'nat=1d20, arc=23'

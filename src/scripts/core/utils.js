@@ -1,6 +1,6 @@
 import { BRTBetterHelpers } from "../tables/better/brt-helper";
 import { CONSTANTS } from "../constants/constants";
-import { isRealBoolean, isRealBooleanOrElseNull, isRealNumber } from "../lib/lib";
+import { isRealBoolean, isRealBooleanOrElseNull, isRealNumber, parseAsArray } from "../lib/lib";
 import SETTINGS from "../constants/settings";
 import Logger from "../lib/Logger";
 import { RetrieveHelpers } from "../lib/retrieve-helpers";
@@ -201,6 +201,8 @@ export class BRTUtils {
             options?.skill ||
             getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_SKILL_VALUE_KEY}`) ||
             undefined;
+
+        newOptions.skills = parseAsArray(newOptions.skill);
 
         newOptions.isTokenActor = isRealBoolean(options?.isTokenActor)
             ? String(options?.isTokenActor) === "true"

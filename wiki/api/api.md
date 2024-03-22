@@ -50,7 +50,7 @@ Roll a table as a Better table with options and get
 | [options.rollMode]       | `string`                |  null   | Type of rollMode for the chat card: 'blindroll'|'gmroll'|'selfroll' |
 | [options.rollsAmount]    | `string or number`      |   1     | The rolls amount value  |
 | [options.dc]             | `string or number`      |  null   | The dc value (only for Harvest type rolltable) |
-| [options.skill]          | `string`                |  null   | The skill denomination (only for Harvest type rolltable) |
+| [options.skill]          | `string`                |  null   | The skill denomination (only for Harvest type rolltable). If there is a "," in the skill string. , it will be treated as an array of skills for example "nat,arc" implies that the roll result will be compared as both a nat (nat) and arcane (arc) roll |
 | [options.distinct]       | `boolean`               |  false  | if checked the same result is not selected more than once indifferently from the number of 'Amount Roll' |
 | [options.distinctKeepRolling]  | `boolean`         |  false  | if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior |
 | [options.usePercentage]    | `boolean`             |  false   | Use the % mechanism instead of the default formula+range behavior |
@@ -94,7 +94,7 @@ Roll a table as a Better table in chat with options
 | [options.rollMode]       | `string`                |  null   | Type of rollMode for the chat card: 'blindroll'|'gmroll'|'selfroll' |
 | [options.rollsAmount]    | `string or number`      |   1     | The rolls amount value  |
 | [options.dc]             | `string or number`      |  null   | The dc value (only for Harvest type rolltable) |
-| [options.skill]          | `string`                |  null   | The skill denomination (only for Harvest type rolltable) |
+| [options.skill]          | `string`                |  null   | The skill denomination (only for Harvest type rolltable). If there is a "," in the skill string. , it will be treated as an array of skills for example "nat,arc" implies that the roll result will be compared as both a nat (nat) and arcane (arc) roll |
 | [options.distinct]       | `boolean`               |  false  | if checked the same result is not selected more than once indifferently from the number of 'Amount Roll' |
 | [options.distinctKeepRolling]  | `boolean`         |  false  | if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior |
 | [options.usePercentage]    | `boolean`             |  false   | Use the % mechanism instead of the default formula+range behavior |
@@ -244,7 +244,7 @@ Generate a loot
 | [options.rollMode]       | `string`                |  null   | Type of rollMode for the chat card: 'blindroll'|'gmroll'|'selfroll' |
 | [options.rollsAmount]    | `string or number`      |   1     | The rolls amount value  |
 | [options.dc]             | `string or number`      |  null   | The dc value (only for Harvest type rolltable) |
-| [options.skill]          | `string`                |  null   | The skill denomination (only for Harvest type rolltable) |
+| [options.skill]          | `string`                |  null   | The skill denomination (only for Harvest type rolltable). If there is a "," in the skill string. , it will be treated as an array of skills for example "nat,arc" implies that the roll result will be compared as both a nat (nat) and arcane (arc) roll |
 | [options.distinct]       | `boolean`               |  false  | if checked the same result is not selected more than once indifferently from the number of 'Amount Roll' |
 | [options.distinctKeepRolling]  | `boolean`         |  false  | if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior |
 | [options.usePercentage]    | `boolean`             |  false   | Use the % mechanism instead of the default formula+range behavior |
@@ -279,7 +279,7 @@ Generate a chat loot
 | [options.rollMode]       | `string`                |  null   | Type of rollMode for the chat card: 'blindroll'|'gmroll'|'selfroll' |
 | [options.rollsAmount]    | `string or number`      |   1     | The rolls amount value  |
 | [options.dc]             | `string or number`      |  null   | The dc value (only for Harvest type rolltable) |
-| [options.skill]          | `string`                |  null   | The skill denomination (only for Harvest type rolltable) |
+| [options.skill]          | `string`                |  null   | The skill denomination (only for Harvest type rolltable). If there is a "," in the skill string. , it will be treated as an array of skills for example "nat,arc" implies that the roll result will be compared as both a nat (nat) and arcane (arc) roll |
 | [options.distinct]       | `boolean`               |  false  | if checked the same result is not selected more than once indifferently from the number of 'Amount Roll' |
 | [options.distinctKeepRolling]  | `boolean`         |  false  | if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior |
 | [options.usePercentage]    | `boolean`             |  false   | Use the % mechanism instead of the default formula+range behavior |
@@ -314,7 +314,7 @@ Add loot to selcted token ( or the one passed as a argument)
 | [options.rollMode]       | `string`                |  null   | Type of rollMode for the chat card: 'blindroll'|'gmroll'|'selfroll' |
 | [options.rollsAmount]    | `string or number`      |   1     | The rolls amount value  |
 | [options.dc]             | `string or number`      |  null   | The dc value (only for Harvest type rolltable) |
-| [options.skill]          | `string`                |  null   | The skill denomination (only for Harvest type rolltable) |
+| [options.skill]          | `string`                |  null   | The skill denomination (only for Harvest type rolltable). If there is a "," in the skill string. , it will be treated as an array of skills for example "nat,arc" implies that the roll result will be compared as both a nat (nat) and arcane (arc) roll |
 | [options.distinct]       | `boolean`               |  false  | if checked the same result is not selected more than once indifferently from the number of 'Amount Roll' |
 | [options.distinctKeepRolling]  | `boolean`         |  false  | if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior |
 | [options.usePercentage]    | `boolean`             |  false   | Use the % mechanism instead of the default formula+range behavior |
