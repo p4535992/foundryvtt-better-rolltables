@@ -196,16 +196,24 @@ export class RollTableToActorHelpers {
                 getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`),
             );
             if (!document) {
+                try {
+                    const collection =
+                        game.collections.get(r.documentCollection) ??
+                        (await RetrieveHelpers.getCompendiumCollectionAsync(r.documentCollection, true, false));
+                    document = (await collection?.get(r.documentId)) ?? (await collection?.getDocument(r.documentId));
+                } catch (e) {
+                    // DO NOTHING
+                }
+            }
+        } else {
+            try {
                 const collection =
                     game.collections.get(r.documentCollection) ??
                     (await RetrieveHelpers.getCompendiumCollectionAsync(r.documentCollection, true, false));
                 document = (await collection?.get(r.documentId)) ?? (await collection?.getDocument(r.documentId));
+            } catch (e) {
+                // DO NOTHING
             }
-        } else {
-            const collection =
-                game.collections.get(r.documentCollection) ??
-                (await RetrieveHelpers.getCompendiumCollectionAsync(r.documentCollection, true, false));
-            document = (await collection?.get(r.documentId)) ?? (await collection?.getDocument(r.documentId));
         }
 
         // Maybe i can remove these double checks...

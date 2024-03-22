@@ -8,7 +8,7 @@ import { BetterRollTable } from "../../core/brt-table";
 import SETTINGS from "../../constants/settings";
 import Logger from "../../lib/Logger";
 import ItemPilesHelpers from "../../lib/item-piles-helpers";
-import { isRealNumber, parseAsArray } from "../../lib/lib";
+import { isRealBoolean, isRealNumber, parseAsArray } from "../../lib/lib";
 
 export class BRTHarvestHelpers {
     /**
@@ -28,32 +28,38 @@ export class BRTHarvestHelpers {
         }
         Logger.info("Harvest generation started.");
 
-        /*
-    const brtTable = new BetterRollTable(tableEntity, options);
-    await brtTable.initialize();
+        const brtTable = new BetterRollTable(tableEntity, options);
+        await brtTable.initialize();
 
-    const isTokenActor = brtTable.options?.isTokenActor;
-    const stackSame = brtTable.options?.stackSame;
-    const itemLimit = brtTable.options?.itemLimit;
-    for (const token of tokenstack) {
-      Logger.info(`Harvest generation started on token '${token.name}'`, true);
-      const resultsBrt = await brtTable.betterRoll();
+        const resultsBrt = await brtTable.betterRoll();
+        const rollMode = brtTable.rollMode;
+        const roll = brtTable.mainRoll;
 
-      const results = resultsBrt?.results;
-      const br = new BetterResults(tableEntity, results, options?.stackResultsWithBRTLogic);
-      const betterResults = await br.buildResults();
-      await RollTableToActorHelpers.addItemsToTokenOld(token, betterResults, stackSame, isTokenActor, itemLimit);
-      Logger.info(`Harvest generation started on token '${token.name}'`, true);
-    }
-    */
+        const results = resultsBrt?.results;
+        const br = new BetterResults(tableEntity, results, options?.stackResultsWithBRTLogic);
+        const betterResults = await br.buildResults();
+
         for (const token of tokenstack) {
             Logger.info(`Harvest generation started on token '${token.name}'`, true);
+            /*
             await ItemPilesHelpers.populateActorOrTokenViaTable(token, tableEntity, options);
 
             const currencyString = tableEntity.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.LOOT_CURRENCY_STRING_KEY);
             const currencyData = ItemPilesHelpers.generateCurrenciesStringFromString(currencyString);
             await ItemPilesHelpers.addCurrencies(token, currencyData);
+            */
+            await ItemPilesHelpers.populateActorOrTokenViaTableResults(token, results);
+
             Logger.info(`Harvest generation ended on token '${token.name}'`, true);
+
+            if (isRealBoolean(options.displayChat)) {
+                if (!options.displayChat) {
+                    continue;
+                }
+            }
+
+            const harvestChatCard = new HarvestChatCard(betterResults, rollMode, roll);
+            await harvestChatCard.createChatCard(tableEntity);
         }
         Logger.info("Harvest generation complete.");
         return;

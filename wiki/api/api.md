@@ -325,7 +325,20 @@ Add loot to selcted token ( or the one passed as a argument)
 ```js
 const tableEntity  = game.tables.getName("Loot Table");
 game.modules.get('better-rolltables').api.generateChatLoot(tableEntity, options: { rollMode: 'blindroll'});
+```
 
+```js
+// Draw from a table that contains items and add the items to a selected token's actor.
+
+const table  = game.tables.getName("Monster Test");
+const token = canvas.tokens.controlled[0];
+const receiver = token?.actor;
+if (!table || !receiver) {
+  ui.notifications.warn("Missing table or selected token.");
+  return null;
+}
+
+game.betterTables.addLootToSelectedToken(table, receiver, {displayChat:true});
 ```
 
 ---

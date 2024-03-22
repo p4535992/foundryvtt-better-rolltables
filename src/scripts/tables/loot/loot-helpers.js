@@ -8,6 +8,7 @@ import { BetterRollTable } from "../../core/brt-table";
 import SETTINGS from "../../constants/settings";
 import Logger from "../../lib/Logger";
 import ItemPilesHelpers from "../../lib/item-piles-helpers";
+import { isRealBoolean } from "../../lib/lib";
 
 export class BRTLootHelpers {
     /**
@@ -27,35 +28,43 @@ export class BRTLootHelpers {
         }
         Logger.info("Loot generation started.", true);
 
-        /*
-    const brtTable = new BetterRollTable(tableEntity, options);
-    await brtTable.initialize();
+        const brtTable = new BetterRollTable(tableEntity, options);
+        await brtTable.initialize();
 
-    const isTokenActor = brtTable.options?.isTokenActor;
-    const stackSame = brtTable.options?.stackSame;
-    const itemLimit = brtTable.options?.itemLimit;
+        const resultsBrt = await brtTable.betterRoll();
 
-    for (const token of tokenstack) {
-      Logger.info(`Loot generation started on token '${token.name}'`, true);
-      const resultsBrt = await brtTable.betterRoll();
+        const rollMode = brtTable.rollMode;
+        const roll = brtTable.mainRoll;
+        const results = resultsBrt?.results;
 
-      const results = resultsBrt?.results;
-      const br = new BetterResults(tableEntity, results, options?.stackResultsWithBRTLogic);
-      const betterResults = await br.buildResults();
-      const currencyData = br.getCurrencyData();
-      await BRTLootHelpers.addCurrenciesToToken(token, currencyData, isTokenActor);
-      await RollTableToActorHelpers.addItemsToTokenOld(token, betterResults, stackSame, isTokenActor, itemLimit);
-      Logger.info(`Loot generation ended on token '${token.name}'`, true);
-    }
-    */
+        const br = new BetterResults(tableEntity, results, options?.stackResultsWithBRTLogic);
+        const betterResults = await br.buildResults();
+        const currencyData = br.getCurrencyData();
+
         for (const token of tokenstack) {
             Logger.info(`Loot generation started on token '${token.name}'`, true);
+            /*
             await ItemPilesHelpers.populateActorOrTokenViaTable(token, tableEntity, options);
 
             const currencyString = tableEntity.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.LOOT_CURRENCY_STRING_KEY);
             const currencyDataForItemPiles = ItemPilesHelpers.generateCurrenciesStringFromString(currencyString);
             await ItemPilesHelpers.addCurrencies(token, currencyDataForItemPiles);
+            */
+            const currencyDataForItemPiles = ItemPilesHelpers.generateCurrenciesStringFromString(currencyData);
+
+            await ItemPilesHelpers.addCurrencies(token, currencyDataForItemPiles);
+            await ItemPilesHelpers.populateActorOrTokenViaTableResults(token, results);
+
             Logger.info(`Loot generation ended on token '${token.name}'`, true);
+
+            if (isRealBoolean(options.displayChat)) {
+                if (!options.displayChat) {
+                    continue;
+                }
+            }
+
+            const lootChatCard = new LootChatCard(betterResults, currencyData, rollMode, roll);
+            await lootChatCard.createChatCard(tableEntity);
         }
         Logger.info("Loot generation complete.", true);
         return;
