@@ -133,8 +133,50 @@ export class BetterTables {
      * @returns {Promise<{flavor: *, sound: string, user: *, content: *}>}
      */
     async rollOld(tableEntity, options = {}) {
-        const data = await BetterTables.prepareCardData(tableEntity, options);
-        return getProperty(data, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.LOOT}`); //data.flags?.betterTables?.loot;
+        // const data = await BetterTables.prepareCardData(tableEntity, options);
+        const brtTable = new BetterRollTable(tableEntity, options);
+        await brtTable.initialize();
+        const resultBrt = await brtTable.betterRoll();
+
+        const results = resultBrt?.results;
+
+        let rollMode = options?.rollMode || brtTable.rollMode || null;
+        let roll = options?.roll || brtTable.mainRoll || null;
+
+        const br = new BetterResults(tableEntity, results, options?.stackResultsWithBRTLogic);
+        const betterResults = await br.buildResults();
+
+        if (isRealBoolean(options.displayChat)) {
+            if (!options.displayChat) {
+                return betterResults;
+            }
+        }
+
+        if (tableEntity.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_BETTER) {
+            const betterChatCard = new BetterChatCard(betterResults, rollMode, roll);
+            await betterChatCard.findOrCreateItems();
+            await betterChatCard.prepareCharCart(tableEntity);
+        } else if (
+            tableEntity.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_LOOT
+        ) {
+            const currencyData = br.getCurrencyData();
+            const lootChatCard = new LootChatCard(betterResults, currencyData, rollMode, roll);
+            await lootChatCard.findOrCreateItems();
+            await lootChatCard.prepareCharCart(tableEntity);
+        } else if (
+            tableEntity.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_STORY
+        ) {
+            const storyChatCard = new StoryChatCard(betterResults, rollMode, roll);
+            // await storyChatCard.findOrCreateItems();
+            await storyChatCard.prepareCharCart(tableEntity);
+        } else if (
+            tableEntity.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_HARVEST
+        ) {
+            const harvestChatCard = new HarvestChatCard(betterResults, rollMode, roll);
+            await harvestChatCard.findOrCreateItems();
+            await harvestChatCard.prepareCharCart(tableEntity);
+        }
+        return betterResults; // getProperty(data, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.LOOT}`); //data.flags?.betterTables?.loot;
     }
 
     /**
@@ -341,28 +383,33 @@ export class BetterTables {
             }
         }
 
+        let chatData = null;
         if (tableEntity.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_BETTER) {
             const betterChatCard = new BetterChatCard(betterResults, rollMode, roll);
-            await betterChatCard.prepareCharCart(tableEntity);
+            await betterChatCard.findOrCreateItems();
+            chatData = await betterChatCard.prepareCharCart(tableEntity);
         } else if (
             tableEntity.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_LOOT
         ) {
             const currencyData = br.getCurrencyData();
             const lootChatCard = new LootChatCard(betterResults, currencyData, rollMode, roll);
-            await lootChatCard.prepareCharCart(tableEntity);
+            await lootChatCard.findOrCreateItems();
+            chatData = await lootChatCard.prepareCharCart(tableEntity);
         } else if (
             tableEntity.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_STORY
         ) {
             const storyChatCard = new StoryChatCard(betterResults, rollMode, roll);
-            await storyChatCard.prepareCharCart(tableEntity);
+            // await storyChatCard.findOrCreateItems();
+            chatData = await storyChatCard.prepareCharCart(tableEntity);
         } else if (
             tableEntity.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_HARVEST
         ) {
             const harvestChatCard = new HarvestChatCard(betterResults, rollMode, roll);
-            await harvestChatCard.prepareCharCart(tableEntity);
+            await harvestChatCard.findOrCreateItems();
+            chatData = await harvestChatCard.prepareCharCart(tableEntity);
         }
 
-        return betterResults;
+        return chatData;
     }
 
     static async _toggleCurrenciesShareSection(message, html) {
@@ -386,30 +433,28 @@ export class BetterTables {
                 )}">`,
             ).append("<i class='fas fa-dice-d20'></i>");
             rerollButton.click(async () => {
-                let cardContent;
-                if (pack && !id) {
-                    cardContent = await API.rollCompendiumAsRolltable(pack, CONSTANTS.MODULE_ID);
+                let rolltable;
+                if (pack && id) {
+                    const myPack = await RetrieveHelpers.getCompendiumCollectionAsync(pack, true, false);
+                    rolltable = await myPack?.getDocument(id);
                 } else {
-                    let rolltable;
-                    if (pack && id) {
-                        const myPack = await RetrieveHelpers.getCompendiumCollectionAsync(pack, true, false);
-                        rolltable = await myPack?.getDocument(id);
-                    } else {
-                        rolltable = RetrieveHelpers.getRollTableSync(id, true);
-                    }
-                    if (rolltable) {
-                        cardContent = await BetterTables.prepareCardData(rolltable);
-                    }
+                    rolltable = RetrieveHelpers.getRollTableSync(id, true);
                 }
-                await BetterTables.updateChatMessage(message, cardContent, {
-                    flags: cardContent.flags,
-                });
+                if (rolltable) {
+                    const chatData = await BetterTables.prepareCardData(rolltable);
+                    const cardContent = chatData.content;
+                    const cardFlags = chatData.flags;
+                    await BetterTables.updateChatMessage(message, cardContent, {
+                        flags: cardFlags,
+                    });
+                } else {
+                    Logger.warn(`No rollTable find with reference pack = '${pack}' and id = '${id}'`, true);
+                }
             });
             $(html).find(".message-delete").before(rerollButton);
         }
 
         if (
-            game.system.id === "dnd5e" &&
             game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SHOW_CURRENCY_SHARE_BUTTON) &&
             getProperty(message, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.LOOT_CURRENCY}`) && // message.flags?.betterTables?.loot.currency &&
             Object.keys(getProperty(message, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.LOOT_CURRENCY}`)).length >
@@ -542,6 +587,7 @@ export class BetterTables {
      */
     static async handleChatMessageButtons(message, html) {
         if (game.user.isGM) {
+            // TODO SEEM NOT TO WORK ANYMORE ???
             BetterTables._addButtonsToMessage(message, html);
             BetterTables._addRollButtonsToEntityLink(html);
         }
@@ -560,13 +606,15 @@ export class BetterTables {
                 Dialog.confirm({
                     title: game.i18n.localize(`${CONSTANTS.MODULE_ID}.Settings.RerollWarning.Title`),
                     content: game.i18n.localize(`${CONSTANTS.MODULE_ID}.Settings.RerollWarning.Description`),
-                    yes: () => BetterTables.updateChatMessage(message, content, { force: true }),
+                    yes: () => {
+                        BetterTables.updateChatMessage(message, content, { force: true, flags: options.flags });
+                    },
                     defaultYes: false,
                 });
             } else {
                 message.update({
-                    content: content.content,
-                    flags: options.flags,
+                    content: content,
+                    flags: options.flags || {},
                     timestamp: Date.now(),
                 });
             }

@@ -60,9 +60,9 @@ class BetterRolltableHooks {
         // Hooks.on("dropRollTableSheetData", BetterTables.handleDropRollTableSheetData);
 
         // TODO we really need this ???
-        if (game.system.id === "dnd5e") {
-            Hooks.on("renderActorSheet", BetterTables.handleChatMessageButtons);
-        }
+        // if (game.system.id === "dnd5e") {
+        //     Hooks.on("renderActorSheet", BetterTables.handleChatMessageButtons);
+        // }
 
         // Handlebars.registerHelper("brt-ifequals", function (arg1, arg2, options) {
         //   return arg1 == arg2 ? options.fn(this) : options.inverse(this);

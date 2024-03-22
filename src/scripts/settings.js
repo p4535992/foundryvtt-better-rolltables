@@ -181,9 +181,8 @@ export function registerSettings() {
         type: Object,
     });
 
-    /**
-     * Loot / Merchant specific
-     */
+    // Loot / Merchant specific
+
     game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.SHOW_CURRENCY_SHARE_BUTTON, {
         name: Logger.i18n(`${CONSTANTS.MODULE_ID}.Settings.ShareCurrencyButton.Title`),
         hint: Logger.i18n(`${CONSTANTS.MODULE_ID}.Settings.ShareCurrencyButton.Description`),
@@ -204,18 +203,17 @@ export function registerSettings() {
         type: Boolean,
     });
 
-    /**
-     * Harvest specific
-     */
-    game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.ALWAYS_SHOW_GENERATED_HARVEST_AS_MESSAGE, {
-        name: Logger.i18n(`${CONSTANTS.MODULE_ID}.Settings.AlwaysShowGeneratedHarvestAsMessage.Title`),
-        hint: Logger.i18n(`${CONSTANTS.MODULE_ID}.Settings.AlwaysShowGeneratedHarvestAsMessage.Description`),
-        scope: WORLD,
-        group: GROUP_HARVEST,
-        config: false,
-        default: false,
-        type: Boolean,
-    });
+    // Harvest specific
+
+    // game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.ALWAYS_SHOW_GENERATED_HARVEST_AS_MESSAGE, {
+    //     name: Logger.i18n(`${CONSTANTS.MODULE_ID}.Settings.AlwaysShowGeneratedHarvestAsMessage.Title`),
+    //     hint: Logger.i18n(`${CONSTANTS.MODULE_ID}.Settings.AlwaysShowGeneratedHarvestAsMessage.Description`),
+    //     scope: WORLD,
+    //     group: GROUP_HARVEST,
+    //     config: false,
+    //     default: false,
+    //     type: Boolean,
+    // });
 
     // =====================================================================
 
