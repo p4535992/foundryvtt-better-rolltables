@@ -55,14 +55,11 @@ class BetterRolltableHooks {
         // }
         Hooks.on("renderRollTableConfig", BetterTables.checkRenderDefaultRollTableConfig);
         Hooks.on("renderChatMessage", BetterTables.handleChatMessageButtons);
-        Hooks.on("renderJournalPageSheet", BetterTables.handleRolltableLink);
-        Hooks.on("renderItemSheet", BetterTables.handleRolltableLink);
-        // Hooks.on("dropRollTableSheetData", BetterTables.handleDropRollTableSheetData);
 
-        // TODO we really need this ???
-        // if (game.system.id === "dnd5e") {
-        //     Hooks.on("renderActorSheet", BetterTables.handleChatMessageButtons);
-        // }
+        // TODO OTHER MODULES DO THIS
+        // Hooks.on("renderJournalPageSheet", BetterTables.handleRolltableLink);
+        // Hooks.on("renderItemSheet", BetterTables.handleRolltableLink);
+        // Hooks.on("dropRollTableSheetData", BetterTables.handleDropRollTableSheetData);
 
         // Handlebars.registerHelper("brt-ifequals", function (arg1, arg2, options) {
         //   return arg1 == arg2 ? options.fn(this) : options.inverse(this);

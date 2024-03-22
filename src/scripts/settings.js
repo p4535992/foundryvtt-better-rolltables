@@ -51,6 +51,8 @@ export function registerSettings() {
     CONSTANTS.ITEM_LOOT_TYPE = SYSTEMS.DATA.ITEM_LOOT_TYPE;
     CONSTANTS.SCROLL_REGEX = SYSTEMS.DATA.SCROLL_REGEX;
     */
+
+    /* RIMOSSO 2024-03-22
     game.settings.registerMenu(CONSTANTS.MODULE_ID, "helpersOptions", {
         name: Logger.i18n("User Interface Integration"),
         label: Logger.i18n(`${CONSTANTS.MODULE_ID}.Settings.Module.AdvancedSettings.Title`),
@@ -58,15 +60,14 @@ export function registerSettings() {
         type: BetterRolltableSettingsConfig,
         restricted: true,
     });
-
-    //   _registerSettingsDuringInit()
+    */
 
     game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.ADD_ROLL_IN_COMPENDIUM_CONTEXTMENU, {
         name: Logger.i18n(`${CONSTANTS.MODULE_ID}.Settings.AddRollInCompediumContextMenu.Title`),
         hint: Logger.i18n(`${CONSTANTS.MODULE_ID}.Settings.AddRollInCompediumContextMenu.Description`),
         scope: WORLD,
         group: GROUP_UI,
-        config: false,
+        config: true,
         default: false,
         type: Boolean,
     });
@@ -75,56 +76,29 @@ export function registerSettings() {
         hint: Logger.i18n(`${CONSTANTS.MODULE_ID}.Settings.AddRollInRolltableContextMenu.Description`),
         scope: WORLD,
         group: GROUP_UI,
-        config: false,
+        config: true,
         default: false,
         type: Boolean,
     });
 
-    // /**
-    //  * Base Settings Sheet
-    //  */
-    // game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.LOOT_SHEET_TO_USE_KEY, {
-    //   name: Logger.i18n(`${CONSTANTS.MODULE_ID}.Settings.LootSheet.Title`),
-    //   hint: Logger.i18n(`${CONSTANTS.MODULE_ID}.Settings.LootSheet.Description`),
-    //   scope: WORLD,
-    //   group: GROUP_DEFAULT,
-    //   config: false,
-    //   default: defaultLootSheet,
-    //   type: String,
-    //   // choices: systemSheets,
-    //   // choices: Object.values(CONFIG.Actor.sheetClasses.npc).map((s) => ({id: s.id, label: s.label}))
-    // });
+    // User Interface Integration
 
-    // game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.SPELL_COMPENDIUM_KEY, {
-    //     name: Logger.i18n(`${CONSTANTS.MODULE_ID}.Settings.SpellCompendium.Title`),
-    //     hint: Logger.i18n(`${CONSTANTS.MODULE_ID}.Settings.SpellCompendium.Description`),
+    // game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.USE_CONDENSED_BETTERROLL, {
+    //     name: Logger.i18n(`${CONSTANTS.MODULE_ID}.Settings.UseCondensedBetterRoll.Title`),
+    //     hint: Logger.i18n(`${CONSTANTS.MODULE_ID}.Settings.UseCondensedBetterRoll.Description`),
     //     scope: WORLD,
-    //     group: GROUP_DEFAULT,
-    //     config: false,
-    //     default: defaultSpellCompendium,
-    //     type: String,
+    //     group: GROUP_UI,
+    //     config: true,
+    //     default: false,
+    //     type: Boolean,
     // });
-
-    /**
-     * User Interface Integration
-     */
-
-    game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.USE_CONDENSED_BETTERROLL, {
-        name: Logger.i18n(`${CONSTANTS.MODULE_ID}.Settings.UseCondensedBetterRoll.Title`),
-        hint: Logger.i18n(`${CONSTANTS.MODULE_ID}.Settings.UseCondensedBetterRoll.Description`),
-        scope: WORLD,
-        group: GROUP_UI,
-        config: false,
-        default: false,
-        type: Boolean,
-    });
 
     game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.SHOW_REROLL_BUTTONS, {
         name: Logger.i18n(`${CONSTANTS.MODULE_ID}.Buttons.Reroll.Title`),
         hint: Logger.i18n(`${CONSTANTS.MODULE_ID}.Buttons.Reroll.Description`),
         scope: WORLD,
         group: GROUP_UI,
-        config: false,
+        config: true,
         default: false,
         type: Boolean,
     });
@@ -134,7 +108,7 @@ export function registerSettings() {
         hint: Logger.i18n(`${CONSTANTS.MODULE_ID}.Settings.ShowWarningBeforeReroll.Description`),
         scope: WORLD,
         group: GROUP_UI,
-        config: false,
+        config: true,
         default: false,
         type: Boolean,
     });
@@ -144,10 +118,12 @@ export function registerSettings() {
         hint: Logger.i18n(`${CONSTANTS.MODULE_ID}.Buttons.Open.Description`),
         scope: WORLD,
         group: GROUP_UI,
-        config: false,
+        config: true,
         default: false,
         type: Boolean,
     });
+
+    // TODO DEPRECATED IN FAVOR OF OTHER MODUELS ??
 
     game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.ROLL_TABLE_FROM_JOURNAL, {
         name: Logger.i18n(`${CONSTANTS.MODULE_ID}.Settings.RollTableFromJournal.Title`),
@@ -159,7 +135,7 @@ export function registerSettings() {
         type: Boolean,
     });
 
-    //   _registerTagsSettings();
+    // TAGS
 
     game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.TAGS.USE, {
         name: Logger.i18n(`${CONSTANTS.MODULE_ID}.Settings.Tags.Use.Title`),
@@ -183,25 +159,25 @@ export function registerSettings() {
 
     // Loot / Merchant specific
 
-    game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.SHOW_CURRENCY_SHARE_BUTTON, {
-        name: Logger.i18n(`${CONSTANTS.MODULE_ID}.Settings.ShareCurrencyButton.Title`),
-        hint: Logger.i18n(`${CONSTANTS.MODULE_ID}.Settings.ShareCurrencyButton.Description`),
-        scope: WORLD,
-        group: GROUP_LOOT,
-        config: false,
-        default: false,
-        type: Boolean,
-    });
+    // game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.SHOW_CURRENCY_SHARE_BUTTON, {
+    //     name: Logger.i18n(`${CONSTANTS.MODULE_ID}.Settings.ShareCurrencyButton.Title`),
+    //     hint: Logger.i18n(`${CONSTANTS.MODULE_ID}.Settings.ShareCurrencyButton.Description`),
+    //     scope: WORLD,
+    //     group: GROUP_LOOT,
+    //     config: false,
+    //     default: false,
+    //     type: Boolean,
+    // });
 
-    game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.ALWAYS_SHOW_GENERATED_LOOT_AS_MESSAGE, {
-        name: Logger.i18n(`${CONSTANTS.MODULE_ID}.Settings.AlwaysShowGeneratedLootAsMessage.Title`),
-        hint: Logger.i18n(`${CONSTANTS.MODULE_ID}.Settings.AlwaysShowGeneratedLootAsMessage.Description`),
-        scope: WORLD,
-        group: GROUP_LOOT,
-        config: false,
-        default: false,
-        type: Boolean,
-    });
+    // game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.ALWAYS_SHOW_GENERATED_LOOT_AS_MESSAGE, {
+    //     name: Logger.i18n(`${CONSTANTS.MODULE_ID}.Settings.AlwaysShowGeneratedLootAsMessage.Title`),
+    //     hint: Logger.i18n(`${CONSTANTS.MODULE_ID}.Settings.AlwaysShowGeneratedLootAsMessage.Description`),
+    //     scope: WORLD,
+    //     group: GROUP_LOOT,
+    //     config: false,
+    //     default: false,
+    //     type: Boolean,
+    // });
 
     // Harvest specific
 
@@ -213,17 +189,6 @@ export function registerSettings() {
     //     config: false,
     //     default: false,
     //     type: Boolean,
-    // });
-
-    // =====================================================================
-
-    // game.settings.register(CONSTANTS.MODULE_ID, "enableOldBehavior", {
-    //   name: `${CONSTANTS.MODULE_ID}.Settings.enableOldBehavior.name`,
-    //   hint: `${CONSTANTS.MODULE_ID}.Settings.enableOldBehavior.hint`,
-    //   scope: "world",
-    //   config: true,
-    //   default: false,
-    //   type: Boolean,
     // });
 
     // =====================================================================

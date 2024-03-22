@@ -93,16 +93,16 @@ export class BRTLootHelpers {
         await ItemPilesHelpers.addCurrencies(actor, currencyDataForItemPiles);
         await ItemPilesHelpers.populateActorOrTokenViaTableResults(actor, results);
 
-        if (game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.ALWAYS_SHOW_GENERATED_LOOT_AS_MESSAGE)) {
-            if (isRealBoolean(options.displayChat)) {
-                if (!options.displayChat) {
-                    return;
-                }
+        // if (game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.ALWAYS_SHOW_GENERATED_LOOT_AS_MESSAGE)) {
+        if (isRealBoolean(options.displayChat)) {
+            if (!options.displayChat) {
+                return;
             }
-
-            const lootChatCard = new LootChatCard(betterResults, currencyData, rollMode, roll);
-            await lootChatCard.createChatCard(tableEntity);
         }
+
+        const lootChatCard = new LootChatCard(betterResults, currencyData, rollMode, roll);
+        await lootChatCard.createChatCard(tableEntity);
+        // }
     }
 
     static async generateChatLoot(tableEntity, options = {}) {

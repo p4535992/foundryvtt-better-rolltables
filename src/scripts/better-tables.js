@@ -96,35 +96,32 @@ export class BetterTables {
             return betterResults;
         }
 
-        if (game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.USE_CONDENSED_BETTERROLL)) {
-            if (
-                tableEntity.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_BETTER
-            ) {
-                const betterChatCard = new BetterChatCard(betterResults, rollMode, roll);
-                await betterChatCard.createChatCard(tableEntity);
-            } else if (
-                tableEntity.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_LOOT
-            ) {
-                const currencyData = br.getCurrencyData();
-                const lootChatCard = new LootChatCard(betterResults, currencyData, rollMode, roll);
-                await lootChatCard.createChatCard(tableEntity);
-            } else if (
-                tableEntity.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_STORY
-            ) {
-                const storyChatCard = new StoryChatCard(betterResults, rollMode, roll);
-                await storyChatCard.createChatCard(tableEntity);
-            } else if (
-                tableEntity.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) ===
-                CONSTANTS.TABLE_TYPE_HARVEST
-            ) {
-                const harvestChatCard = new HarvestChatCard(betterResults, rollMode, roll);
-                await harvestChatCard.createChatCard(tableEntity);
-            } else {
-                await brtTable.createChatCard(betterResults, rollMode, roll);
-            }
+        // if (game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.USE_CONDENSED_BETTERROLL)) {
+        if (tableEntity.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_BETTER) {
+            const betterChatCard = new BetterChatCard(betterResults, rollMode, roll);
+            await betterChatCard.createChatCard(tableEntity);
+        } else if (
+            tableEntity.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_LOOT
+        ) {
+            const currencyData = br.getCurrencyData();
+            const lootChatCard = new LootChatCard(betterResults, currencyData, rollMode, roll);
+            await lootChatCard.createChatCard(tableEntity);
+        } else if (
+            tableEntity.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_STORY
+        ) {
+            const storyChatCard = new StoryChatCard(betterResults, rollMode, roll);
+            await storyChatCard.createChatCard(tableEntity);
+        } else if (
+            tableEntity.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_HARVEST
+        ) {
+            const harvestChatCard = new HarvestChatCard(betterResults, rollMode, roll);
+            await harvestChatCard.createChatCard(tableEntity);
         } else {
             await brtTable.createChatCard(betterResults, rollMode, roll);
         }
+        // } else {
+        //     await brtTable.createChatCard(betterResults, rollMode, roll);
+        // }
         return betterResults;
     }
 
@@ -454,25 +451,25 @@ export class BetterTables {
             $(html).find(".message-delete").before(rerollButton);
         }
 
-        if (
-            game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SHOW_CURRENCY_SHARE_BUTTON) &&
-            getProperty(message, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.LOOT_CURRENCY}`) && // message.flags?.betterTables?.loot.currency &&
-            Object.keys(getProperty(message, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.LOOT_CURRENCY}`)).length >
-                0 // message.flags.betterTables.loot.currency)
-        ) {
-            // Currency share button
-            const currencyShareButton = $(
-                `<a class="better-rolltables-roll-table-share-currencies" title="${game.i18n.localize(
-                    `${CONSTANTS.MODULE_ID}.Buttons.Currency.Share`,
-                )}">`,
-            ).append("<i class='fas fa-coins'></i>");
-            currencyShareButton.click(async () => BetterTables._toggleCurrenciesShareSection(message, html));
-            $(html).find(".message-delete").before(currencyShareButton);
-            const shareButton = html[0].querySelector(`button.${CONSTANTS.MODULE_ID}-share-currencies-button`);
-            shareButton.addEventListener("click", async (event) => {
-                await BetterTables._shareCurrenciesToPlayers(message, html);
-            });
-        }
+        // if (
+        //     game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SHOW_CURRENCY_SHARE_BUTTON) &&
+        //     getProperty(message, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.LOOT_CURRENCY}`) && // message.flags?.betterTables?.loot.currency &&
+        //     Object.keys(getProperty(message, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.LOOT_CURRENCY}`)).length >
+        //         0 // message.flags.betterTables.loot.currency)
+        // ) {
+        //     // Currency share button
+        //     const currencyShareButton = $(
+        //         `<a class="better-rolltables-roll-table-share-currencies" title="${game.i18n.localize(
+        //             `${CONSTANTS.MODULE_ID}.Buttons.Currency.Share`,
+        //         )}">`,
+        //     ).append("<i class='fas fa-coins'></i>");
+        //     currencyShareButton.click(async () => BetterTables._toggleCurrenciesShareSection(message, html));
+        //     $(html).find(".message-delete").before(currencyShareButton);
+        //     const shareButton = html[0].querySelector(`button.${CONSTANTS.MODULE_ID}-share-currencies-button`);
+        //     shareButton.addEventListener("click", async (event) => {
+        //         await BetterTables._shareCurrenciesToPlayers(message, html);
+        //     });
+        // }
 
         if (game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SHOW_OPEN_BUTTONS)) {
             // Open link
@@ -539,18 +536,22 @@ export class BetterTables {
             // handling rolltables imported in campaign
             $(html)
                 .find("a.content-link[data-entity='RollTable']")
-                .each((index, link) => {
+                .each(async (index, link) => {
                     const id = $(link).data("id");
-                    const rolltable = RetrieveHelpers.getRollTableSync(id);
-
-                    const rollNode = $(
-                        `<a class="better-rolltables-roll-table-roll-link" title="${game.i18n.localize(
-                            `${CONSTANTS.MODULE_ID}.DrawReroll`,
-                        )}"><i class="fas fa-dice-d20"></i></a>`,
-                    ).click(async () => {
-                        await API.generateChatLoot(rolltable);
-                    });
-                    $(link).after(rollNode);
+                    const uuid = $(link).data("uuid");
+                    const rolltable = await RetrieveHelpers.getRollTableAsync(uuid);
+                    if (rolltable) {
+                        const rollNode = $(
+                            `<a class="better-rolltables-roll-table-roll-link" title="${game.i18n.localize(
+                                `${CONSTANTS.MODULE_ID}.DrawReroll`,
+                            )}"><i class="fas fa-dice-d20"></i></a>`,
+                        ).click(async () => {
+                            await API.betterTableRoll(rolltable);
+                        });
+                        $(link).after(rollNode);
+                    } else {
+                        Logger.warn(`No rolltable found for reference '${uuid}'`);
+                    }
                 });
 
             // handling rolltables in compendiums
@@ -621,6 +622,9 @@ export class BetterTables {
         }
     }
 
+    /**
+     * @deprecated TODO other modules do this ?
+     */
     static handleDropRollTableSheetData(rollTable, rollTableSheet, json) {
         if (json.event === "sort") {
             return false;
@@ -629,6 +633,9 @@ export class BetterTables {
         }
     }
 
+    /**
+     * @deprecated TODO other modules do this ?
+     */
     static async handleRolltableLink(sheet, html) {
         if (game.user.isGM && game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.ROLL_TABLE_FROM_JOURNAL)) {
             // handling rolltables imported in campaign

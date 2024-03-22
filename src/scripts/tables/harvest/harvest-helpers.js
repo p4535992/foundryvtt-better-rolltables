@@ -84,16 +84,16 @@ export class BRTHarvestHelpers {
         // await RollTableToActorHelpers.addItemsToActorOld(actor, betterResults, stackSame, itemLimit);
         await ItemPilesHelpers.populateActorOrTokenViaTableResults(actor, results);
 
-        if (game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.ALWAYS_SHOW_GENERATED_HARVEST_AS_MESSAGE)) {
-            if (isRealBoolean(options.displayChat)) {
-                if (!options.displayChat) {
-                    return;
-                }
+        // if (game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.ALWAYS_SHOW_GENERATED_HARVEST_AS_MESSAGE)) {
+        if (isRealBoolean(options.displayChat)) {
+            if (!options.displayChat) {
+                return;
             }
-
-            const harvestChatCard = new HarvestChatCard(betterResults, rollMode, roll);
-            await harvestChatCard.createChatCard(tableEntity);
         }
+
+        const harvestChatCard = new HarvestChatCard(betterResults, rollMode, roll);
+        await harvestChatCard.createChatCard(tableEntity);
+        // }
     }
 
     static async generateChatHarvest(tableEntity, options = {}) {

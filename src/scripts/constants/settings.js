@@ -9,7 +9,7 @@ const SETTINGS = {
     // LOOT_SHEET_TO_USE_KEY: "loot-sheet-to-use",
     SHOW_REROLL_BUTTONS: "show-reroll-buttons",
     SHOW_OPEN_BUTTONS: "show-open-buttons",
-    USE_CONDENSED_BETTERROLL: "use-condensed-betterroll",
+    // USE_CONDENSED_BETTERROLL: "use-condensed-betterroll",
     ADD_ROLL_IN_COMPENDIUM_CONTEXTMENU: "add-roll-on-compendium-contextmenu",
     ADD_ROLL_IN_ROLLTABLE_CONTEXTMENU: "add-roll-on-rolltable-contextmenu",
     SHOW_WARNING_BEFORE_REROLL: "show-warning-before-reroll",
@@ -18,11 +18,11 @@ const SETTINGS = {
     // ENABLE_OLD_BEHAVIOR: "enableOldBehavior",
 
     // Loot
-    SHOW_CURRENCY_SHARE_BUTTON: "show-currency-share-button",
-    ALWAYS_SHOW_GENERATED_LOOT_AS_MESSAGE: "always-show-generated-loot-as-message",
+    // SHOW_CURRENCY_SHARE_BUTTON: "show-currency-share-button",
+    // ALWAYS_SHOW_GENERATED_LOOT_AS_MESSAGE: "always-show-generated-loot-as-message",
 
     // Harvest
-    ALWAYS_SHOW_GENERATED_HARVEST_AS_MESSAGE: "always-show-generated-harvest-as-message",
+    // ALWAYS_SHOW_GENERATED_HARVEST_AS_MESSAGE: "always-show-generated-harvest-as-message",
 
     TAGS: {
         USE: "use-tags",
