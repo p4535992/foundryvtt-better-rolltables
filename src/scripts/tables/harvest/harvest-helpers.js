@@ -31,14 +31,6 @@ export class BRTHarvestHelpers {
         const brtTable = new BetterRollTable(tableEntity, options);
         await brtTable.initialize();
 
-        const resultsBrt = await brtTable.betterRoll();
-        const rollMode = brtTable.rollMode;
-        const roll = brtTable.mainRoll;
-
-        const results = resultsBrt?.results;
-        const br = new BetterResults(tableEntity, results, options?.stackResultsWithBRTLogic);
-        const betterResults = await br.buildResults();
-
         for (const token of tokenstack) {
             Logger.info(`Harvest generation started on token '${token.name}'`, true);
             /*
@@ -48,6 +40,15 @@ export class BRTHarvestHelpers {
             const currencyData = ItemPilesHelpers.generateCurrenciesStringFromString(currencyString);
             await ItemPilesHelpers.addCurrencies(token, currencyData);
             */
+
+            const resultsBrt = await brtTable.betterRoll();
+            const rollMode = brtTable.rollMode;
+            const roll = brtTable.mainRoll;
+
+            const results = resultsBrt?.results;
+            const br = new BetterResults(tableEntity, results, options?.stackResultsWithBRTLogic);
+            const betterResults = await br.buildResults();
+
             await ItemPilesHelpers.populateActorOrTokenViaTableResults(token, results);
 
             Logger.info(`Harvest generation ended on token '${token.name}'`, true);
