@@ -84,7 +84,7 @@ export class BetterChatCard {
                 result,
                 `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`,
             );
-            const itemEntity = await fromUuid(entityUuid);
+            let itemEntity = await fromUuid(entityUuid);
 
             const fontSize = itemEntity
                 ? Math.max(60, 100 - Math.max(0, (customResultName || itemEntity.name || result.text).length - 27) * 2)
