@@ -47,6 +47,7 @@ If you are familiar with the deferred inline rolls that Foundry supports, then t
 
 ### Roll Command
 
+TODO
 
 
 ### Skill Command (Only tested with Dnd5e)

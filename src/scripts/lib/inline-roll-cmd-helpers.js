@@ -8,10 +8,10 @@ import Logger from "./Logger";
 export default class InlineRollCommandHelpers {
     static initialize() {
         // example: [[/roll formula]]
-        CONFIG.TextEditor.enrichers.push({
-            pattern: /\[\[\/(r|roll|pr|publicroll|gmr|gmroll|br|broll|blindroll|sr|selfroll) (\w+)\]\](?:{([^}]+)})?/gi,
-            enricher: InlineRollCommandHelpers.createRoll,
-        });
+        // CONFIG.TextEditor.enrichers.push({
+        //     pattern: /\[\[\/(r|roll|pr|publicroll|gmr|gmroll|br|broll|blindroll|sr|selfroll) (\w+)\]\](?:{([^}]+)})?/gi,
+        //     enricher: InlineRollCommandHelpers.createRoll,
+        // });
 
         // example: [[/rollSkill ath]]
         CONFIG.TextEditor.enrichers.push({
@@ -51,7 +51,6 @@ export default class InlineRollCommandHelpers {
         const mode = InlineRollCommandHelpers._getRollMode(match[1]);
         const formula = match[2];
         const flavor = match[3];
-        const ability = CONFIG.DND5E.abilities[formula] ?? "";
         const title = formula;
         Logger.debug("", "mode", mode, "formula", formula);
 
@@ -200,13 +199,14 @@ export default class InlineRollCommandHelpers {
         const flavor = a.dataset.flavor;
 
         switch (a.dataset.func) {
-            case "skill":
+            case "skill": {
                 for (const token of tokens) {
                     const speaker = ChatMessage.getSpeaker({ scene: canvas.scene, token: token.document });
                     await token.actor.rollSkill(a.dataset.skillId, { event, flavor, rollMode, speaker });
                 }
                 break;
-            case "abilityCheck":
+            }
+            case "abilityCheck": {
                 for (const token of tokens) {
                     const speaker = ChatMessage.getSpeaker({ scene: canvas.scene, token: token.document });
                     await token.actor.rollAbilityTest(a.dataset.abilityId, {
@@ -217,7 +217,8 @@ export default class InlineRollCommandHelpers {
                     });
                 }
                 break;
-            case "save":
+            }
+            case "save": {
                 for (const token of tokens) {
                     const speaker = ChatMessage.getSpeaker({ scene: canvas.scene, token: token.document });
                     await token.actor.rollAbilitySave(a.dataset.abilityId, {
@@ -228,9 +229,15 @@ export default class InlineRollCommandHelpers {
                     });
                 }
                 break;
-            case "item":
+            }
+            case "item": {
                 dnd5e.documents.macro.rollItem(a.dataset.itemName);
                 break;
+            }
+            default: {
+                Logger.warn(`The func '${func}' is not a valid deferred roll`);
+                break;
+            }
         }
     }
 }
