@@ -4,6 +4,7 @@ import { BRTBetterHelpers } from "../better/brt-helper.js";
 import { RollTableToActorHelpers } from "../../apps/rolltable-to-actor/rolltable-to-actor-helpers.js";
 import Logger from "../../lib/Logger.js";
 import ItemPilesHelpers from "../../lib/item-piles-helpers.js";
+import { getRollMode } from "../../lib/lib.js";
 
 /**
  * create a chat card based on the content of the object HarvestData
@@ -14,7 +15,7 @@ export class HarvestChatCard {
      */
     constructor(betterResults, rollMode, roll) {
         this.betterResults = betterResults;
-        this.rollMode = rollMode;
+        this.rollMode = getRollMode(rollMode);
         this.roll = roll;
         this.itemsData = [];
         this.itemsDataGM = [];

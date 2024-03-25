@@ -5,6 +5,7 @@ import { RollTableToActorHelpers } from "../../apps/rolltable-to-actor/rolltable
 import { betterRolltablesSocket } from "../../socket.js";
 import Logger from "../../lib/Logger.js";
 import ItemPilesHelpers from "../../lib/item-piles-helpers.js";
+import { getRollMode } from "../../lib/lib.js";
 
 /**
  * create a chat card based on the content of the object LootData
@@ -15,7 +16,7 @@ export class BetterChatCard {
      */
     constructor(betterResults, rollMode, roll) {
         this.betterResults = betterResults;
-        this.rollMode = rollMode;
+        this.rollMode = getRollMode(rollMode);
         this.roll = roll;
         this.itemsData = [];
         this.itemsDataGM = [];

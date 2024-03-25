@@ -28,11 +28,19 @@
                         placeholder="{{localize 'better-rolltables.LootActorNamePlaceholder'}}" name="flags.better-rolltables.loot-actor-name"
                         value="{{data.flags.better-rolltables.loot-actor-name}}" />
                 </div>
-
+                <!--
                 <input type="hidden"
                     placeholder="{{localize 'better-rolltables.label.sourcePlaceholder'}}"
                     name="flags.better-rolltables.brt-source-value"
                     value="{{data.flags.better-rolltables.brt-source-value}}" />
+                -->
+                <div class="form-group">
+                    <label for="flags.better-rolltables.brt-source-value">{{ localize 'better-rolltables.label.source' }}</label>
+                    <input type="text"
+                        placeholder="{{localize 'better-rolltables.label.sourcePlaceholder'}}"
+                        name="flags.better-rolltables.brt-source-value"
+                        value="{{data.flags.better-rolltables.brt-source-value}}" />
+                </div>
 
                 <input type="hidden"
                     placeholder="0"
@@ -87,7 +95,7 @@
                     <input type="checkbox"
                         name="flags.better-rolltables.brt-use-dynamic-dc"
                         {{checked data.flags.better-rolltables.brt-use-dynamic-dc}} />
-                </div> 
+                </div>
             {{else}}
                 <input type="hidden"
                         placeholder="{{localize 'better-rolltables.CurrencyLootPlaceholder'}}"
@@ -97,11 +105,19 @@
                 <input type="hidden"
                         placeholder="{{localize 'better-rolltables.LootActorNamePlaceholder'}}" name="flags.better-rolltables.loot-actor-name"
                         value="{{data.flags.better-rolltables.loot-actor-name}}" />
-
+                <!--
                 <input type="hidden"
                     placeholder="{{localize 'better-rolltables.label.sourcePlaceholder'}}"
                     name="flags.better-rolltables.brt-source-value"
                     value="{{data.flags.better-rolltables.brt-source-value}}" />
+                -->
+                <div class="form-group">
+                    <label for="flags.better-rolltables.brt-source-value">{{ localize 'better-rolltables.label.source' }}</label>
+                    <input type="text"
+                        placeholder="{{localize 'better-rolltables.label.sourcePlaceholder'}}"
+                        name="flags.better-rolltables.brt-source-value"
+                        value="{{data.flags.better-rolltables.brt-source-value}}" />
+                </div>
 
                 <input type="hidden"
                     placeholder="0"
@@ -150,7 +166,7 @@
                 <input type="checkbox"
                     name="flags.better-rolltables.brt-use-percentage"
                     {{checked data.flags.better-rolltables.brt-use-percentage}} />
-            </div>            
+            </div>
             <!-- TODO
             <div class="form-group">
                 <a class='normalize-dcs-asc' data-tooltip='{{localize 'better-rolltables.label.OrderByDCAsc'}}' data-tooltip-direction='UP'>
@@ -205,14 +221,14 @@
         <label>{{ localize "TABLE.DisplayRoll" }}</label>
         <input type="checkbox" name="displayRoll" {{checked data.displayRoll}}/>
     </div>
-
+    <!-- REMOVED 2024-03-25
     <fieldset>
         <legend>{{localize "better-rolltables.label.redFlagNoteTitle"}}</legend>
         <p class="notes">{{ localize "better-rolltables.label.redFlagNote1Hint"}}</p>
         <p class="notes">{{ localize "better-rolltables.label.redFlagNote2Hint"}}</p>
         <p class="notes">{{ localize "better-rolltables.label.redFlagNote3Hint"}}</p>
     </fieldset>
-
+    -->
     <!-- Roll Table Results Loop -->
     <section class="results">
         <table class="table-results">
@@ -299,28 +315,28 @@
                 <input type="hidden" name="results.{{i}}._id" value="{{result._id}}"/>
 
                 {{#if result.isText}}
-                    <input type="hidden" 
-                        name="results.{{i}}.flags.better-rolltables.brt-result-uuid" 
+                    <input type="hidden"
+                        name="results.{{i}}.flags.better-rolltables.brt-result-uuid"
                         value=""/>
                 {{else if result.isDocument}}
-                    <input type="hidden" 
-                        name="results.{{i}}.flags.better-rolltables.brt-result-uuid" 
+                    <input type="hidden"
+                        name="results.{{i}}.flags.better-rolltables.brt-result-uuid"
                         value="{{result.flags.better-rolltables.brt-result-uuid}}"/>
                 {{else if result.isCompendium}}
-                    <input type="hidden" 
-                        name="results.{{i}}.flags.better-rolltables.brt-result-uuid" 
+                    <input type="hidden"
+                        name="results.{{i}}.flags.better-rolltables.brt-result-uuid"
                         value="{{result.flags.better-rolltables.brt-result-uuid}}"/>
                 {{/if}}
 
                 <td class="result-image">
                     <img src="{{result.img}}" data-edit="results.{{i}}.img" width="32" height="32"/>
                     <!-- DONE WITH JAVASCRIPT
-                    <input type="hidden" 
-                        name="results.{{i}}.flags.better-rolltables.brt-result-original-icon" 
+                    <input type="hidden"
+                        name="results.{{i}}.flags.better-rolltables.brt-result-original-icon"
                         value="{{result.flags.better-rolltables.brt-result-original-icon}}"/>
                     -->
-                    <input type="hidden" 
-                        name="results.{{i}}.flags.better-rolltables.brt-result-custom-icon" 
+                    <input type="hidden"
+                        name="results.{{i}}.flags.better-rolltables.brt-result-custom-icon"
                         value="{{result.flags.better-rolltables.brt-result-custom-icon}}"/>
                 </td>
 
@@ -341,14 +357,14 @@
                         <input type="text" name="results.{{i}}.text" value="{{result.text}}" placeholder="{{localize 'TABLE.ResultDescription'}}"/>
                         <!-- START MOD ADD 4535992 -->
                         <!-- TODO ??
-                        <input class="result-brt-custom-name" type="hidden" 
-                                name="results.{{i}}.documentCollection" 
+                        <input class="result-brt-custom-name" type="hidden"
+                                name="results.{{i}}.documentCollection"
                                 value="result.documentCollection" />
-                        <input class="result-brt-custom-name" type="hidden" 
-                                name="results.{{i}}.flags.better-rolltables.brt-result-journal-page-uuid" 
+                        <input class="result-brt-custom-name" type="hidden"
+                                name="results.{{i}}.flags.better-rolltables.brt-result-journal-page-uuid"
                                 value="{{result.flags.better-rolltables.brt-result-journal-page-uuid}}" />
-                        <input class="result-brt-custom-name" type="hidden" type="hidden" 
-                            name="results.{{i}}.flags.better-rolltables.brt-result-custom-name" 
+                        <input class="result-brt-custom-name" type="hidden" type="hidden"
+                            name="results.{{i}}.flags.better-rolltables.brt-result-custom-name"
                             value="{{result.flags.better-rolltables.brt-result-custom-name}}" />
                         -->
                         <!-- END MOD ADD 4535992 -->
@@ -363,8 +379,8 @@
                         <input class="result-target" name="results.{{i}}.text" type="hidden" value="{{result.text}}"/>
 
                         {{#if result.isJournal}}
-                            <input style="width:28%" class="result-brt-custom-name" type="text" 
-                                name="results.{{i}}.flags.better-rolltables.brt-result-custom-name" 
+                            <input style="width:28%" class="result-brt-custom-name" type="text"
+                                name="results.{{i}}.flags.better-rolltables.brt-result-custom-name"
                                 value="{{result.flags.better-rolltables.brt-result-custom-name}}" />
                             <select class="result-details-journal-page-id" style="width:28%" name="results.{{i}}.flags.better-rolltables.brt-result-journal-page-uuid">
                                 {{#select result.flags.better-rolltables.brt-result-journal-page-uuid}}
@@ -374,14 +390,14 @@
                                 {{/select}}
                             </select>
                         {{else}}
-                            <input class="result-brt-custom-name" type="hidden" 
-                                name="results.{{i}}.flags.better-rolltables.brt-result-journal-page-uuid" 
+                            <input class="result-brt-custom-name" type="hidden"
+                                name="results.{{i}}.flags.better-rolltables.brt-result-journal-page-uuid"
                                 value="" />
-                            <input class="result-brt-custom-name" type="text" 
-                                name="results.{{i}}.flags.better-rolltables.brt-result-custom-name" 
+                            <input class="result-brt-custom-name" type="text"
+                                name="results.{{i}}.flags.better-rolltables.brt-result-custom-name"
                                 value="{{result.flags.better-rolltables.brt-result-custom-name}}" />
                         {{/if}}
-                    
+
                     {{else if result.isCompendium}}
                         <select name="results.{{i}}.documentCollection">
                             {{#select result.documentCollection}}
@@ -391,16 +407,16 @@
                             {{/select}}
                         </select>
                         <input class="result-target" name="results.{{i}}.text" type="hidden" value="{{result.text}}"/>
-                        <input class="result-brt-custom-name" type="text" 
-                            type="text" 
-                            name="results.{{i}}.flags.better-rolltables.brt-result-custom-name" 
+                        <input class="result-brt-custom-name" type="text"
+                            type="text"
+                            name="results.{{i}}.flags.better-rolltables.brt-result-custom-name"
                             value="{{result.flags.better-rolltables.brt-result-custom-name}}" />
                     {{/if}}
 				</td>
 
                 <td class="result-brt-quantity-formula">
 					{{#if result.isStackable}}
-                        <input {{#brt-isEmpty result.flags.better-rolltables.brt-result-custom-quantity}} style="background: lightcoral;"{{/brt-isEmpty}} 
+                        <input {{#brt-isEmpty result.flags.better-rolltables.brt-result-custom-quantity}} style="background: lightcoral;"{{/brt-isEmpty}}
                             class="result-better-rolltables-formula"
                             type="text"
                             name="results.{{i}}.flags.better-rolltables.brt-result-custom-quantity"
@@ -408,7 +424,7 @@
                             placeholder="1"
                             data-dtype="String"
                         />
-                    {{else}}    
+                    {{else}}
                         <input class="result-better-rolltables-formula"
                             type="hidden"
                             name="results.{{i}}.flags.better-rolltables.brt-result-custom-quantity"
@@ -427,7 +443,7 @@
                             data-dtype="String"
                         />
 					{{else if result.isDocument}}
-                        <input {{#brt-isEmpty result.flags.better-rolltables.brt-result-custom-quantity}} style="background: lightcoral;"{{/brt-isEmpty}} 
+                        <input {{#brt-isEmpty result.flags.better-rolltables.brt-result-custom-quantity}} style="background: lightcoral;"{{/brt-isEmpty}}
                             class="result-better-rolltables-formula"
                             type="text"
                             name="results.{{i}}.flags.better-rolltables.brt-result-custom-quantity"
@@ -436,7 +452,7 @@
                             data-dtype="String"
                             />
 					{{else if result.isCompendium}}
-                        <input {{#brt-isEmpty result.flags.better-rolltables.brt-result-custom-quantity}} style="background: lightcoral;"{{/brt-isEmpty}} 
+                        <input {{#brt-isEmpty result.flags.better-rolltables.brt-result-custom-quantity}} style="background: lightcoral;"{{/brt-isEmpty}}
                             class="result-better-rolltables-formula"
                             type="text"
                             name="results.{{i}}.flags.better-rolltables.brt-result-custom-quantity"

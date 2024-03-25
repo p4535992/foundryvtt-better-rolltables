@@ -65,7 +65,7 @@ At the moment the documentation is in progress, any help on this front is more t
 
 ## FAQ
 
-**Is there a way to from a rolltable to call another roll table and have it roll 4d4 times?** 
+**Is there a way to from a rolltable to call another roll table and have it roll 4d4 times?**
 
 The use case you told me is very general, but to roll an inner (or child ) rolltable 4d4 times of you just need to set in the quantity field the string "4d4" and an amount roll of at least 1.
 
@@ -140,6 +140,7 @@ Any issues, bugs, or feature requests are always welcome to be reported directly
 - **[Enhanced RollTable Sheet](https://gitlab.com/koboldworks/agnostic/rolltable-sheet)** : [MIT](https://gitlab.com/koboldworks/agnostic/rolltable-sheet/-/blob/main/LICENSE)
 - **[sortable](https://gist.github.com/code-boxx/45ebe489b99583dc170564113b1ad24e)** : [Code Boxx](https://gist.github.com/code-boxx/45ebe489b99583dc170564113b1ad24e#file-0-js-sortable-table-md)
 - **[Roll Table Importer](https://github.com/ClipplerBlood/roll-table-importer)** : [???]()
+- **[Inline Roll Commands](https://github.com/kaelad02/inline-roll-cmd)**: [MIT](https://github.com/kaelad02/inline-roll-cmd/blob/main/LICENSE)
 
 
 This package is under an [MIT license](LICENSE) and the [Foundry Virtual Tabletop Limited License Agreement for module development](https://foundryvtt.com/article/license/).
@@ -153,3 +154,4 @@ A special ty to the original authors [Ultrakorne#6240](https://discordapp.com/us
 - [code-boxxKoboldworks](https://gitlab.com/koboldworks) and the module [Enhanced RollTable Sheet](https://gitlab.com/koboldworks/agnostic/rolltable-sheet)
 - [code-boxx](https://github.com/code-boxx) and the module [sortable](https://gist.github.com/code-boxx/45ebe489b99583dc170564113b1ad24e)
 - [ClipplerBlood](https://github.com/ClipplerBlood) and the module [Roll Table Importer](https://github.com/ClipplerBlood/roll-table-importer)
+- [kaelad02](https://github.com/kaelad02) and the module [Inline Roll Commands](https://github.com/kaelad02/inline-roll-cmd)

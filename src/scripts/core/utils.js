@@ -1,6 +1,6 @@
 import { BRTBetterHelpers } from "../tables/better/brt-helper";
 import { CONSTANTS } from "../constants/constants";
-import { isRealBoolean, isRealBooleanOrElseNull, isRealNumber, parseAsArray } from "../lib/lib";
+import { getRollMode, isRealBoolean, isRealBooleanOrElseNull, isRealNumber, parseAsArray } from "../lib/lib";
 import SETTINGS from "../constants/settings";
 import Logger from "../lib/Logger";
 import { RetrieveHelpers } from "../lib/retrieve-helpers";
@@ -230,7 +230,7 @@ export class BRTUtils {
         ) {
             rollMode = "gmroll";
         }
-        newOptions.rollMode = rollMode;
+        newOptions.rollMode = getRollMode(rollMode);
 
         let distinct = isRealBooleanOrElseNull(options?.distinct);
         if (distinct === null) {

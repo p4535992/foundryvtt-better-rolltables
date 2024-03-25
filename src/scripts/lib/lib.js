@@ -100,3 +100,34 @@ export function parseAsArray(obj) {
     }
     return arr;
 }
+
+/**
+ * Normalize the roll mode found by the pattern.
+ * @param {String} mode the mode found by the pattern
+ * @returns the corresponding value from `CONST.DICE_ROLL_MODES`
+ */
+export function getRollMode(mode) {
+    switch (mode) {
+        case "r":
+        case "roll": {
+            return "roll";
+        }
+        case "pr":
+        case "publicroll": {
+            return "publicroll";
+        }
+        case "gmr":
+        case "gmroll": {
+            return "gmroll";
+        }
+        case "br":
+        case "broll":
+        case "blindroll": {
+            return "blindroll";
+        }
+        case "sr":
+        case "selfroll": {
+            return "selfroll";
+        }
+    }
+}

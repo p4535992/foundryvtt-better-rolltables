@@ -18,6 +18,7 @@ export const CONSTANTS = {
         GENERIC_DISTINCT_RESULT: "brt-distinct-result",
         GENERIC_DISTINCT_RESULT_KEEP_ROLLING: "brt-distinct-result-keep-rolling",
         GENERIC_USE_PERCENTAGE: "brt-use-percentage",
+        GENERIC_SOURCE_VALUE_KEY: "brt-source-value",
 
         GENERIC_RESULT_UUID: "brt-result-uuid",
         GENERIC_RESULT_CUSTOM_NAME: "brt-result-custom-name",
@@ -32,6 +33,7 @@ export const CONSTANTS = {
 
         GENERIC_RESULT_CUSTOM_QUANTITY: "brt-result-custom-quantity",
         GENERIC_RESULT_ORIGINAL_QUANTITY: "brt-result-original-quantity",
+
         // TODO
         // GENERIC_RESULT_CUSTOM_PRICE: "brt-result-custom-price",
         // GENERIC_RESULT_ORIGINAL_PRICE: "brt-result-original-price",
@@ -42,7 +44,6 @@ export const CONSTANTS = {
 
         HARVEST: "harvest",
         HARVEST_AMOUNT_KEY: "loot-amount-key",
-        HARVEST_SOURCE_VALUE_KEY: "brt-source-value",
         HARVEST_ACTOR_NAME_KEY: "loot-actor-name",
         HARVEST_USE_DYNAMIC_DC: "brt-use-dynamic-dc",
 

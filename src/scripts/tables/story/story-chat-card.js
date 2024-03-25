@@ -1,4 +1,5 @@
 import { BRTUtils } from "../../core/utils";
+import { getRollMode } from "../../lib/lib";
 import { BRTStoryHelpers } from "./story-helpers";
 
 export class StoryChatCard {
@@ -8,7 +9,7 @@ export class StoryChatCard {
      */
     constructor(betterResults, rollMode, roll) {
         this.betterResults = betterResults;
-        this.rollMode = rollMode;
+        this.rollMode = getRollMode(rollMode);
         this.roll = roll;
     }
 

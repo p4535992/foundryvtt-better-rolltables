@@ -218,7 +218,7 @@
             "skillHint": "Skill: the skill string used for filter the results",
             "dc": "DC",
             "skill": "Skill",
-            "source": "Source reference",
+            "source": "Source reference (is used for integration with third modules)",
             "sourcePlaceholder": "some string",
             "usePercentageMinAndMax": "Min - Max %",
             "usePercentageOnlyMax": "Percentage",

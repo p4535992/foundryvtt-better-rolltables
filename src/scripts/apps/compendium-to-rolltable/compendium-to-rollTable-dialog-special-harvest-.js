@@ -158,7 +158,7 @@ export class CompendiumToRollTableSpecialHarvestDialog {
                             [`${CONSTANTS.FLAGS.RESULTS_FORMULA_KEY_FORMULA}`]: String(num) ?? "1",
                             [`${CONSTANTS.FLAGS.HARVEST_DC_VALUE_KEY}`]: String(dcValue) ?? "0",
                             [`${CONSTANTS.FLAGS.HARVEST_SKILL_VALUE_KEY}`]: skillDenom ?? "",
-                            [`${CONSTANTS.FLAGS.HARVEST_SOURCE_VALUE_KEY}`]: sourceValue ?? "",
+                            [`${CONSTANTS.FLAGS.GENERIC_SOURCE_VALUE_KEY}`]: sourceValue ?? "",
                             [`${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`]: es.uuid ?? "",
                             [`${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`]: newName ?? "",
                             [`${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`]: "",
@@ -186,7 +186,7 @@ export class CompendiumToRollTableSpecialHarvestDialog {
     async createCompendiumFromData(compendiumName, results, formula, options = {}) {
         const resultsGroupedBySystemOrigin = this._groupBy(
             results,
-            `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_SOURCE_VALUE_KEY}`,
+            `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_SOURCE_VALUE_KEY}`,
         );
         const documents = [];
 
@@ -210,7 +210,7 @@ export class CompendiumToRollTableSpecialHarvestDialog {
                             [`${CONSTANTS.FLAGS.TABLE_TYPE_KEY}`]: CONSTANTS.TABLE_TYPE_HARVEST,
                             [`${CONSTANTS.FLAGS.HARVEST_DC_VALUE_KEY}`]: String(firstDcValue) ?? "0",
                             [`${CONSTANTS.FLAGS.HARVEST_SKILL_VALUE_KEY}`]: firstSkillDenom ?? "",
-                            [`${CONSTANTS.FLAGS.HARVEST_SOURCE_VALUE_KEY}`]: key ?? "",
+                            [`${CONSTANTS.FLAGS.GENERIC_SOURCE_VALUE_KEY}`]: key ?? "",
                             [`${CONSTANTS.FLAGS.GENERIC_DISTINCT_RESULT}`]: true,
                             [`${CONSTANTS.FLAGS.GENERIC_DISTINCT_RESULT_KEEP_ROLLING}`]: false,
                             [`${CONSTANTS.FLAGS.GENERIC_AMOUNT_KEY}`]: amount ?? 1,

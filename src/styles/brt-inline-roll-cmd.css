@@ -1,0 +1,43 @@
+/* styles copied from a.brt-inline-roll */
+
+a.brt-inline-roll-cmd {
+    background: #ddd;
+    padding: 1px 4px;
+    border: 1px solid var(--color-border-dark-tertiary);
+    border-radius: 2px;
+    white-space: nowrap;
+    word-break: break-all;
+}
+a.brt-inline-roll-cmd i {
+    color: var(--color-text-dark-inactive);
+    margin-right: 0.25em;
+}
+a.brt-inline-roll-cmd.gmroll {
+    background: #e8e8ef;
+    border-color: #545469;
+}
+a.brt-inline-roll-cmd.blindroll {
+    background: #f5eaf5;
+    border-color: #6b476b;
+}
+
+/* style an inline roll with an image in it */
+
+a.brt-inline-roll-cmd:has(.item-image) {
+    display: inline-block;
+}
+a.brt-inline-roll-cmd .item-image {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background-size: cover;
+    background-position: 50% 0;
+    border: none;
+    margin-right: 5px;
+}
+a.brt-inline-roll-cmd:hover .item-image {
+    background-image: url("../../../icons/svg/d20-grey.svg") !important;
+}
+a.brt-inline-roll-cmd .item-image:hover {
+    background-image: url("../../../icons/svg/d20-black.svg") !important;
+}
