@@ -109,7 +109,7 @@ export class BetterChatCard {
                             customResultImg ?? result.icon ?? result.img ?? result.src ?? `icons/svg/d20-highlight.svg`,
                         text: customResultName ?? result.text ?? result.name,
                         uuid: "",
-                        isHidden: isResultHidden,
+                        isHidden: false,
                         quantity: quantity,
                         // weight: weight,
                         fontSize: fontSize,
