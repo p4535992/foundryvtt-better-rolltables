@@ -107,7 +107,7 @@
     box-shadow: 0 0 0.5em var(--better-rolltables-shadowcolor);
     min-height: fit-content;
     /* END ADDED 20223-10-17 */
-
+    min-width: 680px;
     form {
         display: flex;
         flex-flow: column nowrap;
@@ -221,14 +221,6 @@
                 }
 
                 tr.table-result {
-                    /*
-		  display: contents;
-
-          &:not(.table-header) {
-            grid-area: content;
-            overflow: auto;
-          }
-          */
                     border: unset;
                     border-bottom: 1px solid var(--better-rolltables-header-border);
                     &:nth-child(2n) {
@@ -311,27 +303,50 @@
                             margin-right: 5px;
                         }
                     }
+
+                    /* display: contents;  */
+                    grid-area: content;
+					overflow: auto;
+
+					&.table-header {
+						overflow: none;
+					}
+
+					> .result-controls {
+						padding: 0 0.3rem;
+					}
+
                     > div {
                         white-space: nowrap;
                         margin: 0;
                         line-height: unset;
                     }
                     /*
-          > .result-type,
-          > .result-details,
-          > .result-weight {
-            padding: 0 0.2rem;
-          }
-          > .result-details {
-            display: flex;
-            place-items: center;
-            gap: 0.2rem;
+                    > .result-type,
+                    > .result-details,
+                    > .result-weight {
+                        padding: 0 0.2rem;
+                    }
+                    > .result-range {
+						display: flex;
+						flex-flow: row nowrap;
+						gap: 3px;
+						align-items: center;
 
-            > input {
-              //height: unset;
-            }
-          }
-		  */
+						> input {
+							flex: 1;
+						}
+					}
+                    > .result-details {
+                        display: flex;
+                        place-items: center;
+                        gap: 0.2rem;
+
+                        > input {
+                        //height: unset;
+                        }
+                    }
+                    */
                     > .result-grip {
                         cursor: grab;
                         justify-self: center;

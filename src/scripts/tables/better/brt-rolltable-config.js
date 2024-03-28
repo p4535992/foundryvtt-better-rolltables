@@ -19,7 +19,7 @@ export class BetterRollTableBetterConfig extends RollTableConfig {
             height: "auto",
             closeOnSubmit: false,
             viewPermission: CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER,
-            scrollY: ["table.table-results"],
+            // scrollY: ["table.table-results"],
             // dragDrop: [{ dragSelector: null, dropSelector: null }],
             dragDrop: [
                 // { dragSelector: null, dropSelector: null },
@@ -28,6 +28,8 @@ export class BetterRollTableBetterConfig extends RollTableConfig {
                     dropSelector: "section.results .table-results",
                 },
             ],
+            scrollY: [".table-results"],
+            resizable: true,
         });
     }
 
@@ -92,6 +94,7 @@ export class BetterRollTableBetterConfig extends RollTableConfig {
         brtData = foundry.utils.mergeObject(brtData, duplicate(this.document.flags));
         brtData.disabled = !this.isEditable;
         brtData.uuid = this.document.uuid;
+        brtData.owner = this.document.isOwner;
         // TODO
         // brtData.enrichedDescription = await TextEditor.enrichHTML(context.data.description, { async: true });
 

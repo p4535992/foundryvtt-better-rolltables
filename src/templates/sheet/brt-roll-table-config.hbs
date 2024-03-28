@@ -28,12 +28,6 @@
                         placeholder="{{localize 'better-rolltables.LootActorNamePlaceholder'}}" name="flags.better-rolltables.loot-actor-name"
                         value="{{data.flags.better-rolltables.loot-actor-name}}" />
                 </div>
-                <!--
-                <input type="hidden"
-                    placeholder="{{localize 'better-rolltables.label.sourcePlaceholder'}}"
-                    name="flags.better-rolltables.brt-source-value"
-                    value="{{data.flags.better-rolltables.brt-source-value}}" />
-                -->
                 <div class="form-group">
                     <label for="flags.better-rolltables.brt-source-value">{{ localize 'better-rolltables.label.source' }}</label>
                     <input type="text"
@@ -284,7 +278,7 @@
                         </th>
                     {{/if}}
 
-                    {{#if owner}}
+                    {{#if @root.owner}}
                     <th class="result-controls result-brt-controls-header">
                         <a class="normalize-results" title="{{ localize "TABLE.Normalize" }}" data-tooltip="{{localize 'better-rolltables.label.Normalize'}}" data-tooltip-direction="UP">
                             <i class="fas fa-balance-scale fa-fw"></i>
@@ -330,11 +324,6 @@
 
                 <td class="result-image">
                     <img src="{{result.img}}" data-edit="results.{{i}}.img" width="32" height="32"/>
-                    <!-- DONE WITH JAVASCRIPT
-                    <input type="hidden"
-                        name="results.{{i}}.flags.better-rolltables.brt-result-original-icon"
-                        value="{{result.flags.better-rolltables.brt-result-original-icon}}"/>
-                    -->
                     <input type="hidden"
                         name="results.{{i}}.flags.better-rolltables.brt-result-custom-icon"
                         value="{{result.flags.better-rolltables.brt-result-custom-icon}}"/>
@@ -371,7 +360,7 @@
                     {{else if result.isDocument}}
                         <select name="results.{{i}}.documentCollection">
                             {{#select result.documentCollection}}
-                            {{#each ../documentTypes}}
+                            {{#each @root.documentTypes}}
                             <option value="{{this}}">{{this}}</option>
                             {{/each}}
                             {{/select}}
@@ -401,7 +390,7 @@
                     {{else if result.isCompendium}}
                         <select name="results.{{i}}.documentCollection">
                             {{#select result.documentCollection}}
-                            {{#each ../compendiumPacks}}
+                            {{#each @root.compendiumPacks}}
                             <option value="{{this}}">{{this}}</option>
                             {{/each}}
                             {{/select}}
@@ -508,7 +497,7 @@
                     </td>
                 {{/if}}
 
-                {{#if ../owner}}
+                {{#if @root.owner}}
                 <td class="result-controls">
                     <a class="lock-result" title="{{ localize "TABLE.ToggleDrawn" }}">
                         <i class="fas {{#if result.drawn}}fa-lock{{else}}fa-unlock{{/if}} fa-fw"></i>
@@ -548,12 +537,7 @@
         <button id="BRT-gen-harvest" class="generate" type="button" data-tooltip='{{localize 'better-rolltables.Buttons.GenerateHarvestTooltip'}}' data-tooltip-direction='UP'><i class="fas fa-coins"></i>{{localize "better-rolltables.Buttons.GenerateHarvest"}}</button>
         <button id="BRT-gen-harvest-token" class="generate" type="button" data-tooltip='{{localize 'better-rolltables.Buttons.GenerateHarvestTokenTooltip'}}' data-tooltip-direction='UP'><i class="fa-solid fa-user-group"></i>{{localize "better-rolltables.Buttons.GenerateHarvestToken"}}</button>
         {{/if}}
-        {{#if owner}}
-        <!--
-        <button class="refresh" type="button" data-tooltip='{{localize 'better-rolltables.label.betterRolltableRefreshTooltip'}}' data-tooltip-direction='UP'>
-            <i class="fa-solid fa-refresh"></i> {{ localize "better-rolltables.label.betterRolltableRefresh" }}
-        </button>
-        -->
+        {{#if @root.owner}}
         <button class="submit" type="submit" data-tooltip='{{localize 'better-rolltables.label.betterRolltableUpdateTooltip'}}' data-tooltip-direction='UP'><i class="fas fa-save"></i> {{ localize "TABLE.Update" }}</button>
         <button class="reset" type="button" data-tooltip='{{localize 'better-rolltables.label.betterRolltableResetTooltip'}}' data-tooltip-direction='UP'><i class="fas fa-undo"></i> {{ localize "TABLE.Reset" }}</button>
         {{/if}}
