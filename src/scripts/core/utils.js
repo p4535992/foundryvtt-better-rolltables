@@ -306,7 +306,7 @@ export class BRTUtils {
                 ? true
                 : false
             : true;
-        newOptions.roll = options.roll ? options.roll : null;
+        newOptions.roll = options.roll ? String(options.roll) : null;
         return newOptions;
     }
 

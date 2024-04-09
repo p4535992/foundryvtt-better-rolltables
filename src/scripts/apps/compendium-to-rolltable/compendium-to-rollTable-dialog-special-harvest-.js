@@ -155,7 +155,7 @@ export class CompendiumToRollTableSpecialHarvestDialog {
                     drawn: false,
                     flags: {
                         [`${CONSTANTS.MODULE_ID}`]: {
-                            [`${CONSTANTS.FLAGS.RESULTS_FORMULA_KEY_FORMULA}`]: String(num) ?? "1",
+                            // [`${CONSTANTS.FLAGS.RESULTS_FORMULA_KEY_FORMULA}`]: String(num) ?? "1",
                             [`${CONSTANTS.FLAGS.HARVEST_DC_VALUE_KEY}`]: String(dcValue) ?? "0",
                             [`${CONSTANTS.FLAGS.HARVEST_SKILL_VALUE_KEY}`]: skillDenom ?? "",
                             [`${CONSTANTS.FLAGS.GENERIC_SOURCE_VALUE_KEY}`]: sourceValue ?? "",

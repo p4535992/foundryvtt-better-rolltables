@@ -183,7 +183,11 @@ export class BetterRollTable {
                 formulaAmount =
                     getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_QUANTITY}`) ||
                     "";
-            } else {
+            }
+            if (
+                !formulaAmount &&
+                getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RESULTS_FORMULA_KEY_FORMULA}`)
+            ) {
                 formulaAmount =
                     getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RESULTS_FORMULA_KEY_FORMULA}`) || "";
             }
@@ -576,7 +580,11 @@ export class BetterRollTable {
                             result,
                             `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_QUANTITY}`,
                         ) || "";
-                } else {
+                }
+                if (
+                    !formulaAmount &&
+                    getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RESULTS_FORMULA_KEY_FORMULA}`)
+                ) {
                     formulaAmount =
                         getProperty(
                             result,
@@ -845,7 +853,12 @@ export class BetterRollTable {
             resultsTmp.push(rTmp);
         }
         if (resultsTmp.length === 0) {
-            Logger.warn(`No results are be drawn with this table and with these options`, true);
+            Logger.warn(
+                `No results are be drawn with this table and with these options`,
+                true,
+                this.table,
+                this.options,
+            );
         }
 
         this.results = resultsTmp;
@@ -921,9 +934,9 @@ export class BetterRollTable {
                 return;
             }
 
-            // TODO understand why there is this behaviour with the percentage feature
             let draw = {};
             if (this.options.usePercentage) {
+                // TODO understand why there is this behaviour with the percentage feature
                 draw = await this.drawMany(1, {
                     roll: roll,
                     recursive: recursive,
@@ -931,6 +944,7 @@ export class BetterRollTable {
                     rollMode: "gmroll",
                 });
             } else {
+                // TODO it should be 1 instead of amount ? why i have done this ? i do not remember...
                 draw = await this.drawMany(amount, {
                     roll: roll,
                     recursive: recursive,
@@ -953,7 +967,11 @@ export class BetterRollTable {
                             entry,
                             `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_QUANTITY}`,
                         ) || "";
-                } else {
+                }
+                if (
+                    !formulaAmount &&
+                    getProperty(entry, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RESULTS_FORMULA_KEY_FORMULA}`)
+                ) {
                     formulaAmount =
                         getProperty(
                             entry,

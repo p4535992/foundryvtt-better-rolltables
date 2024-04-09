@@ -305,17 +305,18 @@
                     }
 
                     /* display: contents;  */
+                    /*
                     grid-area: content;
-					overflow: auto;
+                    overflow: auto;
 
-					&.table-header {
-						overflow: none;
-					}
+                    &.table-header {
+                        overflow: none;
+                    }
 
-					> .result-controls {
-						padding: 0 0.3rem;
-					}
-
+                    > .result-controls {
+                        padding: 0 0.3rem;
+                    }
+                    */
                     > div {
                         white-space: nowrap;
                         margin: 0;

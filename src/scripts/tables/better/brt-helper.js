@@ -375,12 +375,12 @@ export class BRTBetterHelpers {
                     resultDocType = resultDoc.documentCollection;
                 }
 
-                if (resultDocType === "Item") {
+                if (resultDocType === "Item" || result.uuidDoc.includes(".Item.")) {
                     //  && ItemPilesHelpers.isStackable(resultDoc)
                     result.isStackable = true;
-                } else if (resultDocType === "Actor") {
+                } else if (resultDocType === "Actor" || result.uuidDoc.includes(".Actor.")) {
                     result.isStackable = true;
-                } else if (resultDocType === "RollTable") {
+                } else if (resultDocType === "RollTable" || result.uuidDoc.includes(".RollTable.")) {
                     result.isStackable = true;
                 }
             } else {
