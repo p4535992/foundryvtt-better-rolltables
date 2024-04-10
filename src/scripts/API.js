@@ -592,7 +592,7 @@ const API = {
      * @param {object} options                                      Options to pass to the function
      * @param {string/number} [options.timesToRoll="1"]             The number of times to roll on the tables, which can be a roll formula
      * @param {boolean} [options.resetTable=true]                   Whether to reset the table before rolling it
-     * @param {boolean} [options.normalizeTable=true]               Whether to normalize the table before rolling it
+     * @param {boolean} [options.normalizeTable=false]               Whether to normalize the table before rolling it
      * @param {boolean} [options.displayChat=false]                 Whether to display the rolls to the chat
      * @param {object} [options.rollData={}]                        Data to inject into the roll formula
      * @param {Actor/string/boolean} [options.targetActor=false]    The target actor to add the items to, or the UUID of an actor

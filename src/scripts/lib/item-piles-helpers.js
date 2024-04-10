@@ -504,8 +504,8 @@ export default class ItemPilesHelpers {
     let items = await ItemPilesHelpers.rollTable({
       tableUuid: table,
       formula: timesToRoll,
-      normalize: normalizeTable,
-      resetTable,
+      normalizeTable: normalizeTable,
+      resetTable: resetTable,
       displayChat,
       rollData,
       customCategory,
@@ -549,7 +549,7 @@ export default class ItemPilesHelpers {
 
         const formula = table.formula;
         const resetTable = !!options.resetTable; // true;
-        const normalize = !!options.normalize; // false;
+        const normalizeTable = !!options.normalizeTable; // false;
         const displayChat = options.displayChat;
         const rollData = options.roll;
         const customCategory = !!options.customCategory; // false
@@ -566,7 +566,7 @@ export default class ItemPilesHelpers {
                 await table.reset();
             }
 
-            if (normalize) {
+            if (normalizeTable) {
                 await table.update({
                     results: table.results.map((result) => ({
                         _id: result.id,
@@ -617,7 +617,7 @@ export default class ItemPilesHelpers {
         //       `'item instanceof RollTable', It shouldn't never go here something go wrong with the code please contact the brt developer`
         //     );
         //     rolledItems.push(
-        //       ...(await ItemPilesHelpers.rollTable({ tableUuid: item.uuid, resetTable, normalize, displayChat }))
+        //       ...(await ItemPilesHelpers.rollTable({ tableUuid: item.uuid, resetTable, normalizeTable, displayChat }))
         //     );
         //   } else if (item instanceof Item) {
         //     const quantity = Math.max(ItemPilesHelpers.getItemQuantity(item) * rolledQuantity, 1);
@@ -671,7 +671,7 @@ export default class ItemPilesHelpers {
     static async _convertResultsToStackedItems(results, options = {}) {
         // const formula = options.formula;
         const resetTable = !!options.resetTable; // true;
-        const normalize = !!options.normalize; // false;
+        const normalizeTable = !!options.normalizeTable; // false;
         const displayChat = options.displayChat;
         const rollData = options.roll;
         const customCategory = !!options.customCategory; // false
@@ -696,7 +696,7 @@ export default class ItemPilesHelpers {
                 `'item instanceof RollTable', It shouldn't never go here something go wrong with the code please contact the brt developer`
             );
             rolledItems.push(
-                ...(await ItemPilesHelpers.rollTable({ tableUuid: item.uuid, resetTable, normalize, displayChat }))
+                ...(await ItemPilesHelpers.rollTable({ tableUuid: item.uuid, resetTable, normalizeTable, displayChat }))
             );
             } else if (item instanceof Item) {
             const quantity = Math.max(ItemPilesHelpers.getItemQuantity(item) * rolledQuantity, 1);
@@ -726,7 +726,7 @@ export default class ItemPilesHelpers {
                     ...(await ItemPilesHelpers.rollTable({
                         tableUuid: itemTmp.uuid,
                         resetTable: resetTable,
-                        normalize: normalize,
+                        normalizeTable: normalizeTable,
                         displayChat: displayChat,
                     })),
                 );

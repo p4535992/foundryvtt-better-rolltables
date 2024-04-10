@@ -48,6 +48,22 @@ export class BetterRollTable {
             optionsTmp,
         );
         this.mainRoll = undefined;
+        this.tableUuid = this.table.uuid;
+        if (!this.tableUuid.startsWith("Compendium")) {
+            if (this.options.resetTable) {
+                await this.table.reset();
+            }
+
+            if (this.options.normalizeTable) {
+                await this.table.update({
+                    results: this.table.results.map((result) => ({
+                        _id: result.id,
+                        weight: result.range[1] - (result.range[0] - 1),
+                    })),
+                });
+                await this.table.normalize();
+            }
+        }
     }
 
     /* -------------------------------------------- */
@@ -911,7 +927,7 @@ export class BetterRollTable {
         let drawnResults = [];
 
         while (amount > 0) {
-            let resultToDraw = amount;
+            // let resultToDraw = amount;
             // if we draw without replacement we need to reset the table once all entries are drawn
             if (!this.table.replacement) {
                 const resultsLeft = this.table.results.reduce(function (n, r) {
@@ -923,7 +939,7 @@ export class BetterRollTable {
                     continue;
                 }
 
-                resultToDraw = Math.min(resultsLeft, amount);
+                // resultToDraw = Math.min(resultsLeft, amount);
             }
 
             if (!this.table.formula) {
@@ -945,7 +961,7 @@ export class BetterRollTable {
                 });
             } else {
                 // TODO it should be 1 instead of amount ? why i have done this ? i do not remember...
-                draw = await this.drawMany(amount, {
+                draw = await this.drawMany(1, {
                     roll: roll,
                     recursive: recursive,
                     displayChat: false,
@@ -1014,12 +1030,13 @@ export class BetterRollTable {
             }
             if (this.options.usePercentage) {
                 if (draw.results?.length > 0) {
-                    amount -= draw.results?.length;
+                    amount = amount - draw.results?.length;
                 } else {
-                    amount -= 1;
+                    amount = amount - 1;
                 }
             } else {
-                amount -= resultToDraw ?? 1;
+                // amount = amount - resultToDraw ?? 1;
+                amount = amount - 1;
             }
         }
 

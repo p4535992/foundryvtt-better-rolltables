@@ -263,6 +263,18 @@ export class BRTUtils {
                 : false
             : false;
 
+        newOptions.resetTable = isRealBoolean(options?.resetTable)
+            ? String(options?.resetTable) === "true"
+                ? true
+                : false
+            : true;
+
+        newOptions.normalizeTable = isRealBoolean(options?.normalizeTable)
+            ? String(options?.normalizeTable) === "true"
+                ? true
+                : false
+            : false;
+
         newOptions.displayChat = isRealBoolean(options?.displayChat)
             ? String(options?.displayChat) === "true"
                 ? true
