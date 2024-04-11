@@ -438,14 +438,18 @@ export class BetterRollTable {
                         a,
                         `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_RESULT_DYNAMIC_DC_VALUE}`,
                     );
-                    const dynamicDcValue = BRTHarvestHelpers.prepareValueDynamicDcSync(dynamicDcFormula);
-                    const brtAvailable = foundry.utils.deepClone(a);
-                    setProperty(
-                        brtAvailable,
-                        `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_RESULT_DYNAMIC_DC_VALUE}`,
-                        dynamicDcValue,
-                    );
-                    availableTmp.push(brtAvailable);
+                    if (dynamicDcFormula) {
+                        const dynamicDcValue = BRTHarvestHelpers.prepareValueDynamicDcSync(dynamicDcFormula);
+                        const brtAvailable = foundry.utils.deepClone(a);
+                        setProperty(
+                            brtAvailable,
+                            `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_RESULT_DYNAMIC_DC_VALUE}`,
+                            dynamicDcValue,
+                        );
+                        availableTmp.push(brtAvailable);
+                    } else {
+                        availableTmp.push(a);
+                    }
                 }
                 available = availableTmp;
             }
@@ -518,14 +522,18 @@ export class BetterRollTable {
                         a,
                         `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_RESULT_DYNAMIC_DC_VALUE}`,
                     );
-                    const dynamicDcValue = BRTHarvestHelpers.prepareValueDynamicDcSync(dynamicDcFormula);
-                    const brtAvailable = foundry.utils.deepClone(a);
-                    setProperty(
-                        brtAvailable,
-                        `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_RESULT_DYNAMIC_DC_VALUE}`,
-                        dynamicDcValue,
-                    );
-                    availableTmp.push(brtAvailable);
+                    if (dynamicDcFormula) {
+                        const dynamicDcValue = BRTHarvestHelpers.prepareValueDynamicDcSync(dynamicDcFormula);
+                        const brtAvailable = foundry.utils.deepClone(a);
+                        setProperty(
+                            brtAvailable,
+                            `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_RESULT_DYNAMIC_DC_VALUE}`,
+                            dynamicDcValue,
+                        );
+                        availableTmp.push(brtAvailable);
+                    } else {
+                        availableTmp.push(a);
+                    }
                 }
                 available = availableTmp;
             }
