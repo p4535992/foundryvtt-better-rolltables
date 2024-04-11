@@ -162,6 +162,10 @@
             "debug": {
                 "name": "Enable debugging",
                 "hint": "Prints debug messages to the console"
+            },
+            "forceNormalizeIfNoResultAreDrawn": {
+                "name": "Force Normalize If No Result Are Drawn",
+                "hint": "I DON'T RECOMMENDED TO ENABLE THIS SETTING. Enable this only if you get the warning 'No results can possibly be drawn from this table and formula' every single time for some dirt on your world."
             }
         },
         "Strings": {

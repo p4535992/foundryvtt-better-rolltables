@@ -191,6 +191,15 @@ export function registerSettings() {
     //     type: Boolean,
     // });
 
+    game.settings.register(CONSTANTS.MODULE_ID, "forceNormalizeIfNoResultAreDrawn", {
+        name: `${CONSTANTS.MODULE_ID}.Settings.forceNormalizeIfNoResultAreDrawn.name`,
+        hint: `${CONSTANTS.MODULE_ID}.Settings.forceNormalizeIfNoResultAreDrawn.hint`,
+        scope: "world",
+        config: true,
+        default: false,
+        type: Boolean,
+    });
+
     // =====================================================================
 
     game.settings.register(CONSTANTS.MODULE_ID, "debug", {

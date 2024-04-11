@@ -539,9 +539,9 @@ export class BetterRollTable {
             }
 
             // Ensure that results are available within the minimum/maximum range
-            const minRoll = (await roll.reroll({ minimize: true, async: true })).total;
-            const maxRoll = (await roll.reroll({ maximize: true, async: true })).total;
-            const availableRange = available.reduce(
+            let minRoll = (await roll.reroll({ minimize: true, async: true })).total;
+            let maxRoll = (await roll.reroll({ maximize: true, async: true })).total;
+            let availableRange = available.reduce(
                 (range, result) => {
                     const r = result.range;
                     if (!range[0] || r[0] < range[0]) range[0] = r[0];
@@ -551,8 +551,32 @@ export class BetterRollTable {
                 [null, null],
             );
             if (availableRange[0] > maxRoll || availableRange[1] < minRoll) {
-                Logger.warn("No results can possibly be drawn from this table and formula.", true);
-                return { roll, results };
+                if (game.settings.get(CONSTANTS.MODULE_ID, "forceNormalizeIfNoResultAreDrawn")) {
+                    await this.table.reset();
+                    await this.table.update({
+                        results: this.table.results.map((result) => ({
+                            _id: result.id,
+                            weight: result.range[1] - (result.range[0] - 1),
+                        })),
+                    });
+                    await this.table.normalize();
+                    roll = Roll.create(this.table.formula);
+                    minRoll = (await roll.reroll({ minimize: true, async: true })).total;
+                    maxRoll = (await roll.reroll({ maximize: true, async: true })).total;
+
+                    availableRange = await BRTBetterHelpers.retrieveAvailableRange(this.table);
+                    if (availableRange[0] > maxRoll || availableRange[1] < minRoll) {
+                        Logger.error(
+                            "Sorry i tried everything ! No results can possibly be drawn from this table and formula.",
+                            true,
+                            this.table,
+                        );
+                        return { roll, results };
+                    }
+                } else {
+                    Logger.warn("No results can possibly be drawn from this table and formula.", true, this.table);
+                    return { roll, results };
+                }
             }
 
             // Continue rolling until one or more results are recovered

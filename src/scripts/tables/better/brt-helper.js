@@ -438,4 +438,57 @@ export class BRTBetterHelpers {
             isUpdate: isUpdate,
         };
     }
+
+    static async retrieveAvailableRange(table) {
+        // Ensure that at least one non-drawn result remains
+        let available = table.results.filter((r) => !r.drawn);
+        if (!available.length) {
+            Logger.warn(game.i18n.localize("TABLE.NoAvailableResults"), true);
+            return { roll, results };
+        }
+
+        const useDynamicDcOnTable = getProperty(
+            table,
+            `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_USE_DYNAMIC_DC}`,
+        );
+        if (
+            useDynamicDcOnTable &&
+            table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_HARVEST
+        ) {
+            const availableTmp = [];
+            for (const a of available) {
+                const dynamicDcFormula = getProperty(
+                    a,
+                    `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_RESULT_DYNAMIC_DC_VALUE}`,
+                );
+                if (dynamicDcFormula) {
+                    const dynamicDcValue = BRTHarvestHelpers.prepareValueDynamicDcSync(dynamicDcFormula);
+                    const brtAvailable = foundry.utils.deepClone(a);
+                    setProperty(
+                        brtAvailable,
+                        `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_RESULT_DYNAMIC_DC_VALUE}`,
+                        dynamicDcValue,
+                    );
+                    availableTmp.push(brtAvailable);
+                } else {
+                    availableTmp.push(a);
+                }
+            }
+            available = availableTmp;
+        }
+
+        // // Ensure that results are available within the minimum/maximum range
+        // const minRoll = (await roll.reroll({ minimize: true, async: true })).total;
+        // const maxRoll = (await roll.reroll({ maximize: true, async: true })).total;
+        const availableRange = available.reduce(
+            (range, result) => {
+                const r = result.range;
+                if (!range[0] || r[0] < range[0]) range[0] = r[0];
+                if (!range[1] || r[1] > range[1]) range[1] = r[1];
+                return range;
+            },
+            [null, null],
+        );
+        return availableRange;
+    }
 }
