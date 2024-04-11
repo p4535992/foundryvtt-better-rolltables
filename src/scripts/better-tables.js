@@ -724,6 +724,16 @@ export class BetterTables {
         }
       }
       */
+            // Force a update
+            // if(rollTableConfig.rendered) {
+            //     Logger.log(`checkRenderDefaultRollTableConfig | ${rollTableConfig.object.name}`);
+            //     await rollTableConfig.object.update(rollTableConfig.object.toObject(), {
+            //         diff: false,
+            //         pack: null,
+            //         parent: null,
+            //         recursive: false,
+            //     });
+            // }
         } else {
             Logger.debug(`Set table type to null for default sheet rolltable config`);
             // If the flas is not null

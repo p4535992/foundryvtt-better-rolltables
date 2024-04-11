@@ -384,7 +384,8 @@ export class BRTBetterHelpers {
                     result.isStackable = true;
                 }
             } else {
-                result.drawn = true;
+                // TODO to many problem but the logic was right ?
+                // result.drawn = true;
             }
         }
 
