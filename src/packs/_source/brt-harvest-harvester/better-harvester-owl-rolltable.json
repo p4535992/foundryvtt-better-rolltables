@@ -15,9 +15,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "1"
-          },
+          "brt-result-custom-quantity": "1",
           "brt-dc-value": "5",
           "brt-skill-value": "nat",
           "brt-source-value": "Owl",
@@ -57,7 +55,7 @@
     "coreVersion": "11.311",
     "createdTime": 1696756564557,
     "modifiedTime": 1696756758345,
-    "lastModifiedBy": "packsebuilder0000"
+    "lastModifiedBy": "packsbuilder0000"
   },
   "_id": "KulZaqUncc9k56YJ",
   "sort": 0,

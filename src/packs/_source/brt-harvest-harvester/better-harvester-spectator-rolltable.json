@@ -15,9 +15,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "1"
-          },
+          "brt-result-custom-quantity": "1",
           "brt-dc-value": "15",
           "brt-skill-value": "arc",
           "brt-source-value": "Spectator",
@@ -44,9 +42,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "1"
-          },
+          "brt-result-custom-quantity": "1",
           "brt-dc-value": "20",
           "brt-skill-value": "arc",
           "brt-source-value": "Spectator",
@@ -86,7 +82,7 @@
     "coreVersion": "11.311",
     "createdTime": 1696756561667,
     "modifiedTime": 1696756759973,
-    "lastModifiedBy": "packsebuilder0000"
+    "lastModifiedBy": "packsbuilder0000"
   },
   "_id": "fkgmylszKpQ6wMhi",
   "sort": 0,

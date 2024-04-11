@@ -15,9 +15,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "20"
-          },
+          "brt-result-custom-quantity": "20",
           "brt-dc-value": "15",
           "brt-skill-value": "med",
           "brt-source-value": "B'rohg",
@@ -44,9 +42,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "7"
-          },
+          "brt-result-custom-quantity": "7",
           "brt-dc-value": "20",
           "brt-skill-value": "med",
           "brt-source-value": "B'rohg",
@@ -73,9 +69,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "1"
-          },
+          "brt-result-custom-quantity": "1",
           "brt-dc-value": "25",
           "brt-skill-value": "med",
           "brt-source-value": "B'rohg",
@@ -115,7 +109,7 @@
     "coreVersion": "11.311",
     "createdTime": 1696756571795,
     "modifiedTime": 1696756755919,
-    "lastModifiedBy": "packsebuilder0000"
+    "lastModifiedBy": "packsbuilder0000"
   },
   "_id": "7a5lzhJUDbLtsxKw",
   "sort": 0,

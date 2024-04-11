@@ -15,9 +15,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "3"
-          },
+          "brt-result-custom-quantity": "3",
           "brt-dc-value": "15",
           "brt-skill-value": "med",
           "brt-source-value": "Wererat",
@@ -57,7 +55,7 @@
     "coreVersion": "11.311",
     "createdTime": 1696756569290,
     "modifiedTime": 1696756761153,
-    "lastModifiedBy": "packsebuilder0000"
+    "lastModifiedBy": "packsbuilder0000"
   },
   "_id": "gAfrWvDwfmnPk6td",
   "sort": 0,

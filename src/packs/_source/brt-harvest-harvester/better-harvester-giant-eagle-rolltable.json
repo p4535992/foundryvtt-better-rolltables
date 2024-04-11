@@ -15,9 +15,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "1"
-          },
+          "brt-result-custom-quantity": "1",
           "brt-dc-value": "10",
           "brt-skill-value": "nat",
           "brt-source-value": "Giant Eagle",
@@ -44,9 +42,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "1"
-          },
+          "brt-result-custom-quantity": "1",
           "brt-dc-value": "5",
           "brt-skill-value": "nat",
           "brt-source-value": "Giant Eagle",
@@ -86,7 +82,7 @@
     "coreVersion": "11.311",
     "createdTime": 1696756574411,
     "modifiedTime": 1696756756338,
-    "lastModifiedBy": "packsebuilder0000"
+    "lastModifiedBy": "packsbuilder0000"
   },
   "_id": "47kxutdfX1WcG9NP",
   "sort": 0,

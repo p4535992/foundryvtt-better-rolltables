@@ -15,9 +15,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "1"
-          },
+          "brt-result-custom-quantity": "1",
           "brt-dc-value": "15",
           "brt-skill-value": "med",
           "brt-source-value": "Githyanki Xenomancer",
@@ -44,9 +42,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "1"
-          },
+          "brt-result-custom-quantity": "1",
           "brt-dc-value": "20",
           "brt-skill-value": "med",
           "brt-source-value": "Githyanki Xenomancer",
@@ -86,7 +82,7 @@
     "coreVersion": "11.311",
     "createdTime": 1696756567580,
     "modifiedTime": 1696756756679,
-    "lastModifiedBy": "packsebuilder0000"
+    "lastModifiedBy": "packsbuilder0000"
   },
   "_id": "qMxU5VKw48iDI6ww",
   "sort": 0,

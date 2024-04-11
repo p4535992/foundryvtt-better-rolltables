@@ -15,9 +15,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "2"
-          },
+          "brt-result-custom-quantity": "2",
           "brt-dc-value": "5",
           "brt-skill-value": "med",
           "brt-source-value": "Giff Shock Trooper",
@@ -44,9 +42,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "1"
-          },
+          "brt-result-custom-quantity": "1",
           "brt-dc-value": "10",
           "brt-skill-value": "med",
           "brt-source-value": "Giff Shock Trooper",
@@ -73,9 +69,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "2"
-          },
+          "brt-result-custom-quantity": "2",
           "brt-dc-value": "10",
           "brt-skill-value": "med",
           "brt-source-value": "Giff Shock Trooper",
@@ -115,7 +109,7 @@
     "coreVersion": "11.311",
     "createdTime": 1696756567513,
     "modifiedTime": 1696756756665,
-    "lastModifiedBy": "packsebuilder0000"
+    "lastModifiedBy": "packsbuilder0000"
   },
   "_id": "qrsQQSrgeQFTtYxj",
   "sort": 0,

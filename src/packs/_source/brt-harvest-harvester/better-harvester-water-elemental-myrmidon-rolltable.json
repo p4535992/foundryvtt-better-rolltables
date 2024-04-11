@@ -15,9 +15,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "1"
-          },
+          "brt-result-custom-quantity": "1",
           "brt-dc-value": "20",
           "brt-skill-value": "arc",
           "brt-source-value": "Water Elemental Myrmidon",
@@ -44,9 +42,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "1"
-          },
+          "brt-result-custom-quantity": "1",
           "brt-dc-value": "15",
           "brt-skill-value": "arc",
           "brt-source-value": "Water Elemental Myrmidon",
@@ -86,7 +82,7 @@
     "coreVersion": "11.311",
     "createdTime": 1696756567457,
     "modifiedTime": 1696756761145,
-    "lastModifiedBy": "packsebuilder0000"
+    "lastModifiedBy": "packsbuilder0000"
   },
   "_id": "Zff99HMi9m6Z97bV",
   "sort": 0,

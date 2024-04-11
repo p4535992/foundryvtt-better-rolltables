@@ -15,9 +15,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "2"
-          },
+          "brt-result-custom-quantity": "2",
           "brt-dc-value": "10",
           "brt-skill-value": "med",
           "brt-source-value": "Hadozee Warrior",
@@ -44,9 +42,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "2"
-          },
+          "brt-result-custom-quantity": "2",
           "brt-dc-value": "5",
           "brt-skill-value": "med",
           "brt-source-value": "Hadozee Warrior",
@@ -86,7 +82,7 @@
     "coreVersion": "11.311",
     "createdTime": 1696756564240,
     "modifiedTime": 1696756756744,
-    "lastModifiedBy": "packsebuilder0000"
+    "lastModifiedBy": "packsbuilder0000"
   },
   "_id": "R4FNOGsaHNH9XdSx",
   "sort": 0,

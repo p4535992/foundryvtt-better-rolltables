@@ -15,9 +15,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "4"
-          },
+          "brt-result-custom-quantity": "4",
           "brt-dc-value": "15",
           "brt-skill-value": "arc",
           "brt-source-value": "Death Kiss",
@@ -44,9 +42,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "1"
-          },
+          "brt-result-custom-quantity": "1",
           "brt-dc-value": "20",
           "brt-skill-value": "arc",
           "brt-source-value": "Death Kiss",
@@ -73,9 +69,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "5"
-          },
+          "brt-result-custom-quantity": "5",
           "brt-dc-value": "5",
           "brt-skill-value": "arc",
           "brt-source-value": "Death Kiss",
@@ -115,7 +109,7 @@
     "coreVersion": "11.311",
     "createdTime": 1696756568026,
     "modifiedTime": 1696756756075,
-    "lastModifiedBy": "packsebuilder0000"
+    "lastModifiedBy": "packsbuilder0000"
   },
   "_id": "NXAp2aE1TdkH2Y70",
   "sort": 0,

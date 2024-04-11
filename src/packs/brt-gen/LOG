@@ -1,15 +1,3 @@
-2024/03/06-17:20:24.964 9016c Recovering log #89
-2024/03/06-17:20:24.969 9016c Delete type=0 #89
-2024/03/06-17:20:24.970 9016c Delete type=3 #88
-2024/03/06-17:20:24.976 8dec8 Level-0 table #93: started
-2024/03/06-17:20:24.979 8dec8 Level-0 table #93: 811 bytes OK
-2024/03/06-17:20:24.979 8dec8 Delete type=0 #91
-2024/03/06-17:20:24.979 8dec8 Manual compaction at level-0 from '!journal!QznNN2bWOBmBV24Y' @ 72057594037927935 : 1 .. '!journal!cbRWiUnHpH0aDN32' @ 0 : 0; will stop at (end)
-2024/03/06-17:20:24.979 8dec8 Manual compaction at level-1 from '!journal!QznNN2bWOBmBV24Y' @ 72057594037927935 : 1 .. '!journal!cbRWiUnHpH0aDN32' @ 0 : 0; will stop at '!journal!cbRWiUnHpH0aDN32' @ 4 : 1
-2024/03/06-17:20:24.979 8dec8 Compacting 1@1 + 1@2 files
-2024/03/06-17:20:24.983 8dec8 Generated table #94@1: 2 keys, 811 bytes
-2024/03/06-17:20:24.983 8dec8 Compacted 1@1 + 1@2 files => 811 bytes
-2024/03/06-17:20:24.984 8dec8 compacted to: files[ 0 0 1 0 0 0 0 ]
-2024/03/06-17:20:24.984 8dec8 Delete type=2 #5
-2024/03/06-17:20:24.985 8dec8 Delete type=2 #93
-2024/03/06-17:20:24.985 8dec8 Manual compaction at level-1 from '!journal!cbRWiUnHpH0aDN32' @ 4 : 1 .. '!journal!cbRWiUnHpH0aDN32' @ 0 : 0; will stop at (end)
+2024/04/11-09:42:38.878 5990 Recovering log #7
+2024/04/11-09:42:38.884 5990 Delete type=0 #7
+2024/04/11-09:42:38.884 5990 Delete type=3 #6

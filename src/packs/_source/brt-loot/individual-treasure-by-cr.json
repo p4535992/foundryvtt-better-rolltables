@@ -18,9 +18,7 @@
       "_id": "jbvhfiOZ4hqlb9Qb",
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "1"
-          }
+          "brt-result-custom-quantity": "1"
         }
       },
       "type": 2,
@@ -40,9 +38,7 @@
       "_id": "ofawtpVqiG10yrOW",
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "1"
-          }
+          "brt-result-custom-quantity": "1"
         }
       },
       "type": 2,
@@ -62,9 +58,7 @@
       "_id": "nmOPFjgTgoJV35dG",
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "1"
-          }
+          "brt-result-custom-quantity": "1"
         }
       },
       "type": 2,
@@ -84,9 +78,7 @@
       "_id": "6Kr8s7t7flHWR0Uh",
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "1"
-          }
+          "brt-result-custom-quantity": "1"
         }
       },
       "type": 2,

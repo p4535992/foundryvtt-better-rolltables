@@ -15,9 +15,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "1"
-          },
+          "brt-result-custom-quantity": "1",
           "brt-dc-value": "5",
           "brt-skill-value": "nat",
           "brt-source-value": "Flying Snake",
@@ -57,7 +55,7 @@
     "coreVersion": "11.311",
     "createdTime": 1696756572378,
     "modifiedTime": 1696756756292,
-    "lastModifiedBy": "packsebuilder0000"
+    "lastModifiedBy": "packsbuilder0000"
   },
   "_id": "lDrFDBd2z8oXMzK6",
   "sort": 0,

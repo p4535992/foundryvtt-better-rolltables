@@ -15,9 +15,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "2"
-          },
+          "brt-result-custom-quantity": "2",
           "brt-dc-value": "15",
           "brt-skill-value": "nat",
           "brt-source-value": "Ancient Sea Serpent",
@@ -44,9 +42,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "9"
-          },
+          "brt-result-custom-quantity": "9",
           "brt-dc-value": "5",
           "brt-skill-value": "nat",
           "brt-source-value": "Ancient Sea Serpent",
@@ -73,9 +69,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "10"
-          },
+          "brt-result-custom-quantity": "10",
           "brt-dc-value": "20",
           "brt-skill-value": "nat",
           "brt-source-value": "Ancient Sea Serpent",
@@ -102,9 +96,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "3"
-          },
+          "brt-result-custom-quantity": "3",
           "brt-dc-value": "10",
           "brt-skill-value": "nat",
           "brt-source-value": "Ancient Sea Serpent",
@@ -131,9 +123,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "8"
-          },
+          "brt-result-custom-quantity": "8",
           "brt-dc-value": "20",
           "brt-skill-value": "nat",
           "brt-source-value": "Ancient Sea Serpent",
@@ -173,7 +163,7 @@
     "coreVersion": "11.311",
     "createdTime": 1696756564978,
     "modifiedTime": 1696756755876,
-    "lastModifiedBy": "packsebuilder0000"
+    "lastModifiedBy": "packsbuilder0000"
   },
   "_id": "4ZKF8bgLpReOjy1O",
   "sort": 0,

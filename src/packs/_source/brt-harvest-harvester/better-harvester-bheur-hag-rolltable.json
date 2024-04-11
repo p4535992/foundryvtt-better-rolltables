@@ -15,9 +15,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "1"
-          },
+          "brt-result-custom-quantity": "1",
           "brt-dc-value": "15",
           "brt-skill-value": "arc",
           "brt-source-value": "Bheur Hag",
@@ -44,9 +42,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "1"
-          },
+          "brt-result-custom-quantity": "1",
           "brt-dc-value": "10",
           "brt-skill-value": "arc",
           "brt-source-value": "Bheur Hag",
@@ -73,9 +69,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "3"
-          },
+          "brt-result-custom-quantity": "3",
           "brt-dc-value": "10",
           "brt-skill-value": "arc",
           "brt-source-value": "Bheur Hag",
@@ -102,9 +96,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "1"
-          },
+          "brt-result-custom-quantity": "1",
           "brt-dc-value": "20",
           "brt-skill-value": "arc",
           "brt-source-value": "Bheur Hag",
@@ -144,7 +136,7 @@
     "coreVersion": "11.311",
     "createdTime": 1696756565001,
     "modifiedTime": 1696756755957,
-    "lastModifiedBy": "packsebuilder0000"
+    "lastModifiedBy": "packsbuilder0000"
   },
   "_id": "0SYZn8d3dtyJM74O",
   "sort": 0,

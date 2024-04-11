@@ -15,9 +15,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "3"
-          },
+          "brt-result-custom-quantity": "3",
           "brt-dc-value": "10",
           "brt-skill-value": "med",
           "brt-source-value": "Sea Spawn",
@@ -44,9 +42,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "1"
-          },
+          "brt-result-custom-quantity": "1",
           "brt-dc-value": "15",
           "brt-skill-value": "med",
           "brt-source-value": "Sea Spawn",
@@ -86,7 +82,7 @@
     "coreVersion": "11.311",
     "createdTime": 1696756564030,
     "modifiedTime": 1696756759170,
-    "lastModifiedBy": "packsebuilder0000"
+    "lastModifiedBy": "packsbuilder0000"
   },
   "_id": "POSY2Id3b9lQDXYc",
   "sort": 0,

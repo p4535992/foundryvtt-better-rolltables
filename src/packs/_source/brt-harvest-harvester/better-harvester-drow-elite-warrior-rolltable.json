@@ -15,9 +15,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "3"
-          },
+          "brt-result-custom-quantity": "3",
           "brt-dc-value": "10",
           "brt-skill-value": "med",
           "brt-source-value": "Drow Elite Warrior",
@@ -57,7 +55,7 @@
     "coreVersion": "11.311",
     "createdTime": 1696756570962,
     "modifiedTime": 1696756756153,
-    "lastModifiedBy": "packsebuilder0000"
+    "lastModifiedBy": "packsbuilder0000"
   },
   "_id": "NHHpEiYwdSrouVvC",
   "sort": 0,

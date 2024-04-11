@@ -15,9 +15,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "1d8"
-          },
+          "brt-result-custom-quantity": "1d8",
           "brt-dc-value": "5",
           "brt-skill-value": "nat",
           "brt-source-value": "Swarm of Rats",
@@ -57,7 +55,7 @@
     "coreVersion": "11.311",
     "createdTime": 1696756586850,
     "modifiedTime": 1696756761074,
-    "lastModifiedBy": "packsebuilder0000"
+    "lastModifiedBy": "packsbuilder0000"
   },
   "_id": "DdPARcnsmsEXlqsV",
   "sort": 0,

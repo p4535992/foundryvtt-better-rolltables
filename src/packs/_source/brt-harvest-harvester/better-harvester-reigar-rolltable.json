@@ -15,9 +15,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "3"
-          },
+          "brt-result-custom-quantity": "3",
           "brt-dc-value": "10",
           "brt-skill-value": "arc",
           "brt-source-value": "Reigar",
@@ -44,9 +42,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "1"
-          },
+          "brt-result-custom-quantity": "1",
           "brt-dc-value": "20",
           "brt-skill-value": "arc",
           "brt-source-value": "Reigar",
@@ -86,7 +82,7 @@
     "coreVersion": "11.311",
     "createdTime": 1696756561342,
     "modifiedTime": 1696756759123,
-    "lastModifiedBy": "packsebuilder0000"
+    "lastModifiedBy": "packsbuilder0000"
   },
   "_id": "Sh92dU7DpHo3e3tq",
   "sort": 0,

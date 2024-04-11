@@ -15,9 +15,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "1"
-          },
+          "brt-result-custom-quantity": "1",
           "brt-dc-value": "5",
           "brt-skill-value": "med",
           "brt-source-value": "Orc Claw of Luthic",
@@ -44,9 +42,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "1"
-          },
+          "brt-result-custom-quantity": "1",
           "brt-dc-value": "10",
           "brt-skill-value": "med",
           "brt-source-value": "Orc Claw of Luthic",
@@ -86,7 +82,7 @@
     "coreVersion": "11.311",
     "createdTime": 1696756578588,
     "modifiedTime": 1696756758327,
-    "lastModifiedBy": "packsebuilder0000"
+    "lastModifiedBy": "packsbuilder0000"
   },
   "_id": "T08u09baOQqhWv4U",
   "sort": 0,

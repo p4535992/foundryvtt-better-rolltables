@@ -15,9 +15,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "1"
-          },
+          "brt-result-custom-quantity": "1",
           "brt-dc-value": "5",
           "brt-skill-value": "med",
           "brt-source-value": "Kobold Scale Sorceror",
@@ -57,7 +55,7 @@
     "coreVersion": "11.311",
     "createdTime": 1696756566751,
     "modifiedTime": 1696756757160,
-    "lastModifiedBy": "packsebuilder0000"
+    "lastModifiedBy": "packsbuilder0000"
   },
   "_id": "5mwItTHgFW2ie9zM",
   "sort": 0,

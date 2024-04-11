@@ -15,9 +15,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "2"
-          },
+          "brt-result-custom-quantity": "2",
           "brt-dc-value": "5",
           "brt-skill-value": "med",
           "brt-source-value": "Goblin",
@@ -57,7 +55,7 @@
     "coreVersion": "11.311",
     "createdTime": 1696756575313,
     "modifiedTime": 1696756756701,
-    "lastModifiedBy": "packsebuilder0000"
+    "lastModifiedBy": "packsbuilder0000"
   },
   "_id": "Yy0MDThbK534MorQ",
   "sort": 0,

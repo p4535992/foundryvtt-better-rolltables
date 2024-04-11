@@ -15,9 +15,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "1"
-          },
+          "brt-result-custom-quantity": "1",
           "brt-dc-value": "15",
           "brt-skill-value": "arc",
           "brt-source-value": "Death Tyrant",
@@ -44,9 +42,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "1"
-          },
+          "brt-result-custom-quantity": "1",
           "brt-dc-value": "25",
           "brt-skill-value": "arc",
           "brt-source-value": "Death Tyrant",
@@ -86,7 +82,7 @@
     "coreVersion": "11.311",
     "createdTime": 1696756561241,
     "modifiedTime": 1696756756080,
-    "lastModifiedBy": "packsebuilder0000"
+    "lastModifiedBy": "packsbuilder0000"
   },
   "_id": "HYX0TeY22EzVoOdo",
   "sort": 0,

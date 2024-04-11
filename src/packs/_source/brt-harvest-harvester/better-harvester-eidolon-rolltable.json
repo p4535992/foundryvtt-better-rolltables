@@ -15,9 +15,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "1"
-          },
+          "brt-result-custom-quantity": "1",
           "brt-dc-value": "15",
           "brt-skill-value": "arc",
           "brt-source-value": "Eidolon",
@@ -57,7 +55,7 @@
     "coreVersion": "11.311",
     "createdTime": 1696756589270,
     "modifiedTime": 1696756756185,
-    "lastModifiedBy": "packsebuilder0000"
+    "lastModifiedBy": "packsbuilder0000"
   },
   "_id": "9N48n3EempDmQJt7",
   "sort": 0,

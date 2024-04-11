@@ -15,9 +15,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "1"
-          },
+          "brt-result-custom-quantity": "1",
           "brt-dc-value": "20",
           "brt-skill-value": "arc",
           "brt-source-value": "Star Spawn Larva Mage",
@@ -57,7 +55,7 @@
     "coreVersion": "11.311",
     "createdTime": 1696756565585,
     "modifiedTime": 1696756759989,
-    "lastModifiedBy": "packsebuilder0000"
+    "lastModifiedBy": "packsbuilder0000"
   },
   "_id": "hvawZ7AvJ9o9M61P",
   "sort": 0,

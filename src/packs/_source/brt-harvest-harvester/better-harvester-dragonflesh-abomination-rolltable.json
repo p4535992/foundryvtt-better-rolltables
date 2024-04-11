@@ -15,9 +15,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "1"
-          },
+          "brt-result-custom-quantity": "1",
           "brt-dc-value": "20",
           "brt-skill-value": "nat",
           "brt-source-value": "Dragonflesh Abomination",
@@ -44,9 +42,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "7"
-          },
+          "brt-result-custom-quantity": "7",
           "brt-dc-value": "10",
           "brt-skill-value": "nat",
           "brt-source-value": "Dragonflesh Abomination",
@@ -73,9 +69,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "1"
-          },
+          "brt-result-custom-quantity": "1",
           "brt-dc-value": "15",
           "brt-skill-value": "nat",
           "brt-source-value": "Dragonflesh Abomination",
@@ -115,7 +109,7 @@
     "coreVersion": "11.311",
     "createdTime": 1696756568669,
     "modifiedTime": 1696756756141,
-    "lastModifiedBy": "packsebuilder0000"
+    "lastModifiedBy": "packsbuilder0000"
   },
   "_id": "WEgR61SSih2oTq5n",
   "sort": 0,

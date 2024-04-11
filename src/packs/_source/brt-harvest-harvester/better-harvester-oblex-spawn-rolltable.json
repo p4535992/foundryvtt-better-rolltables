@@ -15,9 +15,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "1"
-          },
+          "brt-result-custom-quantity": "1",
           "brt-dc-value": "10",
           "brt-skill-value": "inv",
           "brt-source-value": "Oblex Spawn",
@@ -57,7 +55,7 @@
     "coreVersion": "11.311",
     "createdTime": 1696756568976,
     "modifiedTime": 1696756758309,
-    "lastModifiedBy": "packsebuilder0000"
+    "lastModifiedBy": "packsbuilder0000"
   },
   "_id": "8W7D2y3Pq9knqRsK",
   "sort": 0,

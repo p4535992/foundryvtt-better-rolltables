@@ -15,9 +15,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "1"
-          },
+          "brt-result-custom-quantity": "1",
           "brt-dc-value": "20",
           "brt-skill-value": "med",
           "brt-source-value": "Venom Troll",
@@ -44,9 +42,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "1"
-          },
+          "brt-result-custom-quantity": "1",
           "brt-dc-value": "10",
           "brt-skill-value": "med",
           "brt-source-value": "Venom Troll",
@@ -73,9 +69,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "5"
-          },
+          "brt-result-custom-quantity": "5",
           "brt-dc-value": "15",
           "brt-skill-value": "med",
           "brt-source-value": "Venom Troll",
@@ -115,7 +109,7 @@
     "coreVersion": "11.311",
     "createdTime": 1696756563961,
     "modifiedTime": 1696756761131,
-    "lastModifiedBy": "packsebuilder0000"
+    "lastModifiedBy": "packsbuilder0000"
   },
   "_id": "Gu3kfX41juU9NdGS",
   "sort": 0,

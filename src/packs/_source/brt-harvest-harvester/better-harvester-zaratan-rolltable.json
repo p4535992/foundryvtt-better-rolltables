@@ -15,9 +15,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "9"
-          },
+          "brt-result-custom-quantity": "9",
           "brt-dc-value": "20",
           "brt-skill-value": "arc",
           "brt-source-value": "Zaratan",
@@ -44,9 +42,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "3"
-          },
+          "brt-result-custom-quantity": "3",
           "brt-dc-value": "20",
           "brt-skill-value": "arc",
           "brt-source-value": "Zaratan",
@@ -73,9 +69,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "1"
-          },
+          "brt-result-custom-quantity": "1",
           "brt-dc-value": "25",
           "brt-skill-value": "arc",
           "brt-source-value": "Zaratan",
@@ -115,7 +109,7 @@
     "coreVersion": "11.311",
     "createdTime": 1696756583640,
     "modifiedTime": 1696756762291,
-    "lastModifiedBy": "packsebuilder0000"
+    "lastModifiedBy": "packsbuilder0000"
   },
   "_id": "jrvRQEWaOHiImKZ1",
   "sort": 0,

@@ -15,9 +15,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "1"
-          },
+          "brt-result-custom-quantity": "1",
           "brt-dc-value": "5",
           "brt-skill-value": "arc",
           "brt-source-value": "Slaad Tadpole",
@@ -57,7 +55,7 @@
     "coreVersion": "11.311",
     "createdTime": 1696756567293,
     "modifiedTime": 1696756759956,
-    "lastModifiedBy": "packsebuilder0000"
+    "lastModifiedBy": "packsbuilder0000"
   },
   "_id": "LPkvt9ufQbnVNEA9",
   "sort": 0,

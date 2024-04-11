@@ -15,9 +15,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "1"
-          },
+          "brt-result-custom-quantity": "1",
           "brt-dc-value": "10",
           "brt-skill-value": "arc",
           "brt-source-value": "Nupperibo",
@@ -57,7 +55,7 @@
     "coreVersion": "11.311",
     "createdTime": 1696756573818,
     "modifiedTime": 1696756758305,
-    "lastModifiedBy": "packsebuilder0000"
+    "lastModifiedBy": "packsbuilder0000"
   },
   "_id": "AbR7JTdNSxx89W2M",
   "sort": 0,

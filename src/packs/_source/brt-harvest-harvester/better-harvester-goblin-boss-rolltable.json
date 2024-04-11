@@ -15,9 +15,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "2"
-          },
+          "brt-result-custom-quantity": "2",
           "brt-dc-value": "5",
           "brt-skill-value": "med",
           "brt-source-value": "Goblin Boss",
@@ -57,7 +55,7 @@
     "coreVersion": "11.311",
     "createdTime": 1696756589158,
     "modifiedTime": 1696756756699,
-    "lastModifiedBy": "packsebuilder0000"
+    "lastModifiedBy": "packsbuilder0000"
   },
   "_id": "zC9SwXasIMcBl16g",
   "sort": 0,

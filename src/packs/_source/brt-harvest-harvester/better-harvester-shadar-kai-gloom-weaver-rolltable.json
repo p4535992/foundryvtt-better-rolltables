@@ -15,9 +15,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "3"
-          },
+          "brt-result-custom-quantity": "3",
           "brt-dc-value": "10",
           "brt-skill-value": "med",
           "brt-source-value": "Shadar-kai Gloom Weaver",
@@ -57,7 +55,7 @@
     "coreVersion": "11.311",
     "createdTime": 1696756567712,
     "modifiedTime": 1696756759171,
-    "lastModifiedBy": "packsebuilder0000"
+    "lastModifiedBy": "packsbuilder0000"
   },
   "_id": "5LFXaoIoIb6pyT8r",
   "sort": 0,

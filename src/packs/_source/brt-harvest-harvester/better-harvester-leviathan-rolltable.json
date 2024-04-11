@@ -15,9 +15,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "1"
-          },
+          "brt-result-custom-quantity": "1",
           "brt-dc-value": "25",
           "brt-skill-value": "arc",
           "brt-source-value": "Leviathan",
@@ -57,7 +55,7 @@
     "coreVersion": "11.311",
     "createdTime": 1696756588242,
     "modifiedTime": 1696756757612,
-    "lastModifiedBy": "packsebuilder0000"
+    "lastModifiedBy": "packsbuilder0000"
   },
   "_id": "PO525B6vQQLqcjdE",
   "sort": 0,

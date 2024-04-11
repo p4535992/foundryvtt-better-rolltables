@@ -15,9 +15,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "1"
-          },
+          "brt-result-custom-quantity": "1",
           "brt-dc-value": "15",
           "brt-skill-value": "nat",
           "brt-source-value": "Giant Dragonfly",
@@ -57,7 +55,7 @@
     "coreVersion": "11.311",
     "createdTime": 1696756583744,
     "modifiedTime": 1696756756337,
-    "lastModifiedBy": "packsebuilder0000"
+    "lastModifiedBy": "packsbuilder0000"
   },
   "_id": "9RildEA2tE1D9WK6",
   "sort": 0,

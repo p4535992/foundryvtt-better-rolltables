@@ -18,9 +18,7 @@
       "_id": "zNBb1obmwlc6IiXx",
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "1d3"
-          }
+          "brt-result-custom-quantity": "1d3"
         }
       },
       "type": 2,
@@ -40,9 +38,7 @@
       "_id": "tdaxYoB1l1f0rC0G",
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "1"
-          }
+          "brt-result-custom-quantity": "1"
         }
       },
       "type": 2,
@@ -62,9 +58,7 @@
       "_id": "BIzGAjZYsARhIfhn",
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "1d2"
-          }
+          "brt-result-custom-quantity": "1d2"
         }
       },
       "type": 2,
@@ -84,9 +78,7 @@
       "_id": "v21AAVFGAi4y2aBQ",
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "1"
-          }
+          "brt-result-custom-quantity": "1"
         }
       },
       "type": 2,
@@ -106,9 +98,7 @@
       "_id": "L6yvcr1JurphldiM",
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "1"
-          }
+          "brt-result-custom-quantity": "1"
         }
       },
       "type": 2,

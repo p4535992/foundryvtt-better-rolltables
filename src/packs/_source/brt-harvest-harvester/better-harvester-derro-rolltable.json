@@ -15,9 +15,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "2"
-          },
+          "brt-result-custom-quantity": "2",
           "brt-dc-value": "10",
           "brt-skill-value": "arc",
           "brt-source-value": "Derro",
@@ -57,7 +55,7 @@
     "coreVersion": "11.311",
     "createdTime": 1696756566493,
     "modifiedTime": 1696756756097,
-    "lastModifiedBy": "packsebuilder0000"
+    "lastModifiedBy": "packsbuilder0000"
   },
   "_id": "MxMV4ylI94iL57sd",
   "sort": 0,

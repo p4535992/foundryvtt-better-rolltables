@@ -15,9 +15,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "1"
-          },
+          "brt-result-custom-quantity": "1",
           "brt-dc-value": "15",
           "brt-skill-value": "arc",
           "brt-source-value": "Nightwalker",
@@ -57,7 +55,7 @@
     "coreVersion": "11.311",
     "createdTime": 1696756571342,
     "modifiedTime": 1696756758301,
-    "lastModifiedBy": "packsebuilder0000"
+    "lastModifiedBy": "packsbuilder0000"
   },
   "_id": "ijgKXTGvtBHv47Z9",
   "sort": 0,

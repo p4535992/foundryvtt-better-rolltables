@@ -15,9 +15,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "1"
-          },
+          "brt-result-custom-quantity": "1",
           "brt-dc-value": "10",
           "brt-skill-value": "arc",
           "brt-source-value": "Phoenix",
@@ -44,9 +42,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "1"
-          },
+          "brt-result-custom-quantity": "1",
           "brt-dc-value": "1",
           "brt-skill-value": "arc",
           "brt-source-value": "Phoenix",
@@ -86,7 +82,7 @@
     "coreVersion": "11.311",
     "createdTime": 1696756564524,
     "modifiedTime": 1696756758356,
-    "lastModifiedBy": "packsebuilder0000"
+    "lastModifiedBy": "packsbuilder0000"
   },
   "_id": "LrCU7pFynDWzRz8q",
   "sort": 0,

@@ -15,9 +15,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "7"
-          },
+          "brt-result-custom-quantity": "7",
           "brt-dc-value": "10",
           "brt-skill-value": "nat",
           "brt-source-value": "Yuan-ti Anathema",
@@ -44,9 +42,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "1"
-          },
+          "brt-result-custom-quantity": "1",
           "brt-dc-value": "25",
           "brt-skill-value": "nat",
           "brt-source-value": "Yuan-ti Anathema",
@@ -73,9 +69,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "1"
-          },
+          "brt-result-custom-quantity": "1",
           "brt-dc-value": "20",
           "brt-skill-value": "nat",
           "brt-source-value": "Yuan-ti Anathema",
@@ -102,9 +96,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "3"
-          },
+          "brt-result-custom-quantity": "3",
           "brt-dc-value": "15",
           "brt-skill-value": "nat",
           "brt-source-value": "Yuan-ti Anathema",
@@ -144,7 +136,7 @@
     "coreVersion": "11.311",
     "createdTime": 1696756560199,
     "modifiedTime": 1696756762281,
-    "lastModifiedBy": "packsebuilder0000"
+    "lastModifiedBy": "packsbuilder0000"
   },
   "_id": "rwO4XcJ6uBVVQG6I",
   "sort": 0,

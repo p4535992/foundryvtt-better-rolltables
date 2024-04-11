@@ -15,9 +15,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "2"
-          },
+          "brt-result-custom-quantity": "2",
           "brt-dc-value": "15",
           "brt-skill-value": "arc",
           "brt-source-value": "Bael",
@@ -44,9 +42,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "2"
-          },
+          "brt-result-custom-quantity": "2",
           "brt-dc-value": "20",
           "brt-skill-value": "arc",
           "brt-source-value": "Bael",
@@ -73,9 +69,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "5"
-          },
+          "brt-result-custom-quantity": "5",
           "brt-dc-value": "10",
           "brt-skill-value": "arc",
           "brt-source-value": "Bael",
@@ -115,7 +109,7 @@
     "coreVersion": "11.311",
     "createdTime": 1696756565040,
     "modifiedTime": 1696756755929,
-    "lastModifiedBy": "packsebuilder0000"
+    "lastModifiedBy": "packsbuilder0000"
   },
   "_id": "4OIHT7FZnoruPdyh",
   "sort": 0,

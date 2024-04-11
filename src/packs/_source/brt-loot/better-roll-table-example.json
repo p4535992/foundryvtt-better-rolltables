@@ -18,9 +18,7 @@
       "_id": "51KMxyPi70aoIWYd",
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "1d4+1"
-          }
+          "brt-result-custom-quantity": "1d4+1"
         }
       },
       "type": 2,
@@ -40,9 +38,7 @@
       "_id": "xrMl23qI4WgNWyYK",
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "1d6+1"
-          }
+          "brt-result-custom-quantity": "1d6+1"
         }
       },
       "type": 2,
@@ -62,9 +58,7 @@
       "_id": "Zn7AgirxPkSAxMtm",
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "1d6"
-          }
+          "brt-result-custom-quantity": "1d6"
         }
       },
       "type": 2,

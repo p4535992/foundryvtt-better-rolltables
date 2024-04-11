@@ -15,9 +15,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "2"
-          },
+          "brt-result-custom-quantity": "2",
           "brt-dc-value": "5",
           "brt-skill-value": "arc",
           "brt-source-value": "Solar",
@@ -44,9 +42,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "2"
-          },
+          "brt-result-custom-quantity": "2",
           "brt-dc-value": "15",
           "brt-skill-value": "arc",
           "brt-source-value": "Solar",
@@ -73,9 +69,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "2"
-          },
+          "brt-result-custom-quantity": "2",
           "brt-dc-value": "25",
           "brt-skill-value": "arc",
           "brt-source-value": "Solar",
@@ -102,9 +96,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "3"
-          },
+          "brt-result-custom-quantity": "3",
           "brt-dc-value": "10",
           "brt-skill-value": "arc",
           "brt-source-value": "Solar",
@@ -144,7 +136,7 @@
     "coreVersion": "11.311",
     "createdTime": 1696756563635,
     "modifiedTime": 1696756759963,
-    "lastModifiedBy": "packsebuilder0000"
+    "lastModifiedBy": "packsbuilder0000"
   },
   "_id": "01EzPZFN39EX7Mw0",
   "sort": 0,

@@ -15,9 +15,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "1"
-          },
+          "brt-result-custom-quantity": "1",
           "brt-dc-value": "10",
           "brt-skill-value": "nat",
           "brt-source-value": "Giant Wolf Spider",
@@ -44,9 +42,7 @@
       "drawn": false,
       "flags": {
         "better-rolltables": {
-          "brt-result-formula": {
-            "formula": "1"
-          },
+          "brt-result-custom-quantity": "1",
           "brt-dc-value": "15",
           "brt-skill-value": "nat",
           "brt-source-value": "Giant Wolf Spider",
@@ -86,7 +82,7 @@
     "coreVersion": "11.311",
     "createdTime": 1696756561078,
     "modifiedTime": 1696756756369,
-    "lastModifiedBy": "packsebuilder0000"
+    "lastModifiedBy": "packsbuilder0000"
   },
   "_id": "R9QHK4HGt9eKnxb8",
   "sort": 0,
