@@ -8,7 +8,14 @@ import { BetterRollTable } from "../../core/brt-table";
 import SETTINGS from "../../constants/settings";
 import Logger from "../../lib/Logger";
 import ItemPilesHelpers from "../../lib/item-piles-helpers";
-import { isRealBoolean, isRealNumber, parseAsArray } from "../../lib/lib";
+import {
+    isRealBoolean,
+    isRealNumber,
+    parseAsArray,
+    tryToConvertToNumber,
+    tryToConvertToNumberSync,
+} from "../../lib/lib";
+import { RetrieveHelpers } from "../../lib/retrieve-helpers";
 
 export class BRTHarvestHelpers {
     /**
@@ -184,7 +191,7 @@ export class BRTHarvestHelpers {
     /**
      *
      * @param {string} dynamicDcValue
-     * @returns {string}
+     * @returns {string} A joiner string of value X=10,Y=20
      */
     static prepareValueDynamicDcSync(dynamicDcValue) {
         const mapDynamicDc = BRTHarvestHelpers.prepareMapDynamicDcSync(dynamicDcValue);
@@ -193,5 +200,79 @@ export class BRTHarvestHelpers {
             asStrings.push(`${key}=${value}`);
         }
         return asStrings.join(",").trim();
+    }
+
+    /**
+     * Utility method to retrieve the minimal dc value present on the table
+     * @param {RollTable|string|UUID} tableEntity
+     * @returns {Promise<number>} The minimal dc founded or 0 otherwise
+     */
+    static async retrieveMinDCOnTable(tableEntity) {
+        const table = await RetrieveHelpers.getRollTableAsync(tableEntity);
+        const dcs = [];
+        let results = table.results?.contents || [];
+        const useDynamicDcOnTable = getProperty(
+            table,
+            `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_USE_DYNAMIC_DC}`,
+        );
+        for (const r of results) {
+            if (
+                useDynamicDcOnTable &&
+                table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_HARVEST
+            ) {
+                const dynamicDcValue = getProperty(
+                    r,
+                    `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_RESULT_DYNAMIC_DC_VALUE}`,
+                );
+                if (dynamicDcValue) {
+                    const mapDynamicDc = BRTHarvestHelpers.prepareMapDynamicDcSync(dynamicDcValue);
+                    for (const dcValue of mapDynamicDc.values()) {
+                        dcs.push(await tryToConvertToNumber(dcValue));
+                    }
+                }
+            } else {
+                const dcValue = getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_DC_VALUE_KEY}`);
+                dcs.push(await tryToConvertToNumber(dcValue));
+            }
+        }
+        const minimalDC = Math.min(...dcs);
+        return minimalDC;
+    }
+
+    /**
+     * Utility method to retrieve the minimal dc value present on the table
+     * @param {RollTable|string|UUID} tableEntity
+     * @returns {number} The minimal dc founded or 0 otherwise
+     */
+    static retrieveMinDCOnTableSync(tableEntity) {
+        const table = RetrieveHelpers.getRollTableSync(tableEntity);
+        const dcs = [];
+        let results = table.results?.contents || [];
+        const useDynamicDcOnTable = getProperty(
+            table,
+            `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_USE_DYNAMIC_DC}`,
+        );
+        for (const r of results) {
+            if (
+                useDynamicDcOnTable &&
+                table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_HARVEST
+            ) {
+                const dynamicDcValue = getProperty(
+                    r,
+                    `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_RESULT_DYNAMIC_DC_VALUE}`,
+                );
+                if (dynamicDcValue) {
+                    const mapDynamicDc = BRTHarvestHelpers.prepareMapDynamicDcSync(dynamicDcValue);
+                    for (const dcValue of mapDynamicDc.values()) {
+                        dcs.push(tryToConvertToNumberSync(dcValue));
+                    }
+                }
+            } else {
+                const dcValue = getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_DC_VALUE_KEY}`);
+                dcs.push(tryToConvertToNumberSync(dcValue));
+            }
+        }
+        const minimalDC = Math.min(...dcs);
+        return minimalDC;
     }
 }

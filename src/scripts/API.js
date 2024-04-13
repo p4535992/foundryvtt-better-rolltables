@@ -369,6 +369,21 @@ const API = {
         return await BRTHarvestHelpers.generateChatHarvest(tableEntity, options);
     },
 
+    /**
+     * Utility method to retrieve the minimal dc value present on the table
+     * @module game.modules.get('better-rolltables').api.retrieveMinDCOnTable(table);
+     * @param {RollTable|string|UUID} tableEntity
+     * @returns {Promise<number>} The minimal dc founded or 0 otherwise
+     */
+    async retrieveMinDCOnTable(tableEntity) {
+        if (!tableEntity) {
+            Logger.warn(`retrieveMinDCOnTable | No reference to a RollTable is been passed`, true);
+            return;
+        }
+        const minDC = await BRTHarvestHelpers.retrieveMinDCOnTable(tableEntity);
+        return minDC;
+    },
+
     /* ================================================ */
     /* STORY */
     /* ================================================ */

@@ -412,4 +412,6 @@ const itemsData = await game.modules.get("better-rolltables").api.retrieveItemsD
 
  game.modules.get("better-rolltables").api.resultToItemData(tableResult);
 
+ game.modules.get('better-rolltables').api.retrieveMinDCOnTable(table);
+
 ```

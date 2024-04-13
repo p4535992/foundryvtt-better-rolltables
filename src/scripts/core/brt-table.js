@@ -1,5 +1,5 @@
 import { CONSTANTS } from "../constants/constants.js";
-import { isRealNumber } from "../lib/lib.js";
+import { isRealNumber, tryToConvertToNumber, tryToConvertToNumberSync } from "../lib/lib.js";
 import { BRTBetterHelpers } from "../tables/better/brt-helper.js";
 import { BRTUtils } from "./utils.js";
 import { LootChatCard } from "../tables/loot/loot-chat-card.js";
@@ -689,7 +689,7 @@ export class BetterRollTable {
      */
     getResultsForRoll(value) {
         // return this.table.results.filter((r) => !r.drawn && Number.between(value, ...r.range));
-        let dc = this.options.dc || undefined;
+        let dc = tryToConvertToNumberSync(this.options.dc || undefined);
         let skills = this.options.skills || undefined;
 
         //  let resultsUpdate = this.table.results.filter((r) => !r.drawn && Number.between(value, ...r.range));
@@ -721,17 +721,25 @@ export class BetterRollTable {
         }
 
         if (this.table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_HARVEST) {
+            if (dc < BRTHarvestHelpers.retrieveMinDCOnTableSync(this.table)) {
+                Logger.info(`The rolled DC '${dc}' is not enough for any result on the rollTable '${this.table.name}'`);
+                return [];
+            }
+
             if (this.options.useDynamicDc) {
-                resultsUpdate = resultsUpdate.filter((r) => {
-                    return BRTHarvestHelpers.calculateDynamicDcSync(
-                        getProperty(
-                            r,
-                            `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_RESULT_DYNAMIC_DC_VALUE}`,
-                        ),
-                        parseInt(dc),
-                        skill,
-                    );
-                });
+                // Filter by dc
+                if (isRealNumber(dc) && parseInt(dc) > 0) {
+                    resultsUpdate = resultsUpdate.filter((r) => {
+                        return BRTHarvestHelpers.calculateDynamicDcSync(
+                            getProperty(
+                                r,
+                                `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_RESULT_DYNAMIC_DC_VALUE}`,
+                            ),
+                            parseInt(dc),
+                            skill,
+                        );
+                    });
+                }
             } else {
                 // Filter by dc
                 if (isRealNumber(dc) && parseInt(dc) > 0) {

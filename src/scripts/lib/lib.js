@@ -1,4 +1,5 @@
 import { CONSTANTS } from "../constants/constants";
+import { BRTBetterHelpers } from "../tables/better/brt-helper";
 import Logger from "./Logger";
 
 // =========================================================================================
@@ -130,4 +131,60 @@ export function getRollMode(mode) {
             return "selfroll";
         }
     }
+}
+
+/**
+ * Utility method to convert the element to a number
+ * @param {number|string} elementToConvertToNumber
+ * @returns {Promise<number>} The number representation of the element
+ */
+export async function tryToConvertToNumber(elementToConvertToNumber) {
+    if (elementToConvertToNumber) {
+        if (isRealNumber(elementToConvertToNumber)) {
+            // DO NOTHING
+        } else if (String(elementToConvertToNumber) === "0") {
+            elementToConvertToNumber = 0;
+        } else {
+            let elementI = null;
+            try {
+                elementI = Number(elementToConvertToNumber);
+            } catch (e) {}
+            if (elementI && isRealNumber(elementI)) {
+                elementToConvertToNumber = elementI;
+            } else {
+                elementToConvertToNumber = await BRTBetterHelpers.tryRoll(elementToConvertToNumber, 0);
+            }
+        }
+    } else {
+        elementToConvertToNumber = 0;
+    }
+    return elementToConvertToNumber;
+}
+
+/**
+ * Utility method to convert the element to a number
+ * @param {number|string} elementToConvertToNumber
+ * @returns {number} The number representation of the element
+ */
+export function tryToConvertToNumberSync(elementToConvertToNumber) {
+    if (elementToConvertToNumber) {
+        if (isRealNumber(elementToConvertToNumber)) {
+            // DO NOTHING
+        } else if (String(elementToConvertToNumber) === "0") {
+            elementToConvertToNumber = 0;
+        } else {
+            let elementI = null;
+            try {
+                elementI = Number(elementToConvertToNumber);
+            } catch (e) {}
+            if (elementI && isRealNumber(elementI)) {
+                elementToConvertToNumber = elementI;
+            } else {
+                elementToConvertToNumber = BRTBetterHelpers.tryRollSync(elementToConvertToNumber, 0);
+            }
+        }
+    } else {
+        elementToConvertToNumber = 0;
+    }
+    return elementToConvertToNumber;
 }

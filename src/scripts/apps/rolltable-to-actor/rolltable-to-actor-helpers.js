@@ -233,20 +233,24 @@ export class RollTableToActorHelpers {
         }
 
         // TODO
+        /*
         const itemConversions = {
             Actor: {
                 name: `${r.text} Portrait`,
                 img: document?.img || "icons/svg/mystery-man.svg",
-                price: new Roll("1d20 + 10").roll({ async: false }).total || 1,
+                price: new Roll("1d20 + 10").roll({ async: false }).total || 1, // TODO MAKE MORE RANDOM
+                type: game.itempiles.API.ITEM_CLASS_LOOT_TYPE,
             },
             Scene: {
                 name: `Map of ${document?.name}`,
                 img: document?.thumb || "icons/svg/direction.svg",
-                price: new Roll("1d20 + 10").roll({ async: false }).total || 1,
+                price: new Roll("1d20 + 10").roll({ async: false }).total || 1, // TODO MAKE MORE RANDOM
+                type: game.itempiles.API.ITEM_CLASS_LOOT_TYPE,
             },
         };
+        */
 
-        if ((!document) instanceof Item) {
+        if (!(document instanceof Item)) {
             // const defaultType = Item.TYPES[0]; // TODO add on item piles default item type like actor
             Logger.debug(`You cannot create itemData from this result probably is not a item`, r);
             return null;
@@ -314,6 +318,12 @@ export class RollTableToActorHelpers {
             mergeObject(itemTmp.flags[CONSTANTS.MODULE_ID], getProperty(r, `flags.${CONSTANTS.MODULE_ID}`));
             // itemsData.push(itemTmp);
             return itemTmp;
+        } else if (document instanceof Actor) {
+            Logger.debug(`The Table Result is not a item but a Actor`, false, r);
+            return null;
+        } else if (document instanceof Scene) {
+            Logger.debug(`The Table Result is not a item but a Scene`, false, r);
+            return null;
         } else {
             Logger.debug(`The Table Result is not a item`, false, r);
             return null;

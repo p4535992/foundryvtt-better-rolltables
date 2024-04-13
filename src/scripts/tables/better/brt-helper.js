@@ -56,47 +56,47 @@ export class BRTBetterHelpers {
         }
     }
 
-    static async tryRoll(rollFormula) {
+    static async tryRoll(rollFormula, defaultValue = 1) {
         try {
             const qtFormula = String(rollFormula);
             if (qtFormula == null || qtFormula === "" || qtFormula === "1") {
                 return 1;
             } else {
                 try {
-                    const qt = (await new Roll(qtFormula).roll({ async: true })).total || 1;
+                    const qt = (await new Roll(qtFormula).roll({ async: true })).total || defaultValue;
                     return qt;
                 } catch (e) {
                     Logger.debug(e.message, false, e);
                     const qtRoll = Roll.create(qtFormula);
-                    const qt = (await qtRoll.evaluate({ async: true })).total || 1;
+                    const qt = (await qtRoll.evaluate({ async: true })).total || defaultValue;
                     return qt;
                 }
             }
         } catch (e) {
             Logger.error(e.message, false, e);
-            return 1;
+            return defaultValue;
         }
     }
 
-    static tryRollSync(rollFormula) {
+    static tryRollSync(rollFormula, defaultValue = 1) {
         try {
             const qtFormula = String(rollFormula);
             if (qtFormula == null || qtFormula === "" || qtFormula === "1") {
                 return 1;
             } else {
                 try {
-                    const qt = new Roll(qtFormula).roll({ async: false }).total || 1;
+                    const qt = new Roll(qtFormula).roll({ async: false }).total || defaultValue;
                     return qt;
                 } catch (e) {
                     Logger.debug(e.message, false, e);
                     const qtRoll = Roll.create(qtFormula);
-                    const qt = qtRoll.evaluate({ async: false }).total || 1;
+                    const qt = qtRoll.evaluate({ async: false }).total || defaultValue;
                     return qt;
                 }
             }
         } catch (e) {
             Logger.error(e.message, false, e);
-            return 1;
+            return defaultValue;
         }
     }
 
@@ -375,12 +375,12 @@ export class BRTBetterHelpers {
                     resultDocType = resultDoc.documentCollection;
                 }
 
-                if (resultDocType === "Item" || result.uuidDoc.includes(".Item.")) {
+                if (resultDocType === "Item" || result.uuidDoc.includes("Item.")) {
                     //  && ItemPilesHelpers.isStackable(resultDoc)
                     result.isStackable = true;
-                } else if (resultDocType === "Actor" || result.uuidDoc.includes(".Actor.")) {
+                } else if (resultDocType === "Actor" || result.uuidDoc.includes("Actor.")) {
                     result.isStackable = true;
-                } else if (resultDocType === "RollTable" || result.uuidDoc.includes(".RollTable.")) {
+                } else if (resultDocType === "RollTable" || result.uuidDoc.includes("RollTable.")) {
                     result.isStackable = true;
                 }
             } else {
