@@ -137,7 +137,7 @@ export default class ItemPilesHelpers {
      *
      * @param {string} currenciesS                               A string of currencies to convert (eg, "5gp 25sp")
      *
-     * @returns {Array<object>}                                 An array of object containing the data and quantity for each currency
+     * @returns {Array<Record<string,number>>}                                 An array of object containing the data and quantity for each currency
      */
     static retrieveCurrenciesSimpleFromString(currenciesS) {
         const c = ItemPilesHelpers.generateCurrenciesStringFromString(currenciesS);

@@ -126,6 +126,64 @@ export class BetterTables {
     }
 
     /**
+     * @param {RollTable|string|UUID} tableEntity
+     * @param {object} options
+     * @returns {Promise<{results:TableResult[], currenciesData:Record<string,number}>}
+     */
+    async betterTableRollV2(tableEntity, options = {}) {
+        const brtTable = new BetterRollTable(tableEntity, options);
+        await brtTable.initialize();
+        const resultBrt = await brtTable.betterRoll();
+
+        const results = resultBrt?.results;
+
+        const br = new BetterResults(tableEntity, results, options?.stackResultsWithBRTLogic);
+        const betterResults = await br.buildResults();
+
+        let rollMode = brtTable.rollMode;
+        let roll = brtTable.mainRoll;
+
+        if (isRealBoolean(options.displayChat) && !options.displayChat) {
+            return {
+                results: betterResults,
+                currenciesData: br.currencyData,
+            };
+        }
+
+        // if (game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.USE_CONDENSED_BETTERROLL)) {
+        if (tableEntity.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_BETTER) {
+            const betterChatCard = new BetterChatCard(betterResults, rollMode, roll);
+            await betterChatCard.createChatCard(tableEntity);
+        } else if (
+            tableEntity.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_LOOT
+        ) {
+            const currencyData = br.getCurrencyData();
+            const lootChatCard = new LootChatCard(betterResults, currencyData, rollMode, roll);
+            await lootChatCard.createChatCard(tableEntity);
+        } else if (
+            tableEntity.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_STORY
+        ) {
+            const storyChatCard = new StoryChatCard(betterResults, rollMode, roll);
+            await storyChatCard.createChatCard(tableEntity);
+        } else if (
+            tableEntity.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_HARVEST
+        ) {
+            const harvestChatCard = new HarvestChatCard(betterResults, rollMode, roll);
+            await harvestChatCard.createChatCard(tableEntity);
+        } else {
+            await brtTable.createChatCard(betterResults, rollMode, roll);
+        }
+        // } else {
+        //     await brtTable.createChatCard(betterResults, rollMode, roll);
+        // }
+        return {
+            results: betterResults,
+            currenciesData: br.currencyData,
+        };
+    }
+
+    /**
+     * @deprecated TO REMOVE
      * @param {RollTable} tableEntity rolltable to generate content from
      * @returns {Promise<{flavor: *, sound: string, user: *, content: *}>}
      */

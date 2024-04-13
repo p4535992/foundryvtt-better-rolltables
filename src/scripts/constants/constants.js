@@ -4,8 +4,9 @@ export const CONSTANTS = {
     MODULE_ID: "better-rolltables",
     PATH: "modules/better-rolltables",
     TYPES: ["none", "better", "loot", "harvest", "story"],
-    PRE_RESULT_TEXT_ROLL: "/roll",
+    PRE_RESULT_TEXT_ROLL: "/roll ",
     PRE_RESULT_TEXT_ROLLED: "Rolled: ",
+    PRE_RESULT_TEXT_CURRENCY: "/currency ",
     FLAGS: {
         LOOT: "loot",
         BETTER: "better",

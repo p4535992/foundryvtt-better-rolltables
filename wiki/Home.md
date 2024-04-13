@@ -16,7 +16,7 @@ How to use [Better RollTables Macros](./old/API-for-macros-and-modules#how-to-ro
 
 ![](./img/common_type_inline_data_roll.png)
 
-Every BRT table apply inline roll on text table result with the prefix "roll/" on the text result content.
+Every BRT table apply inline roll on text table result with the prefix "roll/ " on the text result content.
 
 As a example a text like this:
 
@@ -28,6 +28,30 @@ is converted runtime in this
 
 ```
 Rolled: 7
+```
+
+### Simple inline currency roll on table text result
+
+Every BRT table apply inline currency roll on text table result with the prefix "currency/ " on the text result content.
+
+This feature support many format from old and other modules here a list:
+
+- Old brt format: `100*1d6[gp],4d4+4[sp] to 100*1d6gp 4d4+4sp`
+- Harvester format: `[[/r 5d6]]{Copper} and [[/r 1d6*100]]{Electrum}[[/r 2d6*10]]`
+- Old brt loot currency formula: `{(2d8+1)*10[cp], 6d8+3 [sp]}`
+- Html code base with the editor: `<p>100*1d6[gp],4d4+4[sp]</p>`,`<p>[[/r 5d6]]{Copper} and [[/r 1d6*100]]{Electrum}[[/r 2d6*10]]</p>`, `<p>{(2d8+1)*10[cp], 6d8+3 [sp]}</p>`
+- Item Piles format **(The advisable format to use)**: `((2d8+1)*10)cp (6d8+3)sp`
+
+As a example a text like this:
+
+```
+/currency 32gp 1d2sp
+```
+
+is converted runtime in this
+
+```
+32gp 1sp
 ```
 
 ### Customize images and names

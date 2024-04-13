@@ -722,7 +722,7 @@ export class BetterRollTable {
 
         if (this.table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_HARVEST) {
             if (dc < BRTHarvestHelpers.retrieveMinDCOnTableSync(this.table)) {
-                Logger.info(`The rolled DC '${dc}' is not enough for any result on the rollTable '${this.table.name}'`);
+                // Logger.info(`The rolled DC '${dc}' is not enough for any result on the rollTable '${this.table.name}'`);
                 return [];
             }
 

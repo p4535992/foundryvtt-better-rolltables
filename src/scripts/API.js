@@ -16,6 +16,7 @@ import { isRealBoolean } from "./lib/lib.js";
 import { BetterRollTable } from "./core/brt-table.js";
 import Logger from "./lib/Logger.js";
 import ItemPilesHelpers from "./lib/item-piles-helpers.js";
+import { RetrieveHelpers } from "./lib/retrieve-helpers.js";
 
 /**
  * Create a new API class and export it as default
@@ -50,7 +51,7 @@ const API = {
 
     /**
      * @deprecated remains for retro compatibility with Item Piles
-     * @param {RollTable} tableEntity rolltable to generate content from
+     * @param {RollTable|string|UUID} tableEntity rolltable to generate content from
      * @returns {Promise<{flavor: *, sound: string, user: *, content: *}>}
      */
     async roll(tableEntity, options = {}) {
@@ -58,8 +59,8 @@ const API = {
             Logger.warn(`roll | No reference to a rollTable is been passed`, true);
             return;
         }
-
-        const brtTable = new BetterRollTable(tableEntity, options);
+        const table = await RetrieveHelpers.getRollTableAsync(tableEntity);
+        const brtTable = new BetterRollTable(table, options);
         await brtTable.initialize();
         const resultBrt = await brtTable.betterRoll();
 
@@ -68,7 +69,7 @@ const API = {
         let rollMode = options?.rollMode || brtTable.rollMode || null;
         let roll = options?.roll || brtTable.mainRoll || null;
 
-        const br = new BetterResults(tableEntity, results, options?.stackResultsWithBRTLogic);
+        const br = new BetterResults(table, results, options?.stackResultsWithBRTLogic);
         const betterResults = await br.buildResults();
 
         const data = {};
@@ -78,7 +79,7 @@ const API = {
 
     /**
      *
-     * @param {RollTable} tableEntity
+     * @param {RollTable|string|UUID} tableEntity
      * @param {Object} options
      * @param {Roll|string} [options.roll] An optional pre-configured Roll instance which defines the dice roll to use
      * @param {boolean} [options.recursive=true] Allow drawing recursively from inner RollTable results
@@ -98,7 +99,44 @@ const API = {
             Logger.warn(`betterTableRoll | No reference to a rollTable is been passed`, true);
             return;
         }
-        return await this.betterTables.betterTableRoll(tableEntity, options);
+        const table = await RetrieveHelpers.getRollTableAsync(tableEntity);
+        return await this.betterTables.betterTableRoll(table, options);
+        // TODO
+        // if(game.user.isGM) {
+        //   return await this.betterTables.betterTableRoll(tableEntity, options);
+        // } else {
+        //   return await betterRolltablesSocket.executeAsGM(
+        // 		"invokeBetterTableRollArr",
+        // 		tableEntity.uuid,
+        // 		options
+        // 	);
+        // }
+    },
+
+    /**
+     *
+     * @param {RollTable|string|UUID} tableEntity
+     * @param {Object} options
+     * @param {Roll|string} [options.roll] An optional pre-configured Roll instance which defines the dice roll to use
+     * @param {boolean} [options.recursive=true] Allow drawing recursively from inner RollTable results
+     * @param {boolean} [options.displayChat=true] Whether to automatically display the results in chat
+     * @param {('blindroll'|'gmroll'|'selfroll')} [options.rollMode=null] The chat roll mode to use when displaying the result
+     * @param {string|number} [options.rollsAmount=1]  The rolls amount value
+     * @param {string|number} [options.dc=null]  The dc value
+     * @param {string} [options.skill=null]  The skill denomination. If there is a "," in the skill string. , it will be treated as an array of skills for example "nat,arc" implies that the roll result will be compared as both a nat (nat) and arcane (arc) roll
+     * @param {boolean} [options.distinct=false] if checked the same result is not selected more than once indifferently from the number of 'Amount Roll'
+     * @param {boolean} [options.distinctKeepRolling=false] if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior
+     * @param {boolean} [options.usePercentage=false] Use the % mechanism instead of the default formula+range behavior
+     * @param {boolean} [options.stackResultsWithBRTLogic=false] if enabled the table results are stacked with the BRT logic like the module item-piles a new 'quantity' property is been added to the table result data to check how much the single result is been stacked
+     * @returns {Promise<{results:TableResult[],currenciesData:Record<string,number>}>}
+     */
+    async betterTableRollV2(tableEntity, options = {}) {
+        if (!tableEntity) {
+            Logger.warn(`betterTableRollV2 | No reference to a rollTable is been passed`, true);
+            return;
+        }
+        const table = await RetrieveHelpers.getRollTableAsync(tableEntity);
+        return await this.betterTables.betterTableRollV2(table, options);
         // TODO
         // if(game.user.isGM) {
         //   return await this.betterTables.betterTableRoll(tableEntity, options);

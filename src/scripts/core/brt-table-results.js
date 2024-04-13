@@ -16,11 +16,15 @@ export class BetterResults {
         this.stackResults = isRealBoolean(stackResults) ? (String(stackResults) === "true" ? true : false) : false;
     }
 
+    /**
+     *
+     * @returns {Promise<TableResult[]>}
+     */
     async buildResults() {
         // START PATCH 2024-03-02
         // this.currencyData = await this._generateCurrency(currencyString);
         const currencyString = this.table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.LOOT_CURRENCY_STRING_KEY);
-        this.currencyData = await ItemPilesHelpers.retrieveCurrenciesSimpleFromString(currencyString);
+        this.currencyData = ItemPilesHelpers.retrieveCurrenciesSimpleFromString(currencyString);
         // END PATCH 2024-03-02
         // START PATCH 2024-03-02
         /*
@@ -49,7 +53,30 @@ export class BetterResults {
                         (await BRTBetterHelpers.tryRoll(
                             betterResult.result.innerText?.replaceAll(CONSTANTS.PRE_RESULT_TEXT_ROLL, "").trim(),
                         ));
-                    betterResult.result.html = betterResult.result.text;
+                    // betterResult.result.html = betterResult.result.text;
+                } else if (
+                    betterResult.result.isText &&
+                    betterResult.result.innerText?.startsWith(CONSTANTS.PRE_RESULT_TEXT_CURRENCY)
+                ) {
+                    betterResult.result.text = betterResult.result.innerText
+                        ?.replaceAll(CONSTANTS.PRE_RESULT_TEXT_CURRENCY, "")
+                        .trim();
+                    // betterResult.result.html = betterResult.result.text;
+                    const currencyDataToAddS = betterResult.result.innerText
+                        ?.replaceAll(CONSTANTS.PRE_RESULT_TEXT_CURRENCY, "")
+                        .trim();
+                    const currencyDataToAdd = ItemPilesHelpers.retrieveCurrenciesSimpleFromString(currencyDataToAddS);
+                    for (const currencyKey of Object.keys(currencyDataToAdd)) {
+                        if (this.currencyData[currencyKey]) {
+                            this.currencyData[currencyKey] =
+                                this.currencyData[currencyKey] +
+                                (await BRTBetterHelpers.tryRoll(String(currencyDataToAdd[currencyKey])));
+                        } else {
+                            this.currencyData[currencyKey] = await BRTBetterHelpers.tryRoll(
+                                String(currencyDataToAdd[currencyKey]),
+                            );
+                        }
+                    }
                 }
             }
             // ====================
@@ -68,11 +95,33 @@ export class BetterResults {
                         (await BRTBetterHelpers.tryRoll(
                             betterResult.result.innerText?.replaceAll(CONSTANTS.PRE_RESULT_TEXT_ROLL, "").trim(),
                         ));
-                    betterResult.result.html = betterResult.result.text;
+                    // betterResult.result.html = betterResult.result.text;
+                } else if (
+                    betterResult.result.isText &&
+                    betterResult.result.innerText?.startsWith(CONSTANTS.PRE_RESULT_TEXT_CURRENCY)
+                ) {
+                    betterResult.result.text = betterResult.result.innerText
+                        ?.replaceAll(CONSTANTS.PRE_RESULT_TEXT_CURRENCY, "")
+                        .trim();
+                    // betterResult.result.html = betterResult.result.text;
+                    const currencyDataToAddS = betterResult.result.innerText
+                        ?.replaceAll(CONSTANTS.PRE_RESULT_TEXT_CURRENCY, "")
+                        .trim();
+                    const currencyDataToAdd = ItemPilesHelpers.retrieveCurrenciesSimpleFromString(currencyDataToAddS);
+                    for (const currencyKey of Object.keys(currencyDataToAdd)) {
+                        if (this.currencyData[currencyKey]) {
+                            this.currencyData[currencyKey] =
+                                this.currencyData[currencyKey] +
+                                (await BRTBetterHelpers.tryRoll(String(currencyDataToAdd[currencyKey])));
+                        } else {
+                            this.currencyData[currencyKey] = await BRTBetterHelpers.tryRoll(
+                                String(currencyDataToAdd[currencyKey]),
+                            );
+                        }
+                    }
                 } else if (betterResult.result.isText) {
                     const currencyDataToAddS = betterResult.result.text;
-                    const currencyDataToAdd =
-                        await ItemPilesHelpers.retrieveCurrenciesSimpleFromString(currencyDataToAddS);
+                    const currencyDataToAdd = ItemPilesHelpers.retrieveCurrenciesSimpleFromString(currencyDataToAddS);
                     for (const currencyKey of Object.keys(currencyDataToAdd)) {
                         if (this.currencyData[currencyKey]) {
                             this.currencyData[currencyKey] =
@@ -101,7 +150,30 @@ export class BetterResults {
                         (await BRTBetterHelpers.tryRoll(
                             betterResult.result.innerText?.replaceAll(CONSTANTS.PRE_RESULT_TEXT_ROLL, "").trim(),
                         ));
-                    betterResult.result.html = betterResult.result.text;
+                    // betterResult.result.html = betterResult.result.text;
+                } else if (
+                    betterResult.result.isText &&
+                    betterResult.result.innerText?.startsWith(CONSTANTS.PRE_RESULT_TEXT_CURRENCY)
+                ) {
+                    betterResult.result.text = betterResult.result.innerText
+                        ?.replaceAll(CONSTANTS.PRE_RESULT_TEXT_CURRENCY, "")
+                        .trim();
+                    // betterResult.result.html = betterResult.result.text;
+                    const currencyDataToAddS = betterResult.result.innerText
+                        ?.replaceAll(CONSTANTS.PRE_RESULT_TEXT_CURRENCY, "")
+                        .trim();
+                    const currencyDataToAdd = ItemPilesHelpers.retrieveCurrenciesSimpleFromString(currencyDataToAddS);
+                    for (const currencyKey of Object.keys(currencyDataToAdd)) {
+                        if (this.currencyData[currencyKey]) {
+                            this.currencyData[currencyKey] =
+                                this.currencyData[currencyKey] +
+                                (await BRTBetterHelpers.tryRoll(String(currencyDataToAdd[currencyKey])));
+                        } else {
+                            this.currencyData[currencyKey] = await BRTBetterHelpers.tryRoll(
+                                String(currencyDataToAdd[currencyKey]),
+                            );
+                        }
+                    }
                 }
             }
             // ====================
@@ -119,7 +191,30 @@ export class BetterResults {
                         (await BRTBetterHelpers.tryRoll(
                             betterResult.result.innerText?.replaceAll(CONSTANTS.PRE_RESULT_TEXT_ROLL, "").trim(),
                         ));
-                    betterResult.result.html = betterResult.result.text;
+                    // betterResult.result.html = betterResult.result.text;
+                } else if (
+                    betterResult.result.isText &&
+                    betterResult.result.innerText?.startsWith(CONSTANTS.PRE_RESULT_TEXT_CURRENCY)
+                ) {
+                    betterResult.result.text = betterResult.result.innerText
+                        ?.replaceAll(CONSTANTS.PRE_RESULT_TEXT_CURRENCY, "")
+                        .trim();
+                    // betterResult.result.html = betterResult.result.text;
+                    const currencyDataToAddS = betterResult.result.innerText
+                        ?.replaceAll(CONSTANTS.PRE_RESULT_TEXT_CURRENCY, "")
+                        .trim();
+                    const currencyDataToAdd = ItemPilesHelpers.retrieveCurrenciesSimpleFromString(currencyDataToAddS);
+                    for (const currencyKey of Object.keys(currencyDataToAdd)) {
+                        if (this.currencyData[currencyKey]) {
+                            this.currencyData[currencyKey] =
+                                this.currencyData[currencyKey] +
+                                (await BRTBetterHelpers.tryRoll(String(currencyDataToAdd[currencyKey])));
+                        } else {
+                            this.currencyData[currencyKey] = await BRTBetterHelpers.tryRoll(
+                                String(currencyDataToAdd[currencyKey]),
+                            );
+                        }
+                    }
                 }
             }
 

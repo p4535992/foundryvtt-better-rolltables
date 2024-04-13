@@ -2,6 +2,10 @@ TODO
 - Add confirm dialog on reset button ???
 - Add flags for cost/price like already done for the quantity is possible now with item piles support
 
+### 2.1.16
+
+- Add some api method and little fix here and there
+
 ### 2.1.15
 
 - Add module settings patch... forceNormalizeIfNoResultAreDrawn
