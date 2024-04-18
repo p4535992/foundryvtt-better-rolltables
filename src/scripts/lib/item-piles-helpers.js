@@ -361,18 +361,35 @@ export default class ItemPilesHelpers {
     static async addItems(
         actorOrToken,
         itemsToAdd,
-        {
-            removeExistingActorItems = false,
-            skipVaultLogging = false,
-            interactionId = false,
-            mergeSimilarItems = true,
-        } = {},
+        options = {
+            removeExistingActorItems: false,
+            skipVaultLogging: false,
+            interactionId: false,
+            mergeSimilarItems: true,
+        },
     ) {
+        const newOptions = foundry.utils.mergeObject(
+            {
+                removeExistingActorItems: false,
+                skipVaultLogging: false,
+                interactionId: false,
+                mergeSimilarItems: true,
+            },
+            options,
+        );
+
+        if (newOptions.removeExistingActorItems && actorOrToken instanceof Actor) {
+            Logger.error(
+                `Sorry i don't trust you i will not let you destroy some actor, you can use the 'removeExistingActorItems' options only with tokens`,
+            );
+            return [];
+        }
+
         const itemsData = await game.itempiles.API.addItems(actorOrToken, itemsToAdd, {
-            mergeSimilarItems: mergeSimilarItems, // NOT SUPPORTED ANYMORE FROM ITEM PILES TO REMOVE IN THE FUTURE
-            removeExistingActorItems: removeExistingActorItems,
-            skipVaultLogging: skipVaultLogging,
-            interactionId: interactionId,
+            mergeSimilarItems: newOptions.mergeSimilarItems, // NOT SUPPORTED ANYMORE FROM ITEM PILES TO REMOVE IN THE FUTURE
+            removeExistingActorItems: newOptions.removeExistingActorItems,
+            skipVaultLogging: newOptions.skipVaultLogging,
+            interactionId: newOptions.interactionId,
         });
         Logger.debug(`addItems | Added ${itemsToAdd.length} items to ${actorOrToken.name}`, itemsData);
         return itemsData;
@@ -915,22 +932,25 @@ export default class ItemPilesHelpers {
      * @href https://github.com/trioderegion/fvtt-macros/blob/master/honeybadger-macros/tokens/single-loot-pile.js#L77
      * @param {Array<Token|TokenDocument} tokensTarget
      * @param {object} options	object	Options to pass to the function
-     * @param {boolean} options.applyDefaultImage little utility for lazy people apply a default image
-     * @param {boolean} options.applyDefaultLight little utility for lazy people apply a default light
-     * @param {boolean} options.isSinglePile little utility it need 'warpgate' module installed and active for merge all the token items in one big item piles
-     * @param {boolean} options.deleteTokens only if singlePile is true it will delete all tokens
+     * @param {boolean} [options.untouchedImage=""] little utility for lazy people apply a default image
+     * @param {boolean} [options.applyDefaultLight=false] little utility for lazy people apply a default light
+     * @param {boolean} [options.addCurrency=false] Add some random currency
+     * @param {boolean} [options.isSinglePile=false] little utility it need 'warpgate' module installed and active for merge all the token items in one big item piles
+     * @param {boolean} [options.deleteTokens=false] only if singlePile is true it will delete all tokens
+     * @param {boolean} [options.warpgatePermanent=false] Set the warpgate mutate setting to permanent
      * @param {object} tokenSettings Overriding settings that will update the tokens settings
      * @param {object} pileSettings Overriding settings to be put on the item piles’ settings - see pile flag defaults
-     * @returns {Promise<Array>} The uuids of the targets after they were turned into item piles
+     * @returns {Promise<string[]>} The uuids of the targets after they were turned into item piles
      */
     static async convertTokensToItemPiles(
         tokensTarget,
         options = {
-            applyDefaultLight: true,
+            applyDefaultLight: false,
             untouchedImage: "",
             isSinglePile: false,
             deleteTokens: false,
             addCurrency: false,
+            warpgatePermanent: false,
         },
         tokenSettings = { rotation: 0 },
         pileSettings = {
@@ -942,9 +962,36 @@ export default class ItemPilesHelpers {
             closed: true,
         },
     ) {
+        options = foundry.utils.mergeObject(
+            {
+                applyDefaultLight: false,
+                untouchedImage: "",
+                isSinglePile: false,
+                deleteTokens: false,
+                addCurrency: false,
+                warpgatePermanent: false,
+            },
+            options,
+        );
+
+        tokenSettings = foundry.utils.mergeObject({ rotation: 0 }, tokenSettings);
+
+        pileSettings = foundry.utils.mergeObject(
+            {
+                openedImage: "",
+                emptyImage: "",
+                type: game.itempiles.pile_types.CONTAINER,
+                deleteWhenEmpty: false,
+                activePlayers: true,
+                closed: true,
+            },
+            pileSettings,
+        );
+
         const tokens = Array.isArray(tokensTarget) ? tokensTarget : [tokensTarget];
         const token = tokens[0];
-        const { applyDefaultLight, untouchedImage, isSinglePile, deleteTokens } = options;
+        const { applyDefaultLight, untouchedImage, addCurrency, isSinglePile, deleteTokens, warpgatePermanent } =
+            options;
 
         if (applyDefaultLight) {
             let light = {
@@ -961,7 +1008,7 @@ export default class ItemPilesHelpers {
                     intensity: 10,
                 },
             };
-            mergeObject(tokenSettings, { light: light });
+            foundry.utils.mergeObject(tokenSettings, { light: light });
         }
 
         if (game.modules.get("warpgate")?.active && isSinglePile) {
@@ -993,12 +1040,45 @@ export default class ItemPilesHelpers {
                 // get their items
                 const items = tok.actor.items.reduce((acc, item) => {
                     if (ItemPilesHelpers._shouldBeLoot(item)) {
-                        acc[randomID()] = item.toObject();
+                        const itemData = item instanceof Item ? item.toObject() : item;
+                        acc[randomID()] = itemData;
                     }
                     return acc;
                 }, {});
 
                 foundry.utils.mergeObject(acc.embedded.Item, items);
+
+                if (addCurrency) {
+                    // TODO BETTER MAYBE WITH BRT ??
+                    /*
+                    // Adjust as needed -- this very loosely approximates individual treasure by CR
+                    const exponent = 0.15 * (getProperty(tok.actor, "system.details.cr") ?? 0);
+                    let gold = Math.round(0.6 * 10 * (10 ** exponent));
+
+                    // ensure it can devide evenly across all looting players (convienence)
+                    gold = gold + (numPlayers) - (gold % Math.max(numPlayers, 1)) ?? 0;
+
+                    // split a random percentage to silver (no more than half)
+                    const silverPct = Math.random()/2;
+                    const convertedGold = Math.floor(gold * silverPct);
+                    let silver = convertedGold * 10;
+                    gold -= convertedGold
+
+                    // split a random percentage to copper (no more than half silver)
+                    const cprPct = Math.random()/2;
+                    const convertedSilver = Math.floor(silver * cprPct);
+                    let copper = convertedSilver * 10;
+                    silver -= convertedSilver
+
+                    // Add onto any currency the actor may already have
+                    gold += acc.actor.system.currency.gp + getProperty(tok.actor, 'system.currency.gp') ?? 0
+                    silver += acc.actor.system.currency.sp + getProperty(tok.actor, 'system.currency.sp') ?? 0
+                    copper += acc.actor.system.currency.cp + getProperty(tok.actor, 'system.currency.cp') ?? 0
+
+                    acc.actor.system.currency = {gp: gold, sp: silver, cp: copper};
+                    */
+                }
+
                 return acc;
             }, updates);
 
@@ -1011,7 +1091,7 @@ export default class ItemPilesHelpers {
                 token.document,
                 singlePile,
                 {},
-                { permanent: true, comparisonKeys: { ActiveEffect: "label", Item: "id" } },
+                { permanent: warpgatePermanent, comparisonKeys: { ActiveEffect: "label", Item: "id" } },
             );
 
             const newTargets = await game.itempiles.API.turnTokensIntoItemPiles([token], {
@@ -1029,6 +1109,99 @@ export default class ItemPilesHelpers {
             });
             return newTargets;
         }
+    }
+
+    /**
+     * Converts the provided token to a item piles lootable sheet check out the documentation from the itempiles page
+     * @href https://fantasycomputer.works/FoundryVTT-ItemPiles/#/api?id=turntokensintoitempiles
+     * @href https://github.com/trioderegion/fvtt-macros/blob/master/honeybadger-macros/tokens/single-loot-pile.js#L77
+     * @param {Token|TokenDocument} tokenTarget
+     * @param {object} options	object	Options to pass to the function
+     * @param {boolean} [options.untouchedImage=""] little utility for lazy people apply a default image
+     * @param {boolean} [options.applyDefaultLight=false] little utility for lazy people apply a default light
+     * @param {boolean} [options.addCurrency=false] Add some random currency
+     * @param {object} tokenSettings Overriding settings that will update the tokens settings
+     * @param {object} pileSettings Overriding settings to be put on the item piles’ settings - see pile flag defaults
+     * @returns {Promise<string[]>} The uuids of the targets after they were turned into item piles
+     */
+    static async convertTokenToItemPilesContainer(
+        tokenTarget,
+        options = {
+            applyDefaultLight: false,
+            untouchedImage: "",
+            addCurrency: false,
+        },
+        tokenSettings = { rotation: 0 },
+        pileSettings = {
+            openedImage: "",
+            emptyImage: "",
+            type: game.itempiles.pile_types.CONTAINER,
+            deleteWhenEmpty: false,
+            activePlayers: true,
+            closed: true,
+        },
+    ) {
+        // if (ItemPilesHelpers.isValidItemPile(tokenTarget)) {
+        //     Logger.warn(`The targeted token is already a item piles`, false, tokenTarget);
+        //     return [tokenTarget];
+        // }
+
+        options = foundry.utils.mergeObject(
+            {
+                applyDefaultLight: false,
+                untouchedImage: "",
+                addCurrency: false,
+            },
+            options,
+        );
+
+        tokenSettings = foundry.utils.mergeObject({ rotation: 0 }, tokenSettings);
+
+        pileSettings = foundry.utils.mergeObject(
+            {
+                openedImage: "",
+                emptyImage: "",
+                type: game.itempiles.pile_types.CONTAINER,
+                deleteWhenEmpty: false,
+                activePlayers: true,
+                closed: true,
+            },
+            pileSettings,
+        );
+
+        const tokens = [tokenTarget];
+        const { applyDefaultLight, untouchedImage, addCurrency } = options;
+
+        if (applyDefaultLight) {
+            let light = {
+                dim: 0.2,
+                bright: 0.2,
+                luminosity: 0,
+                alpha: 1,
+                color: "#ad8800",
+                coloration: 6,
+                animation: {
+                    // type:"sunburst",
+                    type: "radialrainbow",
+                    speed: 3,
+                    intensity: 10,
+                },
+            };
+            foundry.utils.mergeObject(tokenSettings, { light: light });
+        }
+
+        // await warpgate.mutate(
+        //     tokenTarget,
+        //     {},
+        //     {},
+        //     { permanent: warpgatePermanent },
+        // ); // TODO NOT WORK...
+
+        const newTargets = await game.itempiles.API.turnTokensIntoItemPiles(tokens, {
+            pileSettings: pileSettings,
+            tokenSettings: tokenSettings,
+        });
+        return newTargets;
     }
 
     /**
@@ -1147,6 +1320,49 @@ export default class ItemPilesHelpers {
      */
     static isItemStackable(target) {
         return game.itempiles.API.canItemStack(target);
+    }
+
+    /**
+     * Unlink the token
+     * @param {Token/TokenDocument/string} token
+     */
+    static async unlinkToken(token) {
+        const tokenTarget = RetrieveHelpers.getTokenSync(token);
+        if (tokenTarget instanceof Token) {
+            await tokenTarget.document.update({ actorLink: false });
+        } else if (tokenTarget instanceof TokenDocument) {
+            await tokenTarget.update({ actorLink: false });
+        } else {
+            Logger.log(`Cannot unlink this token ?`, tokenTarget);
+        }
+    }
+
+    /**
+     * Unlink actor
+     * @param {Token/TokenDocument/string} token
+     */
+    static async unlinkActor(actor) {
+        const actorTarget = await RetrieveHelpers.getActorAsync(actor);
+        const isNowLinked = actorTarget.prototypeToken.actorLink;
+        if (isNowLinked) {
+            actorTarget.update({ "token.actorLink": false });
+        } else {
+            Logger.log(`Cannot unlink this actor ?`, actorTarget);
+        }
+    }
+
+    /**
+     * Link actor
+     * @param {Token/TokenDocument/string} token
+     */
+    static async linkActor(actor) {
+        const actorTarget = await RetrieveHelpers.getActorAsync(actor);
+        const isNowLinked = actorTarget.prototypeToken.actorLink;
+        if (!isNowLinked) {
+            actorTarget.update({ "token.actorLink": true });
+        } else {
+            Logger.log(`Cannot link this actor ?`, actorTarget);
+        }
     }
 
     // ======================================

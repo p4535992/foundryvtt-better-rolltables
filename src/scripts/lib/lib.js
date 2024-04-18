@@ -13,31 +13,39 @@ import Logger from "./Logger";
  * let t1 = a.test(s); // true
  * let t2 = b.test(s); // false
  * @href https://stackoverflow.com/questions/17250815/how-to-check-if-the-input-string-is-a-valid-regular-expression
- * @param {*} pattern
- * @returns
+ * @param {string} stringToCheck The string passed to check
+ * @param {string} [pattern=""] The regular expression to use on the string passed.
+ * @param {boolean} [enableExactMatch=false] Enable Exact Match.
+ * @param {boolean} [enableAnySuffixMatch=false] Enable Any Suffix Match.
+ * @returns {boolean} The regular expression match the string passed.
  */
-export function testWithRegex(nameToCheck, pattern = "") {
-    function validateRegex(pattern) {
-        let parts = pattern.split("/");
-        let regex = pattern;
-        let options = "";
-        if (parts.length > 1) {
-            regex = parts[1];
-            options = parts[2];
-        }
-        try {
-            return new RegExp(regex, options);
-            //just remove this return and return true instead
-        } catch (e) {
-            return false;
-        }
+export function testWithRegex(stringToCheck, pattern = "", enableExactMatch = false, enableAnySuffixMatch = false) {
+    if (!pattern) {
+        return false;
     }
-    let patternTmp = pattern ? pattern : `/${nameToCheck}/i`;
-    let a = validateRegex(patternTmp);
-    if (a) {
-        let t1 = a.test(s);
-        return t1;
+    if (enableExactMatch) {
+        let t2 = stringToCheck?.toLowerCase()?.trim() === pattern?.toLowerCase()?.trim();
+        if (t2) {
+            Logger.debug(`testWithRegex | Regex found with enableExactMatch ${stringToCheck} === ${pattern}`, false);
+        }
+        return t2;
+    }
+
+    let stringToCheckTmp = stringToCheck?.toLowerCase()?.trim();
+    let patternTmp = pattern?.toLowerCase()?.trim();
+    if (enableAnySuffixMatch && !patternTmp.endsWith(`(.*?)`)) {
+        patternTmp = `^${patternTmp}(.*?)$`;
     } else {
+        patternTmp = `^${patternTmp}$`;
+    }
+    try {
+        let t1 = new RegExp(patternTmp).test(stringToCheckTmp); // stringToCheck.match(patternTmp);
+        if (t1) {
+            Logger.debug(`testWithRegex | Regex found ${stringToCheck} <=> ${pattern}`, false);
+        }
+        return t1;
+    } catch (e) {
+        Logger.error(`testWithRegex | Regex error ${stringToCheck} <=> ${pattern}`, false, e);
         return false;
     }
 }
