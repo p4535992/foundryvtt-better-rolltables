@@ -4,6 +4,7 @@ import { BRTBetterHelpers } from "../better/brt-helper";
 import { RichResultEdit } from "../../core/brt-result-editor";
 import { BetterRollTableBetterConfig } from "../better/brt-rolltable-config";
 import Logger from "../../lib/Logger";
+import { BRTUtils } from "../../core/utils";
 
 /**
  * The Application responsible for displaying and editing a single RollTable document.
@@ -73,8 +74,10 @@ export class BetterRollTableLootConfig extends RollTableConfig {
             compendiumPacks: Array.from(game.packs.keys()),
         });
 
+        const brtTypeToCheck = BRTUtils.retrieveBRTType(this.document);
+
         // Set brt type
-        if (this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) !== CONSTANTS.TABLE_TYPE_LOOT) {
+        if (brtTypeToCheck !== CONSTANTS.TABLE_TYPE_LOOT) {
             await this.document.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY, CONSTANTS.TABLE_TYPE_LOOT);
         }
         brtData.usePercentage = this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.GENERIC_USE_PERCENTAGE);
@@ -719,8 +722,11 @@ export class BetterRollTableLootConfig extends RollTableConfig {
         } else {
             event.target.disabled = true;
         }
+
+        const brtTypeToCheck = BRTUtils.retrieveBRTType(this.document);
+
         // Set brt type
-        if (this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) !== CONSTANTS.TABLE_TYPE_LOOT) {
+        if (brtTypeToCheck !== CONSTANTS.TABLE_TYPE_LOOT) {
             await this.document.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY, CONSTANTS.TABLE_TYPE_LOOT);
         }
         const tableEntity = this.document;
@@ -747,8 +753,11 @@ export class BetterRollTableLootConfig extends RollTableConfig {
         } else {
             event.target.disabled = true;
         }
+
+        const brtTypeToCheck = BRTUtils.retrieveBRTType(this.document);
+
         // Set brt type
-        if (this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) !== CONSTANTS.TABLE_TYPE_LOOT) {
+        if (brtTypeToCheck !== CONSTANTS.TABLE_TYPE_LOOT) {
             await this.document.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY, CONSTANTS.TABLE_TYPE_LOOT);
         }
         const tableEntity = this.document;
@@ -773,8 +782,11 @@ export class BetterRollTableLootConfig extends RollTableConfig {
         } else {
             event.target.disabled = true;
         }
+
+        const brtTypeToCheck = BRTUtils.retrieveBRTType(this.document);
+
         // Set brt type
-        if (this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) !== CONSTANTS.TABLE_TYPE_LOOT) {
+        if (brtTypeToCheck !== CONSTANTS.TABLE_TYPE_LOOT) {
             await this.document.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY, CONSTANTS.TABLE_TYPE_LOOT);
         }
         const tableEntity = this.document;

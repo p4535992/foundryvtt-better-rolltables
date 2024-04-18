@@ -53,7 +53,12 @@ export class BRTHarvestHelpers {
             const roll = brtTable.mainRoll;
 
             const results = resultsBrt?.results;
-            const br = new BetterResults(tableEntity, results, options?.stackResultsWithBRTLogic);
+            const br = new BetterResults(
+                tableEntity,
+                results,
+                options?.stackResultsWithBRTLogic,
+                options?.rollAsTableType,
+            );
             const betterResults = await br.buildResults();
 
             await ItemPilesHelpers.populateActorOrTokenViaTableResults(token, results);
@@ -91,7 +96,7 @@ export class BRTHarvestHelpers {
         const roll = brtTable.mainRoll;
 
         const results = resultsBrt?.results;
-        const br = new BetterResults(tableEntity, results, options?.stackResultsWithBRTLogic);
+        const br = new BetterResults(tableEntity, results, options?.stackResultsWithBRTLogic, options?.rollAsTableType);
         const betterResults = await br.buildResults();
 
         const actor = await BRTHarvestHelpers.createActor(tableEntity);
@@ -119,7 +124,7 @@ export class BRTHarvestHelpers {
         const roll = brtTable.mainRoll;
         const results = resultsBrt?.results;
 
-        const br = new BetterResults(tableEntity, results, options?.stackResultsWithBRTLogic);
+        const br = new BetterResults(tableEntity, results, options?.stackResultsWithBRTLogic, options?.rollAsTableType);
         const betterResults = await br.buildResults();
 
         const harvestChatCard = new HarvestChatCard(betterResults, rollMode, roll);
@@ -211,14 +216,17 @@ export class BRTHarvestHelpers {
         const table = await RetrieveHelpers.getRollTableAsync(tableEntity);
         const dcs = [];
         let results = table.results?.contents || [];
+
+        // const brtTypeToCheck = BRTUtils.retrieveBRTType(tableEntity);
+
         const useDynamicDcOnTable = getProperty(
             table,
             `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_USE_DYNAMIC_DC}`,
         );
         for (const r of results) {
             if (
-                useDynamicDcOnTable &&
-                table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_HARVEST
+                useDynamicDcOnTable
+                // && brtTypeToCheck === CONSTANTS.TABLE_TYPE_HARVEST
             ) {
                 const dynamicDcValue = getProperty(
                     r,
@@ -248,14 +256,17 @@ export class BRTHarvestHelpers {
         const table = RetrieveHelpers.getRollTableSync(tableEntity);
         const dcs = [];
         let results = table.results?.contents || [];
+
+        // const brtTypeToCheck = BRTUtils.retrieveBRTType(tableEntity);
+
         const useDynamicDcOnTable = getProperty(
             table,
             `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_USE_DYNAMIC_DC}`,
         );
         for (const r of results) {
             if (
-                useDynamicDcOnTable &&
-                table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_HARVEST
+                useDynamicDcOnTable
+                // && brtTypeToCheck === CONSTANTS.TABLE_TYPE_HARVEST
             ) {
                 const dynamicDcValue = getProperty(
                     r,

@@ -8,12 +8,13 @@ import ItemPilesHelpers from "../lib/item-piles-helpers.js";
 import { RetrieveHelpers } from "../lib/retrieve-helpers.js";
 
 export class BetterResults {
-    constructor(table, tableResults, stackResults) {
+    constructor(table, tableResults, stackResults, rollAsTableType) {
         this.results = [];
         this.currencyData = {}; // cp: 0, ep: 0, gp: 0, pp: 0, sp: 0 };
         this.table = table;
         this.tableResults = tableResults;
         this.stackResults = isRealBoolean(stackResults) ? (String(stackResults) === "true" ? true : false) : false;
+        this.rollAsTableType = BRTUtils.retrieveBRTType(table, rollAsTableType);
     }
 
     /**
@@ -36,14 +37,15 @@ export class BetterResults {
       }
     }
     */
+        const brtTypeToCheck = BRTUtils.retrieveBRTType(this.table, this.rollAsTableType);
+
         for (const r of this.tableResults) {
             const betterResult = await BRTBetterHelpers.updateTableResult(r);
+
             // ====================
             // BETTER Special cases
             // =====================
-            if (
-                this.table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_BETTER
-            ) {
+            if (brtTypeToCheck === CONSTANTS.TABLE_TYPE_BETTER) {
                 if (
                     betterResult.result.isText &&
                     betterResult.result.innerText?.startsWith(CONSTANTS.PRE_RESULT_TEXT_ROLL)
@@ -82,9 +84,7 @@ export class BetterResults {
             // ====================
             // LOOT Special cases
             // =====================
-            else if (
-                this.table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_LOOT
-            ) {
+            else if (brtTypeToCheck === CONSTANTS.TABLE_TYPE_LOOT) {
                 //
                 if (
                     betterResult.result.isText &&
@@ -138,9 +138,7 @@ export class BetterResults {
             // ====================
             // STORY Special cases
             // =====================
-            else if (
-                this.table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_STORY
-            ) {
+            else if (brtTypeToCheck === CONSTANTS.TABLE_TYPE_STORY) {
                 if (
                     betterResult.result.isText &&
                     betterResult.result.innerText?.startsWith(CONSTANTS.PRE_RESULT_TEXT_ROLL)
@@ -179,9 +177,7 @@ export class BetterResults {
             // ====================
             // HARVEST Special cases
             // =====================
-            else if (
-                this.table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_HARVEST
-            ) {
+            else if (brtTypeToCheck === CONSTANTS.TABLE_TYPE_HARVEST) {
                 if (
                     betterResult.result.isText &&
                     betterResult.result.innerText?.startsWith(CONSTANTS.PRE_RESULT_TEXT_ROLL)

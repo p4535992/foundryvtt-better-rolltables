@@ -46,7 +46,12 @@ export class BRTLootHelpers {
             const roll = brtTable.mainRoll;
             const results = resultsBrt?.results;
 
-            const br = new BetterResults(tableEntity, results, options?.stackResultsWithBRTLogic);
+            const br = new BetterResults(
+                tableEntity,
+                results,
+                options?.stackResultsWithBRTLogic,
+                options?.rollAsTableType,
+            );
             const betterResults = await br.buildResults();
             const currencyData = br.getCurrencyData();
 
@@ -84,7 +89,7 @@ export class BRTLootHelpers {
         const roll = brtTable.mainRoll;
         const results = resultsBrt?.results;
 
-        const br = new BetterResults(tableEntity, results, options?.stackResultsWithBRTLogic);
+        const br = new BetterResults(tableEntity, results, options?.stackResultsWithBRTLogic, options?.rollAsTableType);
         const betterResults = await br.buildResults();
         const currencyData = br.getCurrencyData();
         /*
@@ -123,7 +128,7 @@ export class BRTLootHelpers {
         const roll = brtTable.mainRoll;
         const results = resultsBrt?.results;
 
-        const br = new BetterResults(tableEntity, results, options?.stackResultsWithBRTLogic);
+        const br = new BetterResults(tableEntity, results, options?.stackResultsWithBRTLogic, options?.rollAsTableType);
         const betterResults = await br.buildResults();
         const currencyData = br.getCurrencyData();
 

@@ -493,6 +493,7 @@ export class LootChatCard {
                     this.rollMode,
                     this.roll,
                     false,
+                    CONSTANTS.TABLE_TYPE_LOOT,
                 );
             } else {
                 await this.findOrCreateItems();

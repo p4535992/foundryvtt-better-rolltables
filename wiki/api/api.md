@@ -47,14 +47,15 @@ Roll a table as a Better table with options and get
 | [options.roll]           | `Roll or string`        |  null   | An optional pre-configured Roll instance which defines the dice roll to use |
 | [options.recursive]      | `boolean`               |  true   | Allow drawing recursively from inner RollTable results |
 | [options.displayChat]    | `boolean`               |  true   | Whether to automatically display the results in chat |
-| [options.rollMode]       | `string`                |  null   | Type of rollMode for the chat card: 'blindroll'|'gmroll'|'selfroll' |
+| [options.rollMode]       | `string`                |  null   | Type of rollMode for the chat card: `'blindroll','gmroll','selfroll'` |
 | [options.rollsAmount]    | `string or number`      |   1     | The rolls amount value  |
 | [options.dc]             | `string or number`      |  null   | The dc value (only for Harvest type rolltable) |
 | [options.skill]          | `string`                |  null   | The skill denomination (only for Harvest type rolltable). If there is a "," in the skill string. , it will be treated as an array of skills for example "nat,arc" implies that the roll result will be compared as both a nat (nat) and arcane (arc) roll |
 | [options.distinct]       | `boolean`               |  false  | if checked the same result is not selected more than once indifferently from the number of 'Amount Roll' |
 | [options.distinctKeepRolling]  | `boolean`         |  false  | if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior |
 | [options.usePercentage]    | `boolean`             |  false   | Use the % mechanism instead of the default formula+range behavior |
-| [options.stackResultsWithBRTLogic] | `boolean`     |  false   |  if enabled the table results are stacked with the BRT logic like the module item-piles a new 'quantity' property is been added to the table result data to check how much the single result is been stacked |
+| [options.stackResultsWithBRTLogic] | `boolean`     |  false   | if enabled the table results are stacked with the BRT logic like the module item-piles a new 'quantity' property is been added to the table result data to check how much the single result is been stacked |
+| [options.rollAsTableType] | `string`              | null     | Accepted value are `'none','better','loot','harvest','story'`. Roll the RollRable as a specific BRT Roll Table type. Very useful for not duplicate the same rolltable for different usage. If not set the current BRT Roll Table types is used as usual. |
 
 **Example**:
 
@@ -88,7 +89,7 @@ Roll a table as a Better table in chat with options
 | [options.roll]           | `Roll or string`        |  null   | An optional pre-configured Roll instance which defines the dice roll to use |
 | [options.recursive]      | `boolean`               |  true   | Allow drawing recursively from inner RollTable results |
 | [options.displayChat]    | `boolean`               |  true   | Whether to automatically display the results in chat |
-| [options.rollMode]       | `string`                |  null   | Type of rollMode for the chat card: 'blindroll'|'gmroll'|'selfroll' |
+| [options.rollMode]       | `string`                |  null   | Type of rollMode for the chat card: `'blindroll','gmroll','selfroll'` |
 | [options.rollsAmount]    | `string or number`      |   1     | The rolls amount value  |
 | [options.dc]             | `string or number`      |  null   | The dc value (only for Harvest type rolltable) |
 | [options.skill]          | `string`                |  null   | The skill denomination (only for Harvest type rolltable). If there is a "," in the skill string. , it will be treated as an array of skills for example "nat,arc" implies that the roll result will be compared as both a nat (nat) and arcane (arc) roll |
@@ -96,6 +97,7 @@ Roll a table as a Better table in chat with options
 | [options.distinctKeepRolling]  | `boolean`         |  false  | if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior |
 | [options.usePercentage]    | `boolean`             |  false   | Use the % mechanism instead of the default formula+range behavior |
 | [options.stackResultsWithBRTLogic] | `boolean`     |  false   |  if enabled the table results are stacked with the BRT logic like the module item-piles a new 'quantity' property is been added to the table result data to check how much the single result is been stacked |
+| [options.rollAsTableType] | `string`              | null     | Accepted value are `'none','better','loot','harvest','story'`. Roll the RollRable as a specific BRT Roll Table type. Very useful for not duplicate the same rolltable for different usage. If not set the current BRT Roll Table types is used as usual. |
 
 **Example**:
 
@@ -129,7 +131,7 @@ Roll a table as a Better table in chat with options
 | [options.roll]           | `Roll or string`        |  null   | An optional pre-configured Roll instance which defines the dice roll to use |
 | [options.recursive]      | `boolean`               |  true   | Allow drawing recursively from inner RollTable results |
 | [options.displayChat]    | `boolean`               |  true   | Whether to automatically display the results in chat |
-| [options.rollMode]       | `string`                |  null   | Type of rollMode for the chat card: 'blindroll'|'gmroll'|'selfroll' |
+| [options.rollMode]       | `string`                |  null   | Type of rollMode for the chat card: `'blindroll','gmroll','selfroll'` |
 | [options.rollsAmount]    | `string or number`      |   1     | The rolls amount value  |
 | [options.dc]             | `string or number`      |  null   | The dc value (only for Harvest type rolltable) |
 | [options.skill]          | `string`                |  null   | The skill denomination (only for Harvest type rolltable). If there is a "," in the skill string. , it will be treated as an array of skills for example "nat,arc" implies that the roll result will be compared as both a nat (nat) and arcane (arc) roll |
@@ -137,6 +139,7 @@ Roll a table as a Better table in chat with options
 | [options.distinctKeepRolling]  | `boolean`         |  false  | if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior |
 | [options.usePercentage]    | `boolean`             |  false   | Use the % mechanism instead of the default formula+range behavior |
 | [options.stackResultsWithBRTLogic] | `boolean`     |  false   |  if enabled the table results are stacked with the BRT logic like the module item-piles a new 'quantity' property is been added to the table result data to check how much the single result is been stacked |
+| [options.rollAsTableType] | `string`              | null     | Accepted value are `'none','better','loot','harvest','story'`. Roll the RollRable as a specific BRT Roll Table type. Very useful for not duplicate the same rolltable for different usage. If not set the current BRT Roll Table types is used as usual. |
 
 **Example**:
 
@@ -279,7 +282,7 @@ Generate a loot
 | [options.roll]           | `Roll or string`        |  null   | An optional pre-configured Roll instance which defines the dice roll to use |
 | [options.recursive]      | `boolean`               |  true   | Allow drawing recursively from inner RollTable results |
 | [options.displayChat]    | `boolean`               |  true   | Whether to automatically display the results in chat |
-| [options.rollMode]       | `string`                |  null   | Type of rollMode for the chat card: 'blindroll'|'gmroll'|'selfroll' |
+| [options.rollMode]       | `string`                |  null   | Type of rollMode for the chat card: `'blindroll','gmroll','selfroll'` |
 | [options.rollsAmount]    | `string or number`      |   1     | The rolls amount value  |
 | [options.dc]             | `string or number`      |  null   | The dc value (only for Harvest type rolltable) |
 | [options.skill]          | `string`                |  null   | The skill denomination (only for Harvest type rolltable). If there is a "," in the skill string. , it will be treated as an array of skills for example "nat,arc" implies that the roll result will be compared as both a nat (nat) and arcane (arc) roll |
@@ -287,6 +290,7 @@ Generate a loot
 | [options.distinctKeepRolling]  | `boolean`         |  false  | if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior |
 | [options.usePercentage]    | `boolean`             |  false   | Use the % mechanism instead of the default formula+range behavior |
 | [options.stackResultsWithBRTLogic] | `boolean`     |  false   |  if enabled the table results are stacked with the BRT logic like the module item-piles a new 'quantity' property is been added to the table result data to check how much the single result is been stacked |
+| [options.rollAsTableType] | `string`              | null     | Accepted value are `'none','better','loot','harvest','story'`. Roll the RollRable as a specific BRT Roll Table type. Very useful for not duplicate the same rolltable for different usage. If not set the current BRT Roll Table types is used as usual. |
 
 **Example**:
 
@@ -314,7 +318,7 @@ Generate a chat loot
 | [options.roll]           | `Roll or string`        |  null   | An optional pre-configured Roll instance which defines the dice roll to use |
 | [options.recursive]      | `boolean`               |  true   | Allow drawing recursively from inner RollTable results |
 | [options.displayChat]    | `boolean`               |  true   | Whether to automatically display the results in chat |
-| [options.rollMode]       | `string`                |  null   | Type of rollMode for the chat card: 'blindroll'|'gmroll'|'selfroll' |
+| [options.rollMode]       | `string`                |  null   | Type of rollMode for the chat card: `'blindroll','gmroll','selfroll'` |
 | [options.rollsAmount]    | `string or number`      |   1     | The rolls amount value  |
 | [options.dc]             | `string or number`      |  null   | The dc value (only for Harvest type rolltable) |
 | [options.skill]          | `string`                |  null   | The skill denomination (only for Harvest type rolltable). If there is a "," in the skill string. , it will be treated as an array of skills for example "nat,arc" implies that the roll result will be compared as both a nat (nat) and arcane (arc) roll |
@@ -322,6 +326,7 @@ Generate a chat loot
 | [options.distinctKeepRolling]  | `boolean`         |  false  | if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior |
 | [options.usePercentage]    | `boolean`             |  false   | Use the % mechanism instead of the default formula+range behavior |
 | [options.stackResultsWithBRTLogic] | `boolean`     |  false   |  if enabled the table results are stacked with the BRT logic like the module item-piles a new 'quantity' property is been added to the table result data to check how much the single result is been stacked |
+| [options.rollAsTableType] | `string`              | null     | Accepted value are `'none','better','loot','harvest','story'`. Roll the RollRable as a specific BRT Roll Table type. Very useful for not duplicate the same rolltable for different usage. If not set the current BRT Roll Table types is used as usual. |
 
 **Example**:
 
@@ -349,7 +354,7 @@ Add loot to selcted token ( or the one passed as a argument)
 | [options.roll]           | `Roll or string`        |  null   | An optional pre-configured Roll instance which defines the dice roll to use |
 | [options.recursive]      | `boolean`               |  true   | Allow drawing recursively from inner RollTable results |
 | [options.displayChat]    | `boolean`               |  true   | Whether to automatically display the results in chat |
-| [options.rollMode]       | `string`                |  null   | Type of rollMode for the chat card: 'blindroll'|'gmroll'|'selfroll' |
+| [options.rollMode]       | `string`                |  null   | Type of rollMode for the chat card: `'blindroll','gmroll','selfroll'` |
 | [options.rollsAmount]    | `string or number`      |   1     | The rolls amount value  |
 | [options.dc]             | `string or number`      |  null   | The dc value (only for Harvest type rolltable) |
 | [options.skill]          | `string`                |  null   | The skill denomination (only for Harvest type rolltable). If there is a "," in the skill string. , it will be treated as an array of skills for example "nat,arc" implies that the roll result will be compared as both a nat (nat) and arcane (arc) roll |
@@ -357,6 +362,7 @@ Add loot to selcted token ( or the one passed as a argument)
 | [options.distinctKeepRolling]  | `boolean`         |  false  | if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior |
 | [options.usePercentage]    | `boolean`             |  false   | Use the % mechanism instead of the default formula+range behavior |
 | [options.stackResultsWithBRTLogic] | `boolean`     |  false   |  if enabled the table results are stacked with the BRT logic like the module item-piles a new 'quantity' property is been added to the table result data to check how much the single result is been stacked |
+| [options.rollAsTableType] | `string`              | null     | Accepted value are `'none','better','loot','harvest','story'`. Roll the RollRable as a specific BRT Roll Table type. Very useful for not duplicate the same rolltable for different usage. If not set the current BRT Roll Table types is used as usual. |
 
 **Example**:
 

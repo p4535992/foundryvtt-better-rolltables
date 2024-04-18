@@ -490,6 +490,7 @@ export class BetterChatCard {
                     this.rollMode,
                     this.roll,
                     false,
+                    CONSTANTS.TABLE_TYPE_BETTER,
                 );
             } else {
                 await this.findOrCreateItems();

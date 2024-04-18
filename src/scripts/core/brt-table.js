@@ -32,6 +32,10 @@ export class BetterRollTable {
         );
         this.mainRoll = undefined;
         this.blackListForDistinct = [];
+        this.rollAsTableType = this.options.rollAsTableType
+            ? this.options.rollAsTableType
+            : this.table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY);
+        this.options.rollAsTableType = this.rollAsTableType;
     }
 
     async initialize() {
@@ -64,6 +68,10 @@ export class BetterRollTable {
                 await this.table.normalize();
             }
         }
+        this.rollAsTableType = this.options.rollAsTableType
+            ? this.options.rollAsTableType
+            : this.table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY);
+        this.options.rollAsTableType = this.rollAsTableType;
     }
 
     /* -------------------------------------------- */
@@ -129,23 +137,17 @@ export class BetterRollTable {
             }
         });
 
-        if (this.table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_BETTER) {
+        if (this.rollAsTableType === CONSTANTS.TABLE_TYPE_BETTER) {
             const betterChatCard = new BetterChatCard(betterResults, this.rollMode, roll);
             await betterChatCard.createChatCard(this.table);
-        } else if (
-            this.table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_LOOT
-        ) {
+        } else if (this.rollAsTableType === CONSTANTS.TABLE_TYPE_LOOT) {
             const currencyData = br.getCurrencyData();
             const lootChatCard = new LootChatCard(betterResults, currencyData, this.rollMode, roll);
             await lootChatCard.createChatCard(this.table);
-        } else if (
-            this.table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_STORY
-        ) {
+        } else if (this.rollAsTableType === CONSTANTS.TABLE_TYPE_STORY) {
             const storyChatCard = new StoryChatCard(betterResults, this.rollMode, roll);
             await storyChatCard.createChatCard(this.table);
-        } else if (
-            this.table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_HARVEST
-        ) {
+        } else if (this.rollAsTableType === CONSTANTS.TABLE_TYPE_HARVEST) {
             const harvestChatCard = new HarvestChatCard(betterResults, this.rollMode, roll);
             await harvestChatCard.createChatCard(this.table);
         } else {
@@ -428,10 +430,7 @@ export class BetterRollTable {
                 this.table,
                 `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_USE_DYNAMIC_DC}`,
             );
-            if (
-                useDynamicDcOnTable &&
-                this.table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_HARVEST
-            ) {
+            if (useDynamicDcOnTable && this.options.rollAsTableType === CONSTANTS.TABLE_TYPE_HARVEST) {
                 const availableTmp = [];
                 for (const a of available) {
                     const dynamicDcFormula = getProperty(
@@ -512,10 +511,7 @@ export class BetterRollTable {
                 this.table,
                 `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_USE_DYNAMIC_DC}`,
             );
-            if (
-                useDynamicDcOnTable &&
-                this.table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_HARVEST
-            ) {
+            if (useDynamicDcOnTable && this.options.rollAsTableType === CONSTANTS.TABLE_TYPE_HARVEST) {
                 const availableTmp = [];
                 for (const a of available) {
                     const dynamicDcFormula = getProperty(
@@ -720,7 +716,7 @@ export class BetterRollTable {
             });
         }
 
-        if (this.table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_HARVEST) {
+        if (this.options.rollAsTableType === CONSTANTS.TABLE_TYPE_HARVEST) {
             if (dc < BRTHarvestHelpers.retrieveMinDCOnTableSync(this.table)) {
                 // Logger.info(`The rolled DC '${dc}' is not enough for any result on the rollTable '${this.table.name}'`);
                 return [];

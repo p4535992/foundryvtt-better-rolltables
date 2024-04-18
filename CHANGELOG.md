@@ -1,6 +1,10 @@
-TODO 
+TODO
 - Add confirm dialog on reset button ???
 - Add flags for cost/price like already done for the quantity is possible now with item piles support
+
+### 2.1.17
+
+- Add new api parameters 'rollAsTableType' so you can roll the same roll table as "Loot" or "Harvest" or "Better" or "Story"
 
 ### 2.1.16
 
@@ -100,11 +104,11 @@ TODO
 
 - Little fix on _createItem function
 
-### 2.0.30 
+### 2.0.30
 
 - Clean up the code remove old and deprecated config class in favor of the constants class
-- 
-### 2.0.29 
+-
+### 2.0.29
 
 - allow (again) quantity formula to accept text (like 1d10) ty to @Pantus
 

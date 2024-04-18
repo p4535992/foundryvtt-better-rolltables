@@ -4,6 +4,7 @@ import { BRTBetterHelpers } from "../better/brt-helper";
 import { RichResultEdit } from "../../core/brt-result-editor";
 import { BetterRollTableBetterConfig } from "../better/brt-rolltable-config";
 import Logger from "../../lib/Logger";
+import { BRTUtils } from "../../core/utils";
 
 /**
  * The Application responsible for displaying and editing a single RollTable document.
@@ -73,8 +74,10 @@ export class BetterRollTableStoryConfig extends RollTableConfig {
             compendiumPacks: Array.from(game.packs.keys()),
         });
 
+        const brtTypeToCheck = BRTUtils.retrieveBRTType(this.document);
+
         // Set brt type
-        if (this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) !== CONSTANTS.TABLE_TYPE_STORY) {
+        if (brtTypeToCheck !== CONSTANTS.TABLE_TYPE_STORY) {
             await this.document.setFlag(
                 CONSTANTS.MODULE_ID,
                 CONSTANTS.FLAGS.TABLE_TYPE_KEY,
@@ -719,8 +722,11 @@ export class BetterRollTableStoryConfig extends RollTableConfig {
         } else {
             event.target.disabled = true;
         }
+
+        const brtTypeToCheck = BRTUtils.retrieveBRTType(this.document);
+
         // Set brt type
-        if (this.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) !== CONSTANTS.TABLE_TYPE_STORY) {
+        if (brtTypeToCheck !== CONSTANTS.TABLE_TYPE_STORY) {
             await this.document.setFlag(
                 CONSTANTS.MODULE_ID,
                 CONSTANTS.FLAGS.TABLE_TYPE_KEY,

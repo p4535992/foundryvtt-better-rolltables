@@ -17,6 +17,7 @@ import { BetterRollTable } from "./core/brt-table.js";
 import Logger from "./lib/Logger.js";
 import ItemPilesHelpers from "./lib/item-piles-helpers.js";
 import { RetrieveHelpers } from "./lib/retrieve-helpers.js";
+import { BRTUtils } from "./core/utils.js";
 
 /**
  * Create a new API class and export it as default
@@ -92,6 +93,7 @@ const API = {
      * @param {boolean} [options.distinctKeepRolling=false] if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior
      * @param {boolean} [options.usePercentage=false] Use the % mechanism instead of the default formula+range behavior
      * @param {boolean} [options.stackResultsWithBRTLogic=false] if enabled the table results are stacked with the BRT logic like the module item-piles a new 'quantity' property is been added to the table result data to check how much the single result is been stacked
+     * @param {('none'|'better'|'loot'|'harvest'|'story')} [options.rollAsTableType=null] Roll the rolltable as a specific BRT Roll Table type. Very useful for not duplicate the same rolltable for different usage. If not set the current BRT Roll Table types is used as usual.
      * @returns {Promise<TableResult[]>}
      */
     async betterTableRoll(tableEntity, options = {}) {
@@ -128,6 +130,7 @@ const API = {
      * @param {boolean} [options.distinctKeepRolling=false] if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior
      * @param {boolean} [options.usePercentage=false] Use the % mechanism instead of the default formula+range behavior
      * @param {boolean} [options.stackResultsWithBRTLogic=false] if enabled the table results are stacked with the BRT logic like the module item-piles a new 'quantity' property is been added to the table result data to check how much the single result is been stacked
+     * @param {('none'|'better'|'loot'|'harvest'|'story')} [options.rollAsTableType=null] Roll the rolltable as a specific BRT Roll Table type. Very useful for not duplicate the same rolltable for different usage. If not set the current BRT Roll Table types is used as usual.
      * @returns {Promise<{results:TableResult[],currenciesData:Record<string,number>}>}
      */
     async betterTableRollV2(tableEntity, options = {}) {
@@ -243,6 +246,7 @@ const API = {
      * @param {boolean} [options.distinctKeepRolling=false] if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior
      * @param {boolean} [options.usePercentage=false] Use the % mechanism instead of the default formula+range behavior
      * @param {boolean} [options.stackResultsWithBRTLogic=false] if enabled the table results are stacked with the BRT logic like the module item-piles a new 'quantity' property is been added to the table result data to check how much the single result is been stacked
+     * @param {('none'|'better'|'loot'|'harvest'|'story')} [options.rollAsTableType=null] Roll the rolltable as a specific BRT Roll Table type. Very useful for not duplicate the same rolltable for different usage. If not set the current BRT Roll Table types is used as usual.
      * @returns {Promise<void>}
      */
     async addLootToSelectedToken(tableEntity, token = null, options = {}) {
@@ -268,6 +272,7 @@ const API = {
      * @param {boolean} [options.distinctKeepRolling=false] if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior
      * @param {boolean} [options.usePercentage=false] Use the % mechanism instead of the default formula+range behavior
      * @param {boolean} [options.stackResultsWithBRTLogic=false] if enabled the table results are stacked with the BRT logic like the module item-piles a new 'quantity' property is been added to the table result data to check how much the single result is been stacked
+     * @param {('none'|'better'|'loot'|'harvest'|'story')} [options.rollAsTableType=null] Roll the rolltable as a specific BRT Roll Table type. Very useful for not duplicate the same rolltable for different usage. If not set the current BRT Roll Table types is used as usual.
      * @returns {Promise<void>}
      */
     async generateLoot(tableEntity, options = {}) {
@@ -293,6 +298,7 @@ const API = {
      * @param {boolean} [options.distinctKeepRolling=false] if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior
      * @param {boolean} [options.usePercentage=false] Use the % mechanism instead of the default formula+range behavior
      * @param {boolean} [options.stackResultsWithBRTLogic=false] if enabled the table results are stacked with the BRT logic like the module item-piles a new 'quantity' property is been added to the table result data to check how much the single result is been stacked
+     * @param {('none'|'better'|'loot'|'harvest'|'story')} [options.rollAsTableType=null] Roll the rolltable as a specific BRT Roll Table type. Very useful for not duplicate the same rolltable for different usage. If not set the current BRT Roll Table types is used as usual.
      * @returns {Promise<void>}
      */
     async generateLootOnSelectedToken(tableEntity, options = {}) {
@@ -318,6 +324,7 @@ const API = {
      * @param {boolean} [options.distinctKeepRolling=false] if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior
      * @param {boolean} [options.usePercentage=false] Use the % mechanism instead of the default formula+range behavior
      * @param {boolean} [options.stackResultsWithBRTLogic=false] if enabled the table results are stacked with the BRT logic like the module item-piles a new 'quantity' property is been added to the table result data to check how much the single result is been stacked
+     * @param {('none'|'better'|'loot'|'harvest'|'story')} [options.rollAsTableType=null] Roll the rolltable as a specific BRT Roll Table type. Very useful for not duplicate the same rolltable for different usage. If not set the current BRT Roll Table types is used as usual.
      * @returns {Promise<void>}
      */
     async generateChatLoot(tableEntity, options = {}) {
@@ -347,6 +354,7 @@ const API = {
      * @param {boolean} [options.distinctKeepRolling=false] if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior
      * @param {boolean} [options.usePercentage=false] Use the % mechanism instead of the default formula+range behavior
      * @param {boolean} [options.stackResultsWithBRTLogic=false] if enabled the table results are stacked with the BRT logic like the module item-piles a new 'quantity' property is been added to the table result data to check how much the single result is been stacked
+     * @param {('none'|'better'|'loot'|'harvest'|'story')} [options.rollAsTableType=null] Roll the rolltable as a specific BRT Roll Table type. Very useful for not duplicate the same rolltable for different usage. If not set the current BRT Roll Table types is used as usual.
      * @returns {Promise<void>}
      */
     async generateHarvest(tableEntity, options = {}) {
@@ -372,6 +380,7 @@ const API = {
      * @param {boolean} [options.distinctKeepRolling=false] if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior
      * @param {boolean} [options.usePercentage=false] Use the % mechanism instead of the default formula+range behavior
      * @param {boolean} [options.stackResultsWithBRTLogic=false] if enabled the table results are stacked with the BRT logic like the module item-piles a new 'quantity' property is been added to the table result data to check how much the single result is been stacked
+     * @param {('none'|'better'|'loot'|'harvest'|'story')} [options.rollAsTableType=null] Roll the rolltable as a specific BRT Roll Table type. Very useful for not duplicate the same rolltable for different usage. If not set the current BRT Roll Table types is used as usual.
      * @returns {Promise<void>}
      */
     async generateHarvestOnSelectedToken(tableEntity, options = {}) {
@@ -397,6 +406,7 @@ const API = {
      * @param {boolean} [options.distinctKeepRolling=false] if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior
      * @param {boolean} [options.usePercentage=false] Use the % mechanism instead of the default formula+range behavior
      * @param {boolean} [options.stackResultsWithBRTLogic=false] if enabled the table results are stacked with the BRT logic like the module item-piles a new 'quantity' property is been added to the table result data to check how much the single result is been stacked
+     * @param {('none'|'better'|'loot'|'harvest'|'story')} [options.rollAsTableType=null] Roll the rolltable as a specific BRT Roll Table type. Very useful for not duplicate the same rolltable for different usage. If not set the current BRT Roll Table types is used as usual.
      * @returns {Promise<void>}
      */
     async generateChatHarvest(tableEntity, options = {}) {
@@ -687,6 +697,7 @@ const API = {
      * @param {boolean} [options.distinctKeepRolling=false] if 'Distinct result' is checked and 'Amount Rolls' > of the numbers of the result, keep rolling as a normal 'Roll +' behavior
      * @param {boolean} [options.usePercentage=false] Use the % mechanism instead of the default formula+range behavior
      * @param {boolean} [options.stackResultsWithBRTLogic=false] if enabled the table results are stacked with the BRT logic like the module item-piles a new 'quantity' property is been added to the table result data to check how much the single result is been stacked
+     * @param {('none'|'better'|'loot'|'harvest'|'story')} [options.rollAsTableType=null] Roll the rolltable as a specific BRT Roll Table type. Very useful for not duplicate the same rolltable for different usage. If not set the current BRT Roll Table types is used as usual.
      * @returns {Promise<TableResult[]>}
      */
     async invokeBetterTableRollArr(...inAttributes) {
@@ -703,29 +714,25 @@ const API = {
             throw Logger.error("invokeGenericTableRollArr | inAttributes must be of type array");
         }
 
-        const [tableReferenceUuid, results, rollMode, roll, stackResultsWithBRTLogic] = inAttributes;
+        const [tableReferenceUuid, results, rollMode, roll, stackResultsWithBRTLogic, rollAsTableType] = inAttributes;
         const tableEntity = await fromUuid(tableReferenceUuid);
 
-        const br = new BetterResults(tableEntity, results, stackResultsWithBRTLogic); // NOTE: Stack is always false here
+        const br = new BetterResults(tableEntity, results, stackResultsWithBRTLogic, rollAsTableType); // NOTE: Stack is always false here
         const betterResults = await br.buildResults();
 
-        if (tableEntity.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_BETTER) {
+        const brtTypeToCheck = BRTUtils.retrieveBRTType(tableEntity, options?.rollAsTableType);
+
+        if (brtTypeToCheck === CONSTANTS.TABLE_TYPE_BETTER) {
             const betterChatCard = new BetterChatCard(betterResults, rollMode, roll);
             await betterChatCard.createChatCard(tableEntity);
-        } else if (
-            tableEntity.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_LOOT
-        ) {
+        } else if (brtTypeToCheck === CONSTANTS.TABLE_TYPE_LOOT) {
             const currencyData = br.getCurrencyData();
             const lootChatCard = new LootChatCard(betterResults, currencyData, rollMode, roll);
             await lootChatCard.createChatCard(tableEntity);
-        } else if (
-            tableEntity.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_STORY
-        ) {
+        } else if (brtTypeToCheck === CONSTANTS.TABLE_TYPE_STORY) {
             const storyChatCard = new StoryChatCard(betterResults, rollMode, roll);
             await storyChatCard.createChatCard(tableEntity);
-        } else if (
-            tableEntity.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_HARVEST
-        ) {
+        } else if (brtTypeToCheck === CONSTANTS.TABLE_TYPE_HARVEST) {
             const harvestChatCard = new HarvestChatCard(betterResults, rollMode, roll);
             await harvestChatCard.createChatCard(tableEntity);
         } else {

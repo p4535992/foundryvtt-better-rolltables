@@ -489,6 +489,7 @@ export class HarvestChatCard {
                     this.rollMode,
                     this.roll,
                     false,
+                    CONSTANTS.TABLE_TYPE_HARVEST,
                 );
             } else {
                 await this.findOrCreateItems();

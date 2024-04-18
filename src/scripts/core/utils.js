@@ -139,9 +139,9 @@ export class BRTUtils {
      *
      * @param {RollTable} tableEntity
      * @param {Object} options
-     * @param {Roll|string} [options.roll] An optional pre-configured Roll instance which defines the dice roll to use
-     * @param {boolean} [options.recursive=true] Allow drawing recursively from inner RollTable results
-     * @param {boolean} [options.displayChat=true] Whether to automatically display the results in chat
+     * @param {Roll|string} options.roll An optional pre-configured Roll instance which defines the dice roll to use
+     * @param {boolean} options.recursive Allow drawing recursively from inner RollTable results
+     * @param {boolean} options.displayChat Whether to automatically display the results in chat
      * @param {number} options.rollsAmount
      * @param {number} options.dc
      * @param {string} options.skill
@@ -152,7 +152,8 @@ export class BRTUtils {
      * @param {string} options.rollMode
      * @param {string} options.distinct
      * @param {string} options.distinctKeepRolling
-     * @returns {Promise<{rollsAmount: number, dc: number, skill: string, isTokenActor: boolean, stackSame: boolean, customRoll: string, itemLimit: number, rollMode: string, distinct: boolean, distinctKeepRolling: string}>},
+     * @param {string} options.rollAsTableType
+     * @returns {Promise<{rollsAmount: number, dc: number, skill: string, isTokenActor: boolean, stackSame: boolean, customRoll: string, itemLimit: number, rollMode: string, distinct: boolean, distinctKeepRolling: string; rollAsTableType:string;}>},
      */
     static async updateOptions(tableEntity, options = {}) {
         let newOptions = {};
@@ -319,6 +320,16 @@ export class BRTUtils {
                 : false
             : true;
         newOptions.roll = options.roll ? String(options.roll) : null;
+
+        let brtTypeToCheck = BRTUtils.retrieveBRTType(tableEntity, options?.rollAsTableType);
+        if (!CONSTANTS.TYPES.includes(brtTypeToCheck)) {
+            brtTypeToCheck = null;
+        }
+        if (brtTypeToCheck === "none") {
+            brtTypeToCheck = null;
+        }
+        newOptions.rollAsTableType = brtTypeToCheck;
+
         return newOptions;
     }
 
@@ -386,5 +397,18 @@ export class BRTUtils {
 
     static isTableResultCompendium(result) {
         return result?.type === CONST.TABLE_RESULT_TYPES.COMPENDIUM;
+    }
+
+    static retrieveBRTType(tableEntity, rollAsTableType = null) {
+        let brtTypeToCheck = rollAsTableType
+            ? rollAsTableType
+            : getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.TABLE_TYPE_KEY}`);
+        if (!CONSTANTS.TYPES.includes(brtTypeToCheck)) {
+            brtTypeToCheck = null;
+        }
+        if (brtTypeToCheck === "none") {
+            brtTypeToCheck = null;
+        }
+        return brtTypeToCheck;
     }
 }

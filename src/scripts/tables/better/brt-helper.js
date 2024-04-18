@@ -1,4 +1,5 @@
 import { CONSTANTS } from "../../constants/constants.js";
+import { BRTUtils } from "../../core/utils.js";
 import Logger from "../../lib/Logger.js";
 import CompendiumsHelpers from "../../lib/compendiums-helpers.js";
 import ItemPilesHelpers from "../../lib/item-piles-helpers.js";
@@ -102,21 +103,23 @@ export class BRTBetterHelpers {
 
     /**
      * we can provide a formula on how many times we roll on the table.
+     * @deprecated maybe to remove they are all use the same flag property ?
      * @returns {Number} how many times to roll on this table
      */
     static async rollsAmount(table) {
-        const tableType = table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY);
-        if (tableType === CONSTANTS.TABLE_TYPE_BETTER) {
+        const brtTypeToCheck = BRTUtils.retrieveBRTType(table);
+        if (brtTypeToCheck === CONSTANTS.TABLE_TYPE_BETTER) {
             const rollFormula = table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.GENERIC_AMOUNT_KEY);
             return await BRTBetterHelpers.tryRoll(rollFormula);
-        } else if (tableType === CONSTANTS.TABLE_TYPE_LOOT) {
+        } else if (brtTypeToCheck === CONSTANTS.TABLE_TYPE_LOOT) {
             const rollFormula = table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.LOOT_AMOUNT_KEY);
             return await BRTBetterHelpers.tryRoll(rollFormula);
-        } else if (tableType === CONSTANTS.TABLE_TYPE_HARVEST) {
+        } else if (brtTypeToCheck === CONSTANTS.TABLE_TYPE_HARVEST) {
             const rollFormula = table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.HARVEST_AMOUNT_KEY);
             return await BRTBetterHelpers.tryRoll(rollFormula);
         } else {
-            return 1;
+            const rollFormula = table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.GENERIC_AMOUNT_KEY);
+            return await BRTBetterHelpers.tryRoll(rollFormula);
         }
     }
 
@@ -447,14 +450,13 @@ export class BRTBetterHelpers {
             return { roll, results };
         }
 
+        const brtTypeToCheck = BRTUtils.retrieveBRTType(table);
+
         const useDynamicDcOnTable = getProperty(
             table,
             `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_USE_DYNAMIC_DC}`,
         );
-        if (
-            useDynamicDcOnTable &&
-            table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.TABLE_TYPE_KEY) === CONSTANTS.TABLE_TYPE_HARVEST
-        ) {
+        if (useDynamicDcOnTable && brtTypeToCheck === CONSTANTS.TABLE_TYPE_HARVEST) {
             const availableTmp = [];
             for (const a of available) {
                 const dynamicDcFormula = getProperty(
