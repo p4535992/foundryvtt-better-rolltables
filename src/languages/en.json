@@ -166,6 +166,10 @@
             "forceNormalizeIfNoResultAreDrawn": {
                 "name": "Force Normalize If No Result Are Drawn",
                 "hint": "I DON'T RECOMMENDED TO ENABLE THIS SETTING. Enable this only if you get the warning 'No results can possibly be drawn from this table and formula' every single time for some dirt on your world."
+            },
+            "headerActorListLabel": {
+                "name": "Show BRT Actor List Label",
+                "hint": "Uncheck to hide the BRT Actor List label on actor sheet headers."
             }
         },
         "Strings": {
@@ -230,7 +234,28 @@
             "redFlagNoteTitle": "About the red background warnings on the table results",
             "redFlagNote1Hint": "NOTE: If you see ALL the rows with a red background is a cache problem , click the 'Update' button and close the rolltable to force a refresh  of the table results.",
             "redFlagNote2Hint": "NOTE: If you see SOME of the rows with a red background some item maybe some UUID is changed click the 'Update' button to force a refresh  of the table results.",
-            "redFlagNote3Hint": "As a general rule click always the button 'Update' at least one time after open the rolltable to force a refresh of the table results."
+            "redFlagNote3Hint": "As a general rule click always the button 'Update' at least one time after open the rolltable to force a refresh of the table results.",
+            "Clear": "Clear",
+            "Currencies": "Currencies",
+            "DropItem": "Drop item, folder, table, or compendium here...",
+            "GrantToTarget": "Grant to Target",
+            "HeaderActorList": "BRT Actor List",
+            "Item": "Item",
+            "RollTable": "RollTable",
+            "Quantity": "Quantity",
+            "SaveList": "Save List",
+            "SettingHeaderLabel": "Show Label",
+            "SettingHeaderLabelHint": "Uncheck to hide the label on actor sheet headers.",
+            "TitleActorList": "BRT Actor List: {name}",
+            "WarningActorRollTable": "You cannot add an item from an actor.",
+            "WarningAddedRollTables": "Added {amount} items to the loot list on {name}.",
+            "WarningCreatedRollTables": "Added currencies and {amount} items to {name}.",
+            "WarningEmptyDocument": "The document contains no valid items.",
+            "WarningInvalidDocument": "The document is not a valid type.",
+            "WarningRollTableNotFound": "No item with uuid '{uuid}' was found. It has been skipped.",
+            "WarningRollTableNotFoundName": "The item '{name}' could not be found.",
+            "WarningMajorError": "Something has gone terribly wrong.",
+            "WarningNoTarget": "You must target a token on the canvas to grant its actor the loot."
         }
     }
 }

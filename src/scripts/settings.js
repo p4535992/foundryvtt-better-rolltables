@@ -200,6 +200,15 @@ export function registerSettings() {
         type: Boolean,
     });
 
+    game.settings.register(MODULE, "headerActorListLabel", {
+        name: `${CONSTANTS.MODULE_ID}.Settings.headerActorListLabel.name`,
+        hint: `${CONSTANTS.MODULE_ID}.Settings.headerActorListLabel.hint`,
+        scope: "world",
+        config: true,
+        type: Boolean,
+        default: true,
+    });
+
     // =====================================================================
 
     game.settings.register(CONSTANTS.MODULE_ID, "debug", {

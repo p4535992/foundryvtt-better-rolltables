@@ -11,7 +11,7 @@
 .better-rolltables-list [data-action="drop"].drag-over {
     border-color: black;
 }
-.better-rolltables-list .item-header,
+.better-rolltables-list .roll-table-header,
 .better-rolltables-list .currency-header {
     height: 28px;
     background: rgba(0, 0, 0, 0.1);
@@ -24,7 +24,7 @@
 .better-rolltables-list .currency-header {
     padding-left: 5px;
 }
-.better-rolltables-list .item-list {
+.better-rolltables-list .roll-table-list {
     padding-left: 0;
     max-height: 500px;
     overflow-y: scroll;
@@ -46,13 +46,15 @@
 .better-rolltables-list .currency input {
     min-width: 3em;
 }
-.better-rolltables-list .item {
+.better-rolltables-list .roll-table {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
-.better-rolltables-list .item-quantity,
-.better-rolltables-list .header-quantity {
+.better-rolltables-list .roll-table-quantity,
+.better-rolltables-list .roll-table-type,
+.better-rolltables-list .header-quantity,
+.better-rolltables-list .header-type {
     text-align: center;
     flex-basis: 6em;
 }
