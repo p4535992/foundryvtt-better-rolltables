@@ -654,6 +654,9 @@ export class BetterRollTable {
                     const innerTable = pack ? await pack.getDocument(id) : RetrieveHelpers.getRollTableSync(id, true);
                     if (innerTable) {
                         const innerOptions = this.options;
+                        innerOptions.rollAsTableType = this.options.rollAsTableTypeAllTheTables
+                            ? innerOptions.rollAsTableType
+                            : undefined; // ONLY THE FIRST LEVEL TABLE USE THIS RIGHT
                         const brtInnerTable = new BetterRollTable(innerTable, innerOptions);
                         await brtInnerTable.initialize();
                         const innerRoll = await brtInnerTable.drawMany(resultAmount, {
@@ -1051,6 +1054,9 @@ export class BetterRollTable {
 
                 if (innerTable) {
                     const innerOptions = options;
+                    innerOptions.rollAsTableType = options.rollAsTableTypeAllTheTables
+                        ? innerOptions.rollAsTableType
+                        : undefined; // ONLY THE FIRST LEVEL TABLE USE THIS RIGHT
                     const innerBrtTable = new BetterRollTable(innerTable, innerOptions);
                     await innerBrtTable.initialize();
                     const innerResults = await innerBrtTable.rollManyOnTable(entryAmount, {

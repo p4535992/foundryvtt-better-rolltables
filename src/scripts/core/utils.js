@@ -330,6 +330,12 @@ export class BRTUtils {
         }
         newOptions.rollAsTableType = brtTypeToCheck;
 
+        newOptions.rollAsTableTypeAllTheTables = isRealBoolean(options.rollAsTableTypeAllTheTables)
+            ? String(options.rollAsTableTypeAllTheTables) === "true"
+                ? true
+                : false
+            : false;
+
         return newOptions;
     }
 

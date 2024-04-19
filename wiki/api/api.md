@@ -56,6 +56,7 @@ Roll a table as a Better table with options and get
 | [options.usePercentage]    | `boolean`             |  false   | Use the % mechanism instead of the default formula+range behavior |
 | [options.stackResultsWithBRTLogic] | `boolean`     |  false   | if enabled the table results are stacked with the BRT logic like the module item-piles a new 'quantity' property is been added to the table result data to check how much the single result is been stacked |
 | [options.rollAsTableType] | `string`              | null     | Accepted value are `'none','better','loot','harvest','story'`. Roll the RollRable as a specific BRT Roll Table type. Very useful for not duplicate the same rolltable for different usage. If not set the current BRT Roll Table types is used as usual. |
+| [options.rollAsTableTypeAllTheTables] | `boolean`             |  false   | This setting make sense only when you use the parameter 'rollAsTableType'. If true it will treat all the inner tables (or child tables if you prefer) with the same type used on 'rollAsTableType'. Bu default is false. |
 
 **Example**:
 
@@ -98,6 +99,7 @@ Roll a table as a Better table in chat with options
 | [options.usePercentage]    | `boolean`             |  false   | Use the % mechanism instead of the default formula+range behavior |
 | [options.stackResultsWithBRTLogic] | `boolean`     |  false   |  if enabled the table results are stacked with the BRT logic like the module item-piles a new 'quantity' property is been added to the table result data to check how much the single result is been stacked |
 | [options.rollAsTableType] | `string`              | null     | Accepted value are `'none','better','loot','harvest','story'`. Roll the RollRable as a specific BRT Roll Table type. Very useful for not duplicate the same rolltable for different usage. If not set the current BRT Roll Table types is used as usual. |
+| [options.rollAsTableTypeAllTheTables] | `boolean`             |  false   | This setting make sense only when you use the parameter 'rollAsTableType'. If true it will treat all the inner tables (or child tables if you prefer) with the same type used on 'rollAsTableType'. Bu default is false. |
 
 **Example**:
 
@@ -140,6 +142,7 @@ Roll a table as a Better table in chat with options
 | [options.usePercentage]    | `boolean`             |  false   | Use the % mechanism instead of the default formula+range behavior |
 | [options.stackResultsWithBRTLogic] | `boolean`     |  false   |  if enabled the table results are stacked with the BRT logic like the module item-piles a new 'quantity' property is been added to the table result data to check how much the single result is been stacked |
 | [options.rollAsTableType] | `string`              | null     | Accepted value are `'none','better','loot','harvest','story'`. Roll the RollRable as a specific BRT Roll Table type. Very useful for not duplicate the same rolltable for different usage. If not set the current BRT Roll Table types is used as usual. |
+| [options.rollAsTableTypeAllTheTables] | `boolean`             |  false   | This setting make sense only when you use the parameter 'rollAsTableType'. If true it will treat all the inner tables (or child tables if you prefer) with the same type used on 'rollAsTableType'. Bu default is false. |
 
 **Example**:
 
@@ -291,6 +294,7 @@ Generate a loot
 | [options.usePercentage]    | `boolean`             |  false   | Use the % mechanism instead of the default formula+range behavior |
 | [options.stackResultsWithBRTLogic] | `boolean`     |  false   |  if enabled the table results are stacked with the BRT logic like the module item-piles a new 'quantity' property is been added to the table result data to check how much the single result is been stacked |
 | [options.rollAsTableType] | `string`              | null     | Accepted value are `'none','better','loot','harvest','story'`. Roll the RollRable as a specific BRT Roll Table type. Very useful for not duplicate the same rolltable for different usage. If not set the current BRT Roll Table types is used as usual. |
+| [options.rollAsTableTypeAllTheTables] | `boolean`             |  false   | This setting make sense only when you use the parameter 'rollAsTableType'. If true it will treat all the inner tables (or child tables if you prefer) with the same type used on 'rollAsTableType'. Bu default is false. |
 
 **Example**:
 
@@ -327,6 +331,7 @@ Generate a chat loot
 | [options.usePercentage]    | `boolean`             |  false   | Use the % mechanism instead of the default formula+range behavior |
 | [options.stackResultsWithBRTLogic] | `boolean`     |  false   |  if enabled the table results are stacked with the BRT logic like the module item-piles a new 'quantity' property is been added to the table result data to check how much the single result is been stacked |
 | [options.rollAsTableType] | `string`              | null     | Accepted value are `'none','better','loot','harvest','story'`. Roll the RollRable as a specific BRT Roll Table type. Very useful for not duplicate the same rolltable for different usage. If not set the current BRT Roll Table types is used as usual. |
+| [options.rollAsTableTypeAllTheTables] | `boolean`             |  false   | This setting make sense only when you use the parameter 'rollAsTableType'. If true it will treat all the inner tables (or child tables if you prefer) with the same type used on 'rollAsTableType'. Bu default is false. |
 
 **Example**:
 
@@ -363,6 +368,7 @@ Add loot to selcted token ( or the one passed as a argument)
 | [options.usePercentage]    | `boolean`             |  false   | Use the % mechanism instead of the default formula+range behavior |
 | [options.stackResultsWithBRTLogic] | `boolean`     |  false   |  if enabled the table results are stacked with the BRT logic like the module item-piles a new 'quantity' property is been added to the table result data to check how much the single result is been stacked |
 | [options.rollAsTableType] | `string`              | null     | Accepted value are `'none','better','loot','harvest','story'`. Roll the RollRable as a specific BRT Roll Table type. Very useful for not duplicate the same rolltable for different usage. If not set the current BRT Roll Table types is used as usual. |
+| [options.rollAsTableTypeAllTheTables] | `boolean`             |  false   | This setting make sense only when you use the parameter 'rollAsTableType'. If true it will treat all the inner tables (or child tables if you prefer) with the same type used on 'rollAsTableType'. Bu default is false. |
 
 **Example**:
 
