@@ -1,6 +1,6 @@
 import { CONSTANTS } from "./constants/constants";
 import SETTINGS from "./constants/settings";
-import { BetterRolltableSettingsConfig } from "./core/settingsConfig";
+// import { BetterRolltableSettingsConfig } from "./core/settingsConfig";
 import Logger from "./lib/Logger";
 // import { SYSTEMS } from "./systems";
 
@@ -40,7 +40,7 @@ export function registerSettings() {
     for (let [name, data] of Object.entries(SETTINGS.GET_DEFAULT())) {
         game.settings.register(CONSTANTS.MODULE_ID, name, data);
     }
-    
+
     let defaultSpellCompendium = SYSTEMS.DATA.DEFAULT_SPELL_COMPENDIUM;
     let defaultActorNpcType = SYSTEMS.DATA.DEFAULT_ACTOR_NPC_TYPE;
     let defaultLootSheet = SYSTEMS.DATA.DEFAULT_LOOT_SHEET;
