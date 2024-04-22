@@ -4,7 +4,7 @@ TODO
 
 ### 2.1.17
 
-- Add new api parameters 'rollAsTableType' so you can roll the same roll table as "Loot" or "Harvest" or "Better" or "Story"
+- Add new api parameters 'rollAsTableType' and 'rollAsTableTypeAllTheTables'so you can roll the same roll table as "Loot" or "Harvest" or "Better" or "Story"
 
 ### 2.1.16
 

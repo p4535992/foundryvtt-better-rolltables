@@ -94,6 +94,7 @@ const API = {
      * @param {boolean} [options.usePercentage=false] Use the % mechanism instead of the default formula+range behavior
      * @param {boolean} [options.stackResultsWithBRTLogic=false] if enabled the table results are stacked with the BRT logic like the module item-piles a new 'quantity' property is been added to the table result data to check how much the single result is been stacked
      * @param {('none'|'better'|'loot'|'harvest'|'story')} [options.rollAsTableType=null] Roll the rolltable as a specific BRT Roll Table type. Very useful for not duplicate the same rolltable for different usage. If not set the current BRT Roll Table types is used as usual.
+     * @param {boolean} [options.rollAsTableTypeAllTheTables] This setting make sense only when you use the parameter 'rollAsTableType'. If true it will treat all the inner tables (or child tables if you prefer) with the same type used on 'rollAsTableType'. Bu default is false.
      * @returns {Promise<TableResult[]>}
      */
     async betterTableRoll(tableEntity, options = {}) {
@@ -131,6 +132,7 @@ const API = {
      * @param {boolean} [options.usePercentage=false] Use the % mechanism instead of the default formula+range behavior
      * @param {boolean} [options.stackResultsWithBRTLogic=false] if enabled the table results are stacked with the BRT logic like the module item-piles a new 'quantity' property is been added to the table result data to check how much the single result is been stacked
      * @param {('none'|'better'|'loot'|'harvest'|'story')} [options.rollAsTableType=null] Roll the rolltable as a specific BRT Roll Table type. Very useful for not duplicate the same rolltable for different usage. If not set the current BRT Roll Table types is used as usual.
+     * @param {boolean} [options.rollAsTableTypeAllTheTables] This setting make sense only when you use the parameter 'rollAsTableType'. If true it will treat all the inner tables (or child tables if you prefer) with the same type used on 'rollAsTableType'. Bu default is false.
      * @returns {Promise<{results:TableResult[],currenciesData:Record<string,number>}>}
      */
     async betterTableRollV2(tableEntity, options = {}) {
@@ -247,6 +249,7 @@ const API = {
      * @param {boolean} [options.usePercentage=false] Use the % mechanism instead of the default formula+range behavior
      * @param {boolean} [options.stackResultsWithBRTLogic=false] if enabled the table results are stacked with the BRT logic like the module item-piles a new 'quantity' property is been added to the table result data to check how much the single result is been stacked
      * @param {('none'|'better'|'loot'|'harvest'|'story')} [options.rollAsTableType=null] Roll the rolltable as a specific BRT Roll Table type. Very useful for not duplicate the same rolltable for different usage. If not set the current BRT Roll Table types is used as usual.
+     * @param {boolean} [options.rollAsTableTypeAllTheTables] This setting make sense only when you use the parameter 'rollAsTableType'. If true it will treat all the inner tables (or child tables if you prefer) with the same type used on 'rollAsTableType'. Bu default is false.
      * @returns {Promise<void>}
      */
     async addLootToSelectedToken(tableEntity, token = null, options = {}) {
@@ -273,6 +276,7 @@ const API = {
      * @param {boolean} [options.usePercentage=false] Use the % mechanism instead of the default formula+range behavior
      * @param {boolean} [options.stackResultsWithBRTLogic=false] if enabled the table results are stacked with the BRT logic like the module item-piles a new 'quantity' property is been added to the table result data to check how much the single result is been stacked
      * @param {('none'|'better'|'loot'|'harvest'|'story')} [options.rollAsTableType=null] Roll the rolltable as a specific BRT Roll Table type. Very useful for not duplicate the same rolltable for different usage. If not set the current BRT Roll Table types is used as usual.
+     * @param {boolean} [options.rollAsTableTypeAllTheTables] This setting make sense only when you use the parameter 'rollAsTableType'. If true it will treat all the inner tables (or child tables if you prefer) with the same type used on 'rollAsTableType'. Bu default is false.
      * @returns {Promise<void>}
      */
     async generateLoot(tableEntity, options = {}) {
@@ -299,6 +303,7 @@ const API = {
      * @param {boolean} [options.usePercentage=false] Use the % mechanism instead of the default formula+range behavior
      * @param {boolean} [options.stackResultsWithBRTLogic=false] if enabled the table results are stacked with the BRT logic like the module item-piles a new 'quantity' property is been added to the table result data to check how much the single result is been stacked
      * @param {('none'|'better'|'loot'|'harvest'|'story')} [options.rollAsTableType=null] Roll the rolltable as a specific BRT Roll Table type. Very useful for not duplicate the same rolltable for different usage. If not set the current BRT Roll Table types is used as usual.
+     * @param {boolean} [options.rollAsTableTypeAllTheTables] This setting make sense only when you use the parameter 'rollAsTableType'. If true it will treat all the inner tables (or child tables if you prefer) with the same type used on 'rollAsTableType'. Bu default is false.
      * @returns {Promise<void>}
      */
     async generateLootOnSelectedToken(tableEntity, options = {}) {
@@ -325,6 +330,7 @@ const API = {
      * @param {boolean} [options.usePercentage=false] Use the % mechanism instead of the default formula+range behavior
      * @param {boolean} [options.stackResultsWithBRTLogic=false] if enabled the table results are stacked with the BRT logic like the module item-piles a new 'quantity' property is been added to the table result data to check how much the single result is been stacked
      * @param {('none'|'better'|'loot'|'harvest'|'story')} [options.rollAsTableType=null] Roll the rolltable as a specific BRT Roll Table type. Very useful for not duplicate the same rolltable for different usage. If not set the current BRT Roll Table types is used as usual.
+     * @param {boolean} [options.rollAsTableTypeAllTheTables] This setting make sense only when you use the parameter 'rollAsTableType'. If true it will treat all the inner tables (or child tables if you prefer) with the same type used on 'rollAsTableType'. Bu default is false.
      * @returns {Promise<void>}
      */
     async generateChatLoot(tableEntity, options = {}) {
@@ -355,6 +361,7 @@ const API = {
      * @param {boolean} [options.usePercentage=false] Use the % mechanism instead of the default formula+range behavior
      * @param {boolean} [options.stackResultsWithBRTLogic=false] if enabled the table results are stacked with the BRT logic like the module item-piles a new 'quantity' property is been added to the table result data to check how much the single result is been stacked
      * @param {('none'|'better'|'loot'|'harvest'|'story')} [options.rollAsTableType=null] Roll the rolltable as a specific BRT Roll Table type. Very useful for not duplicate the same rolltable for different usage. If not set the current BRT Roll Table types is used as usual.
+     * @param {boolean} [options.rollAsTableTypeAllTheTables] This setting make sense only when you use the parameter 'rollAsTableType'. If true it will treat all the inner tables (or child tables if you prefer) with the same type used on 'rollAsTableType'. Bu default is false.
      * @returns {Promise<void>}
      */
     async generateHarvest(tableEntity, options = {}) {
@@ -381,6 +388,7 @@ const API = {
      * @param {boolean} [options.usePercentage=false] Use the % mechanism instead of the default formula+range behavior
      * @param {boolean} [options.stackResultsWithBRTLogic=false] if enabled the table results are stacked with the BRT logic like the module item-piles a new 'quantity' property is been added to the table result data to check how much the single result is been stacked
      * @param {('none'|'better'|'loot'|'harvest'|'story')} [options.rollAsTableType=null] Roll the rolltable as a specific BRT Roll Table type. Very useful for not duplicate the same rolltable for different usage. If not set the current BRT Roll Table types is used as usual.
+     * @param {boolean} [options.rollAsTableTypeAllTheTables] This setting make sense only when you use the parameter 'rollAsTableType'. If true it will treat all the inner tables (or child tables if you prefer) with the same type used on 'rollAsTableType'. Bu default is false.
      * @returns {Promise<void>}
      */
     async generateHarvestOnSelectedToken(tableEntity, options = {}) {
@@ -407,6 +415,7 @@ const API = {
      * @param {boolean} [options.usePercentage=false] Use the % mechanism instead of the default formula+range behavior
      * @param {boolean} [options.stackResultsWithBRTLogic=false] if enabled the table results are stacked with the BRT logic like the module item-piles a new 'quantity' property is been added to the table result data to check how much the single result is been stacked
      * @param {('none'|'better'|'loot'|'harvest'|'story')} [options.rollAsTableType=null] Roll the rolltable as a specific BRT Roll Table type. Very useful for not duplicate the same rolltable for different usage. If not set the current BRT Roll Table types is used as usual.
+     * @param {boolean} [options.rollAsTableTypeAllTheTables] This setting make sense only when you use the parameter 'rollAsTableType'. If true it will treat all the inner tables (or child tables if you prefer) with the same type used on 'rollAsTableType'. Bu default is false.
      * @returns {Promise<void>}
      */
     async generateChatHarvest(tableEntity, options = {}) {
@@ -698,6 +707,7 @@ const API = {
      * @param {boolean} [options.usePercentage=false] Use the % mechanism instead of the default formula+range behavior
      * @param {boolean} [options.stackResultsWithBRTLogic=false] if enabled the table results are stacked with the BRT logic like the module item-piles a new 'quantity' property is been added to the table result data to check how much the single result is been stacked
      * @param {('none'|'better'|'loot'|'harvest'|'story')} [options.rollAsTableType=null] Roll the rolltable as a specific BRT Roll Table type. Very useful for not duplicate the same rolltable for different usage. If not set the current BRT Roll Table types is used as usual.
+     * @param {boolean} [options.rollAsTableTypeAllTheTables] This setting make sense only when you use the parameter 'rollAsTableType'. If true it will treat all the inner tables (or child tables if you prefer) with the same type used on 'rollAsTableType'. Bu default is false.
      * @returns {Promise<TableResult[]>}
      */
     async invokeBetterTableRollArr(...inAttributes) {
