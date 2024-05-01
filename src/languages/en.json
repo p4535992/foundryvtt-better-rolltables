@@ -238,6 +238,7 @@
             "Clear": "Clear",
             "Currencies": "Currencies",
             "DropItem": "Drop item, folder, table, or compendium here...",
+            "DropRollTable": "Drop folder, table, or compendium here...",
             "GrantToTarget": "Grant to Target",
             "HeaderActorList": "BRT Actor List",
             "Item": "Item",

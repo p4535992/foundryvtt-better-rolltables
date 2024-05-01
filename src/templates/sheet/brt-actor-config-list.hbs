@@ -1,4 +1,4 @@
-<form>
+<form class="better-rolltables-list">
 
   <div data-action="drop">{{localize "better-rolltables.label.DropRollTable"}}</div>
 
@@ -35,18 +35,20 @@
     <ol class="roll-table-list">
       {{#each rollTableList as |result i|}}
         <li class="roll-table" data-uuid="{{uuid}}">
+            <input data-uuid="uuid" name="flags.better-rolltables.brt-actor-list-roll-table-list.{{i}}.uuid" type="hidden" value="{{result.uuid}}">
             <div class="roll-table-quantity">
-                <input data-quantity="quantity" name="rollTableList.{{i}}.quantity" type="text" value="{{result.quantity}}">
+                <input data-quantity="quantity" name="flags.better-rolltables.brt-actor-list-roll-table-list.{{i}}.quantity" type="text" value="{{result.quantity}}">
             </div>
-            <div class="roll-table-type">
-                <select data-type="type" name="rollTableList.{{i}}.type">
-                    {{#select result.type}}
-                        {{#each result.types}}
+            <div class="roll-table-brtType">
+                <select data-brtType="brtType" name="flags.better-rolltables.brt-actor-list-roll-table-list.{{i}}.brtType">
+                    {{#select result.brtType}}
+                        {{#each @root.brtTypes}}
                             <option value="{{this}}">{{this}}</option>
                         {{/each}}
                     {{/select}}
                 </select>
             </div>
+            <img src="{{result.img}}" width="32" height="32"/>
             <a data-action="render">{{name}}</a>
             <a data-action="delete"><i class="fa-solid fa-trash"></i></a>
         </li>

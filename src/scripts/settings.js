@@ -200,7 +200,7 @@ export function registerSettings() {
         type: Boolean,
     });
 
-    game.settings.register(MODULE, "headerActorListLabel", {
+    game.settings.register(CONSTANTS.MODULE_ID, "headerActorListLabel", {
         name: `${CONSTANTS.MODULE_ID}.Settings.headerActorListLabel.name`,
         hint: `${CONSTANTS.MODULE_ID}.Settings.headerActorListLabel.hint`,
         scope: "world",

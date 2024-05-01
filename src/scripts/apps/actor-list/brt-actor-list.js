@@ -6,23 +6,21 @@ import API from "../../API.js";
 import { BRTUtils } from "../../core/utils.js";
 
 export default class BRTActorList extends FormApplication {
-    static initializeList() {
-        Hooks.on("getActorSheetHeaderButtons", (app, array) => {
-            if (!game.user.isGM) {
-                return;
-            }
-            const listButton = {
-                class: CONSTANTS.MODULE_ID,
-                icon: "fa-solid fa-coins",
-                onclick: async () => new BRTActorList(app.document).render(true),
-                label: game.i18n.localize(`${CONSTANTS.MODULE_ID}.label.HeaderActorList`),
-            };
-            const isChar2 = app.constructor.name === "ActorSheet5eCharacter2";
-            if (!isChar2 && !game.settings.get(CONSTANTS.MODULE_ID, "headerActorListLabel")) {
-                delete listButton.label;
-            }
-            array.unshift(listButton);
-        });
+    static initializeActorList(app, array) {
+        if (!game.user.isGM) {
+            return;
+        }
+        const listButton = {
+            class: CONSTANTS.MODULE_ID,
+            icon: "fa-solid fa-coins",
+            onclick: async () => new BRTActorList(app.document).render(true),
+            label: game.i18n.localize(`${CONSTANTS.MODULE_ID}.label.HeaderActorList`),
+        };
+        const isChar2 = app.constructor.name === "ActorSheet5eCharacter2";
+        if (!isChar2 && !game.settings.get(CONSTANTS.MODULE_ID, "headerActorListLabel")) {
+            delete listButton.label;
+        }
+        array.unshift(listButton);
     }
 
     constructor(actor, options = {}) {
@@ -73,7 +71,7 @@ export default class BRTActorList extends FormApplication {
             .reduce((acc, data) => {
                 const rollTable = RetrieveHelpers.getRollTableSync(data.uuid); // fromUuidSync(data.uuid ?? "");
                 if (rollTable) {
-                    acc.push({ ...data, name: rollTable.name });
+                    acc.push({ ...data, name: rollTable.name, img: rollTable.img });
                 }
                 return acc;
             }, [])
@@ -92,34 +90,75 @@ export default class BRTActorList extends FormApplication {
         return {
             rollTableList: rollTableList,
             currencies: currencies,
+            brtTypes: CONSTANTS.TYPES,
         };
     }
 
-    /** @override */
-    async _onChangeInput(event) {
-        /*
-    const key = event.currentTarget.dataset.key;
-    if (CONFIG.DND5E.currencies[key]) {
-      const data = this._getSubmitData();
-      this.clone.updateSource(data);
-    } else {
-      const uuid = event.currentTarget.closest("[data-uuid]").dataset.uuid;
-      this._updateQuantity(uuid, event.currentTarget.value);
-    }
-    */
+    // /** @override */
+    // async _onChangeInput(event) {
+    //     if (event.currentTarget.closest("[data-currencies]")?.dataset?.currencies) {
+    //         // const currencies = event.currentTarget.closest("[data-currencies]").value;
+    //         // this.clone.updateSource({[`flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.ACTOR_LIST.CURRENCIES}`]: currencies});
+    //         const data = this._getSubmitData();
+    //         this.clone.updateSource(data);
+    //     } else {
+    //         const uuid = event.currentTarget.closest("[data-uuid]").dataset.uuid;
+    //         const quantity = event.currentTarget.closest("[data-quantity]").dataset.quantity;
+    //         const brtType= event.currentTarget.closest("[data-brtType]").dataset.brtType;
+    //         this._updateQuantity(uuid, quantity, brtType);
+    //     }
+    //     return this.render();
+    // }
 
-        // if(event.currentTarget.closest("[data-currencies]").dataset.currencies) {
-        //     // const currencies = event.currentTarget.closest("[data-currencies]").dataset.currencies;
-        //     // this.clone.updateSource({[`flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.ACTOR_LIST.CURRENCIES}`]: currencies});
-        //     const data = this._getSubmitData();
-        //     this.clone.updateSource(data);
-        // } else {
-        const uuid = event.currentTarget.closest("[data-uuid]").dataset.uuid;
-        const quantity = event.currentTarget.closest("[data-quantity]").dataset.quantity;
-        const type = event.currentTarget.closest("[data-type]").dataset.type;
-        this._updateQuantity(uuid, quantity, type);
-        // }
-        return this.render();
+    /**
+     * Get an object of update data used to update the form's target object
+     * @param {object} updateData     Additional data that should be merged with the form data
+     * @returns {object}               The prepared update data
+     * @protected
+     * @override
+     */
+    _getSubmitData(updateData = {}) {
+        let dataTmp = super._getSubmitData(updateData);
+        dataTmp = foundry.utils.expandObject(dataTmp);
+
+        let currencies = foundry.utils.getProperty(
+            dataTmp,
+            `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.ACTOR_LIST.CURRENCIES}`,
+        );
+
+        let rollTableListToPatch = foundry.utils.getProperty(
+            dataTmp,
+            `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.ACTOR_LIST.ROLL_TABLES_LIST}`,
+        );
+
+        const rollTableList = [];
+        if (rollTableListToPatch) {
+            for (const [key, value] of Object.entries(rollTableListToPatch)) {
+                rollTableList.push(value);
+            }
+        }
+        this.clone.updateSource({
+            [`flags.${CONSTANTS.MODULE_ID}`]: {
+                [`${CONSTANTS.FLAGS.ACTOR_LIST.CURRENCIES}`]: currencies,
+                [`${CONSTANTS.FLAGS.ACTOR_LIST.ROLL_TABLES_LIST}`]: rollTableList,
+            },
+        });
+
+        foundry.utils.setProperty(dataTmp, `flags.${CONSTANTS.MODULE_ID}`, {});
+        foundry.utils.setProperty(
+            dataTmp,
+            `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.ACTOR_LIST.ROLL_TABLES_LIST}`,
+            rollTableList,
+        );
+        foundry.utils.setProperty(
+            dataTmp,
+            `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.ACTOR_LIST.CURRENCIES}`,
+            currencies,
+        );
+
+        dataTmp = foundry.utils.flattenObject(dataTmp);
+
+        return dataTmp;
     }
 
     /** @override */
@@ -134,7 +173,11 @@ export default class BRTActorList extends FormApplication {
         for (const rollTable of rollTables) {
             const uuid = rollTable.uuid;
             const name = rollTable.name;
-            this._updateQuantity(uuid, null, BRTUtils.retrieveBRTType(rollTable));
+            this._updateQuantity(
+                uuid,
+                BRTUtils.retrieveBRTRollAmount(rollTable) || "1",
+                BRTUtils.retrieveBRTType(rollTable),
+            );
         }
         Logger.info(
             Logger.i18nFormat(`${CONSTANTS.MODULE_ID}.label.WarningAddedRollTables`, {
@@ -150,19 +193,19 @@ export default class BRTActorList extends FormApplication {
      * Update the quantity of an existing roll table on the list.
      * @param {string} uuid           The uuid of the roll table to update. Add it if not found.
      * @param {string} [quantity]     A specific value to set it to, otherwise add 1.
-     * @param {string} [type]
+     * @param {string} [brtType]
      * @returns {void}
      */
-    _updateQuantity(uuid, quantity = null, type = null) {
+    _updateQuantity(uuid, quantity = null, brtType = null) {
         const list = this._gatherTables();
         const existing = list.find((e) => e.uuid === uuid);
         if (existing) {
             existing.quantity = quantity ? quantity : existing.quantity;
-            existing.type = type ? type : existing.type;
+            existing.brtType = brtType ? brtType : existing.brtType;
         } else {
             list.push({
-                quantity: quantity ? quantity : 1,
-                type: type ? type : "none",
+                quantity: quantity ? quantity : "1",
+                brtType: brtType ? brtType : "none",
                 uuid: uuid,
             });
         }
@@ -227,13 +270,13 @@ export default class BRTActorList extends FormApplication {
 
         const rollTables = [];
         const rollTableArray = await Promise.all(
-            rollTablesArrayBase.map(async ({ quantity, type, uuid }) => {
+            rollTablesArrayBase.map(async ({ quantity, brtType, uuid }) => {
                 const rollTable = await RetrieveHelpers.getRollTableAsync(uuid);
-                return [quantity, type, uuid, rollTable];
+                return [quantity, brtType, uuid, rollTable];
             }),
         );
 
-        for (const [quantity, type, uuid, rollTable] of rollTableArray) {
+        for (const [quantity, brtType, uuid, rollTable] of rollTableArray) {
             if (!rollTable) {
                 Logger.warn(
                     Logger.i18nFormat(`${CONSTANTS.MODULE_ID}.label.WarningRollTableNotFound`, { uuid: uuid }),
@@ -301,7 +344,7 @@ export default class BRTActorList extends FormApplication {
                 actor: target,
                 options: {
                     rollsAmount: quantity,
-                    rollAsTableType: type,
+                    rollAsTableType: brtType,
                 },
             });
         }
@@ -325,7 +368,7 @@ export default class BRTActorList extends FormApplication {
         this.clone.updateSource({
             [`flags.${CONSTANTS.MODULE_ID}`]: {
                 [`${CONSTANTS.FLAGS.ACTOR_LIST.ROLL_TABLES_LIST}`]: [],
-                [`${CONSTANTS.FLAGS.ACTOR_LIST.CURRENCIES}`]: {},
+                [`${CONSTANTS.FLAGS.ACTOR_LIST.CURRENCIES}`]: "",
             },
         });
         return this.render();
@@ -367,7 +410,7 @@ export default class BRTActorList extends FormApplication {
 
     /**
      * Read all roll tables on the sheet.
-     * @returns {{uuid:string; quantity:number; type:string}[]}      An array of objects with quantity, uuid, and name.
+     * @returns {{uuid:string; quantity:number; brtType:string}[]}      An array of objects with quantity, uuid, and name.
      */
     _gatherTables() {
         return (
@@ -415,7 +458,8 @@ export default class BRTActorList extends FormApplication {
         const isTable = data.type === "RollTable";
         const isPack = data.type === "Compendium";
 
-        if (!isFolder && !isItem && !isTable && !isPack) {
+        // if (!isFolder && !isItem && !isTable && !isPack) {
+        if (!isFolder && !isTable && !isPack) {
             Logger.warn(Logger.i18nFormat(`${CONSTANTS.MODULE_ID}.label.WarningInvalidDocument`, {}), true);
             return false;
         }
@@ -455,7 +499,7 @@ export default class BRTActorList extends FormApplication {
 
     // Must be a valid roll table type.
     if (!this.validRollTableTypes.has(BRTUtils.retrieveBRTType(rollTable))) {
-      Logger.warn(Logger.i18nFormat(`${CONSTANTS.MODULE_ID}.label.WarningActorRollTable`,{type: BRTUtils.retrieveBRTType(rollTable)}), true);
+      Logger.warn(Logger.i18nFormat(`${CONSTANTS.MODULE_ID}.label.WarningActorRollTable`,{brtType: BRTUtils.retrieveBRTType(rollTable)}), true);
       return false;
     }
     */
@@ -508,7 +552,7 @@ export default class BRTActorList extends FormApplication {
      * @returns {Promise<RollTable[]|boolean>}     The array of valid roll tables, or false if none found.
      */
     async _dropPack(data) {
-        const pack = game.packs.get(data.id);
+        const pack = RetrieveHelpers.getCompendiumCollectionSync(data.id); // game.packs.get(data.id);
         if (pack.metadata.type !== "RollTable") {
             Logger.warn(Logger.i18nFormat(`${CONSTANTS.MODULE_ID}.label.WarningInvalidDocument`, {}), true);
             return false;
@@ -523,7 +567,15 @@ export default class BRTActorList extends FormApplication {
     }, []);
     */
         const index = await pack.getIndex();
-        const rollTables = index;
+        const rollTables = index.reduce((acc, rollTable) => {
+            return acc.concat([
+                {
+                    ...rollTable,
+                    quantity: BRTUtils.retrieveBRTRollAmount(rollTable) || "1",
+                    brtType: BRTUtils.retrieveBRTType(rollTable),
+                },
+            ]);
+        }, []);
         if (!rollTables.length) {
             Logger.warn(Logger.i18nFormat(`${CONSTANTS.MODULE_ID}.label.WarningEmptyDocument`, {}), true);
             return false;

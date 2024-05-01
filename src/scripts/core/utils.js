@@ -418,6 +418,16 @@ export class BRTUtils {
         return brtTypeToCheck;
     }
 
+    static retrieveBRTRollAmount(tableEntity, rollAmount = null) {
+        let brtRollAmountToCheck = rollAmount
+            ? rollAmount
+            : getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_AMOUNT_KEY}`);
+        if (!brtRollAmountToCheck && tableEntity.quantity) {
+            brtRollAmountToCheck = tableEntity.quantity;
+        }
+        return brtRollAmountToCheck;
+    }
+
     /**
      * @href https://github.com/krbz999/simple-loot-list/blob/main/module/module.mjs
      * @param {RollTable|string|UUID} tableEntity

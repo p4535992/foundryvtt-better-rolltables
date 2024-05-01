@@ -47,7 +47,7 @@
     "socket": true,
     "scripts": [],
     "esmodules": ["module.js"],
-    "styles": ["styles/brt.css"],
+    "styles": ["styles/brt.css", "styles/brt-actor-list.css"],
     "packs": [
         {
             "name": "brt-loot",

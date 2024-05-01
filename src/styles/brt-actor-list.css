@@ -52,9 +52,9 @@
     justify-content: space-between;
 }
 .better-rolltables-list .roll-table-quantity,
-.better-rolltables-list .roll-table-type,
+.better-rolltables-list .roll-table-brtType,
 .better-rolltables-list .header-quantity,
-.better-rolltables-list .header-type {
+.better-rolltables-list .header-brtType {
     text-align: center;
     flex-basis: 6em;
 }
