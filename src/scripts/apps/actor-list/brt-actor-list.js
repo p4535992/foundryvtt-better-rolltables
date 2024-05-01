@@ -272,20 +272,14 @@ export default class BRTActorList extends FormApplication {
         const rollTableArray = await Promise.all(
             rollTablesArrayBase.map(async ({ quantity, brtType, uuid }) => {
                 const rollTable = await RetrieveHelpers.getRollTableAsync(uuid);
-                return [quantity, brtType, uuid, rollTable];
+                return {
+                    quantity: quantity,
+                    brtType: brtType,
+                    uuid: uuid,
+                    rollTable: rollTable,
+                };
             }),
         );
-
-        for (const [quantity, brtType, uuid, rollTable] of rollTableArray) {
-            if (!rollTable) {
-                Logger.warn(
-                    Logger.i18nFormat(`${CONSTANTS.MODULE_ID}.label.WarningRollTableNotFound`, { uuid: uuid }),
-                    true,
-                );
-                continue;
-            }
-            rollTables.push(rollTable);
-        }
 
         /*
     const rollTablesUpdates = [];
@@ -329,7 +323,7 @@ export default class BRTActorList extends FormApplication {
          * @param {Actor} target               The target to receive currencies and roll tables.
          * @param {RollTable[]} rollTables     The roll table data for new roll tables to be created.
          */
-        Hooks.callAll(`${CONSTANTS.MODULE_ID}.preGrantRollTables`, target, rollTables);
+        Hooks.callAll(`${CONSTANTS.MODULE_ID}.preGrantRollTables`, target, rollTableArray);
 
         /*
     await target.update(update);
@@ -338,13 +332,13 @@ export default class BRTActorList extends FormApplication {
     Logger.info(Logger.i18nFormat(`${CONSTANTS.MODULE_ID}.label.WarningCreatedRollTables`, {amount: created, name: target.name}), true);
     */
 
-        for (const rollTable of rollTables) {
+        for (const rollTableElement of rollTableArray) {
             await API.addRollTableItemsToActor({
-                table: rollTable,
+                table: rollTableElement.uuid,
                 actor: target,
                 options: {
-                    rollsAmount: quantity,
-                    rollAsTableType: brtType,
+                    rollsAmount: rollTableElement.quantity,
+                    rollAsTableType: rollTableElement.brtType,
                 },
             });
         }
