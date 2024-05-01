@@ -18,6 +18,7 @@ import Logger from "./lib/Logger.js";
 import ItemPilesHelpers from "./lib/item-piles-helpers.js";
 import { RetrieveHelpers } from "./lib/retrieve-helpers.js";
 import { BRTUtils } from "./core/utils.js";
+import BRTActorList from "./apps/actor-list/brt-actor-list.js";
 
 /**
  * Create a new API class and export it as default
@@ -554,6 +555,11 @@ const API = {
         return actorWithItems ?? [];
     },
 
+    /**
+     *
+     * @param {Object} inAttributes
+     * @returns {Promise<ItemData[]>} Item Data Array.  An array of objects, each containing the item that was added or updated, and the quantity that was added
+     */
     async retrieveItemsDataFromRollTableResult(inAttributes) {
         // if (!Array.isArray(inAttributes)) {
         //   throw Logger.error("rollCompendiumAsRollTable | inAttributes must be of type array");
@@ -748,6 +754,62 @@ const API = {
         } else {
             await brtTable.createChatCard(results, rollMode, roll);
         }
+    },
+
+    // ===================================================
+    // ACTOR LIST API
+    // =====================================================
+
+    /**
+     * Method to add some rolltables to the actor list
+     * @param {Actor|UUID|string} actor
+     * @param {UUID|string} data Can be a RollTable a Folder aCompendiumCollection reference
+     * @param {Object} [options={}]
+     * @returns {Promise<RollTable[]>}
+     */
+    async addRollTablesToActorList(actor, data, options = {}) {
+        const actorTmp = await RetrieveHelpers.getActorAsync(actor);
+        // if (typeof data !== "string") {
+        //     throw Logger.error("addRollTablesToActorList | data must be of type string");
+        // }
+        // const dataTmp = await fromUuid(data);
+        return await BRTActorList.addRollTablesToActorList(actorTmp, dataTmp, options);
+    },
+
+    /**
+     * Method to add some rolltables to the actor list
+     * @param {Actor|UUID|string} actor
+     * @param {('none'|'better'|'loot'|'harvest'|'story')} brtType
+     * @returns {Promise<{rollTableList:{rollTable:RollTable;options:{rollsAmount:string;rollAsTableType:string;}}[];currencies:string}>}
+     */
+    async retrieveActorList(actor, brtType) {
+        const actorTmp = await RetrieveHelpers.getActorAsync(actor);
+        return await BRTActorList.retrieveActorList(actorTmp, brtType);
+    },
+
+    /**
+     *
+     * @param {Actor|UUID|string} actor
+     * @param {('none'|'better'|'loot'|'harvest'|'story')} brtType
+     * @returns {Promise<ItemData[]>} Item Data Array.  An array of objects, each containing the item that was added or updated, and the quantity that was added
+     */
+    async retrieveItemsDataFromRollTableResultActorList(actor, brtType) {
+        const actorTmp = await RetrieveHelpers.getActorAsync(actor);
+        const brtActorList = await this.retrieveActorList(actorTmp, brtType);
+        const rolltableList = brtActorList.rollTableList;
+
+        const itemsDataToReturnTotal = [];
+
+        for (const rollTableElement of rolltableList) {
+            const table = rollTableElement.rollTable;
+            const options = rollTableElement.options;
+            const itemsDataToReturn = await this.retrieveItemsDataFromRollTableResult({
+                table: table,
+                options: options,
+            });
+            itemsDataToReturnTotal.push(itemsDataToReturn ?? []);
+        }
+        return itemsDataToReturnTotal;
     },
 };
 

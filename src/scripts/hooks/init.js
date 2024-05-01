@@ -10,6 +10,7 @@ import { BetterRollTableStoryConfig } from "../tables/story/story-rolltable-conf
 import { BetterRollTableHarvestConfig } from "../tables/harvest/harvest-rolltable-config.js";
 import { isEmptyObject } from "../lib/lib.js";
 import CompendiumsHelpers from "../lib/compendiums-helpers.js";
+import BRTActorList from "../apps/actor-list/brt-actor-list.js";
 
 /**
  * @module BetterRollTables.BetterRolltableHooks
@@ -156,6 +157,10 @@ class BetterRolltableHooks {
         Hooks.on("getCompendiumDirectoryEntryContext", BetterTables.enhanceCompendiumContextMenu);
         Hooks.on("getRollTableDirectoryEntryContext", BetterTables.enhanceRolltableContextMenu);
         Hooks.once("aipSetup", BetterRolltableHooks.onAIPSetup);
+
+        Hooks.on("getActorSheetHeaderButtons", (app, array, options) => {
+            BRTActorList.initializeActorList(app, array);
+        });
 
         // WE DON'T NEED THIS WITH BRT WE ALREADY OVERRRIDE THE ROLL MODE
         // libWrapper.register(CONSTANTS.MODULE_ID, "RollTable.prototype.draw", BetterTables.rolltableDrawHandler, "MIXED");

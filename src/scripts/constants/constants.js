@@ -57,6 +57,12 @@ export const CONSTANTS = {
         /** @deprecated it should be replaced in favor of GENERIC_RESULT_CUSTOM_QUANTITY */
         RESULTS_FORMULA_KEY_FORMULA: "brt-result-formula.formula",
         HIDDEN_TABLE: "brt-hidden-table",
+
+        ACTOR_LIST: {
+            ROLL_TABLES_LIST: "brt-actor-list-roll-table-list",
+            CURRENCIES: "brt-actor-list-currencies",
+            // TYPE: "brt-actor-list-type"
+        },
     },
 
     // different type of table type the mod will support. none will basically keep the basic rolltable functionality

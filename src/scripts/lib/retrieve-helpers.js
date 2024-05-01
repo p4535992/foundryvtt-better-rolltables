@@ -990,4 +990,100 @@ export class RetrieveHelpers {
         }
         return targetTmp;
     }
+
+    static async getFolderAsync(target, ignoreError = false, ignoreName = true) {
+        let targetTmp = target;
+        if (!targetTmp) {
+            throw Logger.error(`Folder is undefined`, true, targetTmp);
+        }
+        if (targetTmp instanceof Folder) {
+            return targetTmp;
+        }
+        // This is just a patch for compatibility with others modules
+        if (targetTmp.document) {
+            targetTmp = targetTmp.document;
+        }
+        if (targetTmp.uuid) {
+            targetTmp = targetTmp.uuid;
+        }
+
+        if (targetTmp instanceof Folder) {
+            return targetTmp;
+        }
+        if (RetrieveHelpers.stringIsUuid(targetTmp)) {
+            targetTmp = await fromUuid(targetTmp);
+        } else {
+            if (game.folders.get(targetTmp)) {
+                targetTmp = game.folders.get(targetTmp);
+            } else if (!ignoreName && game.folders.getName(targetTmp)) {
+                targetTmp = game.folders.getName(targetTmp);
+            }
+        }
+        if (!targetTmp) {
+            if (ignoreError) {
+                Logger.warn(`Folder is not found`, false, targetTmp);
+                return;
+            } else {
+                throw Logger.error(`Folder is not found`, true, targetTmp);
+            }
+        }
+        // Type checking
+        if (!(targetTmp instanceof Folder)) {
+            if (ignoreError) {
+                Logger.warn(`Invalid Folder`, false, targetTmp);
+                return;
+            } else {
+                throw Logger.error(`Invalid Folder`, true, targetTmp);
+            }
+        }
+        return targetTmp;
+    }
+
+    static getFolderSync(target, ignoreError = false, ignoreName = true) {
+        let targetTmp = target;
+        if (!targetTmp) {
+            throw Logger.error(`Folder is undefined`, true, targetTmp);
+        }
+        if (targetTmp instanceof Folder) {
+            return targetTmp;
+        }
+        // This is just a patch for compatibility with others modules
+        if (targetTmp.document) {
+            targetTmp = targetTmp.document;
+        }
+        if (targetTmp.uuid) {
+            targetTmp = targetTmp.uuid;
+        }
+
+        if (targetTmp instanceof Folder) {
+            return targetTmp;
+        }
+        if (RetrieveHelpers.stringIsUuid(targetTmp)) {
+            targetTmp = fromUuidSync(targetTmp);
+        } else {
+            if (game.folders.get(targetTmp)) {
+                targetTmp = game.folders.get(targetTmp);
+            } else if (!ignoreName && game.folders.getName(targetTmp)) {
+                targetTmp = game.folders.getName(targetTmp);
+            }
+        }
+        if (!targetTmp) {
+            if (ignoreError) {
+                Logger.warn(`Folder is not found`, false, targetTmp);
+                return;
+            } else {
+                throw Logger.error(`Folder is not found`, true, targetTmp);
+            }
+        }
+        // Type checking
+        // if (!(targetTmp instanceof Folder)) {
+        //   if (ignoreError) {
+        //     Logger.warn(`Invalid Folder`, false, targetTmp);
+        //     return;
+        //   } else {
+        //     throw Logger.error(`Invalid Folder`, true, targetTmp);
+        //   }
+        // }
+        return targetTmp;
+    }
 }

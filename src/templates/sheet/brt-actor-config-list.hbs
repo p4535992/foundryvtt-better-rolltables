@@ -1,0 +1,74 @@
+<form class="better-rolltables-list">
+
+  <div data-action="drop">{{localize "better-rolltables.label.DropRollTable"}}</div>
+
+  <!--
+  <section>
+    <header class="currency-header">
+      {{localize "better-rolltables.label.Currencies"}}
+    </header>
+    <ol class="currency-list">
+      {{#each currencies}}
+      <li class="currency">
+        <label>{{label}}</label>
+        <input type="text" data-key="{{key}}" name="flags.better-rolltables.brt-actor-list-currencies.{{key}}" value="{{value}}">
+      </li>
+      {{/each}}
+    </ol>
+  </section>
+  -->
+
+  <section>
+    <header class="currency-header">
+        <label>{{localize "better-rolltables.label.Currencies"}}</label>
+    </header>
+    <input type="text" data-currencies="currencies" name="flags.better-rolltables.brt-actor-list-currencies" value="{{currencies}}">
+  </section>
+
+  <section>
+
+    <header class="roll-table-header">
+      <div class="header-quantity">{{localize "better-rolltables.label.Quantity"}}</div>
+      <div>{{localize "better-rolltables.label.RollTable"}}</div>
+    </header>
+
+    <ol class="roll-table-list">
+      {{#each rollTableList as |result i|}}
+        <li class="roll-table" data-uuid="{{uuid}}">
+            <input data-uuid="uuid" name="flags.better-rolltables.brt-actor-list-roll-table-list.{{i}}.uuid" type="hidden" value="{{result.uuid}}">
+            <div class="roll-table-quantity">
+                <input data-quantity="quantity" name="flags.better-rolltables.brt-actor-list-roll-table-list.{{i}}.quantity" type="text" value="{{result.quantity}}">
+            </div>
+            <div class="roll-table-brtType">
+                <select data-brtType="brtType" name="flags.better-rolltables.brt-actor-list-roll-table-list.{{i}}.brtType">
+                    {{#select result.brtType}}
+                        {{#each @root.brtTypes}}
+                            <option value="{{this}}">{{this}}</option>
+                        {{/each}}
+                    {{/select}}
+                </select>
+            </div>
+            <img src="{{result.img}}" width="32" height="32"/>
+            <a data-action="render">{{name}}</a>
+            <a data-action="delete"><i class="fa-solid fa-trash"></i></a>
+        </li>
+      {{/each}}
+    </ol>
+
+  </section>
+
+  <div class="flexrow">
+    <button data-action="submit" type="submit">
+      <i class="fa-solid fa-save"></i> {{localize "better-rolltables.label.SaveList"}}
+    </button>
+
+    <button data-action="grant" type="button">
+      <i class="fa-solid fa-bullseye"></i> {{localize "better-rolltables.label.GrantToTarget"}}
+    </button>
+
+    <button data-action="clear" type="button">
+      <i class="fa-solid fa-eraser"></i> {{localize "better-rolltables.label.Clear"}}
+    </button>
+  </div>
+
+</form>

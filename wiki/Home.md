@@ -32,7 +32,7 @@ Rolled: 7
 
 ### Simple inline currency roll on table text result
 
-Every BRT table apply inline currency roll on text table result with the prefix "currency/ " on the text result content.
+Every BRT table apply inline currency roll on text table result with the prefix "/currency" on the text result content.
 
 This feature support many format from old and other modules here a list:
 
@@ -53,6 +53,12 @@ is converted runtime in this
 ```
 32gp 1sp
 ```
+
+### Actor List Feature
+
+Connect actor with N rolltables, it usually useful in combination with other modules
+
+![](/wiki/img/brt_actor_list_feature.gif)
 
 ### Customize images and names
 

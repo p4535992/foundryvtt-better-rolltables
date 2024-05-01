@@ -417,4 +417,52 @@ export class BRTUtils {
         }
         return brtTypeToCheck;
     }
+
+    static retrieveBRTRollAmount(tableEntity, rollAmount = null) {
+        let brtRollAmountToCheck = rollAmount
+            ? rollAmount
+            : getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_AMOUNT_KEY}`);
+        if (!brtRollAmountToCheck && tableEntity.quantity) {
+            brtRollAmountToCheck = tableEntity.quantity;
+        }
+        return brtRollAmountToCheck;
+    }
+
+    /**
+     * @href https://github.com/krbz999/simple-loot-list/blob/main/module/module.mjs
+     * @param {RollTable|string|UUID} tableEntity
+     * @returns {Promise<Item[]>}
+     */
+    static async extractItemsFromRollTAble(tableEntity) {
+        const table = await RetrieveHelpers.getRollTableAsync(tableEntity);
+        const TYPES = CONST.TABLE_RESULT_TYPES;
+        // Must have valid results embedded.
+        const uuids = table.results
+            .filter((result) => {
+                return [TYPES.DOCUMENT, TYPES.COMPENDIUM].includes(result.type) && !!result.documentCollection;
+            })
+            .map((result) => {
+                if (result.type === TYPES.DOCUMENT) {
+                    return `${result.documentCollection}.${result.documentId}`;
+                }
+                return `Compendium.${result.documentCollection}.Item.${result.documentId}`;
+            });
+
+        if (!uuids.length) {
+            Logger.warn(Logger.i18nFormat(`${CONSTANTS.MODULE_ID}.label.WarningEmptyDocument`, {}), true);
+            return false;
+        }
+
+        // Get the items and check validity.
+        const promises = uuids.map((uuid) => fromUuid(uuid));
+        const resolved = await Promise.all(promises);
+        const items = resolved; // TODO FILTER BY TYPE ??? .filter(r => this.validRollTableTypes.has(r?.type));
+
+        if (!items.length) {
+            Logger.warn(Logger.i18nFormat(`${CONSTANTS.MODULE_ID}.label.WarningEmptyDocument`, {}), true);
+            return false;
+        }
+
+        return items;
+    }
 }

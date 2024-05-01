@@ -2,6 +2,10 @@ TODO
 - Add confirm dialog on reset button ???
 - Add flags for cost/price like already done for the quantity is possible now with item piles support
 
+### 2.1.18
+
+- Add new feature "Actor List" connect with some uuid a actor to N rolltable useful for integrate this with other module
+
 ### 2.1.17
 
 - Add new api parameters 'rollAsTableType' and 'rollAsTableTypeAllTheTables'so you can roll the same roll table as "Loot" or "Harvest" or "Better" or "Story"

@@ -2,110 +2,6 @@ import Logger from "./Logger";
 import { RetrieveHelpers } from "./retrieve-helpers";
 
 export default class ItemPilesHelpers {
-    static PILE_DEFAULTS = {
-        // Core settings
-        enabled: false,
-        type: "pile",
-        distance: 1,
-        macro: "",
-        deleteWhenEmpty: "default",
-        canStackItems: "yes",
-        canInspectItems: true,
-        displayItemTypes: false,
-        description: "",
-
-        // Overrides
-        overrideItemFilters: false,
-        overrideCurrencies: false,
-        overrideSecondaryCurrencies: false,
-        requiredItemProperties: [],
-
-        // Token settings
-        displayOne: false,
-        showItemName: false,
-        overrideSingleItemScale: false,
-        singleItemScale: 1.0,
-
-        // Sharing settings
-        shareItemsEnabled: false,
-        shareCurrenciesEnabled: true,
-        takeAllEnabled: false,
-        splitAllEnabled: true,
-        activePlayers: false,
-
-        // Container settings
-        closed: false,
-        locked: false,
-        closedImage: "",
-        closedImages: [],
-        emptyImage: "",
-        emptyImages: [],
-        openedImage: "",
-        openedImages: [],
-        lockedImage: "",
-        lockedImages: [],
-        closeSound: "",
-        closeSounds: [],
-        openSound: "",
-        openSounds: [],
-        lockedSound: "",
-        lockedSounds: [],
-        unlockedSound: "",
-        unlockedSounds: [],
-
-        // Merchant settings
-        merchantImage: "",
-        infiniteQuantity: false,
-        infiniteCurrencies: true,
-        purchaseOnly: false,
-        hideNewItems: false,
-        hideItemsWithZeroCost: false,
-        keepZeroQuantity: false,
-        onlyAcceptBasePrice: true,
-        displayQuantity: "yes",
-        buyPriceModifier: 1,
-        sellPriceModifier: 0.5,
-        itemTypePriceModifiers: [],
-        actorPriceModifiers: [],
-        tablesForPopulate: [],
-        merchantColumns: [],
-        hideTokenWhenClosed: false,
-        openTimes: {
-            enabled: false,
-            status: "open",
-            /*
-			auto = rely on simple calendar
-			open = always open
-			closed = always closed
-			 */
-            open: {
-                hour: 9,
-                minute: 0,
-            },
-            close: {
-                hour: 18,
-                minute: 0,
-            },
-        },
-        closedDays: [],
-        closedHolidays: [],
-        refreshItemsOnOpen: false,
-        refreshItemsDays: [],
-        refreshItemsHolidays: [],
-        logMerchantActivity: false,
-
-        // Vault settings
-        cols: 10,
-        rows: 5,
-        restrictVaultAccess: false,
-        vaultExpansion: false,
-        baseExpansionCols: 0,
-        baseExpansionRows: 0,
-        vaultAccess: [],
-        logVaultActions: false,
-        vaultLogType: "user_actor",
-    };
-
     static FLAGS = {
         VERSION: `flags.item-piles.version`,
         PILE: `flags.item-piles.data`,
@@ -121,16 +17,52 @@ export default class ItemPilesHelpers {
         CUSTOM_CATEGORY: `flags.item-piles.item.customCategory`,
     };
 
-    static PILE_TYPES = {
-        PILE: "pile",
-        CONTAINER: "container",
-        MERCHANT: "merchant",
-        VAULT: "vault",
-    };
-
     // ===================
     // CURRENCIES HELPERS
     // ===================
+
+    /**
+     * Turns a string of currencies into an array containing the data and quantities for each currency
+     *
+     * @returns {{primary: boolean, name: string, data: Object, img: string, abbreviation: string, exchange: number}[]} An array of object containing the data name and abbreviation for each currency
+     */
+    static retrieveCurrenciesRegistered() {
+        const dic = [];
+        const currenciesPrimary = game.itempiles.API.CURRENCIES;
+        for (let c of currenciesPrimary) {
+            dic.push({
+                primary: currency.primary,
+                name: currency.name,
+                data: currency.data,
+                img: currency.img,
+                abbreviation: currency.abbreviation,
+                exchange: currency.exchange,
+            });
+        }
+        const currenciesSecondary = game.itempiles.API.SECONDARY_CURRENCIES;
+        for (let c of currenciesSecondary) {
+            dic.push({
+                primary: currency.primary,
+                name: currency.name,
+                data: currency.data,
+                img: currency.img,
+                abbreviation: currency.abbreviation.toLowerCase().replace("{#}", "").trim(),
+                exchange: currency.exchange,
+            });
+        }
+        return dic;
+    }
+
+    // /**
+    //  *
+    //  * @param {Actor} actor
+    //  * @param {string} currencyAbbreviation
+    //  * @returns {number}
+    //  */
+    // static retrieveCurrency(actor, currencyAbbreviation) {
+    //     // TODO
+    //     return game.itempiles.API.getActorCurrencies(target, options);
+    // }
 
     /**
      * Turns a string of currencies into an array containing the data and quantities for each currency
@@ -549,7 +481,7 @@ export default class ItemPilesHelpers {
     }
 
     /**
-     * @returns {Promise<array>}  An array of objects, each containing the item that was added or updated, and the quantity that was added
+     * @returns {Promise<ItemData[]>} Item Data Array.  An array of objects, each containing the item that was added or updated, and the quantity that was added
      */
     static async retrieveItemsDataFromRollTable(table, options) {
         return await ItemPilesHelpers.rollTable(table, options);
@@ -559,7 +491,7 @@ export default class ItemPilesHelpers {
      * @href https://github.com/fantasycalendar/FoundryVTT-ItemPiles/blob/master/src/helpers/pile-utilities.js#L1885
      * @param {RollTable|string} tableReference
      * @param {Object} options
-     * @returns {Promise<ItemData[]>} Item Data
+     * @returns {Promise<ItemData[]>} Item Data Array
      */
     static async rollTable(tableReference, options) {
         const table = await RetrieveHelpers.getRollTableAsync(tableReference);
