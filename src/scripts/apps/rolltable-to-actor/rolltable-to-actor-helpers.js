@@ -232,72 +232,81 @@ export class RollTableToActorHelpers {
             return null;
         }
 
-        // TODO
-        /*
-        const itemConversions = {
-            Actor: {
-                name: `${r.text} Portrait`,
-                img: document?.img || "icons/svg/mystery-man.svg",
-                price: new Roll("1d20 + 10").roll({ async: false }).total || 1, // TODO MAKE MORE RANDOM
-                type: game.itempiles.API.ITEM_CLASS_LOOT_TYPE,
-            },
-            Scene: {
-                name: `Map of ${document?.name}`,
-                img: document?.thumb || "icons/svg/direction.svg",
-                price: new Roll("1d20 + 10").roll({ async: false }).total || 1, // TODO MAKE MORE RANDOM
-                type: game.itempiles.API.ITEM_CLASS_LOOT_TYPE,
-            },
-        };
-        */
+        // const itemConversions = {
+        //     Actor: {
+        //         name: `${r.text} Portrait`,
+        //         img: document?.img || "icons/svg/mystery-man.svg",
+        //         price: new Roll("1d20 + 10").roll({ async: false }).total || 1, // TODO MAKE MORE RANDOM
+        //         type: game.itempiles.API.ITEM_CLASS_LOOT_TYPE,
+        //     },
+        //     Scene: {
+        //         name: `Map of ${document?.name}`,
+        //         img: document?.thumb || "icons/svg/direction.svg",
+        //         price: new Roll("1d20 + 10").roll({ async: false }).total || 1, // TODO MAKE MORE RANDOM
+        //         type: game.itempiles.API.ITEM_CLASS_LOOT_TYPE,
+        //     },
+        // };
 
-        if (!(document instanceof Item)) {
-            // const defaultType = Item.TYPES[0]; // TODO add on item piles default item type like actor
-            Logger.debug(`You cannot create itemData from this result probably is not a item`, r);
+        // if (!(document instanceof Item)) {
+        //     // const defaultType = Item.TYPES[0]; // TODO add on item piles default item type like actor
+        //     Logger.debug(`You cannot create itemData from this result probably is not a item`, r);
+        //     return null;
+        // }
+
+        let itemTmp = null;
+        let customName = getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`);
+        let customImage = getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`);
+
+        if (document instanceof Item) {
+            itemTmp = document.toObject();
+            itemTmp.uuid = document.uuid;
+        } else if (document instanceof Actor && game.itempiles.API.ITEM_CLASS_LOOT_TYPE) {
+            Logger.debug(`The Table Result is not a item but a Actor`, false, r);
+            itemTmp = {};
+            itemTmp.name = `${r.text || document?.name} Portrait`;
+            itemTmp.img = document?.img || "icons/svg/mystery-man.svg";
+            itemTmp.type = game.itempiles.API.ITEM_CLASS_LOOT_TYPE;
+            ItemPilesHelpers.setItemCost(itemTmp, await BRTBetterHelpers.tryRoll("1d20 +10", 1)); // TODO MAKE MORE RANDOM
+            ItemPilesHelpers.setItemQuantity(itemTmp, 1);
+
+            customName = `${customName || itemTmp.name} Portrait`;
+        } else if (document instanceof Scene && game.itempiles.API.ITEM_CLASS_LOOT_TYPE) {
+            Logger.debug(`The Table Result is not a item but a Scene`, false, r);
+            itemTmp = {};
+            itemTmp.name = `Map of ${r.text || document?.name}`;
+            itemTmp.img = document?.thumb || document?.img || "icons/svg/direction.svg";
+            itemTmp.type = game.itempiles.API.ITEM_CLASS_LOOT_TYPE;
+            ItemPilesHelpers.setItemCost(itemTmp, await BRTBetterHelpers.tryRoll("1d20 +10", 1)); // TODO MAKE MORE RANDOM
+            ItemPilesHelpers.setItemQuantity(itemTmp, 1);
+
+            customName = `Map of ${customName || itemTmp.name}`;
+        } else {
+            Logger.debug(`The Table Result is not a item`, false, r);
             return null;
         }
 
-        if (document instanceof Item) {
-            const itemTmp = document.toObject();
-            itemTmp.uuid = document.uuid;
-            // Update with custom name if present
-            // Set up custom name
-            setProperty(
-                r,
-                `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_NAME}`,
-                itemTmp.name,
-            );
-            if (!getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`)) {
-                setProperty(
-                    r,
-                    `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`,
-                    itemTmp.name,
-                );
-            } else {
-                setProperty(
-                    itemTmp,
-                    `name`,
-                    getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`),
-                );
-            }
-            // Set up custom icon
-            setProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_ICON}`, itemTmp.img);
-            if (!getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`)) {
-                setProperty(
-                    r,
-                    `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`,
-                    itemTmp.img,
-                );
-            } else {
-                setProperty(
-                    itemTmp,
-                    `img`,
-                    getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`),
-                );
-            }
-            // Set up custom quantity (ty item piles)
-            // TODO DISABLED FOR NOW WE USE THE LOGIC 1:1 INSTEAD N:1 FOR NOW
-            /*
-      if (!getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_QUANTITY}`)) {
+        // Update with custom name if present
+        // Set up custom name
+        setProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_NAME}`, itemTmp.name);
+        if (!customName) {
+            setProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`, itemTmp.name);
+        } else {
+            setProperty(itemTmp, `name`, customName);
+        }
+        // Set up custom icon
+        setProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_ICON}`, itemTmp.img);
+        if (!customImage) {
+            setProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`, itemTmp.img);
+        } else {
+            setProperty(itemTmp, `img`, customImage);
+        }
+        // Set up custom quantity (ty item piles)
+        // TODO DISABLED FOR NOW WE USE THE LOGIC 1:1 INSTEAD N:1 FOR NOW
+        /*
+
+        let customQuantity = getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_QUANTITY}`);
+
+      if (!customQuantity) {
         setProperty(
           r,
           `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_QUANTITY}`,
@@ -307,27 +316,17 @@ export class RollTableToActorHelpers {
         setProperty(
           itemTmp,
           `quantity`,
-          getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_QUANTITY}`)
+          customQuantity
         );
       }
       */
-            // Merge flags brt to item data
-            if (!getProperty(itemTmp, `flags.${CONSTANTS.MODULE_ID}`)) {
-                setProperty(itemTmp, `flags.${CONSTANTS.MODULE_ID}`, {});
-            }
-            mergeObject(itemTmp.flags[CONSTANTS.MODULE_ID], getProperty(r, `flags.${CONSTANTS.MODULE_ID}`));
-            // itemsData.push(itemTmp);
-            return itemTmp;
-        } else if (document instanceof Actor) {
-            Logger.debug(`The Table Result is not a item but a Actor`, false, r);
-            return null;
-        } else if (document instanceof Scene) {
-            Logger.debug(`The Table Result is not a item but a Scene`, false, r);
-            return null;
-        } else {
-            Logger.debug(`The Table Result is not a item`, false, r);
-            return null;
+        // Merge flags brt to item data
+        if (!getProperty(itemTmp, `flags.${CONSTANTS.MODULE_ID}`)) {
+            setProperty(itemTmp, `flags.${CONSTANTS.MODULE_ID}`, {});
         }
+        mergeObject(itemTmp.flags[CONSTANTS.MODULE_ID], getProperty(r, `flags.${CONSTANTS.MODULE_ID}`));
+        // itemsData.push(itemTmp);
+        return itemTmp;
     }
 
     /**

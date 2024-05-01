@@ -621,7 +621,6 @@ export class BetterTables {
      */
     static async handleChatMessageButtons(message, html) {
         if (game.user.isGM) {
-            // TODO SEEM NOT TO WORK ANYMORE ???
             BetterTables._addButtonsToMessage(message, html);
             BetterTables._addRollButtonsToEntityLink(html);
         }
