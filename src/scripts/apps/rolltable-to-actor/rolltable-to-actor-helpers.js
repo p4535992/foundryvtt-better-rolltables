@@ -42,6 +42,34 @@ export class RollTableToActorHelpers {
             targetActor: actor,
             removeExistingActorItems: false,
         });
+        /*
+    let brt = new BetterTables();
+    const results = await brt.getBetterTableResults(table, options);
+    const itemsData = await RollTableToActorHelpers.resultsToItemsData(results);
+    const actorWithItems = await RollTableToActorHelpers.addItemsToActor(actor, itemsData);
+    */
+        // Notify the user of items added
+        /*
+    let itemNames = itemsData
+      .map((i) => {
+        const itemStackAttribute = game.itempiles.API.ITEM_QUANTITY_ATTRIBUTE; // game.settings.get(CONSTANTS.MODULE_ID, SETTINGS.QUANTITY_PROPERTY_PATH);
+        if (!itemStackAttribute) {
+          return i.name;
+        }
+        // const stack = parseInt(getProperty(i.system, itemStackAttribute));
+        const stack = parseInt(getProperty(i, itemStackAttribute));
+        if (stack <= 1) {
+          return i.name;
+        }
+        return `${stack} ${i.name}`;
+      })
+      .join(", ");
+    const actorNames = controlledActors.map((a) => a.name).join(", ");
+    const infoStr = RollTableToActorHelpers._stringInject(Logger.i18n(`${CONSTANTS.MODULE_ID}.label.importSuccess`), [
+      itemNames,
+      actorNames,
+    ]);
+    */
         Logger.info(Logger.i18n(`${CONSTANTS.MODULE_ID}.label.importSuccess`), true);
         const items = itemsData;
         return items;
