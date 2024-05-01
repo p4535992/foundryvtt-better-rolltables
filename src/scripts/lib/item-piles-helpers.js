@@ -481,7 +481,7 @@ export default class ItemPilesHelpers {
     }
 
     /**
-     * @returns {Promise<array>}  An array of objects, each containing the item that was added or updated, and the quantity that was added
+     * @returns {Promise<ItemData[]>} Item Data Array.  An array of objects, each containing the item that was added or updated, and the quantity that was added
      */
     static async retrieveItemsDataFromRollTable(table, options) {
         return await ItemPilesHelpers.rollTable(table, options);
@@ -491,7 +491,7 @@ export default class ItemPilesHelpers {
      * @href https://github.com/fantasycalendar/FoundryVTT-ItemPiles/blob/master/src/helpers/pile-utilities.js#L1885
      * @param {RollTable|string} tableReference
      * @param {Object} options
-     * @returns {Promise<ItemData[]>} Item Data
+     * @returns {Promise<ItemData[]>} Item Data Array
      */
     static async rollTable(tableReference, options) {
         const table = await RetrieveHelpers.getRollTableAsync(tableReference);

@@ -555,6 +555,11 @@ const API = {
         return actorWithItems ?? [];
     },
 
+    /**
+     *
+     * @param {Object} inAttributes
+     * @returns {Promise<ItemData[]>} Item Data Array.  An array of objects, each containing the item that was added or updated, and the quantity that was added
+     */
     async retrieveItemsDataFromRollTableResult(inAttributes) {
         // if (!Array.isArray(inAttributes)) {
         //   throw Logger.error("rollCompendiumAsRollTable | inAttributes must be of type array");
@@ -776,6 +781,31 @@ const API = {
     async retrieveActorList(actor, brtType) {
         const actorTmp = await RetrieveHelpers.getActorAsync(actor);
         return await BRTActorList.retrieveActorList(actorTmp, brtType);
+    },
+
+    /**
+     *
+     * @param {Actor|UUID|string} actor
+     * @param {('none'|'better'|'loot'|'harvest'|'story')} brtType
+     * @returns {Promise<ItemData[]>} Item Data Array.  An array of objects, each containing the item that was added or updated, and the quantity that was added
+     */
+    async retrieveItemsDataFromRollTableResultActorList(actor, brtType) {
+        const actorTmp = await RetrieveHelpers.getActorAsync(actor);
+        const brtActorList = await this.retrieveActorList(actorTmp, brtType);
+        const rolltableList = brtActorList.rollTableList;
+
+        const itemsDataToReturnTotal = [];
+
+        for (const rollTableElement of rolltableList) {
+            const table = rollTableElement.rollTable;
+            const options = rollTableElement.options;
+            const itemsDataToReturn = await this.retrieveItemsDataFromRollTableResult({
+                table: table,
+                options: options,
+            });
+            itemsDataToReturnTotal.push(itemsDataToReturn ?? []);
+        }
+        return itemsDataToReturnTotal;
     },
 };
 

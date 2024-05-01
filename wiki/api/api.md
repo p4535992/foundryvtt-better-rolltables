@@ -467,4 +467,6 @@ const itemsData = await game.modules.get("better-rolltables").api.retrieveItemsD
  game.modules.get('better-rolltables').api.addRollTablesToActorList(actor, data, options = {});
 
 game.modules.get('better-rolltables').api.retrieveActorList(actor, brtType) ;
+
+game.modules.get('better-rolltables').api.retrieveItemsDataFromRollTableResultActorList(actor, brtType) {
 ```

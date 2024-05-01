@@ -9,6 +9,12 @@ import { RetrieveHelpers } from "../../lib/retrieve-helpers";
 import ItemPilesHelpers from "../../lib/item-piles-helpers";
 
 export class RollTableToActorHelpers {
+    /**
+     *
+     * @param {RollTable} table
+     * @param {Object} options
+     * @returns {Promise<ItemData[]>} Item Data Array.  An array of objects, each containing the item that was added or updated, and the quantity that was added
+     */
     static async retrieveItemsDataFromRollTableResult(table, options = {}) {
         let itemsData = await ItemPilesHelpers.retrieveItemsDataFromRollTable(table, options);
         /*
