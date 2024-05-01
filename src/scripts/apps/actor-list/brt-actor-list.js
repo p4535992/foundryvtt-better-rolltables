@@ -12,7 +12,7 @@ export default class BRTActorList extends FormApplication {
         }
         const listButton = {
             class: CONSTANTS.MODULE_ID,
-            icon: "fa-solid fa-coins",
+            icon: "fa-solid fa-table-rows",
             onclick: async () => new BRTActorList(app.document).render(true),
             label: game.i18n.localize(`${CONSTANTS.MODULE_ID}.label.HeaderActorList`),
         };
@@ -464,15 +464,15 @@ export default class BRTActorList extends FormApplication {
         // }
         // Case 2: Folder of roll tables dropped.
         if (isFolder) {
-            return this._dropFolder(data);
+            return await this._dropFolder(data);
         }
         // Case 3: RollTable dropped.
         if (isTable) {
-            return this._dropRollTable(data);
+            return await this._dropRollTable(data);
         }
         // Case 4: Compendium dropped.
         if (isPack) {
-            return this._dropPack(data);
+            return await this._dropPack(data);
         }
     }
 
@@ -575,5 +575,151 @@ export default class BRTActorList extends FormApplication {
             return false;
         }
         return rollTables;
+    }
+
+    // =========================================================
+    // STATIC
+    // =======================================================
+
+    /**
+     * Method to add some rolltables to the actor list
+     * @param {Actor|UUID|string} actor
+     * @param {RollTable|Folder|CompendiumCollection} data
+     * @param {Object} [options={}]
+     * @returns {Promise<RollTable[]>}
+     */
+    static async addRollTablesToActorList(actor, data, options = {}) {
+        const isFolder = data.type === "Folder";
+        const isTable = data.type === "RollTable";
+        const isPack = data.type === "Compendium";
+
+        const rollTables = null;
+
+        // if (!isFolder && !isItem && !isTable && !isPack) {
+        if (!isFolder && !isTable && !isPack) {
+            Logger.warn(Logger.i18nFormat(`${CONSTANTS.MODULE_ID}.label.WarningInvalidDocument`, {}), true);
+            return false;
+        }
+
+        // Case 2: Folder of roll tables dropped.
+        if (isFolder) {
+            const folder = await fromUuid(data.uuid);
+            // Must be a folder of roll tables.
+            if (folder.type !== "RollTable") {
+                Logger.warn(Logger.i18nFormat(`${CONSTANTS.MODULE_ID}.label.WarningInvalidDocument`, {}), true);
+                return false;
+            }
+            rollTables = folder.contents;
+        }
+        // Case 3: RollTable dropped.
+        if (isTable) {
+            const rollTable = await RetrieveHelpers.getRollTableAsync(data.uuid);
+            rollTables = [rollTable];
+        }
+        // Case 4: Compendium dropped.
+        if (isPack) {
+            const pack = RetrieveHelpers.getCompendiumCollectionSync(data.id); // game.packs.get(data.id);
+            if (pack.metadata.type !== "RollTable") {
+                Logger.warn(Logger.i18nFormat(`${CONSTANTS.MODULE_ID}.label.WarningInvalidDocument`, {}), true);
+                return false;
+            }
+
+            const index = await pack.getIndex();
+            rollTables = index.reduce((acc, rollTable) => {
+                return acc.concat([
+                    {
+                        ...rollTable,
+                        quantity: BRTUtils.retrieveBRTRollAmount(rollTable) || "1",
+                        brtType: BRTUtils.retrieveBRTType(rollTable),
+                    },
+                ]);
+            }, []);
+        }
+
+        if (!rollTables?.length) {
+            Logger.warn(Logger.i18nFormat(`${CONSTANTS.MODULE_ID}.label.WarningEmptyDocument`, {}), true);
+            return false;
+        }
+
+        for (const rollTable of rollTables) {
+            const uuid = rollTable.uuid;
+            const name = rollTable.name;
+
+            const quantity = BRTUtils.retrieveBRTRollAmount(rollTable) || "1";
+            const brtType = BRTUtils.retrieveBRTType(rollTable);
+
+            const list =
+                foundry.utils.getProperty(
+                    actor,
+                    `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.ACTOR_LIST.ROLL_TABLES_LIST}`,
+                ) ?? [];
+
+            const existing = list.find((e) => e.uuid === uuid);
+            if (existing) {
+                existing.quantity = quantity ? quantity : existing.quantity;
+                existing.brtType = brtType ? brtType : existing.brtType;
+            } else {
+                list.push({
+                    quantity: quantity ? quantity : "1",
+                    brtType: brtType ? brtType : "none",
+                    uuid: uuid,
+                });
+            }
+            actor.update({
+                [`flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.ACTOR_LIST.ROLL_TABLES_LIST}`]: list,
+            });
+        }
+        Logger.info(
+            Logger.i18nFormat(`${CONSTANTS.MODULE_ID}.label.WarningAddedRollTables`, {
+                amount: rollTables.length,
+                name: actor.name,
+            }),
+            true,
+        );
+        return rollTables;
+    }
+
+    /**
+     * Method to add some rolltables to the actor list
+     * @param {Actor|UUID|string} actor
+     * @param {('none'|'better'|'loot'|'harvest'|'story')} brtType
+     * @returns {Promise<{rollTableList:{rollTable:RollTable;options:{rollsAmount:string;rollAsTableType:string;}}[];currencies:string}>}
+     */
+    static async retrieveActorList(actor, brtType) {
+        const list =
+            foundry.utils.getProperty(
+                actor,
+                `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.ACTOR_LIST.ROLL_TABLES_LIST}`,
+            ) ?? [];
+        const curr =
+            foundry.utils.getProperty(actor, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.ACTOR_LIST.CURRENCIES}`) ??
+            "";
+
+        let listTmp = [];
+        if (brtType && brtType !== "none") {
+            listTmp = list.filter((rl) => {
+                return rl.brtType === brtType;
+            });
+        } else {
+            listTmp = list;
+        }
+
+        const rollTableArray = await Promise.all(
+            listTmp.map(async ({ quantity, brtType, uuid }) => {
+                const rollTable = await RetrieveHelpers.getRollTableAsync(uuid);
+                return {
+                    rollTable: rollTable,
+                    options: {
+                        rollsAmount: quantity,
+                        rollAsTableType: brtType,
+                    },
+                };
+            }),
+        );
+
+        return {
+            rollTableList: rollTableArray,
+            currencies: curr,
+        };
     }
 }

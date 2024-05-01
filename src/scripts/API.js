@@ -18,6 +18,7 @@ import Logger from "./lib/Logger.js";
 import ItemPilesHelpers from "./lib/item-piles-helpers.js";
 import { RetrieveHelpers } from "./lib/retrieve-helpers.js";
 import { BRTUtils } from "./core/utils.js";
+import BRTActorList from "./apps/actor-list/brt-actor-list.js";
 
 /**
  * Create a new API class and export it as default
@@ -748,6 +749,33 @@ const API = {
         } else {
             await brtTable.createChatCard(results, rollMode, roll);
         }
+    },
+
+    // ===================================================
+    // ACTOR LIST API
+    // =====================================================
+
+    /**
+     * Method to add some rolltables to the actor list
+     * @param {Actor|UUID|string} actor
+     * @param {RollTable|Folder|CompendiumCollection} data
+     * @param {Object} [options={}]
+     * @returns {Promise<RollTable[]>}
+     */
+    async addRollTablesToActorList(actor, data, options = {}) {
+        const actorTmp = await RetrieveHelpers.getActorAsync(actor);
+        return await BRTActorList.addRollTablesToActorList(actorTmp, data, options);
+    },
+
+    /**
+     * Method to add some rolltables to the actor list
+     * @param {Actor|UUID|string} actor
+     * @param {('none'|'better'|'loot'|'harvest'|'story')} brtType
+     * @returns {Promise<{rollTableList:{rollTable:RollTable;options:{rollsAmount:string;rollAsTableType:string;}}[];currencies:string}>}
+     */
+    async retrieveActorList(actor, brtType) {
+        const actorTmp = await RetrieveHelpers.getActorAsync(actor);
+        return await BRTActorList.retrieveActorList(actorTmp, brtType);
     },
 };
 
