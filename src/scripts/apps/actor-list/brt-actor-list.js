@@ -589,11 +589,21 @@ export default class BRTActorList extends FormApplication {
      * @returns {Promise<RollTable[]>}
      */
     static async addRollTablesToActorList(actor, data, options = {}) {
-        const isFolder = data.type === "Folder";
-        const isTable = data.type === "RollTable";
-        const isPack = data.type === "Compendium";
+        let dataTmp = null;
+        if (!dataTmp) {
+            dataTmp = await RetrieveHelpers.getRollTableAsync(data, true);
+        }
+        if (!dataTmp) {
+            dataTmp = await RetrieveHelpers.getFolderAsync(data, true);
+        }
+        if (!dataTmp) {
+            dataTmp = await RetrieveHelpers.getCompendiumCollectionAsync(data, true);
+        }
+        const isFolder = dataTmp instanceof Folder;
+        const isTable = dataTmp instanceof RollTable;
+        const isPack = dataTmp instanceof CompendiumCollection;
 
-        const rollTables = null;
+        let rollTables = null;
 
         // if (!isFolder && !isItem && !isTable && !isPack) {
         if (!isFolder && !isTable && !isPack) {
@@ -603,7 +613,7 @@ export default class BRTActorList extends FormApplication {
 
         // Case 2: Folder of roll tables dropped.
         if (isFolder) {
-            const folder = await fromUuid(data.uuid);
+            const folder = await RetrieveHelpers.getFolderAsync(dataTmp);
             // Must be a folder of roll tables.
             if (folder.type !== "RollTable") {
                 Logger.warn(Logger.i18nFormat(`${CONSTANTS.MODULE_ID}.label.WarningInvalidDocument`, {}), true);
@@ -613,12 +623,12 @@ export default class BRTActorList extends FormApplication {
         }
         // Case 3: RollTable dropped.
         if (isTable) {
-            const rollTable = await RetrieveHelpers.getRollTableAsync(data.uuid);
+            const rollTable = await RetrieveHelpers.getRollTableAsync(dataTmp);
             rollTables = [rollTable];
         }
         // Case 4: Compendium dropped.
         if (isPack) {
-            const pack = RetrieveHelpers.getCompendiumCollectionSync(data.id); // game.packs.get(data.id);
+            const pack = await RetrieveHelpers.getCompendiumCollectionAsync(dataTmp); // game.packs.get(data.id);
             if (pack.metadata.type !== "RollTable") {
                 Logger.warn(Logger.i18nFormat(`${CONSTANTS.MODULE_ID}.label.WarningInvalidDocument`, {}), true);
                 return false;
@@ -665,7 +675,7 @@ export default class BRTActorList extends FormApplication {
                     uuid: uuid,
                 });
             }
-            actor.update({
+            await actor.update({
                 [`flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.ACTOR_LIST.ROLL_TABLES_LIST}`]: list,
             });
         }

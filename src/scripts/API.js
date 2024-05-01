@@ -763,13 +763,17 @@ const API = {
     /**
      * Method to add some rolltables to the actor list
      * @param {Actor|UUID|string} actor
-     * @param {RollTable|Folder|CompendiumCollection} data
+     * @param {UUID|string} data Can be a RollTable a Folder aCompendiumCollection reference
      * @param {Object} [options={}]
      * @returns {Promise<RollTable[]>}
      */
     async addRollTablesToActorList(actor, data, options = {}) {
         const actorTmp = await RetrieveHelpers.getActorAsync(actor);
-        return await BRTActorList.addRollTablesToActorList(actorTmp, data, options);
+        // if (typeof data !== "string") {
+        //     throw Logger.error("addRollTablesToActorList | data must be of type string");
+        // }
+        // const dataTmp = await fromUuid(data);
+        return await BRTActorList.addRollTablesToActorList(actorTmp, dataTmp, options);
     },
 
     /**
