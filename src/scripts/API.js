@@ -12,7 +12,7 @@ import { LootChatCard } from "./tables/loot/loot-chat-card.js";
 import { HarvestChatCard } from "./tables/harvest/harvest-chat-card.js";
 import { StoryChatCard } from "./tables/story/story-chat-card.js";
 import { betterRolltablesSocket } from "./socket.js";
-import { isRealBoolean } from "./lib/lib.js";
+import { isRealBoolean, parseAsArray } from "./lib/lib.js";
 import { BetterRollTable } from "./core/brt-table.js";
 import Logger from "./lib/Logger.js";
 import ItemPilesHelpers from "./lib/item-piles-helpers.js";
@@ -779,23 +779,29 @@ const API = {
     /**
      * Method to add some rolltables to the actor list
      * @param {Actor|UUID|string} actor
-     * @param {('none'|'better'|'loot'|'harvest'|'story')} brtType
+     * @param {Object} [options={}]
+     * @param {('none'|'better'|'loot'|'harvest'|'story')[]} [options.brtTypes=null]
      * @returns {Promise<{rollTableList:{rollTable:RollTable;options:{rollsAmount:string;rollAsTableType:string;}}[];currencies:string}>}
      */
-    async retrieveActorList(actor, brtType) {
+    async retrieveActorList(actor, options) {
+        const brtTypes = parseAsArray(options.brtTypes);
         const actorTmp = await RetrieveHelpers.getActorAsync(actor);
-        return await BRTActorList.retrieveActorList(actorTmp, brtType);
+        return await BRTActorList.retrieveActorList(actorTmp, brtTypes);
     },
 
     /**
      *
      * @param {Actor|UUID|string} actor
-     * @param {('none'|'better'|'loot'|'harvest'|'story')} brtType
+     * @param {Object} [options={}]
+     * @param {('none'|'better'|'loot'|'harvest'|'story')[]} [options.brtTypes=null]
      * @returns {Promise<ItemData[]>} Item Data Array.  An array of objects, each containing the item that was added or updated, and the quantity that was added
      */
-    async retrieveItemsDataFromRollTableResultActorList(actor, brtType) {
+    async retrieveItemsDataFromRollTableResultActorList(actor, options) {
+        const brtTypes = parseAsArray(options.brtTypes);
         const actorTmp = await RetrieveHelpers.getActorAsync(actor);
-        const brtActorList = await this.retrieveActorList(actorTmp, brtType);
+        const brtActorList = await this.retrieveActorList(actorTmp, {
+            brtTypes: brtTypes,
+        });
         const rolltableList = brtActorList.rollTableList;
 
         const itemsDataToReturnTotal = [];

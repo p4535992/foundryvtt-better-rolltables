@@ -692,10 +692,10 @@ export default class BRTActorList extends FormApplication {
     /**
      * Method to add some rolltables to the actor list
      * @param {Actor|UUID|string} actor
-     * @param {('none'|'better'|'loot'|'harvest'|'story')} brtType
+     * @param {('none'|'better'|'loot'|'harvest'|'story')[]} brtTypes
      * @returns {Promise<{rollTableList:{rollTable:RollTable;options:{rollsAmount:string;rollAsTableType:string;}}[];currencies:string}>}
      */
-    static async retrieveActorList(actor, brtType) {
+    static async retrieveActorList(actor, brtTypes) {
         const list =
             foundry.utils.getProperty(
                 actor,
@@ -706,9 +706,10 @@ export default class BRTActorList extends FormApplication {
             "";
 
         let listTmp = [];
-        if (brtType && brtType !== "none") {
+        if (brtTypes?.length > 0) {
             listTmp = list.filter((rl) => {
-                return rl.brtType === brtType;
+                const brtType = BRTUtils.retrieveBRTType(rl, false, true);
+                return brtType && brtTypes.includes(brtType);
             });
         } else {
             listTmp = list;

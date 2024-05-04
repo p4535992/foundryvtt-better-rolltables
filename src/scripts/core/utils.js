@@ -405,10 +405,13 @@ export class BRTUtils {
         return result?.type === CONST.TABLE_RESULT_TYPES.COMPENDIUM;
     }
 
-    static retrieveBRTType(tableEntity, rollAsTableType = null) {
+    static retrieveBRTType(tableEntity, rollAsTableType = null, returnFlag = false) {
         let brtTypeToCheck = rollAsTableType
             ? rollAsTableType
             : getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.TABLE_TYPE_KEY}`);
+        if (returnFlag) {
+            return brtTypeToCheck;
+        }
         if (!CONSTANTS.TYPES.includes(brtTypeToCheck)) {
             brtTypeToCheck = null;
         }
