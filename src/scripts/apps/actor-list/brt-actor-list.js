@@ -708,7 +708,7 @@ export default class BRTActorList extends FormApplication {
         let listTmp = [];
         if (brtTypes?.length > 0) {
             listTmp = list.filter((rl) => {
-                const brtType = BRTUtils.retrieveBRTType(rl, false, true);
+                const brtType = rl.brtType; //BRTUtils.retrieveBRTType(rl, false, true);
                 return brtType && brtTypes.includes(brtType);
             });
         } else {
