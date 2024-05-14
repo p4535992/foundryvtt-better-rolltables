@@ -236,6 +236,8 @@
             "redFlagNote2Hint": "NOTE: If you see SOME of the rows with a red background some item maybe some UUID is changed click the 'Update' button to force a refresh  of the table results.",
             "redFlagNote3Hint": "As a general rule click always the button 'Update' at least one time after open the rolltable to force a refresh of the table results.",
             "Clear": "Clear",
+            "Populate": "Populate",
+            "ClearAndPopulate": "Clear and Populate",
             "Currencies": "Currencies",
             "DropItem": "Drop item, folder, table, or compendium here...",
             "DropRollTable": "Drop folder, table, or compendium here...",

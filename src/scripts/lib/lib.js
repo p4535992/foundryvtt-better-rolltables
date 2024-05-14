@@ -50,6 +50,47 @@ export function testWithRegex(stringToCheck, pattern = "", enableExactMatch = fa
     }
 }
 
+/**
+ *
+ * @param {string} stringToCheck
+ * @param {RollTable} document
+ * @param {Object} options
+ * @param {boolean} [options.enableExactMatch=false] Enable Exact Match.
+ * @param {boolean} [options.enableAnySuffixMatch=false] Enable Any Suffix Match.
+ * @param {boolean} [options.forceCheckOnNameIfNotFoundedMatch=false] Enable Any Suffix Match.
+ * @returns {boolean} The regular expression match the string passed.
+ */
+export function testRegexTable(stringToCheck, document, options) {
+    const enableExactMatch = options.enableExactMatch;
+    const enableAnySuffixMatch = options.enableAnySuffixMatch;
+    const forceCheckOnNameIfNotFoundedMatch = options.forceCheckOnNameIfNotFoundedMatch;
+
+    let brtSourceReference = getProperty(document, `flags.better-rolltables.brt-source-value`)?.trim() || "";
+    brtSourceReference = brtSourceReference.replaceAll("Loot | ", "");
+    brtSourceReference = brtSourceReference.replaceAll("Harvester | ", "");
+    brtSourceReference = brtSourceReference.replaceAll("Better ", "");
+    brtSourceReference = brtSourceReference.replaceAll("RollTable", "");
+
+    let isFound = testWithRegex(stringToCheck, brtSourceReference, enableExactMatch, enableAnySuffixMatch);
+
+    if (!isFound && forceCheckOnNameIfNotFoundedMatch) {
+        let standardSourceReference = getProperty(document, `name`)?.trim() || "";
+        standardSourceReference = standardSourceReference.replaceAll("Loot | ", "");
+        standardSourceReference = standardSourceReference.replaceAll("Harvester | ", "");
+        standardSourceReference = standardSourceReference.replaceAll("Better ", "");
+        standardSourceReference = standardSourceReference.replaceAll("RollTable", "");
+
+        isFound = testWithRegex(
+            stringToCheck,
+            standardSourceReference,
+            enableExactMatchForSourceReference,
+            enableAnySuffixMatchForSourceReference,
+        );
+    }
+
+    return isFound;
+}
+
 export function isEmptyObject(obj) {
     // because Object.keys(new Date()).length === 0;
     // we have to do some additional check
