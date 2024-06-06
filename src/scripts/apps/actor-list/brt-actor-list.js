@@ -4,6 +4,7 @@ import ItemPilesHelpers from "../../lib/item-piles-helpers.js";
 import { RetrieveHelpers } from "../../lib/retrieve-helpers.js";
 import API from "../../API.js";
 import { BRTUtils } from "../../core/utils.js";
+import { parseAsArray, testRegexTable } from "../../lib/lib.js";
 
 export default class BRTActorList extends FormApplication {
     static initializeActorList(app, array) {
@@ -230,21 +231,34 @@ export default class BRTActorList extends FormApplication {
         super.activateListeners(html);
         html[0].querySelectorAll("[data-action]").forEach((n) => {
             switch (n.dataset.action) {
-                case "delete":
+                case "delete": {
                     n.addEventListener("click", this._onClickRollTableDelete.bind(this));
                     break;
-                case "render":
+                }
+                case "render": {
                     n.addEventListener("click", this._onClickRollTableName.bind(this));
                     break;
-                case "drop":
+                }
+                case "drop": {
                     n.addEventListener("dragleave", this._onDragLeaveBox.bind(this));
                     break;
-                case "clear":
+                }
+                case "clear": {
                     n.addEventListener("click", this._onClickClear.bind(this));
                     break;
-                case "grant":
+                }
+                case "grant": {
                     n.addEventListener("click", this._onClickGrant.bind(this));
                     break;
+                }
+                case "populate": {
+                    n.addEventListener("click", this._onClickPopulate.bind(this));
+                    break;
+                }
+                case "clearandpopulate": {
+                    n.addEventListener("click", this._onClickClearAndPopulate.bind(this));
+                    break;
+                }
             }
         });
         html[0].querySelectorAll("input[type=text]").forEach((n) => {
@@ -365,6 +379,32 @@ export default class BRTActorList extends FormApplication {
                 [`${CONSTANTS.FLAGS.ACTOR_LIST.CURRENCIES}`]: "",
             },
         });
+        return this.render();
+    }
+
+    /**
+     * Populate actor with roll tables on the sheet. This does not stick unless saved.
+     * @param {PointerEvent} event      The initiating click event.
+     * @returns {BRTActorList}
+     */
+    async _onClickPopulate(event) {
+        await BRTActorList.tryToUpdateActorWithBRTActorListPreFilled(this.clone);
+        return this.render();
+    }
+
+    /**
+     * Remove all roll tables on the sheet and populate. This does not stick unless saved.
+     * @param {PointerEvent} event      The initiating click event.
+     * @returns {BRTActorList}
+     */
+    async _onClickClearAndPopulate(event) {
+        this.clone.updateSource({
+            [`flags.${CONSTANTS.MODULE_ID}`]: {
+                [`${CONSTANTS.FLAGS.ACTOR_LIST.ROLL_TABLES_LIST}`]: [],
+                [`${CONSTANTS.FLAGS.ACTOR_LIST.CURRENCIES}`]: "",
+            },
+        });
+        await BRTActorList.tryToUpdateActorWithBRTActorListPreFilled(this.clone);
         return this.render();
     }
 
@@ -732,5 +772,221 @@ export default class BRTActorList extends FormApplication {
             rollTableList: rollTableArray,
             currencies: curr,
         };
+    }
+
+    /**
+     * A "Save Time" method for attempting to link through certain filters
+     * character objects to objects in a compendium list, useful when transferring
+     * an actor from one world to another
+     *
+     * @param {Actor|string} actor The reference to the actor entity, can be a Actor or a actor id, uuid, name
+     */
+    static async tryToUpdateActorWithBRTActorListPreFilled(actor) {
+        const compendiumsToCheck = [];
+        const rollTablesFoldersToCheck = [];
+        const explicitRollTables = [];
+
+        for (const compendium of game.packs) {
+            if (compendium.metadata.label?.trim().startsWith("BRT")) {
+                compendiumsToCheck.push(`${comp.metadata.packageName}.${comp.metadata.name}`); // e.g. brt-harvest-harvester
+            }
+        }
+        for (const folder of game.tables.folders) {
+            if (folder.name?.trim().startsWith("BRT")) {
+                rollTablesFoldersToCheck.push(folder.name);
+            }
+        }
+        for (const rollTable of game.tables.contents) {
+            if (rollTable.name?.trim().startsWith("BRT")) {
+                explicitRollTables.push(folder.name);
+            }
+        }
+
+        const optionsGlobal = {
+            compendiumsToCheck: compendiumsToCheck,
+            compendiumsFoldersToCheck: null,
+            rollTablesFoldersToCheck: rollTablesFoldersToCheck,
+            regexEnableExactMatch: false,
+            regexEnableAnySuffixMatch: true,
+            regexForceCheckOnNameIfNotFoundedMatch: false,
+            regexExplicitStringToCheck: null,
+            explicitRollTables: explicitRollTables,
+        };
+        BRTActorList.tryToUpdateActorWithBRTActorList(actor, optionsGlobal);
+    }
+
+    /**
+     * A "Save Time" method for attempting to link through certain filters
+     * character objects to objects in a compendium list, useful when transferring
+     * an actor from one world to another
+     *
+     * @param {Actor|string} actor The reference to the actor entity, can be a Actor or a actor id, uuid, name
+     * @param {Object} options
+     * @param {string|string[]} [options.compendiumsToCheck=null] A list of compendium collection references to the compendium collection entities, can be a CompendiumCollection or a CompendiumCollection id, uuid, name
+     * @param {string|string[]} [options.compendiumsFoldersToCheck=null] A list of folder  references (usually names) in the compendium directory from which try to retrieve collections
+     * @param {string|string[]} [options.rollTablesFoldersToCheck=null] A list of folder  references (usually names) in the rolltable directory from which try to retrieve collections
+     * @param {boolean} [options.regexEnableExactMatch=false] Enable Exact Match.
+     * @param {boolean} [options.regexEnableAnySuffixMatch=false] Enable Any Suffix Match.
+     * @param {boolean} [options.regexForceCheckOnNameIfNotFoundedMatch=false] Enable Any Suffix Match.
+     * @param {string|string[]} [options.regexExplicitStringToCheck=null] A list of string to check for retrieve the rolltable usually is the name of the actor. If you set this the actor name is ignored
+     * @param {string[]|RollTable[]} [options.explicitRollTables=null]
+     * @return {Promise<void>}
+     */
+    static async tryToUpdateActorWithBRTActorList(actor, options) {
+        const actorToUpdate = await RetrieveHelpers.getActorAsync(actor, false);
+        if (!actorToUpdate) {
+            Logger.warn(`tryToUpdateActorWithBRTActorList | No Actor is been passed`, true);
+            return;
+        }
+
+        const compendiumsPassed = options.compendiumsToCheck || [];
+        const compendiumsFoldersPassed = options.compendiumsFoldersToCheck || [];
+        const rollTablesFoldersPassed = options.rollTablesFoldersToCheck || [];
+        const explicitRollTablesPassed = options.explicitRollTables || [];
+
+        const enableExactMatch = options.regexEnableExactMatch;
+        const enableAnySuffixMatch = options.regexEnableExactMatch;
+        const forceCheckOnNameIfNotFoundedMatch = options.regexForceCheckOnNameIfNotFoundedMatch;
+
+        const stringsToCheck = parseAsArray(options.regexExplicitStringToCheck);
+        if (stringsToCheck?.length <= 0) {
+            stringsToCheck.push(actor.name);
+        }
+
+        let compendiumsReferencesToCheck = parseAsArray(compendiumsPassed);
+        let compendiumsFoldersToCheck = parseAsArray(compendiumsFoldersPassed);
+        let rollTablesFoldersToCheck = parseAsArray(rollTablesFoldersPassed);
+        let explicitRollTablesToCheck = parseAsArray(explicitRollTablesPassed);
+
+        Logger.info(`tryToUpdateActorWithBRTActorList | Compendiums folder passed`, false, compendiumsFoldersToCheck);
+        Logger.info(`tryToUpdateActorWithBRTActorList | Compendiums passed`, false, compendiumsReferencesToCheck);
+        Logger.info(`tryToUpdateActorWithBRTActorList | RollTable folders passed`, false, rollTablesFoldersToCheck);
+        Logger.info(`tryToUpdateActorWithBRTActorList | RollTables explicit passed`, false, explicitRollTablesToCheck);
+        Logger.info(
+            `tryToUpdateActorWithBRTActorList | String to check passed with enableExactMatch=${enableExactMatch}, enableAnySuffixMatch=${enableAnySuffixMatch}, forceCheckOnNameIfNotFoundedMatch=${forceCheckOnNameIfNotFoundedMatch}`,
+            false,
+            stringsToCheck,
+        );
+
+        const rollTableDocumentsToCheckMap = {};
+
+        for (const pack of game.packs.contents) {
+            if (pack.metadata.type === "RollTable" && compendiumsFoldersToCheck.includes(pack.folder?.name)) {
+                // TODO add regex ?
+                if (!compendiumsReferencesToCheck.includes(pack.metadata.id)) {
+                    compendiumsReferencesToCheck.push(`${comp.metadata.packageName}.${comp.metadata.name}`);
+                }
+            }
+        }
+
+        let compendiumsRollTableToCheck = [];
+        for (const ref of compendiumsReferencesToCheck) {
+            const comp = await RetrieveHelpers.getCompendiumCollectionAsync(ref, false);
+            if (comp) {
+                compendiumsRollTableToCheck.push(comp);
+            } else {
+                Logger.warn(`tryToUpdateActorWithBRTActorList | Cannot find compendium rollTable '${ref}'`);
+            }
+        }
+
+        for (const pack of compendiumsRollTableToCheck) {
+            const comp = await RetrieveHelpers.getCompendiumCollectionAsync(ref, false);
+            if (comp) {
+                if (comp.metadata.type === "RollTable") {
+                    const documentsRetrieved = await comp.getDocuments();
+                    Logger.info(
+                        `tryToUpdateActorWithBRTActorList | Added compendium: '${comp.metadata.packageName}.${comp.metadata.name}'`,
+                    );
+                    for (const doc of documentsRetrieved) {
+                        Logger.info(
+                            `tryToUpdateActorWithBRTActorList | Added rollTable from compendium '${doc.name}|${doc.uuid}'`,
+                        );
+                        rollTableDocumentsToCheckMap[doc.name] ??= [];
+                        rollTableDocumentsToCheckMap[doc.name].push(doc);
+                    }
+                }
+            }
+        }
+
+        /*
+        for(const rollTable of game.tables.contents) {
+            rollTableDocumentsToCheckMap[rollTable.name] ??= [];
+            rollTableDocumentsToCheckMap[rollTable.name].push(doc);
+        }
+        */
+
+        for (const rollTableRef of explicitRollTablesToCheck) {
+            const doc = await RetrieveHelpers.getRollTableAsync(rollTableRef, true, false);
+            if (doc) {
+                Logger.info(`tryToUpdateActorWithBRTActorList | Added explicit rollTable '${doc.name}|${doc.uuid}'`);
+                rollTableDocumentsToCheckMap[rollTable.name] ??= [];
+                rollTableDocumentsToCheckMap[rollTable.name].push(doc);
+            } else {
+                Logger.warn(`tryToUpdateActorWithBRTActorList | Cannot find explicit rollTable '${rollTableRef}'`);
+            }
+        }
+
+        for (const folder of game.tables.folders) {
+            if (rollTablesFoldersToCheck.includes(folder?.name)) {
+                // TODO add regex ?
+                Logger.info(
+                    `tryToUpdateActorWithBRTActorList | Added folder rollTable '${folder.name}|${folder.uuid}'`,
+                );
+                for (const doc of folder.contents) {
+                    Logger.info(
+                        `tryToUpdateActorWithBRTActorList | Added rollTable from folder '${doc.name}|${doc.uuid}'`,
+                    );
+                    rollTableDocumentsToCheckMap[doc.name] ??= [];
+                    rollTableDocumentsToCheckMap[doc.name].push(doc);
+                }
+            }
+        }
+
+        if (Object.keys(rollTableDocumentsToCheckMap).length === 0) {
+            Logger.warn(`tryToUpdateActorWithBRTActorList | No documents were found with these filters`, true);
+            return;
+        }
+
+        let rollTablesChecked = [];
+        // BY default i check all the rolltable on the world
+        const optionsRegex = {
+            enableExactMatch: enableExactMatch,
+            enableAnySuffixMatch: enableAnySuffixMatch,
+            forceCheckOnNameIfNotFoundedMatch: forceCheckOnNameIfNotFoundedMatch,
+        };
+
+        for (const [rollTableName, rollTableDocumentsArray] of Object.entries(rollTableDocumentsToCheckMap)) {
+            const uuidAvoidDuplicate = [];
+            Logger.info(
+                `tryToUpdateActorWithBRTActorList | Start check documents with name ${rollTableName}: `,
+                false,
+                rollTableDocumentsArray,
+            );
+            for (const rollTableDoc of rollTableDocumentsArray) {
+                for (const stringToCheck of stringsToCheck) {
+                    if (testRegexTable(stringToCheck, rollTableDoc, optionsRegex)) {
+                        if (!uuidAvoidDuplicate.includes(rollTableDoc.uuid)) {
+                            Logger.info(
+                                `tryToUpdateActorWithBRTActorList | Checked rolltable '${rollTableDoc.name}|${rollTableDoc.uuid}'`,
+                            );
+                            rollTablesChecked.push(rollTableDoc);
+                            uuidAvoidDuplicate.push(rollTableDoc.uuid);
+                        }
+                    }
+                }
+            }
+        }
+
+        if (rollTablesChecked.length === 0) {
+            Logger.warn(`tryToUpdateActorWithBRTActorList | No rolltables were found with this checks`, true);
+            return;
+        }
+
+        for (const rollTable of rollTablesChecked) {
+            Logger.info(
+                `tryToUpdateActorWithBRTActorList | Add rolltable '${rollTable.name}|${rollTable.uuid}' on actor '${actor.name}|${actor.uuid}'`,
+            );
+            await BRTActorList.addRollTablesToActorList(actor, rollTable);
+        }
     }
 }
