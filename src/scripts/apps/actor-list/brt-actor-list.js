@@ -17,8 +17,8 @@ export default class BRTActorList extends FormApplication {
             onclick: async () => new BRTActorList(app.document).render(true),
             label: game.i18n.localize(`${CONSTANTS.MODULE_ID}.label.HeaderActorList`),
         };
-        const isChar2 = app.constructor.name === "ActorSheet5eCharacter2";
-        if (!isChar2 && !game.settings.get(CONSTANTS.MODULE_ID, "headerActorListLabel")) {
+        const isV2 = ["ActorSheet5eCharacter2", "ActorSheet5eNPC2"].includes(app.constructor.name);
+        if (!isV2 && !game.settings.get(CONSTANTS.MODULE_ID, "headerActorListLabel")) {
             delete listButton.label;
         }
         array.unshift(listButton);
@@ -316,7 +316,7 @@ export default class BRTActorList extends FormApplication {
       }
       delete rollTableData.system.equipped;
 
-      const existing = target.items.find(item => item.flags.core?.sourceId === uuid);
+      const existing = target.items.find(item => item._stats.compendiumSource === uuid);
       if (existing && ["loot", "consumable"].includes(existing.type)) {
         rollTablesUpdates.push({_id: existing.id, "system.quantity": existing.system.quantity + rollTableData.system.quantity})
       } else rollTables.push(rollTableData);
