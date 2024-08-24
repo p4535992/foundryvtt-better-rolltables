@@ -323,19 +323,15 @@
                 {{/if}}
 
                 <td class="result-image">
-                    <img src="{{result.img}}" data-edit="results.{{i}}.img" width="32" height="32"/>
+                    <img src="{{result.img}}" {{#if result.isText}}data-edit="results.{{i}}.img"{{/if}} width="32" height="32"/>
                     <input type="hidden"
                         name="results.{{i}}.flags.better-rolltables.brt-result-custom-icon"
                         value="{{result.flags.better-rolltables.brt-result-custom-icon}}"/>
                 </td>
 
                 <td class="result-type">
-                    <select name="results.{{i}}.type" data-dtype="Number">
-                        {{#select result.type}}
-                        {{#each ../resultTypes as |title type|}}
-                        <option value="{{type}}">{{title}}</option>
-                        {{/each}}
-                        {{/select}}
+                    <select name="results.{{i}}.type">
+                        {{selectOptions ../resultTypes selected=result.type}}
                     </select>
                 </td>
 
@@ -359,11 +355,7 @@
                         <!-- END MOD ADD 4535992 -->
                     {{else if result.isDocument}}
                         <select name="results.{{i}}.documentCollection">
-                            {{#select result.documentCollection}}
-                            {{#each @root.documentTypes}}
-                            <option value="{{this}}">{{this}}</option>
-                            {{/each}}
-                            {{/select}}
+                            {{selectOptions @root.documentTypes selected=result.documentCollection sort=true}}
                         </select>
                         <input class="result-target" name="results.{{i}}.text" type="hidden" value="{{result.text}}"/>
 
@@ -389,11 +381,7 @@
 
                     {{else if result.isCompendium}}
                         <select name="results.{{i}}.documentCollection">
-                            {{#select result.documentCollection}}
-                            {{#each @root.compendiumPacks}}
-                            <option value="{{this}}">{{this}}</option>
-                            {{/each}}
-                            {{/select}}
+                            {{selectOptions @root.compendiumPacks selected=result.documentCollection sort=true}}
                         </select>
                         <input class="result-target" name="results.{{i}}.text" type="hidden" value="{{result.text}}"/>
                         <input class="result-brt-custom-name" type="text"

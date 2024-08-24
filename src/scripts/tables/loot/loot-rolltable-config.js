@@ -21,7 +21,7 @@ export class BetterRollTableLootConfig extends RollTableConfig {
             height: "auto",
             closeOnSubmit: false,
             viewPermission: CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER,
-            // scrollY: ["table.table-results"],
+            // scrollY: ["table.table-results tbody"],
             // dragDrop: [{ dragSelector: null, dropSelector: null }],
             dragDrop: [
                 // { dragSelector: null, dropSelector: null },
@@ -30,7 +30,7 @@ export class BetterRollTableLootConfig extends RollTableConfig {
                     dropSelector: "section.results .table-results",
                 },
             ],
-            scrollY: [".table-results"],
+            scrollY: [".table-results tbody"],
             resizable: true,
         });
     }
@@ -50,7 +50,6 @@ export class BetterRollTableLootConfig extends RollTableConfig {
     async getData(options = {}) {
         const context = await super.getData(options);
         context.descriptionHTML = await TextEditor.enrichHTML(this.object.description, {
-            async: true,
             secrets: this.object.isOwner,
         });
         const results = await Promise.all(
@@ -67,11 +66,14 @@ export class BetterRollTableLootConfig extends RollTableConfig {
         let brtData = foundry.utils.mergeObject(context, {
             results: results,
             resultTypes: Object.entries(CONST.TABLE_RESULT_TYPES).reduce((obj, v) => {
-                obj[v[1]] = v[0].titleCase();
+                obj[v[1]] = game.i18n.localize(`TABLE.RESULT_TYPES.${v[0]}.label`);
                 return obj;
             }, {}),
-            documentTypes: CONST.COMPENDIUM_DOCUMENT_TYPES,
-            compendiumPacks: Array.from(game.packs.keys()),
+            documentTypes: CONST.COMPENDIUM_DOCUMENT_TYPES.map((d) => ({
+                value: d,
+                label: game.i18n.localize(getDocumentClass(d).metadata.label),
+            })),
+            compendiumPacks: Array.from(game.packs.keys()).map((k) => ({ value: k, label: k })),
         });
 
         const brtTypeToCheck = BRTUtils.retrieveBRTType(this.document);
@@ -270,7 +272,7 @@ export class BetterRollTableLootConfig extends RollTableConfig {
                 if (allowed === false) return;
 
                 // Get the dropped document
-                if (!CONST.DOCUMENT_TYPES.includes(data.type)) return;
+                if (!CONST.COMPENDIUM_DOCUMENT_TYPES.includes(data.type)) return;
                 //const cls = getDocumentClass(data.type);
                 //const document = await cls.fromDropData(data);
                 const document = data;
@@ -461,7 +463,7 @@ export class BetterRollTableLootConfig extends RollTableConfig {
 
     //         // Plain text results
     //         default:
-    //           r.type = 0;
+    //           r.type = CONST.TABLE_RESULT_TYPES.TEXT;
     //           r.documentCollection = null;
     //           r.documentId = null;
     //       }
