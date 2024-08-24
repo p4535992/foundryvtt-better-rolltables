@@ -19,7 +19,7 @@ export class BetterRollTable {
 
     constructor(table, options) {
         this.table = table;
-        this.options = mergeObject(
+        this.options = foundry.utils.mergeObject(
             {
                 roll: null,
                 results: [],
@@ -40,7 +40,7 @@ export class BetterRollTable {
 
     async initialize() {
         let optionsTmp = await BRTUtils.updateOptions(this.table, this.options);
-        this.options = mergeObject(
+        this.options = foundry.utils.mergeObject(
             {
                 roll: null,
                 results: [],
@@ -197,17 +197,30 @@ export class BetterRollTable {
             const r = draw.results[i];
 
             let formulaAmount = "";
-            if (hasProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_QUANTITY}`)) {
+            if (
+                foundry.utils.hasProperty(
+                    r,
+                    `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_QUANTITY}`,
+                )
+            ) {
                 formulaAmount =
-                    getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_QUANTITY}`) ||
-                    "";
+                    foundry.utils.getProperty(
+                        r,
+                        `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_QUANTITY}`,
+                    ) || "";
             }
             if (
                 !formulaAmount &&
-                getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RESULTS_FORMULA_KEY_FORMULA}`)
+                foundry.utils.getProperty(
+                    r,
+                    `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RESULTS_FORMULA_KEY_FORMULA}`,
+                )
             ) {
                 formulaAmount =
-                    getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RESULTS_FORMULA_KEY_FORMULA}`) || "";
+                    foundry.utils.getProperty(
+                        r,
+                        `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RESULTS_FORMULA_KEY_FORMULA}`,
+                    ) || "";
             }
             if (r.type === CONST.TABLE_RESULT_TYPES.TEXT) {
                 formulaAmount = "";
@@ -284,8 +297,11 @@ export class BetterRollTable {
         }
 
         // PATCH SET FLAG FOR HIDDEN RESULT
-        const isTableHidden = getProperty(this.table, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HIDDEN_TABLE}`);
-        const isShowHiddenResultOnChat = getProperty(
+        const isTableHidden = foundry.utils.getProperty(
+            this.table,
+            `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HIDDEN_TABLE}`,
+        );
+        const isShowHiddenResultOnChat = foundry.utils.getProperty(
             this.table,
             `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_SHOW_HIDDEN_RESULT_ON_CHAT}`,
         );
@@ -293,29 +309,40 @@ export class BetterRollTable {
             if (
                 isTableHidden ||
                 String(
-                    getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_HIDDEN_TABLE}`),
+                    foundry.utils.getProperty(
+                        r,
+                        `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_HIDDEN_TABLE}`,
+                    ),
                 ) === "true"
             ) {
-                setProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_HIDDEN_TABLE}`, true);
+                foundry.utils.setProperty(
+                    r,
+                    `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_HIDDEN_TABLE}`,
+                    true,
+                );
             } else {
-                setProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_HIDDEN_TABLE}`, false);
+                foundry.utils.setProperty(
+                    r,
+                    `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_HIDDEN_TABLE}`,
+                    false,
+                );
             }
             if (
                 isShowHiddenResultOnChat ||
                 String(
-                    getProperty(
+                    foundry.utils.getProperty(
                         r,
                         `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_SHOW_HIDDEN_RESULT_ON_CHAT}`,
                     ),
                 ) === "true"
             ) {
-                setProperty(
+                foundry.utils.setProperty(
                     r,
                     `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_SHOW_HIDDEN_RESULT_ON_CHAT}`,
                     true,
                 );
             } else {
-                setProperty(
+                foundry.utils.setProperty(
                     r,
                     `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_SHOW_HIDDEN_RESULT_ON_CHAT}`,
                     false,
@@ -426,21 +453,21 @@ export class BetterRollTable {
                 return { roll, results };
             }
 
-            const useDynamicDcOnTable = getProperty(
+            const useDynamicDcOnTable = foundry.utils.getProperty(
                 this.table,
                 `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_USE_DYNAMIC_DC}`,
             );
             if (useDynamicDcOnTable && this.options.rollAsTableType === CONSTANTS.TABLE_TYPE_HARVEST) {
                 const availableTmp = [];
                 for (const a of available) {
-                    const dynamicDcFormula = getProperty(
+                    const dynamicDcFormula = foundry.utils.getProperty(
                         a,
                         `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_RESULT_DYNAMIC_DC_VALUE}`,
                     );
                     if (dynamicDcFormula) {
                         const dynamicDcValue = BRTHarvestHelpers.prepareValueDynamicDcSync(dynamicDcFormula);
                         const brtAvailable = foundry.utils.deepClone(a);
-                        setProperty(
+                        foundry.utils.setProperty(
                             brtAvailable,
                             `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_RESULT_DYNAMIC_DC_VALUE}`,
                             dynamicDcValue,
@@ -459,7 +486,7 @@ export class BetterRollTable {
             const availableRange = available.reduce(
                 (range, result) => {
                     const percentageValueLFlag =
-                        getProperty(
+                        foundry.utils.getProperty(
                             result,
                             `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_PERCENTAGE_LOW_VALUE}`,
                         ) ?? null;
@@ -467,7 +494,7 @@ export class BetterRollTable {
                     percentageValueLTmp = percentageValueLTmp * 10;
 
                     const percentageValueHFlag =
-                        getProperty(
+                        foundry.utils.getProperty(
                             result,
                             `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_PERCENTAGE_HIGH_VALUE}`,
                         ) ?? null;
@@ -507,21 +534,21 @@ export class BetterRollTable {
                 return { roll, results };
             }
 
-            const useDynamicDcOnTable = getProperty(
+            const useDynamicDcOnTable = foundry.utils.getProperty(
                 this.table,
                 `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_USE_DYNAMIC_DC}`,
             );
             if (useDynamicDcOnTable && this.options.rollAsTableType === CONSTANTS.TABLE_TYPE_HARVEST) {
                 const availableTmp = [];
                 for (const a of available) {
-                    const dynamicDcFormula = getProperty(
+                    const dynamicDcFormula = foundry.utils.getProperty(
                         a,
                         `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_RESULT_DYNAMIC_DC_VALUE}`,
                     );
                     if (dynamicDcFormula) {
                         const dynamicDcValue = BRTHarvestHelpers.prepareValueDynamicDcSync(dynamicDcFormula);
                         const brtAvailable = foundry.utils.deepClone(a);
-                        setProperty(
+                        foundry.utils.setProperty(
                             brtAvailable,
                             `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_RESULT_DYNAMIC_DC_VALUE}`,
                             dynamicDcValue,
@@ -580,11 +607,11 @@ export class BetterRollTable {
             while (!results.length) {
                 if (iter >= 10000) {
                     // START PATCH DISTINCT VALUES
-                    const isTableDistinct = getProperty(
+                    const isTableDistinct = foundry.utils.getProperty(
                         this.table,
                         `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_DISTINCT_RESULT}`,
                     );
-                    const isTableDistinctKeepRolling = getProperty(
+                    const isTableDistinctKeepRolling = foundry.utils.getProperty(
                         this.table,
                         `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_DISTINCT_RESULT_KEEP_ROLLING}`,
                     );
@@ -614,23 +641,26 @@ export class BetterRollTable {
             for (let result of results) {
                 let formulaAmount = "";
                 if (
-                    hasProperty(
+                    foundry.utils.hasProperty(
                         result,
                         `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_QUANTITY}`,
                     )
                 ) {
                     formulaAmount =
-                        getProperty(
+                        foundry.utils.getProperty(
                             result,
                             `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_QUANTITY}`,
                         ) || "";
                 }
                 if (
                     !formulaAmount &&
-                    getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RESULTS_FORMULA_KEY_FORMULA}`)
+                    foundry.utils.getProperty(
+                        result,
+                        `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RESULTS_FORMULA_KEY_FORMULA}`,
+                    )
                 ) {
                     formulaAmount =
-                        getProperty(
+                        foundry.utils.getProperty(
                             result,
                             `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RESULTS_FORMULA_KEY_FORMULA}`,
                         ) || "";
@@ -697,7 +727,7 @@ export class BetterRollTable {
         if (this.options.usePercentage) {
             resultsUpdate = this.table.results.filter((r) => {
                 const percentageValueLFlag =
-                    getProperty(
+                    foundry.utils.getProperty(
                         r,
                         `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_PERCENTAGE_LOW_VALUE}`,
                     ) ?? null;
@@ -705,7 +735,7 @@ export class BetterRollTable {
                 percentageValueLTmp = percentageValueLTmp * 10;
 
                 const percentageValueHFlag =
-                    getProperty(
+                    foundry.utils.getProperty(
                         r,
                         `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_PERCENTAGE_HIGH_VALUE}`,
                     ) ?? null;
@@ -730,7 +760,7 @@ export class BetterRollTable {
                 if (isRealNumber(dc) && parseInt(dc) > 0) {
                     resultsUpdate = resultsUpdate.filter((r) => {
                         return BRTHarvestHelpers.calculateDynamicDcSync(
-                            getProperty(
+                            foundry.utils.getProperty(
                                 r,
                                 `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_RESULT_DYNAMIC_DC_VALUE}`,
                             ),
@@ -744,8 +774,10 @@ export class BetterRollTable {
                 if (isRealNumber(dc) && parseInt(dc) > 0) {
                     resultsUpdate = resultsUpdate.filter((r) => {
                         return (
-                            getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_DC_VALUE_KEY}`) <=
-                            parseInt(dc)
+                            foundry.utils.getProperty(
+                                r,
+                                `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_DC_VALUE_KEY}`,
+                            ) <= parseInt(dc)
                         );
                     });
                 }
@@ -753,7 +785,10 @@ export class BetterRollTable {
                 if (skills?.length > 0) {
                     resultsUpdate = resultsUpdate.filter((r) => {
                         return skills.includes(
-                            getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_SKILL_VALUE_KEY}`),
+                            foundry.utils.getProperty(
+                                r,
+                                `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_SKILL_VALUE_KEY}`,
+                            ),
                         );
                     });
                 }
@@ -761,11 +796,11 @@ export class BetterRollTable {
         }
 
         // START PATCH DISTINCT VALUES
-        const isTableDistinct = getProperty(
+        const isTableDistinct = foundry.utils.getProperty(
             this.table,
             `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_DISTINCT_RESULT}`,
         );
-        const isTableDistinctKeepRolling = getProperty(
+        const isTableDistinctKeepRolling = foundry.utils.getProperty(
             this.table,
             `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_DISTINCT_RESULT_KEEP_ROLLING}`,
         );
@@ -895,10 +930,13 @@ export class BetterRollTable {
                     }
                 }
                 if (
-                    !getProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`) &&
+                    !foundry.utils.getProperty(
+                        rTmp,
+                        `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`,
+                    ) &&
                     rDoc.uuid
                 ) {
-                    setProperty(
+                    foundry.utils.setProperty(
                         rTmp,
                         `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`,
                         rDoc.uuid ?? "",
@@ -946,7 +984,7 @@ export class BetterRollTable {
      * @returns {Promise<RollTableDraw>}  The Roll and results drawn by that Roll
      */
     async rollManyOnTable(amount, { roll = null, recursive = true, displayChat = false, _depth = 0 } = {}) {
-        let options = mergeObject(this.options, {
+        let options = foundry.utils.mergeObject(this.options, {
             roll: roll,
             recursive: recursive,
             displayChat: displayChat,
@@ -1015,20 +1053,26 @@ export class BetterRollTable {
             for (const entry of draw.results) {
                 let formulaAmount = "";
                 if (
-                    hasProperty(entry, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_QUANTITY}`)
+                    foundry.utils.hasProperty(
+                        entry,
+                        `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_QUANTITY}`,
+                    )
                 ) {
                     formulaAmount =
-                        getProperty(
+                        foundry.utils.getProperty(
                             entry,
                             `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_QUANTITY}`,
                         ) || "";
                 }
                 if (
                     !formulaAmount &&
-                    getProperty(entry, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RESULTS_FORMULA_KEY_FORMULA}`)
+                    foundry.utils.getProperty(
+                        entry,
+                        `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RESULTS_FORMULA_KEY_FORMULA}`,
+                    )
                 ) {
                     formulaAmount =
-                        getProperty(
+                        foundry.utils.getProperty(
                             entry,
                             `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RESULTS_FORMULA_KEY_FORMULA}`,
                         ) || "";
@@ -1096,60 +1140,73 @@ export class BetterRollTable {
                     }
                 }
                 if (
-                    !getProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`) &&
+                    !foundry.utils.getProperty(
+                        rTmp,
+                        `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`,
+                    ) &&
                     rDoc.uuid
                 ) {
-                    setProperty(
+                    foundry.utils.setProperty(
                         rTmp,
                         `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`,
                         rDoc.uuid ?? "",
                     );
                 }
-                setProperty(
+                foundry.utils.setProperty(
                     rTmp,
                     `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_NAME}`,
                     r.text,
                 );
                 if (
-                    getProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`) &&
-                    getProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`) !==
-                        r.text
+                    foundry.utils.getProperty(
+                        rTmp,
+                        `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`,
+                    ) &&
+                    foundry.utils.getProperty(
+                        rTmp,
+                        `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`,
+                    ) !== r.text
                 ) {
-                    // setProperty(
+                    // foundry.utils.setProperty(
                     //   rTmp,
                     //   `text`,
-                    //   getProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`)
+                    //   foundry.utils.getProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`)
                     // );
-                    // setProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`, rTmp.text);
+                    // foundry.utils.setProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`, rTmp.text);
                 }
-                setProperty(
+                foundry.utils.setProperty(
                     rTmp,
                     `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_ICON}`,
                     r.icon,
                 );
                 if (
-                    getProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`) &&
-                    getProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`) !==
-                        r.icon
+                    foundry.utils.getProperty(
+                        rTmp,
+                        `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`,
+                    ) &&
+                    foundry.utils.getProperty(
+                        rTmp,
+                        `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`,
+                    ) !== r.icon
                 ) {
-                    // setProperty(
+                    // foundry.utils.setProperty(
                     //   rTmp,
                     //   `icon`,
-                    //   getProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`)
+                    //   foundry.utils.getProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`)
                     // );
-                    // setProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`, rTmp.icon);
+                    // foundry.utils.setProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`, rTmp.icon);
                 }
             }
 
             // REMOVED 2024-03-03
             // if (
-            //   getProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`) &&
-            //   getProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`) !== r.icon
+            //   foundry.utils.getProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`) &&
+            //   foundry.utils.getProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`) !== r.icon
             // ) {
             //   // setProperty(
             //   //   rTmp,
             //   //   `icon`,
-            //   //   getProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`)
+            //   //   foundry.utils.getProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`)
             //   // );
             //   // setProperty(rTmp,`flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`, rTmp.icon);
             // }
@@ -1201,8 +1258,8 @@ export class BetterRollTable {
     //          rDoc = {};
     //        }
     //      }
-    //       if (!getProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`) && rDoc.uuid) {
-    //         setProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`, rDoc.uuid ?? "");
+    //       if (!foundry.utils.getProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`) && rDoc.uuid) {
+    //         foundry.utils.setProperty(rTmp, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`, rDoc.uuid ?? "");
     //       }
     //     }
     //     resultsTmp.push(rTmp);

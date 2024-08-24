@@ -40,10 +40,10 @@ export class CompendiumToRollTableSpecialHarvestDialog {
      */
     _groupBy(arr, property) {
         return arr.reduce(function (memo, x) {
-            if (!memo[getProperty(x, property)]) {
-                memo[getProperty(x, property)] = [];
+            if (!memo[foundry.utils.getProperty(x, property)]) {
+                memo[foundry.utils.getProperty(x, property)] = [];
             }
-            memo[getProperty(x, property)].push(x);
+            memo[foundry.utils.getProperty(x, property)].push(x);
             return memo;
         }, {});
     }
@@ -83,9 +83,9 @@ export class CompendiumToRollTableSpecialHarvestDialog {
                 Logger.log("Compendium Item:" + es);
                 Logger.log("Compendium Index:" + i);
                 const e = await fromUuid(es.uuid);
-                const dcValue = getProperty(e, `system.description.chat`);
-                const skillValue = getProperty(e, `system.description.unidentified`);
-                const sourceValue = getProperty(e, `system.source`);
+                const dcValue = foundry.utils.getProperty(e, `system.description.chat`);
+                const skillValue = foundry.utils.getProperty(e, `system.description.unidentified`);
+                const sourceValue = foundry.utils.getProperty(e, `system.source`);
 
                 const skillDenom = this._convertToSkillDenomination(skillValue) ?? skillValue;
 
@@ -195,7 +195,10 @@ export class CompendiumToRollTableSpecialHarvestDialog {
             let firstDcValue = 0;
             let firstSkillDenom =
                 values?.length > 0
-                    ? getProperty(values[0], `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_SKILL_VALUE_KEY}`)
+                    ? foundry.utils.getProperty(
+                          values[0],
+                          `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_SKILL_VALUE_KEY}`,
+                      )
                     : "";
             let amount = values.length <= 0 ? values.length + 1 : values.length;
             //options.renderSheet = options.renderSheet ?? true;

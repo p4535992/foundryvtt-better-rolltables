@@ -62,8 +62,8 @@ export class RollTableToActorHelpers {
         if (!itemStackAttribute) {
           return i.name;
         }
-        // const stack = parseInt(getProperty(i.system, itemStackAttribute));
-        const stack = parseInt(getProperty(i, itemStackAttribute));
+        // const stack = parseInt(foundry.utils.getProperty(i.system, itemStackAttribute));
+        const stack = parseInt(foundry.utils.getProperty(i, itemStackAttribute));
         if (stack <= 1) {
           return i.name;
         }
@@ -119,8 +119,8 @@ export class RollTableToActorHelpers {
         if (!itemStackAttribute) {
           return i.name;
         }
-        // const stack = parseInt(getProperty(i.system, itemStackAttribute));
-        const stack = parseInt(getProperty(i, itemStackAttribute));
+        // const stack = parseInt(foundry.utils.getProperty(i.system, itemStackAttribute));
+        const stack = parseInt(foundry.utils.getProperty(i, itemStackAttribute));
         if (stack <= 1) {
           return i.name;
         }
@@ -179,9 +179,9 @@ export class RollTableToActorHelpers {
     static async resultToItemData(r) {
         let document = null;
         if (!r.documentId || r.type === CONST.TABLE_RESULT_TYPES.TEXT) {
-            if (getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`)) {
+            if (foundry.utils.getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`)) {
                 document = await fromUuid(
-                    getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`),
+                    foundry.utils.getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`),
                 );
             }
             if (!document) {
@@ -197,9 +197,9 @@ export class RollTableToActorHelpers {
         //   }
         // }
         // NOTE: The formulaAmount calculation is already done on the betterRoll Method
-        if (getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`)) {
+        if (foundry.utils.getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`)) {
             document = await fromUuid(
-                getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`),
+                foundry.utils.getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`),
             );
             if (!document) {
                 try {
@@ -260,8 +260,14 @@ export class RollTableToActorHelpers {
         // }
 
         let itemTmp = null;
-        let customName = getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`);
-        let customImage = getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`);
+        let customName = foundry.utils.getProperty(
+            r,
+            `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`,
+        );
+        let customImage = foundry.utils.getProperty(
+            r,
+            `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`,
+        );
 
         if (document instanceof Item) {
             itemTmp = document.toObject();
@@ -293,33 +299,49 @@ export class RollTableToActorHelpers {
 
         // Update with custom name if present
         // Set up custom name
-        setProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_NAME}`, itemTmp.name);
+        foundry.utils.setProperty(
+            r,
+            `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_NAME}`,
+            itemTmp.name,
+        );
         if (!customName) {
-            setProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`, itemTmp.name);
+            foundry.utils.setProperty(
+                r,
+                `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`,
+                itemTmp.name,
+            );
         } else {
-            setProperty(itemTmp, `name`, customName);
+            foundry.utils.setProperty(itemTmp, `name`, customName);
         }
         // Set up custom icon
-        setProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_ICON}`, itemTmp.img);
+        foundry.utils.setProperty(
+            r,
+            `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_ICON}`,
+            itemTmp.img,
+        );
         if (!customImage) {
-            setProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`, itemTmp.img);
+            foundry.utils.setProperty(
+                r,
+                `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`,
+                itemTmp.img,
+            );
         } else {
-            setProperty(itemTmp, `img`, customImage);
+            foundry.utils.setProperty(itemTmp, `img`, customImage);
         }
         // Set up custom quantity (ty item piles)
         // TODO DISABLED FOR NOW WE USE THE LOGIC 1:1 INSTEAD N:1 FOR NOW
         /*
 
-        let customQuantity = getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_QUANTITY}`);
+        let customQuantity = foundry.utils.getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_QUANTITY}`);
 
       if (!customQuantity) {
-        setProperty(
+        foundry.utils.setProperty(
           r,
           `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_QUANTITY}`,
           ItemPilesHelpers.getItemQuantity(itemTmp)
         );
       } else {
-        setProperty(
+        foundry.utils.setProperty(
           itemTmp,
           `quantity`,
           customQuantity
@@ -327,10 +349,13 @@ export class RollTableToActorHelpers {
       }
       */
         // Merge flags brt to item data
-        if (!getProperty(itemTmp, `flags.${CONSTANTS.MODULE_ID}`)) {
-            setProperty(itemTmp, `flags.${CONSTANTS.MODULE_ID}`, {});
+        if (!foundry.utils.getProperty(itemTmp, `flags.${CONSTANTS.MODULE_ID}`)) {
+            foundry.utils.setProperty(itemTmp, `flags.${CONSTANTS.MODULE_ID}`, {});
         }
-        mergeObject(itemTmp.flags[CONSTANTS.MODULE_ID], getProperty(r, `flags.${CONSTANTS.MODULE_ID}`));
+        foundry.utils.mergeObject(
+            itemTmp.flags[CONSTANTS.MODULE_ID],
+            foundry.utils.getProperty(r, `flags.${CONSTANTS.MODULE_ID}`),
+        );
         // itemsData.push(itemTmp);
         return itemTmp;
     }
@@ -377,25 +402,27 @@ export class RollTableToActorHelpers {
             if (!match) {
                 stackedItemsData.push(item);
             } else {
-                // const newStack = getProperty(match.system, stackAttribute) + (getProperty(item.system, stackAttribute) ?? 1);
-                // setProperty(match, `system.${stackAttribute}`, newStack);
+                // const newStack = foundry.utils.getProperty(match.system, stackAttribute) + (foundry.utils.getProperty(item.system, stackAttribute) ?? 1);
+                // foundry.utils.setProperty(match, `system.${stackAttribute}`, newStack);
                 if (!ignoreQuantity) {
-                    const newStack = getProperty(match, stackAttribute) + (getProperty(item, stackAttribute) ?? 1);
-                    setProperty(match, `${stackAttribute}`, newStack);
+                    const newStack =
+                        foundry.utils.getProperty(match, stackAttribute) +
+                        (foundry.utils.getProperty(item, stackAttribute) ?? 1);
+                    foundry.utils.setProperty(match, `${stackAttribute}`, newStack);
                 }
                 if (!ignorePrice) {
                     const newPriceValue =
-                        (getProperty(match, priceAttribute)?.value ?? 0) +
-                        (getProperty(item, priceAttribute)?.value ?? 0);
+                        (foundry.utils.getProperty(match, priceAttribute)?.value ?? 0) +
+                        (foundry.utils.getProperty(item, priceAttribute)?.value ?? 0);
                     const newPrice = {
-                        denomination: getProperty(item, priceAttribute)?.denomination,
+                        denomination: foundry.utils.getProperty(item, priceAttribute)?.denomination,
                         value: newPriceValue,
                     };
-                    setProperty(match, `${priceAttribute}`, newPrice);
+                    foundry.utils.setProperty(match, `${priceAttribute}`, newPrice);
                 }
                 // if (!ignoreWeight) {
-                //   const newWeight = getProperty(match, weightAttribute) + (getProperty(item, weightAttribute) ?? 1);
-                //   setProperty(match, `${weightAttribute}`, newWeight);
+                //   const newWeight = foundry.utils.getProperty(match, weightAttribute) + (foundry.utils.getProperty(item, weightAttribute) ?? 1);
+                //   foundry.utils.setProperty(match, `${weightAttribute}`, newWeight);
                 // }
             }
         }
@@ -424,20 +451,22 @@ export class RollTableToActorHelpers {
                     return RollTableToActorHelpers.itemMatches(i, item);
                 });
                 if (match) {
-                    // const newStack = getProperty(match.system, stackAttribute) + (getProperty(item.system, stackAttribute) ?? 1);
-                    const newStack = getProperty(match, stackAttribute) + (getProperty(item, stackAttribute) ?? 1);
+                    // const newStack = foundry.utils.getProperty(match.system, stackAttribute) + (foundry.utils.getProperty(item.system, stackAttribute) ?? 1);
+                    const newStack =
+                        foundry.utils.getProperty(match, stackAttribute) +
+                        (foundry.utils.getProperty(item, stackAttribute) ?? 1);
                     const newPriceValue =
-                        (getProperty(match, priceAttribute)?.value ?? 0) +
-                        (getProperty(item, priceAttribute)?.value ?? 0);
+                        (foundry.utils.getProperty(match, priceAttribute)?.value ?? 0) +
+                        (foundry.utils.getProperty(item, priceAttribute)?.value ?? 0);
                     const newPrice = {
-                        denomination: getProperty(item, priceAttribute)?.denomination,
+                        denomination: foundry.utils.getProperty(item, priceAttribute)?.denomination,
                         value: newPriceValue,
                     };
-                    // const newWeight = getProperty(match, weightAttribute) + (getProperty(item, weightAttribute) ?? 0);
+                    // const newWeight = foundry.utils.getProperty(match, weightAttribute) + (foundry.utils.getProperty(item, weightAttribute) ?? 0);
 
                     const newQty = RollTableToActorHelpers._handleLimitedQuantity(
                         newStack,
-                        getProperty(item, stackAttribute),
+                        foundry.utils.getProperty(item, stackAttribute),
                         customLimit,
                     );
 
@@ -585,10 +614,10 @@ export class RollTableToActorHelpers {
     // static async _createItem(result, actor, stackSame = true, customLimit = 0) {
     //     const newItemData = await RollTableToActorHelpers.buildItemData(result);
     //     const priceAttribute = game.itempiles.API.ITEM_PRICE_ATTRIBUTE; // SETTINGS.PRICE_PROPERTY_PATH
-    //     const itemPrice = getProperty(newItemData, priceAttribute) || 0;
+    //     const itemPrice = foundry.utils.getProperty(newItemData, priceAttribute) || 0;
     //     const embeddedItems = [...actor.getEmbeddedCollection("Item").values()];
     //     const originalItem = embeddedItems.find(
-    //         (i) => i.name === newItemData.name && itemPrice === getProperty(i, priceAttribute),
+    //         (i) => i.name === newItemData.name && itemPrice === foundry.utils.getProperty(i, priceAttribute),
     //     );
 
     //     /** if the item is already owned by the actor (same name and same PRICE) */
@@ -599,25 +628,25 @@ export class RollTableToActorHelpers {
     //         const priceAttribute = game.itempiles.API.ITEM_PRICE_ATTRIBUTE; // game.settings.get(CONSTANTS.MODULE_ID, SETTINGS.PRICE_PROPERTY_PATH);
     //         // const weightAttribute = game.settings.get(CONSTANTS.MODULE_ID, SETTINGS.WEIGHT_PROPERTY_PATH);
 
-    //         const newItemQty = getProperty(newItemData, stackAttribute) || 1;
-    //         const originalQty = getProperty(originalItem, stackAttribute) || 1;
+    //         const newItemQty = foundry.utils.getProperty(newItemData, stackAttribute) || 1;
+    //         const originalQty = foundry.utils.getProperty(originalItem, stackAttribute) || 1;
     //         const updateItem = { _id: originalItem.id };
     //         const newQty = RollTableToActorHelpers._handleLimitedQuantity(newItemQty, originalQty, customLimit);
 
     //         if (newQty != newItemQty) {
-    //             setProperty(updateItem, stackAttribute, newQty);
+    //             foundry.utils.setProperty(updateItem, stackAttribute, newQty);
 
     //             const newPriceValue =
-    //                 (getProperty(originalItem, priceAttribute)?.value ?? 0) +
-    //                 (getProperty(newItemData, priceAttribute)?.value ?? 0);
+    //                 (foundry.utils.getProperty(originalItem, priceAttribute)?.value ?? 0) +
+    //                 (foundry.utils.getProperty(newItemData, priceAttribute)?.value ?? 0);
     //             const newPrice = {
-    //                 denomination: getProperty(item, priceAttribute)?.denomination,
+    //                 denomination: foundry.utils.getProperty(item, priceAttribute)?.denomination,
     //                 value: newPriceValue,
     //             };
-    //             setProperty(updateItem, `${priceAttribute}`, newPrice);
+    //             foundry.utils.setProperty(updateItem, `${priceAttribute}`, newPrice);
 
-    //             // const newWeight = getProperty(originalItem, weightAttribute) + (getProperty(newItemData, weightAttribute) ?? 1);
-    //             // setProperty(updateItem, `${weightAttribute}`, newWeight);
+    //             // const newWeight = foundry.utils.getProperty(originalItem, weightAttribute) + (foundry.utils.getProperty(newItemData, weightAttribute) ?? 1);
+    //             // foundry.utils.setProperty(updateItem, `${weightAttribute}`, newWeight);
 
     //             await actor.updateEmbeddedDocuments("Item", [updateItem]);
     //         }
@@ -661,15 +690,15 @@ export class RollTableToActorHelpers {
     // // PATCH 2023-10-04
     // let customResultName = undefined;
     // let customResultImg = undefined;
-    // if (getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`)) {
-    //   customResultName = getProperty(
+    // if (foundry.utils.getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`)) {
+    //   customResultName = foundry.utils.getProperty(
     //     result,
     //     `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`
     //   );
     // }
 
-    // if (getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`)) {
-    //   customResultImg = getProperty(
+    // if (foundry.utils.getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`)) {
+    //   customResultImg = foundry.utils.getProperty(
     //     result,
     //     `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`
     //   );
@@ -677,7 +706,7 @@ export class RollTableToActorHelpers {
 
     // let existingItem = undefined;
 
-    // let docUuid = getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`);
+    // let docUuid = foundry.utils.getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`);
     // if (docUuid) {
     //   existingItem = await fromUuid(docUuid);
     // }
@@ -707,7 +736,7 @@ export class RollTableToActorHelpers {
     //   return null;
     // }
 
-    // let itemData = duplicate(existingItem);
+    // let itemData = foundry.utils.duplicate(existingItem);
 
     // if (customResultName) {
     //   itemData.name = customResultName;
@@ -781,7 +810,7 @@ export class RollTableToActorHelpers {
                 Logger.error(e.message, false, e);
                 continue;
             }
-            setProperty(itemData, `system.${cmd.command.toLowerCase()}`, rolledValue);
+            foundry.utils.setProperty(itemData, `system.${cmd.command.toLowerCase()}`, rolledValue);
         }
         return itemData;
     }
@@ -797,7 +826,7 @@ export class RollTableToActorHelpers {
     // static async _getRandomSpell(level) {
     //   const spells = API.betterTables
     //       .getSpellCache()
-    //       .filter((spell) => getProperty(spell, CONSTANTS.SPELL_LEVEL_PATH) === level),
+    //       .filter((spell) => foundry.utils.getProperty(spell, CONSTANTS.SPELL_LEVEL_PATH) === level),
     //     spell = spells[Math.floor(Math.random() * spells.length)];
     //   return BRTUtils.findInCompendiumById(spell.collection, spell._id);
     // }
@@ -811,7 +840,7 @@ export class RollTableToActorHelpers {
     // static async preItemCreationDataManipulation(itemData) {
     //   const match = CONSTANTS.SCROLL_REGEX.exec(itemData.name);
 
-    //   itemData = duplicate(itemData);
+    //   itemData = foundry.utils.duplicate(itemData);
 
     //   if (!match) {
     //     return itemData;

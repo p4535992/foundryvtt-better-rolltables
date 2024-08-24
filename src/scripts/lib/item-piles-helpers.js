@@ -586,19 +586,19 @@ export default class ItemPilesHelpers {
         //   if (existingItem) {
         //     existingItem.quantity += Math.max(newItem.quantity, 1);
         //   } else {
-        //     setProperty(newItem, ItemPilesHelpers.FLAGS.ITEM, getProperty(newItem.item, ItemPilesHelpers.FLAGS.ITEM));
+        //     foundry.utils.setProperty(newItem, ItemPilesHelpers.FLAGS.ITEM, foundry.utils.getProperty(newItem.item, ItemPilesHelpers.FLAGS.ITEM));
         //     if (
         //       game.itempiles.API.QUANTITY_FOR_PRICE_ATTRIBUTE &&
-        //       !getProperty(newItem, game.itempiles.API.QUANTITY_FOR_PRICE_ATTRIBUTE)
+        //       !foundry.utils.getProperty(newItem, game.itempiles.API.QUANTITY_FOR_PRICE_ATTRIBUTE)
         //     ) {
-        //       setProperty(
+        //       foundry.utils.setProperty(
         //         newItem,
         //         game.itempiles.API.QUANTITY_FOR_PRICE_ATTRIBUTE,
         //         ItemPilesHelpers.getItemQuantity(newItem.item)
         //       );
         //     }
         //     if (customCategory) {
-        //       setProperty(newItem, ItemPilesHelpers.FLAGS.CUSTOM_CATEGORY, customCategory);
+        //       foundry.utils.setProperty(newItem, ItemPilesHelpers.FLAGS.CUSTOM_CATEGORY, customCategory);
         //     }
         //     items.push({
         //       ...newItem,
@@ -698,23 +698,23 @@ export default class ItemPilesHelpers {
             if (existingItem) {
                 existingItem.quantity += Math.max(newItem.quantity, 1);
             } else {
-                setProperty(
+                foundry.utils.setProperty(
                     newItem,
                     ItemPilesHelpers.FLAGS.ITEM,
-                    getProperty(newItem.item, ItemPilesHelpers.FLAGS.ITEM),
+                    foundry.utils.getProperty(newItem.item, ItemPilesHelpers.FLAGS.ITEM),
                 );
                 if (
                     game.itempiles.API.QUANTITY_FOR_PRICE_ATTRIBUTE &&
-                    !getProperty(newItem, game.itempiles.API.QUANTITY_FOR_PRICE_ATTRIBUTE)
+                    !foundry.utils.getProperty(newItem, game.itempiles.API.QUANTITY_FOR_PRICE_ATTRIBUTE)
                 ) {
-                    setProperty(
+                    foundry.utils.setProperty(
                         newItem,
                         game.itempiles.API.QUANTITY_FOR_PRICE_ATTRIBUTE,
                         ItemPilesHelpers.getItemQuantity(newItem.item),
                     );
                 }
                 if (customCategory) {
-                    setProperty(newItem, ItemPilesHelpers.FLAGS.CUSTOM_CATEGORY, customCategory);
+                    foundry.utils.setProperty(newItem, ItemPilesHelpers.FLAGS.CUSTOM_CATEGORY, customCategory);
                 }
                 items.push({
                     ...newItem,
@@ -739,7 +739,7 @@ export default class ItemPilesHelpers {
      */
     static getItemQuantity(item) {
         const itemData = item instanceof Item ? item.toObject() : item;
-        return Number(getProperty(itemData, game.itempiles.API.ITEM_QUANTITY_ATTRIBUTE) ?? 0);
+        return Number(foundry.utils.getProperty(itemData, game.itempiles.API.ITEM_QUANTITY_ATTRIBUTE) ?? 0);
     }
 
     /**
@@ -750,7 +750,7 @@ export default class ItemPilesHelpers {
      */
     static hasItemQuantity(item) {
         const itemData = item instanceof Item ? item.toObject() : item;
-        return hasProperty(itemData, game.itempiles.API.ITEM_QUANTITY_ATTRIBUTE);
+        return foundry.utils.hasProperty(itemData, game.itempiles.API.ITEM_QUANTITY_ATTRIBUTE);
     }
 
     /**
@@ -765,7 +765,7 @@ export default class ItemPilesHelpers {
         const itemData = item instanceof Item ? item.toObject() : item;
         // if (!requiresExistingQuantity || ItemPilesHelpers.getItemTypesThatCanStack().has(itemData.type) || ItemPilesHelpers.hasItemQuantity(itemData)) {
         if (!requiresExistingQuantity || ItemPilesHelpers.hasItemQuantity(itemData)) {
-            setProperty(itemData, game.itempiles.API.ITEM_QUANTITY_ATTRIBUTE, quantity);
+            foundry.utils.setProperty(itemData, game.itempiles.API.ITEM_QUANTITY_ATTRIBUTE, quantity);
         }
         return itemData;
     }
@@ -778,7 +778,7 @@ export default class ItemPilesHelpers {
      */
     static getItemCost(item) {
         const itemData = item instanceof Item ? item.toObject() : item;
-        return getProperty(itemData, game.itempiles.API.ITEM_PRICE_ATTRIBUTE) ?? 0;
+        return foundry.utils.getProperty(itemData, game.itempiles.API.ITEM_PRICE_ATTRIBUTE) ?? 0;
     }
 
     /**
@@ -789,7 +789,7 @@ export default class ItemPilesHelpers {
      */
     static hasItemCost(item) {
         const itemData = item instanceof Item ? item.toObject() : item;
-        return hasProperty(itemData, game.itempiles.API.ITEM_PRICE_ATTRIBUTE);
+        return foundry.utils.hasProperty(itemData, game.itempiles.API.ITEM_PRICE_ATTRIBUTE);
     }
 
     /**
@@ -803,7 +803,7 @@ export default class ItemPilesHelpers {
     static setItemCost(item, cost, requiresExistingCost = false) {
         const itemData = item instanceof Item ? item.toObject() : item;
         if (!requiresExistingCost || ItemPilesHelpers.hasItemCost(itemData)) {
-            setProperty(itemData, game.itempiles.API.ITEM_PRICE_ATTRIBUTE, cost);
+            foundry.utils.setProperty(itemData, game.itempiles.API.ITEM_PRICE_ATTRIBUTE, cost);
         }
         return itemData;
     }
@@ -830,12 +830,13 @@ export default class ItemPilesHelpers {
     static stackTableResults(rolledResult) {
         const resultsStacked = [];
         rolledResult.forEach((newResult) => {
-            let isResultHidden = getProperty(newResult, `flags.better-rolltables.brt-hidden-table`) || false;
+            let isResultHidden =
+                foundry.utils.getProperty(newResult, `flags.better-rolltables.brt-hidden-table`) || false;
             // MOD 4535992
             //const existingItem = resultsStacked.find((item) => ItemPilesHelpers.findSimilarItem(item, newResult));
             const existingItem = resultsStacked.find((r) => {
                 // Merge by hidden property
-                let isResultHidden2 = getProperty(r, `flags.better-rolltables.brt-hidden-table`) || false;
+                let isResultHidden2 = foundry.utils.getProperty(r, `flags.better-rolltables.brt-hidden-table`) || false;
                 // MOD 4535992
                 if (r.documentId && newResult.documentId) {
                     return r.documentId === newResult.documentId && isResultHidden === isResultHidden2;
@@ -984,7 +985,7 @@ export default class ItemPilesHelpers {
                     // TODO BETTER MAYBE WITH BRT ??
                     /*
                     // Adjust as needed -- this very loosely approximates individual treasure by CR
-                    const exponent = 0.15 * (getProperty(tok.actor, "system.details.cr") ?? 0);
+                    const exponent = 0.15 * (foundry.utils.getProperty(tok.actor, "system.details.cr") ?? 0);
                     let gold = Math.round(0.6 * 10 * (10 ** exponent));
 
                     // ensure it can devide evenly across all looting players (convienence)
@@ -1003,9 +1004,9 @@ export default class ItemPilesHelpers {
                     silver -= convertedSilver
 
                     // Add onto any currency the actor may already have
-                    gold += acc.actor.system.currency.gp + getProperty(tok.actor, 'system.currency.gp') ?? 0
-                    silver += acc.actor.system.currency.sp + getProperty(tok.actor, 'system.currency.sp') ?? 0
-                    copper += acc.actor.system.currency.cp + getProperty(tok.actor, 'system.currency.cp') ?? 0
+                    gold += acc.actor.system.currency.gp + foundry.utils.getProperty(tok.actor, 'system.currency.gp') ?? 0
+                    silver += acc.actor.system.currency.sp + foundry.utils.getProperty(tok.actor, 'system.currency.sp') ?? 0
+                    copper += acc.actor.system.currency.cp + foundry.utils.getProperty(tok.actor, 'system.currency.cp') ?? 0
 
                     acc.actor.system.currency = {gp: gold, sp: silver, cp: copper};
                     */

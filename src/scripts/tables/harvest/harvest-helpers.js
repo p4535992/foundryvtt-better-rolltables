@@ -219,7 +219,7 @@ export class BRTHarvestHelpers {
 
         // const brtTypeToCheck = BRTUtils.retrieveBRTType(tableEntity);
 
-        const useDynamicDcOnTable = getProperty(
+        const useDynamicDcOnTable = foundry.utils.getProperty(
             table,
             `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_USE_DYNAMIC_DC}`,
         );
@@ -228,7 +228,7 @@ export class BRTHarvestHelpers {
                 useDynamicDcOnTable
                 // && brtTypeToCheck === CONSTANTS.TABLE_TYPE_HARVEST
             ) {
-                const dynamicDcValue = getProperty(
+                const dynamicDcValue = foundry.utils.getProperty(
                     r,
                     `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_RESULT_DYNAMIC_DC_VALUE}`,
                 );
@@ -239,7 +239,10 @@ export class BRTHarvestHelpers {
                     }
                 }
             } else {
-                const dcValue = getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_DC_VALUE_KEY}`);
+                const dcValue = foundry.utils.getProperty(
+                    r,
+                    `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_DC_VALUE_KEY}`,
+                );
                 dcs.push(await tryToConvertToNumber(dcValue));
             }
         }
@@ -259,7 +262,7 @@ export class BRTHarvestHelpers {
 
         // const brtTypeToCheck = BRTUtils.retrieveBRTType(tableEntity);
 
-        const useDynamicDcOnTable = getProperty(
+        const useDynamicDcOnTable = foundry.utils.getProperty(
             table,
             `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_USE_DYNAMIC_DC}`,
         );
@@ -268,7 +271,7 @@ export class BRTHarvestHelpers {
                 useDynamicDcOnTable
                 // && brtTypeToCheck === CONSTANTS.TABLE_TYPE_HARVEST
             ) {
-                const dynamicDcValue = getProperty(
+                const dynamicDcValue = foundry.utils.getProperty(
                     r,
                     `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_RESULT_DYNAMIC_DC_VALUE}`,
                 );
@@ -279,7 +282,10 @@ export class BRTHarvestHelpers {
                     }
                 }
             } else {
-                const dcValue = getProperty(r, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_DC_VALUE_KEY}`);
+                const dcValue = foundry.utils.getProperty(
+                    r,
+                    `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_DC_VALUE_KEY}`,
+                );
                 dcs.push(tryToConvertToNumberSync(dcValue));
             }
         }

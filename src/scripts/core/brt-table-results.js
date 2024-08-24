@@ -217,7 +217,7 @@ export class BetterResults {
             // Little trick to merge my data with the standard table result object of foundry
             delete betterResult.result.uuid;
             delete betterResult.result._id;
-            const br = mergeObject(r, betterResult.result);
+            const br = foundry.utils.mergeObject(r, betterResult.result);
             this.results.push(br);
         }
 
@@ -258,7 +258,7 @@ export class BetterResults {
     //             let textString = t;
     //             const commands = [];
     //             let table;
-    //             const betterResult = mergeObject({}, result.toObject(false));
+    //             const betterResult = foundry.utils.mergeObject({}, result.toObject(false));
     //             let matches;
 
     //             while ((matches = regex.exec(t)) !== null) {
@@ -336,13 +336,13 @@ export class BetterResults {
     //                 if (isEmptyObject(betterResult.flags)) {
     //                     betterResult.flags = {};
     //                 }
-    //                 mergeObject(betterResult.flags, result.flags);
+    //                 foundry.utils.mergeObject(betterResult.flags, result.flags);
 
     //                 betterResults.push(betterResult);
     //             }
     //         }
     //     } else {
-    //         const betterResult = mergeObject({}, result.toObject(false));
+    //         const betterResult = foundry.utils.mergeObject({}, result.toObject(false));
     //         betterResult.img =
     //             result.thumbnail || result.img || CONFIG.RollTable.resultIcon || `icons/svg/d20-black.svg`;
     //         betterResult.collection = result.documentCollection;
@@ -352,7 +352,7 @@ export class BetterResults {
     //         if (isEmptyObject(betterResult.flags)) {
     //             betterResult.flags = {};
     //         }
-    //         mergeObject(betterResult.flags, result.flags);
+    //         foundry.utils.mergeObject(betterResult.flags, result.flags);
 
     //         betterResults.push(betterResult);
     //     }

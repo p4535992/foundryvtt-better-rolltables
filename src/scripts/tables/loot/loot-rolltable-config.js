@@ -89,7 +89,7 @@ export class BetterRollTableLootConfig extends RollTableConfig {
             Logger.i18n(`${CONSTANTS.MODULE_ID}.${"TypeLoot"}`) +
             "";
 
-        brtData = foundry.utils.mergeObject(brtData, duplicate(this.document.flags));
+        brtData = foundry.utils.mergeObject(brtData, foundry.utils.duplicate(this.document.flags));
         brtData.disabled = !this.isEditable;
         brtData.uuid = this.document.uuid;
         brtData.owner = this.document.isOwner;
@@ -327,7 +327,7 @@ export class BetterRollTableLootConfig extends RollTableConfig {
                 if (inputCustomIcon !== path) {
                     resultImageInputs[0].value = path;
                 }
-                // const resultDocUuid = getProperty(
+                // const resultDocUuid = foundry.utils.getProperty(
                 //     result,
                 //     `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`,
                 // );
@@ -692,7 +692,7 @@ export class BetterRollTableLootConfig extends RollTableConfig {
         let findDocument = await BRTBetterHelpers.retrieveDocumentFromResult(result, true);
 
         let isJournal = findDocument instanceof JournalEntry;
-        let docJournalPageUuid = getProperty(
+        let docJournalPageUuid = foundry.utils.getProperty(
             result,
             `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_JOURNAL_PAGE_UUID}`,
         );
@@ -813,7 +813,11 @@ export class BetterRollTableLootConfig extends RollTableConfig {
         const tableResult = event.currentTarget.closest(".table-result");
         const result = this.document.results.get(tableResult.dataset.resultId);
 
-        setProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_JOURNAL_PAGE_UUID}`, value);
+        foundry.utils.setProperty(
+            result,
+            `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_JOURNAL_PAGE_UUID}`,
+            value,
+        );
         // Save any pending changes
         await this._onSubmit(event);
 

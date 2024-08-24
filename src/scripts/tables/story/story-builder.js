@@ -39,11 +39,14 @@ export class StoryBuilder {
                 }
             } else if (entry.type === CONST.TABLE_RESULT_TYPES.COMPENDIUM) {
                 /** entity type 2 is when an entity inside a compendium is linked */
-                let nameEntry = getProperty(
+                let nameEntry = foundry.utils.getProperty(
                     entry,
                     `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_NAME}`,
                 )
-                    ? getProperty(entry, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_NAME}`)
+                    ? foundry.utils.getProperty(
+                          entry,
+                          `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_NAME}`,
+                      )
                     : entry.text;
                 const entity = await BRTUtils.findInCompendiumByName(entry.documentCollection, nameEntry);
                 if (!entity) {
@@ -142,7 +145,7 @@ export class StoryBuilder {
             return;
         }
         const definition = match[1];
-        if (hasProperty(this._storyTokens, definition)) {
+        if (foundry.utils.hasProperty(this._storyTokens, definition)) {
             Logger.log(`definition ${definition} is already defined, skipping line`);
             return;
         }
@@ -223,7 +226,7 @@ export class StoryBuilder {
         }
 
         if (valueResult) {
-            setProperty(this._storyTokens, definition, valueResult);
+            foundry.utils.setProperty(this._storyTokens, definition, valueResult);
         }
     }
 
@@ -249,7 +252,7 @@ export class StoryBuilder {
         let matches;
 
         while ((matches = regex.exec(story)) != null) {
-            const value = getProperty(this._storyTokens, matches[1]);
+            const value = foundry.utils.getProperty(this._storyTokens, matches[1]);
             if (!value) {
                 Logger.error(`cannot find a value for token ${matches[1]} in #story definition`, true);
                 continue;

@@ -65,7 +65,8 @@ export function testRegexTable(stringToCheck, document, options) {
     const enableAnySuffixMatch = options.enableAnySuffixMatch;
     const forceCheckOnNameIfNotFoundedMatch = options.forceCheckOnNameIfNotFoundedMatch;
 
-    let brtSourceReference = getProperty(document, `flags.better-rolltables.brt-source-value`)?.trim() || "";
+    let brtSourceReference =
+        foundry.utils.getProperty(document, `flags.better-rolltables.brt-source-value`)?.trim() || "";
     brtSourceReference = brtSourceReference.replaceAll("Loot | ", "");
     brtSourceReference = brtSourceReference.replaceAll("Harvester | ", "");
     brtSourceReference = brtSourceReference.replaceAll("Better ", "");
@@ -74,7 +75,7 @@ export function testRegexTable(stringToCheck, document, options) {
     let isFound = testWithRegex(stringToCheck, brtSourceReference, enableExactMatch, enableAnySuffixMatch);
 
     if (!isFound && forceCheckOnNameIfNotFoundedMatch) {
-        let standardSourceReference = getProperty(document, `name`)?.trim() || "";
+        let standardSourceReference = foundry.utils.getProperty(document, `name`)?.trim() || "";
         standardSourceReference = standardSourceReference.replaceAll("Loot | ", "");
         standardSourceReference = standardSourceReference.replaceAll("Harvester | ", "");
         standardSourceReference = standardSourceReference.replaceAll("Better ", "");

@@ -28,7 +28,7 @@ export class BetterRolltableSettingsConfig extends FormApplication {
 
     /** @override */
     static get defaultOptions() {
-        return mergeObject(super.defaultOptions, {
+        return foundry.utils.mergeObject(super.defaultOptions, {
             title: Logger.i18n(`${CONSTANTS.MODULE_ID}.Settings.Module.AdvancedSettings.Title`),
             id: "betterrolltables-settings",
             template: `${CONSTANTS.PATH}/templates/config/settings.hbs`,
@@ -60,7 +60,7 @@ export class BetterRolltableSettingsConfig extends FormApplication {
             if (!game.user.isGM) continue;
 
             // Update setting data
-            const s = duplicate(setting);
+            const s = foundry.utils.duplicate(setting);
             s.name = Logger.i18n(s.name);
             s.hint = Logger.i18n(s.hint);
             s.value = game.settings.get(s.namespace, s.key);

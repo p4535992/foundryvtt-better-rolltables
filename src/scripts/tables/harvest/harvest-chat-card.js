@@ -22,7 +22,12 @@ export class HarvestChatCard {
         this.numberOfDraws = 0;
         this.atLeastOneRollIsHidden = false;
         for (const result of this.betterResults) {
-            if (getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_HIDDEN_TABLE}`)) {
+            if (
+                foundry.utils.getProperty(
+                    result,
+                    `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_HIDDEN_TABLE}`,
+                )
+            ) {
                 this.atLeastOneRollIsHidden = true;
                 break;
             }
@@ -50,22 +55,41 @@ export class HarvestChatCard {
             let customResultImgHidden = undefined;
 
             let customResultName = undefined;
-            if (hasProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`)) {
+            if (
+                foundry.utils.hasProperty(
+                    result,
+                    `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`,
+                )
+            ) {
                 customResultName =
-                    getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`) ||
-                    "";
+                    foundry.utils.getProperty(
+                        result,
+                        `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`,
+                    ) || "";
             }
 
             let customResultImg = undefined;
-            if (hasProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`)) {
+            if (
+                foundry.utils.hasProperty(
+                    result,
+                    `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`,
+                )
+            ) {
                 customResultImg =
-                    getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`) ||
-                    "";
+                    foundry.utils.getProperty(
+                        result,
+                        `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`,
+                    ) || "";
             }
             let isResultHidden = false;
-            if (hasProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_HIDDEN_TABLE}`)) {
+            if (
+                foundry.utils.hasProperty(
+                    result,
+                    `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_HIDDEN_TABLE}`,
+                )
+            ) {
                 // if (
-                //     !getProperty(
+                //     !foundry.utils.getProperty(
                 //         result,
                 //         `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_SHOW_HIDDEN_RESULT_ON_CHAT}`,
                 //     )
@@ -75,12 +99,12 @@ export class HarvestChatCard {
                 // customResultNameHidden = CONSTANTS.DEFAULT_HIDDEN_RESULT_TEXT;
                 // customResultImgHidden = CONSTANTS.DEFAULT_HIDDEN_RESULT_IMAGE;
                 isResultHidden =
-                    getProperty(
+                    foundry.utils.getProperty(
                         result,
                         `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_HIDDEN_TABLE}`,
                     ) || false;
             }
-            const entityUuid = getProperty(
+            const entityUuid = foundry.utils.getProperty(
                 result,
                 `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`,
             );
@@ -119,11 +143,14 @@ export class HarvestChatCard {
                     fontSize: fontSize,
                 });
                 if (
-                    !getProperty(
+                    !foundry.utils.getProperty(
                         result,
                         `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_SHOW_HIDDEN_RESULT_ON_CHAT}`,
                     ) &&
-                    getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_HIDDEN_TABLE}`)
+                    foundry.utils.getProperty(
+                        result,
+                        `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_HIDDEN_TABLE}`,
+                    )
                 ) {
                     continue;
                 }
@@ -208,14 +235,14 @@ export class HarvestChatCard {
             }
 
             if (customResultName && customResultName !== itemEntity.name) {
-                setProperty(itemEntity, `name`, customResultName);
+                foundry.utils.setProperty(itemEntity, `name`, customResultName);
             }
             if (customResultImg && customResultImg !== itemEntity.img) {
-                setProperty(itemEntity, `img`, customResultImg);
+                foundry.utils.setProperty(itemEntity, `img`, customResultImg);
             }
 
             let isJournal = itemEntity instanceof JournalEntry;
-            let docJournalPageUuid = getProperty(
+            let docJournalPageUuid = foundry.utils.getProperty(
                 result,
                 `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_JOURNAL_PAGE_UUID}`,
             );
@@ -250,7 +277,7 @@ export class HarvestChatCard {
 
             if (isResultHidden) {
                 if (
-                    !getProperty(
+                    !foundry.utils.getProperty(
                         result,
                         `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_SHOW_HIDDEN_RESULT_ON_CHAT}`,
                     )
@@ -260,12 +287,12 @@ export class HarvestChatCard {
             }
 
             if (customResultNameHidden && customResultNameHidden !== itemEntity.name) {
-                setProperty(itemEntity, `name`, customResultNameHidden);
+                foundry.utils.setProperty(itemEntity, `name`, customResultNameHidden);
             }
             if (customResultImgHidden && customResultImgHidden !== itemEntity.img) {
-                setProperty(itemEntity, `img`, customResultImgHidden);
+                foundry.utils.setProperty(itemEntity, `img`, customResultImgHidden);
             }
-            setProperty(
+            foundry.utils.setProperty(
                 itemEntity,
                 `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_HIDDEN_TABLE}`,
                 isResultHidden,
@@ -332,7 +359,7 @@ export class HarvestChatCard {
 
             /*
             // TODO ???
-            setProperty(itemData, "permission.default", CONST.DOCUMENT_PERMISSION_LEVELS.OBSERVER);
+            foundry.utils.setProperty(itemData, "permission.default", CONST.DOCUMENT_PERMISSION_LEVELS.OBSERVER);
             let newItem = await Item.create(itemData);
             */
         }
@@ -499,7 +526,7 @@ export class HarvestChatCard {
             }
         } else {
             // IF IS GM
-            const isShowHiddenResultOnChat = getProperty(
+            const isShowHiddenResultOnChat = foundry.utils.getProperty(
                 table,
                 `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_SHOW_HIDDEN_RESULT_ON_CHAT}`,
             );

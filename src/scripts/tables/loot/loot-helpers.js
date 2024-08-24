@@ -143,7 +143,7 @@ export class BRTLootHelpers {
     //  * @param {*} lootCurrency
     //  */
     // static async addCurrenciesToActor(actor, lootCurrency) {
-    //   const currencyData = duplicate(actor.system.currency);
+    //   const currencyData = foundry.utils.duplicate(actor.system.currency);
     //   // const lootCurrency = this.currencyData;
 
     //   for (const key in lootCurrency) {
@@ -167,9 +167,9 @@ export class BRTLootHelpers {
     //   let currencyData = currencyDataInitial;
 
     //   if (isTokenActor) {
-    //     currencyData = duplicate(token.system.currency);
+    //     currencyData = foundry.utils.duplicate(token.system.currency);
     //   } else if (token.actor.system.currency) {
-    //     currencyData = duplicate(token.actor.system.currency);
+    //     currencyData = foundry.utils.duplicate(token.actor.system.currency);
     //   }
 
     //   // const lootCurrency = currencyData;

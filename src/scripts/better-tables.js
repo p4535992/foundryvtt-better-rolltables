@@ -252,7 +252,7 @@ export class BetterTables {
     //       });
     //       this._spellCache = spellCompendiumIndex
     //         .filter((entry) => entry.type === "spell")
-    //         .map((i) => mergeObject(i, { collection: spellCompendium.collection }));
+    //         .map((i) => foundry.utils.mergeObject(i, { collection: spellCompendium.collection }));
     //     } else {
     //       Logger.error(`Spell cache could not be initialized/updated.`);
     //     }
@@ -356,7 +356,8 @@ export class BetterTables {
     }
 
     static async _renderMessage(message) {
-        const dataMessageLoot = getProperty(message, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.LOOT}`) || {};
+        const dataMessageLoot =
+            foundry.utils.getProperty(message, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.LOOT}`) || {};
         if (!dataMessageLoot.compendium) {
             dataMessageLoot.compendium = "";
         }
@@ -486,8 +487,8 @@ export class BetterTables {
 
         // if (
         //     game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SHOW_CURRENCY_SHARE_BUTTON) &&
-        //     getProperty(message, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.LOOT_CURRENCY}`) && // message.flags?.betterTables?.loot.currency &&
-        //     Object.keys(getProperty(message, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.LOOT_CURRENCY}`)).length >
+        //     foundry.utils.getProperty(message, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.LOOT_CURRENCY}`) && // message.flags?.betterTables?.loot.currency &&
+        //     Object.keys(foundry.utils.getProperty(message, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.LOOT_CURRENCY}`)).length >
         //         0 // message.flags.betterTables.loot.currency)
         // ) {
         //     // Currency share button
@@ -541,7 +542,10 @@ export class BetterTables {
         ).map((x) => x.dataset.userId);
         if (!usersId) return undefined;
 
-        const currenciesToShare = getProperty(message, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.LOOT_CURRENCY}`); //message.flags.betterTables.loot.currency;
+        const currenciesToShare = foundry.utils.getProperty(
+            message,
+            `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.LOOT_CURRENCY}`,
+        ); //message.flags.betterTables.loot.currency;
         const usersCount = usersId.length;
         const share = Object.keys(currenciesToShare)
             .map((x) => ({ [x]: Math.floor(currenciesToShare[x] / usersCount) }))
@@ -559,7 +563,9 @@ export class BetterTables {
             await user.character.update({ currency: currency });
         }
         const newMessage = await BetterTables._renderMessage(
-            mergeObject(message, { [`flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.LOOT_SHARED}`]: true }), //"flags.betterTables.loot.shared"
+            foundry.utils.mergeObject(message, {
+                [`flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.LOOT_SHARED}`]: true,
+            }), //"flags.betterTables.loot.shared"
         );
         await BetterTables.updateChatMessage(message, newMessage);
     }
@@ -724,7 +730,7 @@ export class BetterTables {
             if (
               obj?.result &&
               obj.isUpdate &&
-              !isEmptyObject(getProperty(obj.result, `flags.${CONSTANTS.MODULE_ID}`))
+              !isEmptyObject(foundry.utils.getProperty(obj.result, `flags.${CONSTANTS.MODULE_ID}`))
             ) {
               let resultToUpdate = result.toObject(false);
               if (!resultToUpdate.flags) {
@@ -733,9 +739,9 @@ export class BetterTables {
               if (!resultToUpdate.flags[CONSTANTS.MODULE_ID]) {
                 resultToUpdate.flags[CONSTANTS.MODULE_ID] = {};
               }
-              mergeObject(
+              foundry.utils.mergeObject(
                 resultToUpdate.flags[CONSTANTS.MODULE_ID],
-                getProperty(obj.result, `flags.${CONSTANTS.MODULE_ID}`)
+                foundry.utils.getProperty(obj.result, `flags.${CONSTANTS.MODULE_ID}`)
               );
               atLeastOneIsUpdated = true;
               return resultToUpdate;

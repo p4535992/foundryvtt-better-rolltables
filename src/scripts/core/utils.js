@@ -8,7 +8,11 @@ import { RetrieveHelpers } from "../lib/retrieve-helpers";
 export class BRTUtils {
     static addRollModeToChatData(chatData, rollMode) {
         rollMode = rollMode ?? game.settings.get("core", "rollMode");
-        if (String(getProperty(chatData, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HIDDEN_TABLE}`)) === "true") {
+        if (
+            String(
+                foundry.utils.getProperty(chatData, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HIDDEN_TABLE}`),
+            ) === "true"
+        ) {
             rollMode = "gmroll";
         }
 
@@ -84,11 +88,14 @@ export class BRTUtils {
      * @returns {object|boolean} item from compendium
      */
     static async getItemFromCompendium(result) {
-        let nameEntry = getProperty(
+        let nameEntry = foundry.utils.getProperty(
             result,
             `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_NAME}`,
         )
-            ? getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_NAME}`)
+            ? foundry.utils.getProperty(
+                  result,
+                  `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_NAME}`,
+              )
             : result.text;
         return BRTUtils.findInCompendiumByName(result.collection, nameEntry);
     }
@@ -176,7 +183,10 @@ export class BRTUtils {
 
         let dc =
             options?.dc ||
-            getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_DC_VALUE_KEY}`) ||
+            foundry.utils.getProperty(
+                tableEntity,
+                `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_DC_VALUE_KEY}`,
+            ) ||
             undefined;
 
         if (dc) {
@@ -200,7 +210,10 @@ export class BRTUtils {
 
         newOptions.skill =
             options?.skill ||
-            getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_SKILL_VALUE_KEY}`) ||
+            foundry.utils.getProperty(
+                tableEntity,
+                `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_SKILL_VALUE_KEY}`,
+            ) ||
             undefined;
 
         newOptions.skills = parseAsArray(newOptions.skill);
@@ -227,7 +240,9 @@ export class BRTUtils {
 
         let rollMode = options?.rollMode ?? null;
         if (
-            String(getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HIDDEN_TABLE}`)) === "true"
+            String(
+                foundry.utils.getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HIDDEN_TABLE}`),
+            ) === "true"
         ) {
             rollMode = "gmroll";
         }
@@ -236,7 +251,10 @@ export class BRTUtils {
         let distinct = isRealBooleanOrElseNull(options?.distinct);
         if (distinct === null) {
             distinct = isRealBooleanOrElseNull(
-                getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_DISTINCT_RESULT}`),
+                foundry.utils.getProperty(
+                    tableEntity,
+                    `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_DISTINCT_RESULT}`,
+                ),
             );
         }
         if (distinct === null) {
@@ -248,7 +266,7 @@ export class BRTUtils {
         let distinctKeepRolling = isRealBooleanOrElseNull(options?.distinctKeepRolling);
         if (distinctKeepRolling === null) {
             distinctKeepRolling = isRealBooleanOrElseNull(
-                getProperty(
+                foundry.utils.getProperty(
                     tableEntity,
                     `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_DISTINCT_RESULT_KEEP_ROLLING}`,
                 ),
@@ -285,7 +303,10 @@ export class BRTUtils {
         let usePercentage = isRealBooleanOrElseNull(options?.usePercentage);
         if (usePercentage === null) {
             usePercentage = isRealBooleanOrElseNull(
-                getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_USE_PERCENTAGE}`),
+                foundry.utils.getProperty(
+                    tableEntity,
+                    `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_USE_PERCENTAGE}`,
+                ),
             );
         }
         if (usePercentage === null) {
@@ -301,7 +322,10 @@ export class BRTUtils {
         let useDynamicDc = isRealBooleanOrElseNull(options?.useDynamicDc);
         if (useDynamicDc === null) {
             useDynamicDc = isRealBooleanOrElseNull(
-                getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_USE_DYNAMIC_DC}`),
+                foundry.utils.getProperty(
+                    tableEntity,
+                    `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_USE_DYNAMIC_DC}`,
+                ),
             );
         }
         if (useDynamicDc === null) {
@@ -349,8 +373,8 @@ export class BRTUtils {
      */
     static async addToItemData(itemsData, itemEntity, itemData = {}, isHidden = false) {
         const existingItem = itemsData.find((i) => i.item.id === itemEntity.id);
-        const quantity = getProperty(itemData, game.itempiles.API.ITEM_QUANTITY_ATTRIBUTE) || 1; // getProperty(itemData, SETTINGS.QUANTITY_PROPERTY_PATH) || 1;
-        // const weight = getProperty(itemData, SETTINGS.WEIGHT_PROPERTY_PATH) || 0;
+        const quantity = foundry.utils.getProperty(itemData, game.itempiles.API.ITEM_QUANTITY_ATTRIBUTE) || 1; // foundry.utils.getProperty(itemData, SETTINGS.QUANTITY_PROPERTY_PATH) || 1;
+        // const weight = foundry.utils.getProperty(itemData, SETTINGS.WEIGHT_PROPERTY_PATH) || 0;
 
         if (existingItem) {
             existingItem.quantity = existingItem.quantity + quantity;
@@ -408,7 +432,7 @@ export class BRTUtils {
     static retrieveBRTType(tableEntity, rollAsTableType = null, returnFlag = false) {
         let brtTypeToCheck = rollAsTableType
             ? rollAsTableType
-            : getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.TABLE_TYPE_KEY}`);
+            : foundry.utils.getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.TABLE_TYPE_KEY}`);
         if (returnFlag) {
             return brtTypeToCheck;
         }
@@ -424,7 +448,10 @@ export class BRTUtils {
     static retrieveBRTRollAmount(tableEntity, rollAmount = null) {
         let brtRollAmountToCheck = rollAmount
             ? rollAmount
-            : getProperty(tableEntity, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_AMOUNT_KEY}`);
+            : foundry.utils.getProperty(
+                  tableEntity,
+                  `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_AMOUNT_KEY}`,
+              );
         if (!brtRollAmountToCheck && tableEntity.quantity) {
             brtRollAmountToCheck = tableEntity.quantity;
         }

@@ -75,7 +75,7 @@ const API = {
         const betterResults = await br.buildResults();
 
         const data = {};
-        setProperty(data, `itemsData`, betterResults);
+        foundry.utils.setProperty(data, `itemsData`, betterResults);
         return data;
     },
 

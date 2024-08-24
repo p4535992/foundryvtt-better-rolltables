@@ -129,7 +129,10 @@ export class BRTBetterHelpers {
 
     static async retrieveDocumentFromResult(result, throwError, onlyUuid = false) {
         let findDocument = null;
-        let docUuid = getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`);
+        let docUuid = foundry.utils.getProperty(
+            result,
+            `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`,
+        );
         if (docUuid) {
             if (onlyUuid) {
                 findDocument = fromUuidSync(docUuid);
@@ -257,41 +260,44 @@ export class BRTBetterHelpers {
         result.isStackable = false;
 
         // grab the formula
-        // result.qtFormula = getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.}`;
-        const currentUuid = getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`);
-        const currentOriginalName = getProperty(
+        // result.qtFormula = foundry.utils.getProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.}`;
+        const currentUuid = foundry.utils.getProperty(
+            result,
+            `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`,
+        );
+        const currentOriginalName = foundry.utils.getProperty(
             result,
             `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_NAME}`,
         );
-        const currentCustomName = getProperty(
+        const currentCustomName = foundry.utils.getProperty(
             result,
             `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`,
         );
-        const currentOriginalIcon = getProperty(
+        const currentOriginalIcon = foundry.utils.getProperty(
             result,
             `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_ICON}`,
         );
-        const currentCustomIcon = getProperty(
+        const currentCustomIcon = foundry.utils.getProperty(
             result,
             `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`,
         );
-        const currentOriginalQuantity = getProperty(
+        const currentOriginalQuantity = foundry.utils.getProperty(
             result,
             `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_QUANTITY}`,
         );
-        const currentCustomQuantity = getProperty(
+        const currentCustomQuantity = foundry.utils.getProperty(
             result,
             `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_QUANTITY}`,
         );
 
-        const currentCustomQuantityOLD = getProperty(
+        const currentCustomQuantityOLD = foundry.utils.getProperty(
             result,
             `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RESULTS_FORMULA_KEY_FORMULA}`,
         );
 
         if (result.isDocument || result.isCompendium) {
             if (result.uuidDoc && (!currentUuid || currentUuid !== result.uuidDoc)) {
-                setProperty(
+                foundry.utils.setProperty(
                     result,
                     `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_UUID}`,
                     result.uuidDoc,
@@ -300,12 +306,16 @@ export class BRTBetterHelpers {
             }
             // Little patch for old value
             if (currentCustomQuantityOLD && !currentCustomQuantity) {
-                setProperty(
+                foundry.utils.setProperty(
                     result,
                     `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_QUANTITY}`,
                     currentCustomQuantityOLD,
                 );
-                setProperty(result, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RESULTS_FORMULA_KEY_FORMULA}`, "");
+                foundry.utils.setProperty(
+                    result,
+                    `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RESULTS_FORMULA_KEY_FORMULA}`,
+                    "",
+                );
             }
 
             if (
@@ -314,7 +324,7 @@ export class BRTBetterHelpers {
                 currentCustomQuantity &&
                 currentCustomQuantity !== result.quantity
             ) {
-                setProperty(
+                foundry.utils.setProperty(
                     result,
                     `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_QUANTITY}`,
                     result.quantity,
@@ -324,13 +334,13 @@ export class BRTBetterHelpers {
             // TODO DISABLED FOR NOW WE USE THE LOGIC 1:1 INSTEAD N:1 FOR NOW
             /*
       if (result.quantity && !currentCustomQuantity) {
-        setProperty(
+        foundry.utils.setProperty(
           result,
           `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_QUANTITY}`,
           result.quantity
         );
         // if (noFlag) {
-        //   setProperty(
+        //   foundry.utils.setProperty(
         //     result,
         //     `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_QUANTITY}`,
         //     result.quantity
@@ -398,7 +408,7 @@ export class BRTBetterHelpers {
             currentCustomName &&
             currentCustomName !== result.text
         ) {
-            setProperty(
+            foundry.utils.setProperty(
                 result,
                 `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_NAME}`,
                 result.text,
@@ -406,7 +416,7 @@ export class BRTBetterHelpers {
             isUpdate = true;
         }
         if (result.text && !currentCustomName) {
-            setProperty(
+            foundry.utils.setProperty(
                 result,
                 `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_NAME}`,
                 result.text,
@@ -415,7 +425,7 @@ export class BRTBetterHelpers {
         }
 
         if (result.img && currentOriginalIcon !== result.img && currentCustomIcon && currentCustomIcon !== result.img) {
-            setProperty(
+            foundry.utils.setProperty(
                 result,
                 `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_ORIGINAL_ICON}`,
                 result.img,
@@ -423,7 +433,7 @@ export class BRTBetterHelpers {
             isUpdate = true;
         }
         if (result.img && !currentCustomIcon) {
-            setProperty(
+            foundry.utils.setProperty(
                 result,
                 `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.GENERIC_RESULT_CUSTOM_ICON}`,
                 result.img,
@@ -452,21 +462,21 @@ export class BRTBetterHelpers {
 
         const brtTypeToCheck = BRTUtils.retrieveBRTType(table);
 
-        const useDynamicDcOnTable = getProperty(
+        const useDynamicDcOnTable = foundry.utils.getProperty(
             table,
             `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_USE_DYNAMIC_DC}`,
         );
         if (useDynamicDcOnTable && brtTypeToCheck === CONSTANTS.TABLE_TYPE_HARVEST) {
             const availableTmp = [];
             for (const a of available) {
-                const dynamicDcFormula = getProperty(
+                const dynamicDcFormula = foundry.utils.getProperty(
                     a,
                     `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_RESULT_DYNAMIC_DC_VALUE}`,
                 );
                 if (dynamicDcFormula) {
                     const dynamicDcValue = BRTHarvestHelpers.prepareValueDynamicDcSync(dynamicDcFormula);
                     const brtAvailable = foundry.utils.deepClone(a);
-                    setProperty(
+                    foundry.utils.setProperty(
                         brtAvailable,
                         `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.HARVEST_RESULT_DYNAMIC_DC_VALUE}`,
                         dynamicDcValue,

@@ -370,7 +370,6 @@ export default class BRTActorList extends FormApplication {
     /**
      * Remove all roll tables on the sheet. This does not stick unless saved.
      * @param {PointerEvent} event      The initiating click event.
-     * @returns {BRTActorList}
      */
     _onClickClear(event) {
         this.clone.updateSource({
@@ -379,23 +378,21 @@ export default class BRTActorList extends FormApplication {
                 [`${CONSTANTS.FLAGS.ACTOR_LIST.CURRENCIES}`]: "",
             },
         });
-        return this.render();
+        this.render();
     }
 
     /**
      * Populate actor with roll tables on the sheet. This does not stick unless saved.
      * @param {PointerEvent} event      The initiating click event.
-     * @returns {BRTActorList}
      */
     async _onClickPopulate(event) {
         await BRTActorList.tryToUpdateActorWithBRTActorListPreFilled(this.clone);
-        return this.render();
+        this.render();
     }
 
     /**
      * Remove all roll tables on the sheet and populate. This does not stick unless saved.
      * @param {PointerEvent} event      The initiating click event.
-     * @returns {BRTActorList}
      */
     async _onClickClearAndPopulate(event) {
         this.clone.updateSource({
@@ -405,13 +402,12 @@ export default class BRTActorList extends FormApplication {
             },
         });
         await BRTActorList.tryToUpdateActorWithBRTActorListPreFilled(this.clone);
-        return this.render();
+        this.render();
     }
 
     /**
      * Remove a single roll table on the sheet. This does not stick unless saved.
      * @param {PointerEvent} event      The initiating click event.
-     * @returns {BRTActorList}
      */
     _onClickRollTableDelete(event) {
         const uuid = event.currentTarget.closest("[data-uuid]").dataset.uuid;
@@ -420,17 +416,16 @@ export default class BRTActorList extends FormApplication {
         this.clone.updateSource({
             [`flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.ACTOR_LIST.ROLL_TABLES_LIST}`]: list,
         });
-        return this.render();
+        this.render();
     }
 
     /**
      * Render an roll table sheet by clicking its name.
      * @param {PointerEvent} event        The initiating click event.
-     * @returns {Promise<ItemSheet>}      The rendered roll table sheet.
      */
     async _onClickRollTableName(event) {
         const rollTable = await fromUuid(event.currentTarget.closest("[data-uuid]").dataset.uuid);
-        return rollTable.sheet.render(true);
+        rollTable.sheet.render(true);
     }
 
     /**
