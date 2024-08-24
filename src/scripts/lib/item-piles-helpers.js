@@ -528,7 +528,7 @@ export default class ItemPilesHelpers {
 
         // START MOD 4535992
         /*
-        const roll = new Roll(formula.toString(), rollData).evaluate({ async: false });
+        const roll = new Roll(formula.toString(), rollData).evaluateSync();
         if (roll.total <= 0) {
         return [];
         }

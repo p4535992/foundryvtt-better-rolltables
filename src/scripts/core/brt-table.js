@@ -110,7 +110,7 @@ export class BetterRollTable {
         // // Render the chat card which combines the dice roll with the drawn results
         // // messageData.content = await renderTemplate(CONFIG.RollTable.resultTemplate, {
         // messageData.content = await renderTemplate(`modules/${CONSTANTS.MODULE_ID}/templates/card/better-chat-card.hbs`, {
-        //   description: await TextEditor.enrichHTML(this.table.description, { documents: true, async: true }),
+        //   description: await TextEditor.enrichHTML(this.table.description, { documents: true }),
         //   results: results.map((result) => {
         //     const r = result.toObject(false);
         //     r.text = result.getChatText();
@@ -154,7 +154,7 @@ export class BetterRollTable {
             // Render the chat card which combines the dice roll with the drawn results
             messageData.content = await renderTemplate(CONFIG.RollTable.resultTemplate, {
                 // messageData.content = await renderTemplate(`modules/${CONSTANTS.MODULE_ID}/templates/card/better-chat-card.hbs`, {
-                description: await TextEditor.enrichHTML(this.table.description, { documents: true, async: true }),
+                description: await TextEditor.enrichHTML(this.table.description, { documents: true }),
                 results: results.map((result) => {
                     if (result instanceof TableResult) {
                         const r = result.toObject(false);
@@ -231,7 +231,7 @@ export class BetterRollTable {
                 newResults.push(r);
             } else {
                 const qtRoll = Roll.create(qtFormula);
-                const qt = (await qtRoll.evaluate({ async: true })).total;
+                const qt = (await qtRoll.evaluate()).total;
                 Logger.log(qt);
                 newResults = newResults.concat(Array(qt).fill(r));
             }
@@ -513,7 +513,7 @@ export class BetterRollTable {
                 return { roll, results };
             }
 
-            roll = await roll.reroll({ async: true });
+            roll = await roll.reroll();
             // results = this.getResultsForRoll(roll.total);
             let resultsTmp = this.getResultsForRoll(roll.total);
             if (resultsTmp?.length > 0) {
@@ -562,8 +562,8 @@ export class BetterRollTable {
             }
 
             // Ensure that results are available within the minimum/maximum range
-            let minRoll = (await roll.reroll({ minimize: true, async: true })).total;
-            let maxRoll = (await roll.reroll({ maximize: true, async: true })).total;
+            let minRoll = (await roll.reroll({ minimize: true })).total;
+            let maxRoll = (await roll.reroll({ maximize: true })).total;
             let availableRange = available.reduce(
                 (range, result) => {
                     const r = result.range;
@@ -584,8 +584,8 @@ export class BetterRollTable {
                     });
                     await this.table.normalize();
                     roll = Roll.create(this.table.formula);
-                    minRoll = (await roll.reroll({ minimize: true, async: true })).total;
-                    maxRoll = (await roll.reroll({ maximize: true, async: true })).total;
+                    minRoll = (await roll.reroll({ minimize: true })).total;
+                    maxRoll = (await roll.reroll({ maximize: true })).total;
 
                     availableRange = await BRTBetterHelpers.retrieveAvailableRange(this.table);
                     if (availableRange[0] > maxRoll || availableRange[1] < minRoll) {
@@ -629,7 +629,7 @@ export class BetterRollTable {
                     // );
                     break;
                 }
-                roll = await roll.reroll({ async: true });
+                roll = await roll.reroll();
                 results = this.getResultsForRoll(roll.total);
                 iter++;
             }

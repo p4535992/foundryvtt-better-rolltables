@@ -218,7 +218,7 @@ export class BRTLootHelpers {
     //   let currencyDataCalculate = [];
     //   for (let [key, value] of rollMap) {
     //     // var roll = new Roll(value);
-    //     // var rollResult = roll.roll({async: false});
+    //     // var rollResult = roll.evaluateSync();
     //     var rollResult = await BRTBetterHelpers.tryRoll(value);
     //     currencyDataCalculate.push({
     //       value: rollResult,

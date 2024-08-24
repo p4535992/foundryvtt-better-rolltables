@@ -359,7 +359,7 @@ export class HarvestChatCard {
 
             /*
             // TODO ???
-            foundry.utils.setProperty(itemData, "permission.default", CONST.DOCUMENT_PERMISSION_LEVELS.OBSERVER);
+            foundry.utils.setProperty(itemData, "permission.default", CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER);
             let newItem = await Item.create(itemData);
             */
         }
@@ -388,7 +388,6 @@ export class HarvestChatCard {
         // await this.findOrCreateItems();
 
         const htmlDescription = await TextEditor.enrichHTML(table.description, {
-            async: true,
             secrets: table.isOwner,
             documents: true,
         });
@@ -449,7 +448,6 @@ export class HarvestChatCard {
         // await this.findOrCreateItems();
 
         const htmlDescription = await TextEditor.enrichHTML(table.description, {
-            async: true,
             secrets: table.isOwner,
             documents: true,
         });

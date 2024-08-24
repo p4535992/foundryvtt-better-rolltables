@@ -64,12 +64,12 @@ export class BRTBetterHelpers {
                 return 1;
             } else {
                 try {
-                    const qt = (await new Roll(qtFormula).roll({ async: true })).total || defaultValue;
+                    const qt = (await new Roll(qtFormula).roll()).total || defaultValue;
                     return qt;
                 } catch (e) {
                     Logger.debug(e.message, false, e);
                     const qtRoll = Roll.create(qtFormula);
-                    const qt = (await qtRoll.evaluate({ async: true })).total || defaultValue;
+                    const qt = (await qtRoll.evaluate()).total || defaultValue;
                     return qt;
                 }
             }
@@ -86,12 +86,12 @@ export class BRTBetterHelpers {
                 return 1;
             } else {
                 try {
-                    const qt = new Roll(qtFormula).roll({ async: false }).total || defaultValue;
+                    const qt = new Roll(qtFormula).evaluateSync().total || defaultValue;
                     return qt;
                 } catch (e) {
                     Logger.debug(e.message, false, e);
                     const qtRoll = Roll.create(qtFormula);
-                    const qt = qtRoll.evaluate({ async: false }).total || defaultValue;
+                    const qt = qtRoll.evaluateSync().total || defaultValue;
                     return qt;
                 }
             }
@@ -490,8 +490,8 @@ export class BRTBetterHelpers {
         }
 
         // // Ensure that results are available within the minimum/maximum range
-        // const minRoll = (await roll.reroll({ minimize: true, async: true })).total;
-        // const maxRoll = (await roll.reroll({ maximize: true, async: true })).total;
+        // const minRoll = (await roll.reroll({ minimize: true })).total;
+        // const maxRoll = (await roll.reroll({ maximize: true })).total;
         const availableRange = available.reduce(
             (range, result) => {
                 const r = result.range;

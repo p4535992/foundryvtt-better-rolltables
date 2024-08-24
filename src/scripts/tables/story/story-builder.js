@@ -212,7 +212,7 @@ export class StoryBuilder {
             if (rollMatch) {
                 const rollFormula = rollMatch[1];
                 try {
-                    valueResult = new Roll(rollFormula).roll({ async: false }).total || 0;
+                    valueResult = new Roll(rollFormula).evaluateSync().total || 0;
                 } catch (e) {
                     Logger.error(e.message, false, e);
                     valueResult = 0;

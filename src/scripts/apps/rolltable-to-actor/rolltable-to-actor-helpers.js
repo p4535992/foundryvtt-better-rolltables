@@ -242,13 +242,13 @@ export class RollTableToActorHelpers {
         //     Actor: {
         //         name: `${r.text} Portrait`,
         //         img: document?.img || "icons/svg/mystery-man.svg",
-        //         price: new Roll("1d20 + 10").roll({ async: false }).total || 1, // TODO MAKE MORE RANDOM
+        //         price: new Roll("1d20 + 10").evaluateSync().total || 1, // TODO MAKE MORE RANDOM
         //         type: game.itempiles.API.ITEM_CLASS_LOOT_TYPE,
         //     },
         //     Scene: {
         //         name: `Map of ${document?.name}`,
         //         img: document?.thumb || "icons/svg/direction.svg",
-        //         price: new Roll("1d20 + 10").roll({ async: false }).total || 1, // TODO MAKE MORE RANDOM
+        //         price: new Roll("1d20 + 10").evaluateSync().total || 1, // TODO MAKE MORE RANDOM
         //         type: game.itempiles.API.ITEM_CLASS_LOOT_TYPE,
         //     },
         // };
@@ -753,12 +753,12 @@ export class RollTableToActorHelpers {
     //   Actor: {
     //     text: customResultName ? `${customResultName} Portrait` : `${result.text} Portrait`,
     //     img: customResultImg || existingItem?.img || "icons/svg/mystery-man.svg",
-    //     price: new Roll("1d20 + 10").roll({ async: false }).total || 1,
+    //     price: new Roll("1d20 + 10").evaluateSync().total || 1,
     //   },
     //   Scene: {
     //     text: customResultName ? `Map of ${customResultName}` : `Map of ${existingItem?.name}`,
     //     img: customResultImg || existingItem?.thumb || "icons/svg/direction.svg",
-    //     price: new Roll("1d20 + 10").roll({ async: false }).total || 1,
+    //     price: new Roll("1d20 + 10").evaluateSync().total || 1,
     //   },
     // };
 
@@ -805,7 +805,7 @@ export class RollTableToActorHelpers {
             // TODO check the type of command, that is a command to be rolled and a valid command
             let rolledValue;
             try {
-                rolledValue = new Roll(cmd.arg).roll({ async: false }).total;
+                rolledValue = new Roll(cmd.arg).evaluateSync().total;
             } catch (e) {
                 Logger.error(e.message, false, e);
                 continue;

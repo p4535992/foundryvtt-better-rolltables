@@ -96,11 +96,11 @@ export class BetterRollTableLootConfig extends RollTableConfig {
         brtData.uuid = this.document.uuid;
         brtData.owner = this.document.isOwner;
         // TODO
-        // brtData.enrichedDescription = await TextEditor.enrichHTML(context.data.description, { async: true });
+        // brtData.enrichedDescription = await TextEditor.enrichHTML(context.data.description);
 
         this.canRoll = this.document.ownership[game.user.id]
-            ? this.document.ownership[game.user.id] === CONST.DOCUMENT_PERMISSION_LEVELS.OWNER ||
-              this.document.ownership[game.user.id] === CONST.DOCUMENT_PERMISSION_LEVELS.OBSERVER
+            ? this.document.ownership[game.user.id] === CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER ||
+              this.document.ownership[game.user.id] === CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER
             : this.isEditable;
 
         return brtData;
