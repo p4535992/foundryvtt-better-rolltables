@@ -24,7 +24,7 @@
     <ol class="table-results">
         {{#each itemsData as |itemData|}}
             {{#switch itemData.type}}
-                {{#case 0}}
+                {{#case text}}
                     {{#if itemData.item.isHidden}}
                         <li class="table-result flexrow" data-result-id="{{ itemData.item._id }}" data-result-uuid="">
                             <img class="result-image" src="modules/better-rolltables/assets/artwork/unidentified-result.webp">
@@ -37,7 +37,7 @@
                         </li>
                     {{/if}}
                 {{/case}}
-                {{#case 1}}
+                {{#case document}}
                     {{#if itemData.item.isHidden}}
                         <li class="table-result flexrow" data-result-id="{{ itemData.item._id }}" data-result-uuid="">
                             <img class="result-image" src="modules/better-rolltables/assets/artwork/unidentified-result.webp">
@@ -67,7 +67,7 @@
                         </li>
                     {{/if}}
                 {{/case}}
-                {{#case 2}}
+                {{#case pack}}
                     {{#if itemData.item.isHidden}}
                         <li class="table-result flexrow" data-result-id="{{ itemData.item._id }}" data-result-uuid="">
                             <img class="result-image" src="modules/better-rolltables/assets/artwork/unidentified-result.webp">
