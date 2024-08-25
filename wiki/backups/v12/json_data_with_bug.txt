@@ -1,0 +1,158 @@
+{
+    "rollHTML": null,
+    "tableData": {
+        "name": "Parent Table",
+        "_id": "KO3elc06Wb8OHlOP",
+        "img": "icons/svg/book.svg",
+        "description": "",
+        "results": [
+            {
+                "type": "document",
+                "documentCollection": "RollTable",
+                "weight": 1,
+                "range": [
+                    1,
+                    1
+                ],
+                "drawn": false,
+                "text": "Events test",
+                "documentId": "RZGg38Y3EwTeUMiG",
+                "img": "icons/svg/barrel.svg",
+                "_id": "rrb3gdKHOlLYVxcC",
+                "flags": {
+                    "better-rolltables": {
+                        "brt-result-uuid": "RollTable.RZGg38Y3EwTeUMiG",
+                        "brt-result-custom-icon": "icons/svg/barrel.svg",
+                        "brt-result-journal-page-uuid": "",
+                        "brt-result-custom-name": "Events test",
+                        "brt-result-custom-quantity": "1d4",
+                        "brt-result-dynamic-dc-value": "",
+                        "brt-dc-value": null,
+                        "brt-skill-value": "",
+                        "brt-percentage-high-value": null
+                    }
+                }
+            },
+            {
+                "type": "document",
+                "documentCollection": "RollTable",
+                "weight": 1,
+                "range": [
+                    2,
+                    2
+                ],
+                "drawn": false,
+                "text": "Monster Test",
+                "documentId": "g6nQpP0TkYlSXiCq",
+                "img": "icons/svg/mystery-man-black.svg",
+                "_id": "Yxd2DbUaH6uhVoKA",
+                "flags": {
+                    "better-rolltables": {
+                        "brt-result-uuid": "RollTable.g6nQpP0TkYlSXiCq",
+                        "brt-result-custom-icon": "icons/svg/mystery-man-black.svg",
+                        "brt-result-journal-page-uuid": "",
+                        "brt-result-custom-name": "Monster Test",
+                        "brt-result-custom-quantity": "1d10",
+                        "brt-result-dynamic-dc-value": "",
+                        "brt-dc-value": null,
+                        "brt-skill-value": "",
+                        "brt-percentage-high-value": null
+                    }
+                }
+            }
+        ],
+        "replacement": true,
+        "displayRoll": true,
+        "folder": "cCeVA0IA9HjzBW58",
+        "sort": 200000,
+        "ownership": {
+            "default": 0,
+            "oCwK7lMkd1S1suQj": 3
+        },
+        "flags": {
+            "better-rolltables": {
+                "table-type": "better",
+                "table-currency-string": "2",
+                "loot-actor-name": "",
+                "brt-source-value": "",
+                "brt-dc-value": "",
+                "brt-skill-value": "",
+                "loot-amount-key": "2",
+                "brt-hidden-table": false,
+                "brt-show-hidden-result-on-chat": false,
+                "brt-distinct-result": false,
+                "brt-distinct-result-keep-rolling": false,
+                "brt-use-percentage": false
+            }
+        },
+        "_stats": {
+            "systemId": "dnd5e",
+            "systemVersion": "3.1.2",
+            "coreVersion": "12.331",
+            "createdTime": 1710270417383,
+            "modifiedTime": 1724606717003,
+            "lastModifiedBy": "oCwK7lMkd1S1suQj",
+            "compendiumSource": null,
+            "duplicateSource": null
+        },
+        "formula": "1d2"
+    },
+    "htmlDescription": "",
+    "itemsData": [
+        {
+            "id": "Rat",
+            "text": "Rat",
+            "img": "systems/dnd5e/tokens/beast/Rat.webp",
+            "isText": false,
+            "documentName": "Actor",
+            "compendiumName": "dnd5e.monsters",
+            "type": "pack",
+            "item": {
+                "id": "pozQUPTnLZW8epox",
+                "_id": "pozQUPTnLZW8epox",
+                "name": "Rat",
+                "img": "systems/dnd5e/tokens/beast/Rat.webp",
+                "text": "Rat",
+                "uuid": "Compendium.dnd5e.monsters.Actor.pozQUPTnLZW8epox",
+                "isHidden": true,
+                "quantity": 48,
+                "fontSize": 100
+            },
+            "isHidden": true,
+            "quantity": 48,
+            "fontSize": 100
+        },
+        {
+            "id": "Goblin",
+            "text": "Goblin",
+            "img": "systems/dnd5e/tokens/humanoid/Goblin.webp",
+            "isText": false,
+            "documentName": "Actor",
+            "compendiumName": null,
+            "type": "document",
+            "item": {
+                "id": "V5TXDABQdK7jPp7V",
+                "_id": "V5TXDABQdK7jPp7V",
+                "name": "Goblin",
+                "img": "systems/dnd5e/tokens/humanoid/Goblin.webp",
+                "text": "Goblin",
+                "uuid": "Actor.V5TXDABQdK7jPp7V",
+                "isHidden": true,
+                "quantity": 13,
+                "fontSize": 100
+            },
+            "isHidden": true,
+            "quantity": 13,
+            "fontSize": 100
+        }
+    ],
+    "compendium": null,
+    "id": "KO3elc06Wb8OHlOP",
+    "users": [
+        {
+            "id": "jpE4BxybWf1ONIlj",
+            "name": "Afsr2",
+            "img": "icons/svg/mystery-man.svg"
+        }
+    ]
+}
