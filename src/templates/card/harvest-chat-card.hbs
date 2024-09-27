@@ -24,7 +24,7 @@
     <ol class="table-results">
         {{#each itemsData as |itemData|}}
             {{#switch itemData.type}}
-                {{#case text}}
+                {{#case 'text'}}
                     {{#if itemData.item.isHidden}}
                         <li class="table-result flexrow" data-result-id="{{ itemData.item._id }}" data-result-uuid="">
                             <img class="result-image" src="modules/better-rolltables/assets/artwork/unidentified-result.webp">
@@ -37,13 +37,15 @@
                         </li>
                     {{/if}}
                 {{/case}}
-                {{#case document}}
+                {{#case 'document'}}
                     {{#if itemData.item.isHidden}}
                         <li class="table-result flexrow" data-result-id="{{ itemData.item._id }}" data-result-uuid="">
                             <img class="result-image" src="modules/better-rolltables/assets/artwork/unidentified-result.webp">
                             <div class="result-text" style="font-size: {{itemData.fontSize}}%;">
                                 <a class="content-link" draggable="false"
+                                data-type="{{itemData.documentName}}"
                                 data-id="{{itemData.item.id}}"
+                                data-uuid="{{itemData.item.uuid}}"
                                 data-tooltip="Harvest Item">
                                     <i class="fas {{entity-icon itemData.documentName}}"></i> {{localize "better-rolltables.label.tableResultTextHiddenOnChat"}}
                                 </a>
@@ -57,6 +59,8 @@
                                 <a class="content-link" draggable="true"
                                 data-entity="{{itemData.documentName}}"
                                 data-document="{{itemData.documentName}}"
+                                data-link="" 
+                                data-type="{{itemData.documentName}}"
                                 data-id="{{itemData.item.id}}"
                                 data-uuid="{{itemData.item.uuid}}"
                                 data-tooltip="Harvest Item">
@@ -67,13 +71,15 @@
                         </li>
                     {{/if}}
                 {{/case}}
-                {{#case pack}}
+                {{#case 'pack'}}
                     {{#if itemData.item.isHidden}}
                         <li class="table-result flexrow" data-result-id="{{ itemData.item._id }}" data-result-uuid="">
                             <img class="result-image" src="modules/better-rolltables/assets/artwork/unidentified-result.webp">
                             <div class="result-text" style="font-size: {{itemData.fontSize}}%;">
                                 <a class="content-link" draggable="false"
+                                data-type="{{itemData.documentName}}"
                                 data-id="{{itemData.item.id}}"
+                                data-uuid="{{itemData.item.uuid}}"
                                 data-tooltip="Harvest Item">
                                     <i class="fas {{entity-icon itemData.documentName}}"></i> {{localize "better-rolltables.label.tableResultTextHiddenOnChat"}}
                                 </a>
@@ -86,6 +92,8 @@
                             <div class="result-text" style="font-size: {{itemData.fontSize}}%;">
                                 <a class="content-link" draggable="true"
                                 data-pack="{{#if itemData.compendiumName}}{{itemData.compendiumName}}{{else}}{{itemData.item.pack}}{{/if}}"
+                                data-link="" 
+                                data-type="{{itemData.documentName}}"
                                 data-id="{{itemData.item.id}}"
                                 data-uuid="{{itemData.item.uuid}}"
                                 data-tooltip="Harvest Item">

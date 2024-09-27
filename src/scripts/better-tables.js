@@ -271,7 +271,15 @@ export class BetterTables {
             const pack = item.pack || game.collections.get(item.collectionName)?.documentName || "";
             const packPart = pack !== "" ? `data-pack="${pack}"` : "";
             const icon = BRTUtils.getIconByEntityType(entity);
-            return `<a class="content-link" draggable="true" ${packPart} data-entity="${entity}" data-id="${id}" data-uuid="${uuid}"><i class="fas ${icon}"></i>${text}</a>`;
+            return `<a class="content-link" 
+                draggable="true" 
+                ${packPart} 
+                data-entity="${entity}" 
+                data-link=""
+                data-type="${entity}"
+                data-id="${id}" 
+                data-uuid="${uuid}">
+                <i class="fas ${icon}"></i>${text}</a>`;
         }
 
         return item.text;

@@ -25,7 +25,8 @@ export class BetterResults {
         // START PATCH 2024-03-02
         // this.currencyData = await this._generateCurrency(currencyString);
         const currencyString = this.table.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.LOOT_CURRENCY_STRING_KEY);
-        this.currencyData = ItemPilesHelpers.retrieveCurrenciesSimpleFromString(currencyString);
+        const currencyDataTmp = ItemPilesHelpers.retrieveCurrenciesSimpleFromString(currencyString);
+        this.currencyData = isEmptyObject(currencyDataTmp) ? undefined : currencyDataTmp;
         // END PATCH 2024-03-02
         // START PATCH 2024-03-02
         /*
@@ -235,7 +236,7 @@ export class BetterResults {
     }
 
     getCurrencyData() {
-        return this.currencyData;
+        return isEmptyObject(this.currencyData) ? undefined : this.currencyData;
     }
 
     // /**

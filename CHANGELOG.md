@@ -1,6 +1,11 @@
 TODO
 - Add confirm dialog on reset button ???
 - Add flags for cost/price like already done for the quantity is possible now with item piles support
+
+### 12.0.0 (BETA)
+
+- Update everything for v12 compatibility 
+
 ### 2.1.19-20
 
 - Update api actor list
