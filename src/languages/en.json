@@ -194,7 +194,7 @@
             "tableTextHiddenTable": "Hidden Table: if checked the result drawn from this table are visible only to gms on the chat",
             "tableTextHiddenShowResultOnChat": "If the table is hidden drawn table results will be show on the chat card as unknown items to players",
             "tableResultTextHiddenOnChat": "???",
-            "importSuccess": "Imported {0} in {1}",
+            "importSuccess": "Imported '{itemNames}' in '{actorNames}'",
             "Normalize": "Sets the roll formula to be a die with a number of sides equal to the number of options available, and automatically sets the weights of all items in the result list.",
             "NormalizeRanges": "Normalize ranges according to result weight.<br><br>Result ranges are set to appropriate values based on weight.<br><br>Also updates the roll table formula.",
             "NormalizeWeights": "Normalize weights according to result range.<br><br>Result weights are set to appropriate value based on range.",

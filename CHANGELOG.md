@@ -2,6 +2,10 @@ TODO
 - Add confirm dialog on reset button ???
 - Add flags for cost/price like already done for the quantity is possible now with item piles support
 
+### 12.0.1
+
+- Some bug fix on the BRT Table List Feature
+
 ### 12.0.0 (BETA)
 
 - Update everything for v12 compatibility 

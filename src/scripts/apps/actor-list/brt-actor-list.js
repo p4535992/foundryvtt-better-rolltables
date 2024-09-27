@@ -783,7 +783,7 @@ export default class BRTActorList extends FormApplication {
 
         for (const compendium of game.packs) {
             if (compendium.metadata.label?.trim().startsWith("BRT")) {
-                compendiumsToCheck.push(`${comp.metadata.packageName}.${comp.metadata.name}`); // e.g. brt-harvest-harvester
+                compendiumsToCheck.push(`${compendium.metadata.packageName}.${compendium.metadata.name}`); // e.g. brt-harvest-harvester
             }
         }
         for (const folder of game.tables.folders) {
@@ -869,7 +869,7 @@ export default class BRTActorList extends FormApplication {
             if (pack.metadata.type === "RollTable" && compendiumsFoldersToCheck.includes(pack.folder?.name)) {
                 // TODO add regex ?
                 if (!compendiumsReferencesToCheck.includes(pack.metadata.id)) {
-                    compendiumsReferencesToCheck.push(`${comp.metadata.packageName}.${comp.metadata.name}`);
+                    compendiumsReferencesToCheck.push(`${pack.metadata.packageName}.${pack.metadata.name}`);
                 }
             }
         }
@@ -885,7 +885,7 @@ export default class BRTActorList extends FormApplication {
         }
 
         for (const pack of compendiumsRollTableToCheck) {
-            const comp = await RetrieveHelpers.getCompendiumCollectionAsync(ref, false);
+            const comp = await RetrieveHelpers.getCompendiumCollectionAsync(pack, false);
             if (comp) {
                 if (comp.metadata.type === "RollTable") {
                     const documentsRetrieved = await comp.getDocuments();

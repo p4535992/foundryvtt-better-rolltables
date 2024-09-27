@@ -1,3 +1,4 @@
+import { isEmptyObject } from "./lib";
 import Logger from "./Logger";
 import { RetrieveHelpers } from "./retrieve-helpers";
 
@@ -503,6 +504,7 @@ export default class ItemPilesHelpers {
         const rollData = options.roll;
         const customCategory = !!options.customCategory; // false
         const recursive = !!options.recursive; // true
+        const rollsAmount = isEmptyObject(options.rollsAmount) ? options.timesToRoll : options.rollsAmount;
 
         if (!options.formula) {
             options.formula = table.formula;
@@ -546,6 +548,7 @@ export default class ItemPilesHelpers {
         }
         */
         options.displayChat = false;
+        options.rollsAmount = rollsAmount;
         const results = await game.modules.get("better-rolltables").api.betterTableRoll(table, options);
         // END MOD 4535992
 

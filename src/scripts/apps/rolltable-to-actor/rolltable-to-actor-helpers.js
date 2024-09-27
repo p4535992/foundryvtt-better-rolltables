@@ -7,6 +7,7 @@ import { BRTUtils } from "../../core/utils";
 import Logger from "../../lib/Logger";
 import { RetrieveHelpers } from "../../lib/retrieve-helpers";
 import ItemPilesHelpers from "../../lib/item-piles-helpers";
+import { isEmptyObject } from "../../lib/lib";
 
 export class RollTableToActorHelpers {
     /**
@@ -44,39 +45,46 @@ export class RollTableToActorHelpers {
     }
 
     static async addRollTableItemsToActor(table, actor, options = {}) {
-        const itemsData = ItemPilesHelpers.populateActorOrTokenViaTable(actor, table, {
+        const itemsData = await ItemPilesHelpers.populateActorOrTokenViaTable(actor, table, {
             targetActor: actor,
             removeExistingActorItems: false,
+            timesToRoll: isEmptyObject(options?.rollsAmount)
+                ? isEmptyObject(options?.timesToRoll)
+                    ? "1"
+                    : String(options?.timesToRoll)
+                : String(options?.rollsAmount),
         });
         /*
-    let brt = new BetterTables();
-    const results = await brt.getBetterTableResults(table, options);
-    const itemsData = await RollTableToActorHelpers.resultsToItemsData(results);
-    const actorWithItems = await RollTableToActorHelpers.addItemsToActor(actor, itemsData);
-    */
+        let brt = new BetterTables();
+        const results = await brt.getBetterTableResults(table, options);
+        const itemsData = await RollTableToActorHelpers.resultsToItemsData(results);
+        const actorWithItems = await RollTableToActorHelpers.addItemsToActor(actor, itemsData);
+        */
         // Notify the user of items added
-        /*
-    let itemNames = itemsData
-      .map((i) => {
-        const itemStackAttribute = game.itempiles.API.ITEM_QUANTITY_ATTRIBUTE; // game.settings.get(CONSTANTS.MODULE_ID, SETTINGS.QUANTITY_PROPERTY_PATH);
-        if (!itemStackAttribute) {
-          return i.name;
-        }
-        // const stack = parseInt(foundry.utils.getProperty(i.system, itemStackAttribute));
-        const stack = parseInt(foundry.utils.getProperty(i, itemStackAttribute));
-        if (stack <= 1) {
-          return i.name;
-        }
-        return `${stack} ${i.name}`;
-      })
-      .join(", ");
-    const actorNames = controlledActors.map((a) => a.name).join(", ");
-    const infoStr = RollTableToActorHelpers._stringInject(Logger.i18n(`${CONSTANTS.MODULE_ID}.label.importSuccess`), [
-      itemNames,
-      actorNames,
-    ]);
-    */
-        Logger.info(Logger.i18n(`${CONSTANTS.MODULE_ID}.label.importSuccess`), true);
+
+        let itemNames = itemsData
+            .map((i) => {
+                const itemTmp = i.item;
+                const itemStackAttribute = game.itempiles.API.ITEM_QUANTITY_ATTRIBUTE; // game.settings.get(CONSTANTS.MODULE_ID, SETTINGS.QUANTITY_PROPERTY_PATH);
+                if (!itemStackAttribute) {
+                    return itemTmp.name;
+                }
+                // const stack = parseInt(foundry.utils.getProperty(i.system, itemStackAttribute));
+                const stack = parseInt(foundry.utils.getProperty(itemTmp, itemStackAttribute));
+                if (stack <= 1) {
+                    return itemTmp.name;
+                }
+                return `${stack} ${itemTmp.name}`;
+            })
+            .join(", ");
+        const controlledActors = [actor];
+        const actorNames = controlledActors.map((a) => a.name).join(", ");
+        const infoStr = Logger.i18nFormat(`${CONSTANTS.MODULE_ID}.label.importSuccess`, {
+            itemNames: itemNames,
+            actorNames: actorNames,
+        });
+        Logger.info(infoStr, true);
+        //Logger.info(Logger.i18n(`${CONSTANTS.MODULE_ID}.label.importSuccess`), true);
         const items = itemsData;
         return items;
     }
@@ -112,29 +120,30 @@ export class RollTableToActorHelpers {
         }
 
         // Notify the user of items added
-        /*
-    let itemNames = itemsData
-      .map((i) => {
-        const itemStackAttribute = game.itempiles.API.ITEM_QUANTITY_ATTRIBUTE; // game.settings.get(CONSTANTS.MODULE_ID, SETTINGS.QUANTITY_PROPERTY_PATH);
-        if (!itemStackAttribute) {
-          return i.name;
-        }
-        // const stack = parseInt(foundry.utils.getProperty(i.system, itemStackAttribute));
-        const stack = parseInt(foundry.utils.getProperty(i, itemStackAttribute));
-        if (stack <= 1) {
-          return i.name;
-        }
-        return `${stack} ${i.name}`;
-      })
-      .join(", ");
-    const actorNames = controlledActors.map((a) => a.name).join(", ");
-    const infoStr = RollTableToActorHelpers._stringInject(Logger.i18n(`${CONSTANTS.MODULE_ID}.label.importSuccess`), [
-      itemNames,
-      actorNames,
-    ]);
-    Logger.info(infoStr, true);
-    */
-        Logger.info(Logger.i18n(`${CONSTANTS.MODULE_ID}.label.importSuccess`), true);
+
+        let itemNames = itemsData
+            .map((i) => {
+                const itemTmp = i.item;
+                const itemStackAttribute = game.itempiles.API.ITEM_QUANTITY_ATTRIBUTE; // game.settings.get(CONSTANTS.MODULE_ID, SETTINGS.QUANTITY_PROPERTY_PATH);
+                if (!itemStackAttribute) {
+                    return itemTmp.name;
+                }
+                // const stack = parseInt(foundry.utils.getProperty(i.system, itemStackAttribute));
+                const stack = parseInt(foundry.utils.getProperty(itemTmp, itemStackAttribute));
+                if (stack <= 1) {
+                    return itemTmp.name;
+                }
+                return `${stack} ${itemTmp.name}`;
+            })
+            .join(", ");
+        const actorNames = controlledActors.map((a) => a.name).join(", ");
+        const infoStr = Logger.i18nFormat(`${CONSTANTS.MODULE_ID}.label.importSuccess`, {
+            itemNames: itemNames,
+            actorNames: actorNames,
+        });
+        Logger.info(infoStr, true);
+
+        //Logger.info(Logger.i18n(`${CONSTANTS.MODULE_ID}.label.importSuccess`), true);
         const items = itemsData;
         return items;
     }
