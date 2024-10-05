@@ -147,6 +147,12 @@
             "name": "Français",
             "path": "languages/fr.json",
             "flags": {}
+        },
+        {
+            "lang": "pl",
+            "name": "Polski",
+            "path": "languages/pl.json",
+            "flags": {}
         }
     ],
     "compatibility": {
