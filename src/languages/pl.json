@@ -1,0 +1,264 @@
+{
+    "better-rolltables": {
+        "api": {
+            "msg": {
+                "compendiumEmpty": "Kompendium o nazwie {title} ({name}) jest puste.",
+                "compendiumNotFound": "Nie znaleziono kompendium << {name} >>.",
+                "generateRolltableFromCompendium": "Generuj tabelę losową BRT.",
+                "generateRolltableFromCompendiumWithFilters": "Generowanie tabeli z filtrami (tylko Dnd5e) BRT [BETA].",
+                "startRolltableGeneration": "Rozpoczęcie generowania tabeli losowej dla {title} ({name}) z wpisami {compendiumSize}.",
+                "rolltableGenerationFinished": "Generowanie tabeli dla {title} ({name}) zostało zakończone.",
+                "rollCompendiumAsRolltable": "Kompendium jako tabela losowa BRT."
+            }
+        },
+        "Buttons": {
+            "GenerateLoot": "Generuj z Aktora",
+            "GenerateLootTooltip": "Generowanie łupów na istniejącym lub nowym aktorze",
+            "GenerateLootToken": "Generuj z Tokena",
+            "GenerateLootTokenTooltip": "Generowanie łupów na wybranych tokenach",
+            "GenerateHarvest": "Generuj z Aktora",
+            "GenerateHarvestTooltip": "Generowanie zbiorów na istniejącym lub nowym aktorze",
+            "GenerateHarvestToken": "Generuj z Tokena",
+            "GenerateHarvestTokenTooltip": "Generowanie zbiorów na wybranych tokenach",
+            "Currency": {
+                "label": "Waluta",
+                "Share": "Podziel",
+                "Shared": "Podzielono!"
+            },
+            "ShareCurrency": "Podziel walutę",
+            "Reroll": {
+                "Title": "Pokaż przyciski ponownego losowania",
+                "Description": "Wyświetla przycisk ponownego rzutu na każdej karcie wyniku rzutu na stole rzutów (tylko dla nowo utworzonych kart). Działa tylko na karcie czatu łupów lub jeśli włączona jest funkcja skondensowanych wyników rzutów. Nie ma to wpływu na domyślne tabele."
+            },
+            "Open": {
+                "Title": "Pokaż przyciski `Otwórz`",
+                "Description": "Wyświetlanie przycisku otwarcia przy każdym komunikacie o wyniku rzutu na tabeli rzutów (tylko dla nowo utworzonych kart). Działa tylko na karcie czatu łupów lub jeśli włączone jest wyświetlanie skondensowanych wyników rzutów. Nie ma to wpływu na domyślne tabele."
+            },
+            "Rolltable": {
+                "Configuration": {
+                    "Title": "Ustawienia tabeli losowych",
+                    "Description": "Konfiguracja tabeli losowych"
+                }
+            }
+        },
+        "Formula": "Formuła",
+        "BetterTable": "Lepsza tabela",
+        "TypePrefixLabel": "Ten typ tabeli to: ",
+        "TypeLabel": "Lepsze tabele",
+        "TypeDefault": "Domyślna tabela",
+        "TypeLoot": "Tabela łupów",
+        "TypeHarvest": "Tabela zbiorów",
+        "TypeStory": "Tabela opowieści",
+        "CurrencyLoot": "Tabela waluty",
+        "CurrencyLootPlaceholder": "Dodaj formuły oddzielone przecinkami, np: 1d4[gp], (1d4+1)*10[sp]",
+        "HarvestDcValue": "Wartość ST zbiorów",
+        "HarvestDcValuePlaceholder": "Dodaj formułę lub liczbę, np: 1d4 lub 13",
+        "HarvestSkillValue": "Klucz umiejętności zbiorów",
+        "HarvestSkillValuePlaceholder": "Klucz używanej umiejętności. Jest to kluczowa właściwość, a nie etykieta, więc na przykład w Dnd5e, jeśli jest to „Zręczność”, używamy „dex” lub „Arkana” używamy „arc”.",
+        "LootActorName": "Dodaj łup do aktora o tej konkretnej nazwie",
+        "LootActorNamePlaceholder": "Jeśli jest pusta, za każdym razem utworzy nowego aktora łupu",
+        "HarvestActorName": "Dodaj zbiory do aktora o tej konkretnej nazwie",
+        "HarvestActorNamePlaceholder": "Jeśli jest pusta, za każdym razem utworzy nowego aktora zbiorów",
+        "BetterRollAmount": "Ilość rzutów",
+        "BetterRollAmountPlaceholder": "Rzuć całą tabelą wiele razy",
+        "LootRollAmount": "Ilość rzutów",
+        "LootRollAmountPlaceholder": "Rzuć całą tabelą wiele razy",
+        "HarvestRollAmount": "Ilość rzutów",
+        "HarvestRollAmountPlaceholder": "Rzuć całą tabelą wiele razy",
+        "DrawResultPlural": "Losuje {amount} wyników z {name}",
+        "DrawResultSingular": "Losuj {amount} wyników z {name}",
+        "DrawResultZero": "Rzucaj z {name}",
+        "DrawReroll": "Przerzuć",
+        "OpenRolltable": "Otwórz tabelę losową",
+        "Settings": {
+            "Module": {
+                "AdvancedSettings": {
+                    "Title": "Zaawansowane ustawienia BetterRolltables",
+                    "Description": "Bardziej zaawansowane ustawienia dla BetterRolltables",
+
+                    "Menu": {
+                        "Base": {
+                            "Title": "Podstawowe ustawienia",
+                            "Description": "Podstawowe ustawienia dla BetterRolltables"
+                        },
+                        "UI": {
+                            "Title": "Ustawienia interfejsu użytkownika",
+                            "Description": "Ustawienia interfejsu użytkownika dla BetterRolltables"
+                        },
+                        "Loot": {
+                            "Title": "Ustawienia łupów",
+                            "Description": "Ustawienia łupów dla BetterRolltables"
+                        },
+                        "Harvest": {
+                            "Title": "Ustawienia zbiorów",
+                            "Description": "Ustawienia zbiorów dla BetterRolltables"
+                        },
+                        "Tags": {
+                            "Title": "Ustawienia tagów",
+                            "Description": "Ustawienia tagów dla BetterRolltables"
+                        },
+                        "enableOldBehavior": {
+                            "Title": "Włącz poprzednie zachowanie",
+                            "Description": "Włącz ponownie stare zachowanie 1.9.X, jeśli naprawdę chcesz..."
+                        }
+                    }
+                }
+            },
+            "LootSheet": {
+                "Title": "Karta używana do generowania łupów",
+                "Description": "Możesz ustawić alternatywne karty BN, które będą używane dla wygenerowanego łupu podczas tworzenia"
+            },
+            "SpellCompendium": {
+                "Title": "Kompendium zaklęć",
+                "Description": "Możesz określić kompendium zaklęć, a gdy zwój zostanie wybrany z tabeli łupów (muszą mieć określoną nazwę), losowe zaklęcie jest rzucane z tego kompendium"
+            },
+            "ShowWarningBeforeReroll": {
+                "Title": "Potwierdzić ponowne rzucenie?",
+                "Description": "Wyświetla okno dialogowe potwierdzenia przed ponownym przerzutem treści wiadomości."
+            },
+            "UseCondensedBetterRoll": {
+                "Title": "Użyj skondensowanego wyjścia rzutu",
+                "Description": "Jeśli opcja ta jest włączona, agreguje te same dane wyjściowe z mnożnikiem w celu zaoszczędzenia miejsca. Opcja ta może przyspieszyć rzuty tabeli. Nie ma to wpływu na tabele domyślne."
+            },
+            "AddRollInRolltableContextMenu": {
+                "Title": "Rzut z menu kontekstowego tabeli losowej",
+                "Description": "Dodanie opcji w menu kontekstowym tabeli losowej do rzutu tabeli bez jej otwierania. Działa na wszystkich typach tabel."
+            },
+            "AddRollInCompediumContextMenu": {
+                "Title": "Rzut z menu kontekstowego kompendium",
+                "Description": "Dodanie opcji w menu kontekstowym kompendium, aby rzucać to kompendium bez tworzenia z niego tabeli losowej. Działa na wszystkich niepustych kompendiach."
+            },
+            "RerollWarning": {
+                "Title": "Przerzucić?",
+                "Description": "Treść wiadomości zostanie utracona. Czy na pewno chcesz ponownie rzucić?"
+            },
+            "RollTableFromJournal": {
+                "Title": "Dodać przycisk rzutu do tabel we wpisach do dziennika?",
+                "Description": "Jeśli opcja ta jest włączona, do połączonych tabel we wpisach dziennika dodawany jest przycisk rzutu."
+            },
+            "ShareCurrencyButton": {
+                "Title": "Pokazać przycisk dzielenia waluty?",
+                "Description": "Pokaż przycisk na wiadomości, aby podzielić się walutą (jeśli istnieje) (tylko dnd5e)"
+            },
+            "AlwaysShowGeneratedLootAsMessage": {
+                "Title": "Zawsze wyświetlaj wygenerowany łup aktorowi jako wiadomość",
+                "Description": "Jeśli opcja ta jest włączona, wygenerowany łup dodany do aktora jest również wyświetlany jako wiadomość."
+            },
+            "AlwaysShowGeneratedHarvestAsMessage": {
+                "Title": "Zawsze wyświetlaj wygenerowane zbiory aktorowi jako wiadomość",
+                "Description": "Jeśli opcja ta jest włączona, wygenerowane zbiory dodane do aktora są również wyświetlane jako wiadomość."
+            },
+            "Tags": {
+                "Title": "Tagi",
+                "Use": {
+                    "Title": "Użyj tagów",
+                    "Description": "Umożliwienie przypisywania tagów tabeli losowych do własnych tagów."
+                },
+                "Defaults": {
+                    "Title": "Domyślne tagi",
+                    "Description": "Domyślne tagi przypisywane do tabel. Może to być przydatne w przypadku pracy z wieloma tabelami."
+                }
+            },
+            "debug": {
+                "name": "Włącz debugowanie",
+                "hint": "Wyświetla komunikaty debugowania w konsoli"
+            },
+            "forceNormalizeIfNoResultAreDrawn": {
+                "name": "Wymuś normalizację, jeśli nie wylosowano żadnego wyniku",
+                "hint": "NIE ZALECAM WŁĄCZANIA TEGO USTAWIENIA. Włącz tę opcję tylko wtedy, gdy otrzymujesz ostrzeżenie „Nie można wyciągnąć wyników z tej tabeli i formuły” za każdym razem, gdy w twoim świecie pojawi się jakiś problem."
+            },
+            "headerActorListLabel": {
+                "name": "Pokaż etykietę listy aktorów BRT",
+                "hint": "Usuń zaznaczenie, aby ukryć etykietę listy aktorów BRT w nagłówkach kart aktorów."
+            }
+        },
+        "Strings": {
+            "Better": "Lepsza",
+            "Loot": "Łup",
+            "Harvest": "Zbiór",
+            "Story": "Opowieść",
+            "Tags": "Tagi",
+            "Warnings": {
+                "NoFormula": "Nie znaleziono formuły tabeli losowej w {name}",
+                "MaxRecursion": "Przekroczono głębokość rekursji {maxRecursions} podczas próby wyciągnięcia z tabeli losowej {tableId}.",
+                "NotTableByNameInPack": "Nie znaleziono tabeli o nazwie {tableName} w kompendium {packName}, czy źle wpisałeś nazwę tabeli w nawiasie?",
+                "CurrencyFormat": "Pole waluty łupu zawiera nieprawidłowe formatowanie, waluty powinny być zdefiniowane jako „diceFormula[currencyType]” => „1d100[gp]”, ale było {currencyString}."
+            }
+        },
+        "label": {
+            "tableTextGmTitleLabel": "<b>TO JEST KARTA CZATU TYLKO DLA MG</b>",
+            "tableTextDistinctResult": "Odrębny wynik: jeśli zaznaczone, ten sam wynik nie zostanie wybrany więcej niż jeden raz niezależnie od liczby „Ilości rzutów”.",
+            "tableTextDistinctResultKeepRolling": "Odrębny wynik, ale kontynuuj rzuty: jeśli opcja „Odrębny wynik” jest zaznaczona, a „Liczba rzutów” > liczby wyniku, kontynuuj rzuty jako normalne zachowanie „Rzut +”.",
+            "tableTextUsePercentage": "Użyj wartości procentowej zamiast zachowania zakresu. Włączenie tej opcji spowoduje ukrycie (nie usunięcie) kolumny zakresu i wagi.",
+            "tableTextUseDynamicDc": "Użyj dynamicznego ST. Pozwoli ci to ustawić wiele losowych testów na raz dla testów ST, np. 'nat=1d20, arc=23'.",
+            "tableTextHiddenTable": "Ukryta tabela: jeśli zaznaczone, wyniki wyciągnięte z tej tabeli są widoczne tylko dla MG na czacie.",
+            "tableTextHiddenShowResultOnChat": "Jeśli tabela jest ukryta, wyniki losowania będą wyświetlane na karcie czatu jako nieznane elementy dla graczy.",
+            "tableResultTextHiddenOnChat": "???",
+            "importSuccess": "Zaimportowano '{itemNames}' w '{actorNames}'",
+            "Normalize": "Ustawia formułę rzutu jako kość z liczbą boków równą liczbie dostępnych opcji i automatycznie ustawia wagi wszystkich elementów na liście wyników.",
+            "NormalizeRanges": "Normalizacja zakresów zgodnie z wagą wyniku.<br><br>Zakresy wyników są ustawiane na odpowiednie wartości w oparciu o wagę.<br><br>Aktualizuje również formułę tabeli rzutów.",
+            "NormalizeWeights": "Normalizacja wag zgodnie z zakresem wyników.<br><br>Wagi wyników są ustawiane na odpowiednią wartość w oparciu o zakres.",
+            "RichEdit": {
+                "Title": "Tabela „{table}” wynik: {wynik}",
+                "ButtonHint": "Zaawansowana edycja",
+                "ToggleSimple": "Prosta edycja"
+            },
+            "resultTypeHeaderHint": "To rozwijane pole wyboru umożliwia wybranie opcji Tekst, Dokument lub Kompendium. Tekst pozwala na wprowadzanie zwykłego tekstu lub wpisów skryptowych HTML, które będą wyświetlane na czacie po ich wprowadzeniu. Dokumentem może być dowolny nazwany dokument z dowolnego paska bocznego, w tym przedmioty, aktorzy, inne tabele losowe itp.",
+            "resultDetailsHeaderHint": "Każdy typ wyniku niesie ze sobą określone opcje. Tekst pozwala na wprowadzenie zwykłego tekstu lub wpisów skryptowych HTML, które zostaną wysłane na Czat po ich wprowadzeniu; wpisy tekstowe mogą również wykorzystywać Foundry's Document Links(@Document[ID]) dla zaawansowanej funkcjonalności. Dokumenty wymagają wybrania typu dokumentu, do którego odnosi się tabela losowa, z drugim polem umożliwiającym wpisanie dokładnej nazwy dokumentu, który ma zostać znaleziony. Kompendium działa w zasadzie tak samo jak Dokument, ale użytkownik wybiera kompendium, z którego ma znaleźć nazwę dokumentu.",
+            "resultWeightHeaderHint": "Waga określa, ile razy dany wynik jest wprowadzany do tabeli. Domyślnie każdy wynik ma wagę 1. Po przypisaniu wag, naciśnięcie ikony wagi po prawej stronie nagłówka wyników spowoduje wygenerowanie odpowiedniej formuły rzutów dla wyników.",
+            "resultRangeHeaderHint": "Gdy na Tabeli Losowej wykonywany jest rzut, jeśli liczba mieści się w dowolnym miejscu zakresu wyniku, wynik ten jest losowany. W przypadku, gdy dwa lub więcej wyników ma pokrywający się zakres, wszystkie wyniki są uważane za wylosowane.",
+            "resultUsePercentageHeaderHint": "Używaj wartości procentowych zamiast mechanizmu z zakresem do pobierania obiektów z tabeli. Wartości mieszczą się w zakresie od 1 do 100 z krokiem 0,1, więc akceptowane są wartości takie jak 27,1 lub 0,5. UWAGA: W zależności od języka ustawionego w przeglądarce dla wartości dziesiętnych należy użyć znaku „.” lub „,”.",
+            "resultUseDynamicDcHeaderHint": "Dynamiczne ST. Umożliwia ustawienie wielu losowych testów na raz dla testów st, np. „nat=1d20, arc=23”, relacje stanu to OR, a nie AND.",
+            "resultQuantityHeaderHint": "Ustawia ilość elementów powiązanych z indywidualnym wynikiem dla obsługiwanych systemów. Akceptuje również formuły rzutów, takie jak \"1d10\"",
+            "resultDcHeaderHint": "ST, który ma zostać przekazany w celu pobrania obiektu z tabeli losowej",
+            "resultSkillHeaderHint": "Ciąg referencyjny umiejętności do porównania w celu przefiltrowania rzutów tabeli, każdy system jest inny, ale aby podać przykład dla Dnd5e, zdecydowałem się użyć nazw umiejętności",
+            "betterRolltableRefresh": "Odśwież",
+            "betterRolltableRefreshTooltip": "Odśwież wyniki tabeli, użyj tej opcji, jeśli widzisz wszystkie wyniki na czerwonym tle.",
+            "betterRolltableUpdate": "Zaktualizuj",
+            "betterRolltableUpdateTooltip": "Aktualizuje tabelę o wszelkie nowe zmiany, które zostały w niej wprowadzone.",
+            "betterRolltableReset": "Reset",
+            "betterRolltableResetTooltip": "Przywraca domyślne ustawienia tabeli.",
+            "betterRolltableRollPlus": "Rzut+",
+            "betterRolltableRollPlusTooltip": "Rzuć z tabeli za pomocą BRT",
+            "quantityFormula": "Ilość",
+            "editResult": "Edytuj wynik",
+            "dcHint": "ST: minimalna wartość ST, jeśli występuje i > 0",
+            "skillHint": "Umiejętność: ciąg umiejętności używany do filtrowania wyników",
+            "dc": "ST",
+            "skill": "Umiejętność",
+            "source": "Odniesienie do źródła (jest używane do integracji z innymi modułami)",
+            "sourcePlaceholder": "jakiś ciąg znaków",
+            "usePercentageMinAndMax": "Min - Maks %",
+            "usePercentageOnlyMax": "Procentowo",
+            "useDynamicDc": "Dynamiczne ST",
+            "redFlagNoteTitle": "Informacje o ostrzeżeniach na czerwonym tle w wynikach tabeli",
+            "redFlagNote1Hint": "UWAGA: Jeśli widzisz WSZYSTKIE wiersze z czerwonym tłem, jest to problem z pamięcią podręczną, kliknij przycisk „Aktualizuj” i zamknij tabelę, aby wymusić odświeżenie wyników tabeli.",
+            "redFlagNote2Hint": "UWAGA: Jeśli zobaczysz, że niektóre wiersze mają czerwone tło, jakiś element może mieć zmieniony identyfikator UUID, kliknij przycisk „Aktualizuj”, aby wymusić odświeżenie wyników tabeli.",
+            "redFlagNote3Hint": "Zgodnie z ogólną zasadą należy zawsze kliknąć przycisk „Aktualizuj” co najmniej raz po otwarciu tabeli, aby wymusić odświeżenie wyników tabeli.",
+            "Clear": "Wyczyść",
+            "Populate": "Wypełnij",
+            "ClearAndPopulate": "Wyczyść i wypełnij",
+            "Currencies": "Waluty",
+            "DropItem": "Upuść tutaj przedmiot, folder, tabelę lub kompendium...",
+            "DropRollTable": "Upuść folder, tabelę lub kompendium tutaj...",
+            "GrantToTarget": "Przyznaj celowi",
+            "HeaderActorList": "Lista aktorów BRT",
+            "Item": "Przedmiot",
+            "RollTable": "Tabela losowa",
+            "Quantity": "Ilość",
+            "SaveList": "Zapisz listę",
+            "SettingHeaderLabel": "Wyświetl etykietę",
+            "SettingHeaderLabelHint": "Usuń zaznaczenie, aby ukryć etykietę w nagłówkach kart aktorów.",
+            "TitleActorList": "Lista aktorów BRT: {name}",
+            "WarningActorRollTable": "Nie można dodać przedmiotu od aktora.",
+            "WarningAddedRollTables": "Dodano {amount} przedmiotów do listy łupów do {name}.",
+            "WarningCreatedRollTables": "Dodano waluty i  {amount} przedmiotów do {name}.",
+            "WarningEmptyDocument": "Dokument nie zawiera prawidłowych przedmiotów.",
+            "WarningInvalidDocument": "Dokument nie jest prawidłowym typem.",
+            "WarningRollTableNotFound": "Nie znaleziono przedmiotu o uuid '{uuid}'. Został on pominięty.",
+            "WarningRollTableNotFoundName": "Nie można znaleźć przedmiotu „{name}”.",
+            "WarningMajorError": "Coś poszło bardzo źle.",
+            "WarningNoTarget": "Musisz namierzyć token na płótnie, aby przyznać jego aktorowi łup."
+        }
+    }
+}
